@@ -17,6 +17,7 @@ class Noticia extends Model
         'user_id',
         'hash',
         'titulo',
+        'categoria',
         'texto_resumo',
         'texto_completo',
         'e_destaque',

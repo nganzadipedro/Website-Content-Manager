@@ -16,16 +16,13 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Cadastrar Notícias</h4>
+                                    <h4>Editar Notícias</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="widget-content widget-content-area">
 
-                           
-
                                 @csrf
-
 
                                 <div class="row">
                                     <div class="col-lg-8 col-12">

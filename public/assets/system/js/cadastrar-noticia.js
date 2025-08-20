@@ -25,6 +25,7 @@ function valida_formulario() {
     const titulo = document.getElementById('titulo').value;
     const texto_resumo = document.getElementById('texto_resumo').value;
     const texto_completo = document.getElementById('texto_completo').value;
+    const categoria = document.getElementById('categoria').value;
     const imagem = document.getElementById('imagem').files[0];
     const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
 
@@ -38,6 +39,10 @@ function valida_formulario() {
     }
     else if (texto_completo == '' || texto_completo == null) {
         msgErro = "Digite o conteúdo da Notícia";
+        tem = false;
+    }
+    else if (categoria == '' || categoria == null) {
+        msgErro = "Digite a categoria da Notícia";
         tem = false;
     }
     else if (!imagem) {
@@ -73,12 +78,14 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
         const titulo = document.getElementById('titulo').value;
         const texto_resumo = document.getElementById('texto_resumo').value;
         const texto_completo = document.getElementById('texto_completo').value;
+        const categoria = document.getElementById('categoria').value;
         const imagem = document.getElementById('imagem').files[0];
         const e_destaque = document.getElementById('e_destaque').value;
 
         formData.append('titulo', titulo);
         formData.append('texto_resumo', texto_resumo);
         formData.append('texto_completo', texto_completo);
+        formData.append('categoria', categoria);
         formData.append('e_destaque', e_destaque);
         formData.append('imagem', imagem);
 
@@ -108,14 +115,16 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
                         console.log(res);
                         if (res == 'sucesso') {
                             const preview = document.getElementById('imagemExibida');
-                            preview.src = '/assets/template/img/logo_horizontal.png';
+                            preview.src = 'https://placehold.net/default.png';
                             sweetAlert({
                                 type: "success",
                                 title: "Sucesso",
                                 text: 'A notícia foi cadastrada com sucesso',
                                 timer: 6000
                             });
-                            sucesso();
+                            
+                            window.location.href = '/system/admin/newslater/list';
+
                         }
                         else if (res == 'documento') {
                             sweetAlert({

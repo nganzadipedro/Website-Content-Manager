@@ -15,6 +15,7 @@ class PostController extends Controller
             'titulo' => $request->titulo,
             'texto_resumo' => $request->texto_resumo,
             'texto_completo' => $request->texto_completo,
+            'categoria' => $request->categoria,
             'e_destaque' => $request->e_destaque,
             'user_id' => Auth::id()
         ]);
