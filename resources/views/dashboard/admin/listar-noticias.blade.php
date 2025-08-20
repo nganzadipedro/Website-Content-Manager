@@ -65,7 +65,7 @@
                                         <td>{{$item->views}}</td>
                                         <td>
 
-                                            <a href="{{ route('system.admin.detalhesadvogado', $item->hash) }}"
+                                            <a href="{{ route('system.admin.editnoticia', $item->hash) }}"
                                                     style="cursor:pointer; font-size: 24px;">
                                                     <i class="bi bi-pencil"></i>
                                             </a>
