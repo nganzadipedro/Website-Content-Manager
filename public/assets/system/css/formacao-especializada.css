@@ -1,0 +1,166 @@
+* {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+:root {
+    --cor-azul: #1a49a0;
+    --cor-azul2: #1a49a0d5;
+    --cor-preta: #000;
+    --cor-amarela1: #FFDD01;
+}
+
+.navbar-nav li a {
+    color: #000 !important;
+}
+
+.title-page {
+    color: #000;
+    font-weight: bold;
+}
+
+.text-warning {
+    color: #FFDD01 !important;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.bg-black {
+    background-color: #000;
+}
+
+.btn-warning {
+    background-color: #FFDD01 !important;
+    border-color: #FFDD01 !important;
+}
+
+.btn-warning:hover {
+    border-color: #FFDD01 !important;
+}
+
+.page-link {
+    color: #000 !important;
+    padding: 20px;
+}
+
+.page-link:hover {
+    color: #000 !important;
+    font-weight: bold;
+    text-decoration: underline !important;
+}
+
+/* customizações */
+.pg-formacao-especializada .hero-section .formation-date {
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    background-color: var(--cor-azul);
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.pg-formacao-especializada .hero-section .title-formation {
+    /* color: var(--cor-azul); */
+    font-size: 2.2rem;
+    font-weight: bold;
+
+    background: linear-gradient(45deg, var(--cor-azul), #000);
+    /* azul para rosa */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pg-formacao-especializada .hero-section .description-formation {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.pg-formacao-especializada .main-section .left-menu {
+    list-style-type: none;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.pg-formacao-especializada .main-section .left-menu li {
+    padding: 10px 10px;
+    background-color: #fff;
+    border: #d4d4d4 solid 1px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.pg-formacao-especializada .main-section .left-menu li a {
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+
+.pg-formacao-especializada .main-section .left-menu li:hover {
+    border: var(--cor-azul) solid 1px;
+}
+
+.pg-formacao-especializada .main-section .title-section {
+    color: #fff;
+    display: inline-block;
+    background-color: var(--cor-azul);
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.pg-formacao-especializada .main-section .presentation-section .accordion .subject {
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.pg-formacao-especializada .main-section .presentation-section .accordion .description {
+    color: #000;
+    margin-top: -10px;
+    font-size: 14px;
+}
+
+.pg-formacao-especializada .main-section .presentation-section .accordion .link-formador {
+    color: var(--cor-azul2) !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.pg-formacao-especializada .main-section .presentation-section .accordion .link-formador:hover {
+    text-decoration: underline !important;
+}
+
+.pg-formacao-especializada .main-section .content-section .title-modulo h5 {
+    color: #000;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.pg-formacao-especializada .main-section .content-section .title-modulo .duration {
+    font-size: 12px;
+    text-align: center;
+    color: #000;
+    background-color: #fff;
+    border: var(--cor-azul) solid 1px;
+    padding: 3px 5px;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.pg-formacao-especializada .main-section .content-section .title-modulo .professor {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--cor-azul2);
+}
+
+.obrigatorio {
+    color: red;
+    font-style: italic;
+    font-size: 12px;
+}
