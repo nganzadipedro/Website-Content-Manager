@@ -48,10 +48,7 @@
             </a>
             <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample">
                 <li class="active">
-                    <a href="index-2.html"> Analytics </a>
-                </li>
-                <li>
-                    <a href="index2.html"> Facturação </a>
+                    <a href="{{ route('system.admin.dashboard') }}"> Dados Resumo </a>
                 </li>
             </ul>
         </li>
