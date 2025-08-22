@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
                 Route::post('/gallery/post', 'Controllers\PostController@gallery_post');
+                Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
+                Route::post('/message/post', 'Controllers\PostController@message_post');
                 Route::post('/newslater/delete', 'Controllers\PostController@delete_news');
                 Route::post('/gallery/delete', 'Controllers\PostController@delete_gallery');
                 Route::post('/newslater/update', 'Controllers\PostController@newslater_update');

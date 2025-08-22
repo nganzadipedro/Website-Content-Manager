@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Denuncia;
 use App\Models\Galeria;
+use App\Models\Mensagem;
 use App\Models\Noticia;
 use Auth;
 use Illuminate\Http\Request;
@@ -44,7 +46,7 @@ class PostController extends Controller
 
     }
 
-     public function gallery_post(Request $request)
+    public function gallery_post(Request $request)
     {
 
         $galeria = Galeria::create([
@@ -125,6 +127,58 @@ class PostController extends Controller
         $galeria->delete();
 
         ActividadesistemaController::inserir(Auth::id(), "Eliminou uma imagem da galeria ($galeria->titulo)", 'noticia', $galeria->id);
+        return 'sucesso';
+
+    }
+
+    public function complaint_post(Request $request)
+    {
+
+        $denuncia = Denuncia::create([
+            'nome' => $request->nome,
+            'assunto' => $request->assunto,
+            'mensagem' => $request->mensagem,
+        ]);
+
+        $denuncia->hash = md5($denuncia->nome . $denuncia->created_at);
+        $denuncia->save();
+
+        //faz upload do ficheiro
+        $ficheiro = '';
+
+        try {
+            if ($request->hasFile('ficheiro') && $request->file('ficheiro')->isValid()) {
+                $ficheiro = $request->ficheiro->store('denunciareclamacao');
+                $denuncia->ficheiro = $ficheiro;
+                $denuncia->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(null, "Utente submeteu uma denúncia/reclamação ($denuncia->assunto)", 'geral', null);
+        return 'sucesso';
+
+    }
+
+    public function message_post(Request $request)
+    {
+
+        $mensagem = Mensagem::create([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'assunto' => $request->assunto,
+            'tipo_remetente' => $request->tipo_remetente,
+            'mensagem' => $request->mensagem,
+            'num_identificacao' => $request->num_identificacao
+        ]);
+
+        $mensagem->hash = md5($mensagem->nome . $mensagem->created_at);
+        $mensagem->save();
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(null, "Utente enviou uma mensagem ($mensagem->assunto)", 'geral', null);
         return 'sucesso';
 
     }
