@@ -36,7 +36,8 @@ class WebsiteController extends Controller
 
     public function members()
     {
-
+        $this->acesso_pagina('associados');
+        return view('website.members');
     }
 
     public function services()

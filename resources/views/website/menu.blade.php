@@ -11,7 +11,7 @@
                         <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Início</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Serviços</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('news') }}">Notícias</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Associados</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('members') }}">Associados</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('comissions') }}">Comissões</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('legal_assistance') }}">Assistência
                                 Judiciária</a></li>
