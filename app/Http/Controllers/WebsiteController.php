@@ -22,7 +22,8 @@ class WebsiteController extends Controller
 
     public function comissions()
     {
-
+        $this->acesso_pagina('comissoes');
+        return view('website.comissions');
     }
 
     public function contact()
