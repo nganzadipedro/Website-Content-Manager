@@ -26,6 +26,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('members', 'Controllers\WebsiteController@members')->name('members');
     Route::get('legal-assistance', 'Controllers\WebsiteController@legal_assistance')->name('legal_assistance');
     Route::get('news', 'Controllers\WebsiteController@news')->name('news');
+    Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
+    Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
 
 
 

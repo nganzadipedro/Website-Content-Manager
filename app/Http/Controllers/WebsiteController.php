@@ -20,7 +20,7 @@ class WebsiteController extends Controller
 
     }
 
-    public function messages()
+    public function comissions()
     {
 
     }
@@ -29,7 +29,7 @@ class WebsiteController extends Controller
     {
 
         $this->acesso_pagina('contacto');
-         return view('website.contact');
+        return view('website.contact');
 
     }
 
@@ -40,20 +40,31 @@ class WebsiteController extends Controller
 
     public function services()
     {
-
-    }
-
-    public function complaints()
-    {
-
+        $this->acesso_pagina('servicos');
+        return view('website.services');
     }
 
     public function legal_assistance()
     {
+        $this->acesso_pagina('assistencia');
+        return view('website.legal-assistance');
+    }
+
+    public function gallery()
+    {
+        $this->acesso_pagina('galeria');
+        return view('website.gallery');
+    }
+
+    public function news()
+    {
 
     }
 
-    public function acesso_pagina($pagina){
+
+
+    public function acesso_pagina($pagina)
+    {
 
         $acesso = Website::create([
             'pagina' => $pagina
