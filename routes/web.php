@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
                 Route::get('/gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
                 Route::get('/messages/list/{tipo}', 'Livewire\Admin\Listarmensagens')->name('listmessages');
+                Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
                 Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
                 Route::get('/lawyers/list', 'Livewire\Admin\Listaradvogados')->name('listadvogados');

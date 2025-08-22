@@ -18,6 +18,8 @@ class Denuncia extends Model
         'hash',
         'assunto',
         'mensagem',
+        'estado',
+        'notificacao',
         'ficheiro'
     ];
 

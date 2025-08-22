@@ -194,10 +194,10 @@
             </a>
             <ul class="dropdown-menu submenu list-unstyled" id="components" data-bs-parent="#accordionExample">
                 <li>
-                    <a href="{{route('system.admin.listmessages', 'not-solved')}}"> Pendentes</a>
+                    <a href="{{route('system.admin.listdenuncias', 'not-solved')}}"> Pendentes</a>
                 </li>
                 <li>
-                    <a href="{{route('system.admin.listmessages', 'solved')}}"> Atendidas </a>
+                    <a href="{{route('system.admin.listdenuncias', 'solved')}}"> Atendidas </a>
                 </li>
             </ul>
         </li>
