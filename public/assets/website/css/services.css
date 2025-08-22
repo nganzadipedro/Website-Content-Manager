@@ -1,0 +1,188 @@
+.services-page .title-page {
+    margin-top: 50px;
+}
+
+.services-page .title-page h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-black);
+}
+
+.services-page .title-page h4 {
+    font-size: 1.2rem;
+    color: var(--cor-gray);
+}
+
+.services-page .section-services {
+    margin-top: 50px;
+}
+
+.services-page .section-services .content {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.services-page .section-services .content .item-service {
+    width: 30%;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.services-page .section-services .content .item-service:hover {
+    border: solid 1px var(--cor-gray);
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.services-page .section-services .content .item-service .header {
+    padding: 10px 5px;
+    width: 100%;
+    text-align: center;
+    border-bottom: solid var(--cor-yellow-one) 1px;
+    margin-bottom: 0px;
+}
+
+.services-page .section-services .content .item-service .header img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0px;
+}
+
+.services-page .section-services .content .item-service .header h3 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #000;
+    margin-bottom: 0px;
+}
+
+.services-page .section-services .content .item-service .body {
+    margin-top: -12px;
+}
+
+.services-page .section-services .content .item-service .body span {
+    display: inline-block;
+    width: 100px;
+    border-top: solid 5px var(--cor-yellow-one);
+}
+
+.services-page .section-services .content .item-service .body p {
+    padding: 10px 0px;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+
+.services-page .section-services .content .item-service .body a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    background-color: var(--cor-light-blue);
+    color: var(--cor-black);
+    padding: 10px;
+}
+
+.services-page .section-services .content .item-service .body a:hover {
+    background-color: var(--cor-yellow-one);
+    color: var(--cor-black);
+    font-weight: bold;
+}
+
+.services-page .section-cta {
+    margin-top: 50px;
+    background-color: var(--cor-black);
+    height: 350px;
+    padding: 40px;
+    margin-bottom: 130px;
+}
+
+.services-page .section-cta .content {
+    display: flex;
+    gap: 50px;
+}
+
+.services-page .section-cta img {
+    width: 40%;
+    border-radius: 15px;
+}
+
+.services-page .section-cta .text-area .title {
+    font-weight: bold;
+    font-size: 2.1rem;
+    color: var(--cor-yellow-one);
+}
+
+.services-page .section-cta .text-area .subtitle {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #fff;
+}
+
+.services-page .section-cta .text-area a {
+    display: inline-block;
+    margin-top: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    background-color: var(--cor-yellow-one);
+    color: var(--cor-black);
+    padding: 10px;
+    font-weight: bold;
+}
+
+.services-page .section-cta .text-area a:hover {
+    background-color: var(--cor-yellow-one);
+    color: var(--cor-black);
+    transform: scale(1.05); /* Hover com Escala Sutil */
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* estilização da seta indicando para baixo */
+.scroll-down-arrow {
+    position: relative;
+    width: 30px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 90px;
+}
+
+.scroll-down-arrow span {
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-bottom: 7px solid var(--cor-gray);
+    border-right: 7px solid var(--cor-gray);
+    transform: rotate(45deg);
+    margin: 10px auto;
+    animation: down 1.5s infinite;
+}
+
+.scroll-down-arrow span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.scroll-down-arrow span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes down {
+    0% {
+        opacity: 0;
+        transform: translateY(0) rotate(45deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(10px) rotate(45deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px) rotate(45deg);
+    }
+}
+
+/* fim da estilização da seta indicando para baixo */

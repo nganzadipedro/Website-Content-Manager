@@ -13,14 +13,24 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'guest'], function () {
 
-
     Route::post('login', 'Controllers\Auth\LoginController@login')->name('login');
     Route::get('login', 'Controllers\Auth\LoginController@showLoginForm')->name('login');
-
     Route::get('/forgot-password', 'Controllers\Auth\ForgotPasswordController@getEmail')->name('getfpview');
     Route::post('/forgot-password', 'Controllers\Auth\ForgotPasswordController@postEmail')->name('postfp');
     Route::get('/reset-password/{token}', 'Controllers\Auth\ResetPasswordController@getPassword')->name('getrspview');
     Route::post('/reset-password', 'Controllers\Auth\ResetPasswordController@updatePassword')->name('postrsp');
+
+    Route::get('home', 'Controllers\WebsiteController@home')->name('home');
+    Route::get('contact', 'Controllers\WebsiteController@contact')->name('contact');
+    Route::get('services', 'Controllers\WebsiteController@services')->name('services');
+    Route::get('members', 'Controllers\WebsiteController@members')->name('members');
+    Route::get('legal-assistance', 'Controllers\WebsiteController@legal_assistance')->name('legal_assistance');
+    Route::get('news', 'Controllers\WebsiteController@news')->name('news');
+
+
+
+
+
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -44,9 +54,6 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
                 Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
-                Route::get('/lawyers/list', 'Livewire\Admin\Listaradvogados')->name('listadvogados');
-                Route::get('/lawyers-trainee/list', 'Livewire\Admin\Listaradvogadosestagiarios')->name('listadvogadosestagiarios');
-                Route::get('/lawyer-details/{hash}', 'Livewire\Admin\Detalhesadvogado')->name('detalhesadvogado');
 
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');

@@ -14,6 +14,8 @@ class WebsiteController extends Controller
     public function home(Request $request)
     {
 
+        return view('website.index');
+
     }
 
     public function messages()
@@ -41,7 +43,7 @@ class WebsiteController extends Controller
 
     }
 
-    public function judicial_assistance()
+    public function legal_assistance()
     {
 
     }

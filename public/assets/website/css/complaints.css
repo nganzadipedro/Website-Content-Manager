@@ -1,0 +1,127 @@
+.title-page {
+    margin-top: 50px;
+}
+
+.title-page h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-black);
+}
+
+.title-page h4 {
+    font-size: 1.2rem;
+    color: var(--cor-gray);
+}
+
+.section-complaints {
+    margin-top: 40px;
+    padding: 20px 0;
+}
+
+.section-complaints .title {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: var(--cor-black);
+    border-left: 10px solid var(--cor-yellow-one);
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.section-complaints .description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--cor-black);
+    text-align: justify;
+    /* max-width: 990px; */
+    margin: 0 auto;
+}
+
+.section-complaint-form {
+    margin-top: 50px;
+    padding: 40px 0;
+    background-color: var(--cor-light-blue-2);
+    border-radius: 10px;
+}
+
+.section-complaint-form .form-title {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--cor-black);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-complaint-form .form-label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--cor-black);
+}
+
+.section-complaint-form .form-control {
+    border: 1px solid var(--cor-gray);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.section-complaint-form .form-control:focus {
+    border-color: var(--cor-yellow-one);
+    box-shadow: 0 0 5px rgba(247, 219, 17, 0.5);
+    outline: none;
+}
+
+.section-complaint-form .btn-submit {
+    background-color: var(--cor-yellow-two);
+    color: var(--cor-black);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.section-complaint-form .btn-submit:hover {
+    color: var(--cor-yellow-one);
+    background-color: var(--cor-black);
+    transform: scale(1.05); /* Hover com Escala Sutil */
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .section-complaints .title {
+        font-size: 2rem;
+        padding-left: 10px;
+    }
+
+    .section-complaints .description {
+        font-size: 0.9rem;
+    }
+
+    .section-complaint-form {
+        padding: 40px;
+    }
+
+    .section-complaint-form .form-title {
+        font-size: 1.8rem;
+    }
+
+    .section-complaint-form .form-control {
+        font-size: 0.9rem;
+    }
+
+    .section-complaint-form .btn-submit {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .section-complaints .title {
+        font-size: 1.8rem;
+    }
+
+    .section-complaint-form .form-title {
+        font-size: 1.5rem;
+    }
+}

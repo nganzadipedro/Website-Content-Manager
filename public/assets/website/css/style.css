@@ -1,0 +1,481 @@
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-VariableFont_wght.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --cor-yellow-one: #F7DB11;
+    --cor-yellow-two: #FCE200;
+    --cor-black: #000;
+    --cor-gray: #888888;
+    --cor-light-blue: #EDF3F5;
+    --cor-light-blue-2: #B1C1FB;
+    --cor-light-blue-3: #8FB1F2;
+    --font-base: "Nunito", sans-serif;
+}
+
+* {
+    font-family: var(--font-base); 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+p {
+    text-align: justify;
+}
+
+.section-pub {
+    width: 100%;
+    height: 400px;
+    background-color: #fff;
+}
+
+.section-pub img {
+    width: 100%;
+}
+
+.section-menu {
+    background-color: var(--cor-black);
+    border-radius: 5px;
+    width: 100%; /* Changed from 1300px to 100% for responsiveness */
+    max-width: 1300px; /* Optional: Limits maximum width on large screens */
+    margin: 0 auto; /* Centers the container */
+}
+
+.section-menu .navbar {
+    background-color: var(--cor-black);
+}
+
+.section-menu .navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: nowrap; /* Prevents wrapping unless specified in media queries */
+    overflow-x: auto; /* Adds horizontal scrolling if items overflow */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+.section-menu .navbar-nav .nav-item {
+    padding: 0 6px;
+}
+
+.section-menu .navbar-nav .nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: var(--cor-black) solid 3px;
+    padding-left: 10px;
+    white-space: nowrap;
+}
+
+.section-menu .navbar-nav .nav-link:hover {
+    color: var(--cor-yellow-one);
+    border-left: var(--cor-yellow-one) solid 3px;
+}
+
+.section-menu .navbar-nav .btn-signin {
+    background-color: var(--cor-yellow-two);
+    color: var(--cor-black);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.section-menu .navbar-nav .btn-signin:hover {
+    text-decoration: underline;
+    color: var(--cor-black);
+    border-left: var(--cor-black) solid 3px;
+}
+
+/* .section-menu .navbar-toggler {
+    border-color: var(--cor-yellow-two);
+} */
+
+.section-menu .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.section-president {
+    margin-top: 40px;
+}
+
+.section-president .content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.section-president .content .img-advogado img {
+    width: 400px;
+    height: 400px;
+}
+
+.section-president .content .description {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.section-president .content .description h2 {
+    font-weight: bold;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+}
+
+.section-president .content .description span {
+    position: relative;
+    top: -7px;
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: none;
+    background-color: var(--cor-gray);
+    border-radius: 5px;
+    padding: 5px 12px;
+    color: #fff;
+}
+
+.section-president .content .description h3 {
+    font-size: 1.7rem;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.section-president .content .description p {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.main-page .section-feature {
+    margin-top: 50px;
+    padding: 40px 0px;
+}
+
+.main-page .section-feature .content {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.main-page .section-feature .content .text-area {
+    width: 60%;
+}
+
+.main-page .section-feature .content .text-area .title-section {
+    font-weight: bold;
+    border-left: var(--cor-yellow-one) solid 10px;
+    padding-left: 10px;
+    color: var(--cor-gray);
+    font-size: 2rem;
+}
+
+.main-page .section-feature .content .text-area .title-feature {
+    padding: 10px 0px;
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: var(--cor-black);
+}
+
+.main-page .section-feature .content .text-area .description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cor-black);
+}
+
+.main-page .section-feature .content .text-area a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1rem;
+    background-color: var(--cor-black);
+    color: var(--cor-yellow-one);
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.main-page .section-feature .content .text-area a:hover {
+    background-color: var(--cor-yellow-one);
+    color: var(--cor-black);
+    font-weight: bold;
+}
+
+.main-page .section-feature .content img {
+    width: 40%;
+    height: auto;
+    border: var(--cor-gray) solid 1px;
+    padding: 5px;
+}
+
+.section-about {
+    margin-top: 50px;
+    padding: 40px;
+    background-color: var(--cor-yellow-two);
+}
+
+.section-about .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.section-about .title {
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    font-size: 3rem;
+}
+
+.section-about .subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    border-radius: 7px;
+    padding: 5px;
+    color: #000;
+    margin-bottom: 50px;
+}
+
+.section-about .description {
+    color: #000;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.section-values {
+    padding: 50px;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+
+.section-values .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-values .content .item {
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.section-values .content .item:hover {
+    border: solid 1px var(--cor-gray);
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.section-values .content .item .title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.section-values .content .item .title img {
+    width: 30px;
+    height: 30px;
+}
+
+.section-values .content .item .title h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.section-values .content .item .description {
+    color: var(--cor-black);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.scroll-down-arrow {
+    position: relative;
+    width: 30px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-bottom: 100px;
+}
+
+.scroll-down-arrow span {
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-bottom: 7px solid var(--cor-gray);
+    border-right: 7px solid var(--cor-gray);
+    transform: rotate(45deg);
+    margin: 10px auto;
+    animation: down 1.5s infinite;
+}
+
+.scroll-down-arrow span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.scroll-down-arrow span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes down {
+    0% {
+        opacity: 0;
+        transform: translateY(0) rotate(45deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(10px) rotate(45deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px) rotate(45deg);
+    }
+}
+
+.main-page .section-team {
+    margin-top: 100px;
+    /* height: 450px; */
+    background-color: var(--cor-light-blue-2);
+    padding: 40px 0px;
+}
+
+.main-page .section-team .title-pt {
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    color: var(--cor-black);
+}
+
+.main-page .section-team .subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    border-radius: 7px;
+    padding: 5px;
+    color: #000;
+    margin-bottom: 50px;
+}
+
+.main-page .section-team .content {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    margin-top: 60px;
+}
+
+.main-page .section-team .content .membro {
+    text-align: center;
+    /* max-width: 150px; */
+}
+
+.main-page .section-team .content .membro img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #000;
+    background: linear-gradient(135deg, black, gold);
+    padding: 1px;
+    transition: transform 0.3s ease;
+}
+
+.main-page .section-team .content .membro img:hover {
+    transform: scale(1.05);
+}
+
+.main-page .section-team .content .membro p {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+}
+
+.main-page .section-team .content .membro .card-number {
+    display: block;
+    font-size: 0.8rem;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.main-page .section-team .content .membro .role {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: none;
+    background-color: var(--cor-gray);
+    border-radius: 5px;
+    padding: 5px 12px;
+    color: #fff;
+}
+
+footer {
+    background-color: #fff;
+    height: 500px;
+    padding: 60px 40px;
+    margin-top: 0px;
+    border-top: solid 7px var(--cor-black);
+}
+
+footer .content .logo {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+footer .content .logo img {
+    height: 100px;
+    width: 100px;
+}
+
+footer .content .logo h3 {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #000;
+}
+
+footer .content .hiperlikns {
+    margin-top: 30px;
+    display: flex;
+    gap: 60px;
+}
+
+footer .content .hiperlikns div h3 {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 7px;
+    font-size: 0.7rem;
+    background-color: var(--cor-gray);
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+footer .content .hiperlikns div ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer .content .hiperlikns div ul li {
+    padding: 3px 0px;
+    margin-bottom: 5px;
+}
+
+footer .content .hiperlikns div ul li a {
+    text-decoration: none;
+    color: var(--cor-black);
+}
+
+footer .content .hiperlikns div ul li .btn-signin {
+    background-color: var(--cor-black);
+    color: var(--cor-yellow-two);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+footer .content .hiperlikns div ul li .btn-signin:hover {
+    text-decoration: underline;
+}

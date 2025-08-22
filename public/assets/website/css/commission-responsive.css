@@ -1,0 +1,11 @@
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .commissions-header .commissions-title {
+        font-size: 2rem;
+        padding-left: 10px;
+    }
+
+    .commissions-header .commissions-subtitle {
+        font-size: 1rem;
+    }
+}

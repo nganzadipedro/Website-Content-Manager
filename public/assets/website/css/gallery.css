@@ -1,0 +1,272 @@
+/* Estilos específicos para a página de galeria */
+.gallery-page .title-page {
+    margin-top: 80px; 
+    margin-bottom: 40px; 
+}
+
+.gallery-page .title-page h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-black);
+    margin-bottom: 0.5rem;
+}
+
+.gallery-page .title-page h4 {
+    font-size: 1.2rem;
+    color: var(--cor-gray);
+    font-weight: normal;
+}
+
+/* Estilos para o conteúdo principal da galeria */
+.gallery-page .main-content {
+    background-color: #fff;
+    color: #374151;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px;
+    border-radius: 1px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* Estilos para o contêiner de botões de categoria */
+.gallery-page .main-content .category-buttons {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 1rem; 
+    margin-bottom: 2.5rem; 
+}
+
+/* Estilos para os botões de categoria */
+.gallery-page .main-content .category-buttons .category-button {
+    background-color: #f3f4f6; 
+    color: var(--cor-black);
+    padding: 8px 18px; 
+    border-radius: 5px; 
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #e2e8f0; 
+    outline: none;
+    transition: all 0.3s ease-in-out; 
+}
+
+/* Estilo para o botão de categoria ativo */
+.gallery-page .main-content .category-buttons .active {
+    background-color: var(--cor-yellow-one); 
+    color: var(--cor-black);
+    font-weight: bold;
+    border-color: var(--cor-yellow-one); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* Efeito de hover para os botões de categoria */
+.gallery-page .main-content .category-buttons .category-button:hover:not(.active) {
+    background-color: var(--cor-yellow-one);
+    transform: translateY(-2px);
+    color: #000; 
+    border-color: var(--cor-yellow-one);
+}
+
+/* Estilos para o contêiner da galeria (usando Flexbox para responsividade) */
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem; 
+}
+
+/* Estilos para cada cartão de imagem */
+.image-card {
+    background-color: var(--cor-light-blue);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    width: 100%;
+    max-width: 320px; 
+    flex-basis: 100%; 
+    display: block; 
+    cursor: pointer;
+    position: relative; 
+}
+
+/* Efeito de hover para o cartão de imagem */
+.image-card:hover {
+    transform: translateY(-8px) scale(1.03); 
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilo para ocultar cartões de imagem (usado pelo JS) */
+.image-card.hidden {
+    display: none;
+}
+
+.image-card img {
+    width: 100%;
+    height: 12rem; /* Altura fixa para as imagens */
+    object-fit: cover; /* Garante que a imagem cubra a área, cortando se necessário */
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+/* Estilos para a sobreposição de hover com ícone de visualização */
+.image-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 0.75rem;
+}
+
+/* Mostra a sobreposição no hover do cartão */
+.image-card:hover .image-card-overlay {
+    opacity: 1;
+}
+
+.view-icon {
+    font-size: 3rem; /* Tamanho do ícone de olho */
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    pointer-events: none; 
+}
+
+.image-info {
+    padding: 1rem;
+    text-align: center; 
+}
+
+.image-info p:first-child {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.image-info p:last-child {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+/* --- Estilos para o Lightbox (Visualização em Tela Cheia) --- */
+.lightbox-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+    opacity: 0;
+    visibility: hidden; 
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; 
+}
+
+.lightbox-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    position: relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%; 
+    max-height: 90%; 
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+}
+
+/* Estilos para os botões de navegação e fechar do lightbox */
+.lightbox-button {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 2.2rem;
+    border-radius: 50%; 
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    user-select: none; 
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: white;
+    transform: scale(1.05);
+}
+
+/* Posições específicas dos botões */
+.lightbox-prev { left: -4.5rem; }
+.lightbox-next { right: -4.5rem; }
+.lightbox-close {
+    top: -4.5rem;
+    right: -4.5rem;
+    font-size: 2.8rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 4rem;
+    height: 4rem;
+}
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas pequenas (sm): 2 colunas */
+@media (min-width: 640px) {
+    .image-card {
+        flex-basis: calc(50% - 1rem); /* 2 colunas com espaçamento */
+        max-width: calc(50% - 1rem);
+    }
+}
+
+/* Para telas médias (md): 3 colunas */
+@media (min-width: 768px) {
+    .image-card {
+        flex-basis: calc(33.333% - 1rem); /* 3 colunas com espaçamento */
+        max-width: calc(33.333% - 1rem);
+    }
+
+    /* Ajustes do lightbox para telas médias */
+    .lightbox-button {
+        font-size: 1.8rem;
+        width: 3rem;
+        height: 3rem;
+        padding: 0.5rem;
+        border-width: 1px;
+    }
+    .lightbox-prev { left: 0.5rem; top: 50%; transform: translateY(-50%); }
+    .lightbox-next { right: 0.5rem; top: 50%; transform: translateY(-50%); }
+    .lightbox-close { top: 0.5rem; right: 0.5rem; font-size: 2rem; width: 3.5rem; height: 3.5rem; }
+    .lightbox-content { flex-direction: row; max-width: 98%; max-height: 98%; }
+}
+
+/* Para telas grandes (lg): 4 colunas */
+@media (min-width: 1024px) {
+    .image-card {
+        flex-basis: calc(25% - 1.125rem); /* 4 colunas com espaçamento */
+        max-width: calc(25% - 1.125rem);
+    }
+}

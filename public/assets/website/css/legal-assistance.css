@@ -1,0 +1,42 @@
+.legal-assistance-info {
+    background:var(--cor-light-blue);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    padding: 48px 24px 32px 24px;
+    margin: 48px 0;
+}
+
+.legal-assistance-info .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cor-black);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.legal-assistance-info .subtitle {
+    font-size: 1.2rem;
+    color: var(--cor-black);
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.legal-assistance-info p {
+    font-size: 1.08rem;
+    color: #333;
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+@media (max-width: 600px) {
+    .legal-assistance-info {
+        padding: 24px 8px;
+    }
+    .legal-assistance-info .section-title {
+        font-size: 1.3rem;
+    }
+    .legal-assistance-info .subtitle {
+        font-size: 1rem;
+    }
+}

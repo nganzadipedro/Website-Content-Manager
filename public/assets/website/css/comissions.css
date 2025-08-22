@@ -1,0 +1,60 @@
+
+.commissions-header {
+    text-align: center;
+    margin: 48px 0 32px 0;
+    padding: 0 10px;
+}
+
+.commissions-title {
+   font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-black);
+}
+
+.commissions-subtitle {
+    font-size: 1.2rem;
+    color: var(--cor-gray);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .commissions-title {
+        font-size: 1.3rem;
+    }
+    .commissions-subtitle {
+        font-size: 1rem;
+    }
+}
+.commission {
+  background: #fff;
+    padding: 48px 24px 32px 24px;
+    margin: 48px 0;
+}
+
+.commision-background {
+    background:var(--cor-light-blue);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    padding: 48px 24px 32px 24px;
+    margin: 48px 0;
+}
+
+.commission h2{
+    text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+thead {
+  background-color: #e0e0e0;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
