@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Galeria;
 use App\Models\Noticia;
 use Auth;
 use Illuminate\Http\Request;
@@ -43,6 +44,39 @@ class PostController extends Controller
 
     }
 
+     public function gallery_post(Request $request)
+    {
+
+        $galeria = Galeria::create([
+            'titulo' => $request->titulo,
+            'categoria' => $request->categoria,
+            'user_id' => Auth::id()
+        ]);
+
+        $galeria->hash = md5($galeria->tittulo . $galeria->created_at);
+        $galeria->save();
+
+        //faz upload da imagem
+        $imagem = '';
+
+        try {
+            if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                $imagem = $request->imagem->store('galeria');
+                $galeria->imagem = $imagem;
+                $galeria->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        // regista actividade no sistema
+
+        ActividadesistemaController::inserir(Auth::id(), "Adicionou uma nova imagem da galeria ($galeria->titulo)", 'galeria', $galeria->id);
+        return 'sucesso';
+
+    }
+
+
     public function newslater_update(Request $request)
     {
 
@@ -73,7 +107,6 @@ class PostController extends Controller
         return 'sucesso';
 
     }
-
     public function delete_news(Request $request)
     {
 
@@ -81,6 +114,17 @@ class PostController extends Controller
         $noticia->delete();
 
         ActividadesistemaController::inserir(Auth::id(), "Eliminou uma notícia ($noticia->titulo)", 'noticia', $noticia->id);
+        return 'sucesso';
+
+    }
+
+    public function delete_gallery(Request $request)
+    {
+
+        $galeria = Galeria::find($request->id_news);
+        $galeria->delete();
+
+        ActividadesistemaController::inserir(Auth::id(), "Eliminou uma imagem da galeria ($galeria->titulo)", 'noticia', $galeria->id);
         return 'sucesso';
 
     }

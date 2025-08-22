@@ -37,7 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/dashboard', 'Livewire\Admin\Dashboard')->name('dashboard');
                 Route::get('/newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
+                Route::get('/gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
                 Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
+                Route::get('/gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
                 Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
                 Route::get('/lawyers/list', 'Livewire\Admin\Listaradvogados')->name('listadvogados');
@@ -46,7 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
+                Route::post('/gallery/post', 'Controllers\PostController@gallery_post');
                 Route::post('/newslater/delete', 'Controllers\PostController@delete_news');
+                Route::post('/gallery/delete', 'Controllers\PostController@delete_gallery');
                 Route::post('/newslater/update', 'Controllers\PostController@newslater_update');
 
             });
