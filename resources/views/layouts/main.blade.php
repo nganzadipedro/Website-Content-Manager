@@ -42,17 +42,16 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="index-2.html">
-                        <img src="https://designreset.com/cork/html/src/assets/img/logo2.svg" class="navbar-logo"
-                            alt="logo">
+                    <a href="{{ route('system.admin.dashboard')  }}">
+                        <img src="{{ asset('images/logo_oaa_cor.png') }}" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index-2.html" class="nav-link"> CORK </a>
+                    <a href="{{ route('system.admin.dashboard')  }}" class="nav-link"> CPL - OAA </a>
                 </li>
             </ul>
 
-            <div class="search-animated toggle-search">
+            <!-- <div class="search-animated toggle-search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-search">
@@ -71,10 +70,10 @@
                     </div>
                 </form>
                 <span class="badge badge-secondary">Ctrl + /</span>
-            </div>
+            </div> -->
 
             <ul class="navbar-item flex-row ms-lg-auto ms-0 action-area">
-
+                <!-- 
                 <li class="nav-item dropdown language-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -98,9 +97,9 @@
                                 src="https://designreset.com/cork/html/src/assets/img/1x1/de.svg" class="flag-width"
                                 alt="flag"> <span class="align-self-center">&nbsp;German</span></a>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item theme-toggle-item">
+                <!-- <li class="nav-item theme-toggle-item">
                     <a href="javascript:void(0);" class="nav-link theme-toggle">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -121,8 +120,8 @@
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                         </svg>
                     </a>
-                </li>
-
+                </li> -->
+<!-- 
                 <li class="nav-item dropdown notification-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -303,14 +302,15 @@
                         </div>
                     </div>
 
-                </li>
+                </li> -->
 
                 <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-container">
                             <div class="avatar avatar-sm avatar-indicators avatar-online">
-                                <img alt="avatar" src="../src/assets/img/profile-30.png" class="rounded-circle">
+                                <img alt="avatar" src="{{ asset('assets/template/src/assets/img/profile-30.png') }}"
+                                    class="rounded-circle">
                             </div>
                         </div>
                     </a>
@@ -322,12 +322,12 @@
                                     &#x1F44B;
                                 </div>
                                 <div class="media-body">
-                                    <h5>Shaun Park</h5>
-                                    <p>Project Leader</p>
+                                    <h5>{{ Auth::user()->getpessoa->nome }}</h5>
+                                    <p>{{ Auth::user()->getpermissao->descricao }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="dropdown-item">
+                        <!-- <div class="dropdown-item">
                             <a href="user-profile.html">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -348,8 +348,8 @@
                                     </path>
                                 </svg> <span>Inbox</span>
                             </a>
-                        </div>
-                        <div class="dropdown-item">
+                        </div> -->
+                        <!-- <div class="dropdown-item">
                             <a href="auth-boxed-lockscreen.html">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -358,17 +358,21 @@
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg> <span>Lock Screen</span>
                             </a>
-                        </div>
+                        </div> -->
                         <div class="dropdown-item">
-                            <a href="auth-boxed-signin.html">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-log-out">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                     <polyline points="16 17 21 12 16 7"></polyline>
                                     <line x1="21" y1="12" x2="9" y2="12"></line>
-                                </svg> <span>Log Out</span>
+                                </svg> <span>Sair</span>
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                     </div>
 
@@ -395,7 +399,7 @@
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
 
-        @yield('content')
+            @yield('content')
 
         </div>
         <!--  END CONTENT AREA  -->

@@ -18,6 +18,8 @@ class Mensagem extends Model
         'hash',
         'email',
         'assunto',
+        'estado',
+        'notificacao',
         'tipo_remetente',
         'mensagem',
         'num_identificacao'
