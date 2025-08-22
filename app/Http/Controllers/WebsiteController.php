@@ -58,7 +58,8 @@ class WebsiteController extends Controller
 
     public function news()
     {
-
+        $this->acesso_pagina('noticias');
+        return view('website.news');
     }
 
 
