@@ -1,7 +1,8 @@
 @section('css-aux')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="{{ asset('assets/template/src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/template/src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/template/src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/template/src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 @endsection
@@ -56,14 +57,14 @@
                                     <h6 class="value">Acessos ao website</h6>
                                 </div>
                                 <div class="task-action">
-                                    
+
                                 </div>
                             </div>
 
                             <div class="w-content">
 
                                 <div class="w-info">
-                                    <p class="value">45,141</p>
+                                    <p class="value">{{ $vetor_acessos[0] }}</p>
                                 </div>
 
                             </div>
@@ -71,7 +72,7 @@
                     </div>
                 </div>
 
-                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                     <div class="widget widget-card-four">
                         <div class="widget-content">
                             <div class="w-header">
@@ -79,12 +80,12 @@
                                     <h6 class="value">Acessos da semana</h6>
                                 </div>
                                 <div class="task-action">
-                                    
+
                                 </div>
                             </div>
                             <div class="w-content">
                                 <div class="w-info">
-                                    <p class="value">45,141</p>
+                                    <p class="value">{{ $vetor_acessos[1] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -99,12 +100,12 @@
                                     <h6 class="value">Acessos do mês</h6>
                                 </div>
                                 <div class="task-action">
-                                    
+
                                 </div>
                             </div>
                             <div class="w-content">
                                 <div class="w-info">
-                                    <p class="value">45,141</p>
+                                    <p class="value">{{ $vetor_acessos[2] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +119,7 @@
                             <h5 class="">Acessos /Página</h5>
 
                             <div class="task-action">
-                              
+
                             </div>
                         </div>
 
@@ -146,7 +147,7 @@
                                                 <h5>Serviços <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[0]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -167,11 +168,11 @@
                                                 <h5>Notícias <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[3]}} acessos</p>
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -189,7 +190,7 @@
                                                 <h5>Associados <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[6]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -210,7 +211,7 @@
                                                 <h5>Comissões <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[9]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -231,11 +232,11 @@
                                                 <h5>Assistência Judiciária <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[12]}} acessos</p>
                                         </div>
                                     </div>
 
-                                     <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -252,11 +253,11 @@
                                                 <h5>Galeria <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[15]}} acessos</p>
                                         </div>
                                     </div>
 
-                                      <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -273,7 +274,7 @@
                                                 <h5>Contactos <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[18]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -285,14 +286,14 @@
                     </div>
                 </div>
 
-                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 layout-spacing">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 layout-spacing">
                     <div class="widget widget-activity-five">
 
                         <div class="widget-heading">
                             <h5 class="">Acessos /Página (Semana)</h5>
 
                             <div class="task-action">
-                              
+
                             </div>
                         </div>
 
@@ -320,7 +321,7 @@
                                                 <h5>Serviços <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[1]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -341,11 +342,11 @@
                                                 <h5>Notícias <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[4]}} acessos</p>
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -363,7 +364,7 @@
                                                 <h5>Associados <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[7]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -384,7 +385,7 @@
                                                 <h5>Comissões <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[10]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -405,11 +406,11 @@
                                                 <h5>Assistência Judiciária <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[13]}} acessos</p>
                                         </div>
                                     </div>
 
-                                     <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -426,11 +427,11 @@
                                                 <h5>Galeria <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[16]}} acessos</p>
                                         </div>
                                     </div>
 
-                                      <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -447,7 +448,7 @@
                                                 <h5>Contactos <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[19]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -459,14 +460,14 @@
                     </div>
                 </div>
 
-                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 layout-spacing">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 layout-spacing">
                     <div class="widget widget-activity-five">
 
                         <div class="widget-heading">
                             <h5 class="">Acessos /Página (Mês)</h5>
 
                             <div class="task-action">
-                              
+
                             </div>
                         </div>
 
@@ -494,7 +495,7 @@
                                                 <h5>Serviços <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[2]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -515,11 +516,11 @@
                                                 <h5>Notícias <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[5]}} acessos</p>
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -537,7 +538,7 @@
                                                 <h5>Associados <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[8]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -558,7 +559,7 @@
                                                 <h5>Comissões <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[11]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -579,11 +580,11 @@
                                                 <h5>Assistência Judiciária <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[14]}} acessos</p>
                                         </div>
                                     </div>
 
-                                     <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -600,11 +601,11 @@
                                                 <h5>Galeria <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[17]}} acessos</p>
                                         </div>
                                     </div>
 
-                                      <div class="item-timeline timeline-new">
+                                    <div class="item-timeline timeline-new">
                                         <div class="t-dot">
                                             <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -621,7 +622,7 @@
                                                 <h5>Contactos <a href="" target="_blank">[Acessar]</a></h5>
                                                 <span class=""></span>
                                             </div>
-                                            <p>25 acessos</p>
+                                            <p>{{$acessos_pagina[20]}} acessos</p>
                                         </div>
                                     </div>
 
@@ -640,95 +641,24 @@
                         </div>
                         <div class="widget-content">
                             <div class="vistorsBrowser">
-                                <div class="browser-list">
-                                    <div class="w-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-chrome">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <circle cx="12" cy="12" r="4"></circle>
-                                            <line x1="21.17" y1="8" x2="12" y2="8"></line>
-                                            <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-                                            <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-                                        </svg>
-                                    </div>
-                                    <div class="w-browser-details">
-                                        <div class="w-browser-info">
-                                            <h6>Chrome</h6>
-                                            <p class="browser-count">65%</p>
-                                        </div>
-                                        <div class="w-browser-stats">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-primary" role="progressbar"
-                                                    style="width: 65%" aria-valuenow="90" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
+
+                                @foreach ($noticias as $noticia)
+                                    <div class="browser-list">
+                                        <div class="w-browser-details">
+                                            <div class="w-browser-info">
+                                                <h6>{{$noticia->titulo}}</h6>
+                                                <p class="browser-count">{{ $noticia->views . ' Visualizações' }} ({{ (($noticia->views * 100)/$total_views_noticias) }}%)</p>
+                                            </div>
+                                            <div class="w-browser-stats">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-gradient-primary" role="progressbar"
+                                                        style="width: {{ ($noticia->views * 100)/$total_views_noticias }}%" aria-valuenow="90" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="browser-list">
-                                    <div class="w-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-compass">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76">
-                                            </polygon>
-                                        </svg>
-                                    </div>
-                                    <div class="w-browser-details">
-
-                                        <div class="w-browser-info">
-                                            <h6>Safari</h6>
-                                            <p class="browser-count">25%</p>
-                                        </div>
-
-                                        <div class="w-browser-stats">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-danger" role="progressbar"
-                                                    style="width: 35%" aria-valuenow="65" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="browser-list">
-                                    <div class="w-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-globe">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                                            <path
-                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <div class="w-browser-details">
-
-                                        <div class="w-browser-info">
-                                            <h6>Others</h6>
-                                            <p class="browser-count">15%</p>
-                                        </div>
-
-                                        <div class="w-browser-stats">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-warning" role="progressbar"
-                                                    style="width: 15%" aria-valuenow="15" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                @endforeach
 
                             </div>
 
