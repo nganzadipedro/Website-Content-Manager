@@ -40,7 +40,7 @@
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg></a>
 
-            <ul class="navbar-item theme-brand flex-row  text-center">
+            <ul class="navbar-item theme-brand flex-row text-center">
                 <li class="nav-item theme-logo">
                     <a href="{{ route('system.admin.dashboard')  }}">
                         <img src="{{ asset('images/logo_oaa_cor.png') }}" class="navbar-logo" alt="logo">
@@ -309,7 +309,7 @@
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-container">
                             <div class="avatar avatar-sm avatar-indicators avatar-online">
-                                <img alt="avatar" src="{{ asset('assets/template/src/assets/img/profile-30.png') }}"
+                                <img alt="avatar" src="{{ asset('images/user-icon.png') }}"
                                     class="rounded-circle">
                             </div>
                         </div>

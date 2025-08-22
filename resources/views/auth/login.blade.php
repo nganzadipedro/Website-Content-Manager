@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CPL | Acesso </title>
+    <title>CPL | Gestor de Conteúdos do Website </title>
     <link rel="icon" type="image/x-icon" href="https://designreset.com/cork/html/src/assets/img/favicon.ico" />
     <link href="{{ asset('assets/template/layouts/horizontal-dark-menu/css/light/loader.css') }}" rel="stylesheet"
         type="text/css" />
@@ -29,7 +29,7 @@
 
 </head>
 
-<body class="form">
+<body class="form" style="background-color: #fff;">
 
     <!-- BEGIN LOADER -->
     <div id="load_screen">
@@ -56,11 +56,12 @@
 
                         <div class="position-relative">
 
-                            <img src="https://designreset.com/cork/html/src/assets/img/auth-cover.svg" alt="auth-img">
+                            <img src="{{ asset('images/logo_oaa_cor.png') }}" alt="auth-img">
 
-                            <h2 class="mt-5 text-white font-weight-bolder px-2">Gestor de Conteúdos do Website
-                            </h2>
-                            <p class="text-white px-2">Conselho Provincial de Luanda da Ordem dos Advogados de Angola</p>
+                            <h5 class="mt-3 text-white font-weight-bolder">Conselho Provincial de Luanda da Ordem
+                                dos Advogados de Angola
+                            </h5>
+                            <h5 class="text-white"> = Gestor de Conteúdos do Website = </h5>
                         </div>
 
                     </div>
@@ -70,7 +71,7 @@
                 <div
                     class="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center ms-lg-auto me-lg-0 mx-auto">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="border-top: double 5px #000; padding-top: 30px;">
 
                             <form action="{{ route('login') }}" method="POST">
 
@@ -110,7 +111,7 @@
                                         <div class="text-danger text-center mb-3" role="alert">
                                             <strong>Email ou Senha incorrectos!</strong>
                                         </div>
-                                    @endif  
+                                    @endif
 
                                     <div class="col-12">
                                         <div class="mb-4">
