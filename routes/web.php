@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\{
 use App\Http\Livewire\Candidato\Dashboard as CandidatoDashboard;
 
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect('/home');
 });
 
 Route::group(['middleware' => 'guest'], function () {
