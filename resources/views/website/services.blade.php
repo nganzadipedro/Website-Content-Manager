@@ -45,13 +45,13 @@
                             <div class="body">
                                 <span></span>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting.
+                                    Para solicitar uma audiência, o interessado deve apresentar de forma presencial um
+                                    requerimento formal
+                                    dirigido ao Conselho Provincial de Luanda, indicando expressamente o pedido de
+                                    agendamento de reunião com o Presidente ou Vice-Presidente do CPL, conforme a
+                                    natureza do assunto a ser tratado.
                                 </p>
-                                <a href="">Ler Mais...</a>
+                                <!-- <a href="">Ler Mais...</a> -->
                             </div>
                         </div>
                         <div class="item-service">
@@ -64,13 +64,14 @@
                             <div class="body">
                                 <span></span>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting.
+                                    Para dar seguimento ao processo, é necessário apresentar um requerimento formal
+                                    dirigido ao Conselho Provincial de Luanda. Além disso, deve ser efetuado o pagamento
+                                    da taxa no valor de 6.000 Kz, mediante depósito na conta do Conselho Nacional. O
+                                    processo deve ser acompanhado de uma fotografia tipo passe atualizada. Após a
+                                    reunião de todos os documentos, a solicitação deverá ser formalmente submetida junto
+                                    ao CPL.
                                 </p>
-                                <a href="">Ler Mais...</a>
+                                <!-- <a href="">Ler Mais...</a> -->
                             </div>
                         </div>
                         <div class="item-service">
@@ -83,16 +84,18 @@
                             <div class="body">
                                 <span></span>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting.
+                                    Para a formalização do pedido de mudança de patrono, o interessado deverá apresentar
+                                    um requerimento dirigido ao Conselho Provincial de Luanda, acompanhado da declaração
+                                    do novo patrono e do relatório parcial emitido pelo patrono anterior. É igualmente
+                                    necessário proceder ao pagamento da taxa aplicável: no valor de 7.000 Kz caso a
+                                    cédula se encontre plastificada, ou 1.000 Kz caso não esteja, mediante depósito na
+                                    conta do Conselho Nacional. Nos casos em que a cédula for plastificada, deve também
+                                    ser incluída uma fotografia tipo passe atualizada.
                                 </p>
-                                <a href="">Ler Mais...</a>
+                                <!-- <a href="">Ler Mais...</a> -->
                             </div>
                         </div>
-                        <div class="item-service">
+                        <!-- <div class="item-service">
                             <div class="header">
                                 <img src="{{ asset('assets/website/icons/law.png') }}" alt="" class="icon">
                                 <h3 class="title">
@@ -110,8 +113,8 @@
                                 </p>
                                 <a href="">Ler Mais...</a>
                             </div>
-                        </div>
-                        <div class="item-service">
+                        </div> -->
+                        <!-- <div class="item-service">
                             <div class="header">
                                 <img src="{{ asset('assets/website/icons/law.png') }}" alt="" class="icon">
                                 <h3 class="title">
@@ -129,7 +132,7 @@
                                 </p>
                                 <a href="">Ler Mais...</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
