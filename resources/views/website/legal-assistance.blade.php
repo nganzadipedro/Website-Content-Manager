@@ -78,29 +78,29 @@
             <div class="row">
                 <div class="col-12">
                     <h3 class="form-title">Formulário de Denúncias e Reclamações</h3>
-                    <form id="complaintForm" action="#" method="post">
+                    <form id="complaintForm">
                         <div class="row col-12">
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Nome Completo</label>
                                 <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Digite seu nome completo" required>
+                                    placeholder="Digite seu nome completo">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="subject" class="form-label">Assunto</label>
                                 <input type="text" class="form-control" id="subject" name="subject"
-                                    placeholder="Digite o assunto da denúncia/reclamação" required>
+                                    placeholder="Digite o assunto da denúncia/reclamação">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Mensagem</label>
                             <textarea class="form-control" id="message" name="message" rows="6"
-                                placeholder="Descreva sua denúncia ou reclamação" required></textarea>
+                                placeholder="Descreva sua denúncia ou reclamação"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="file" class="form-label">Anexar Arquivo</label>
                             <input type="file" class="form-control" id="file" name="file">
                         </div>
-                        <button type="submit" class="btn btn-submit">Enviar</button>
+                        <button class="btn btn-submit" id="btn-save">Enviar</button>
                     </form>
                 </div>
             </div>
@@ -115,5 +115,6 @@
 <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/website/js/index.js') }}"></script>
 <script src="{{ asset('assets/website/js/legal-assistance-animations.js') }}"></script>
+<script src="{{ asset('assets/website/js/legal-assistance-form.js') }}"></script>
 
 </html>

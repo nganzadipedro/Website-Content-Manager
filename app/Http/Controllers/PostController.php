@@ -78,7 +78,6 @@ class PostController extends Controller
 
     }
 
-
     public function newslater_update(Request $request)
     {
 
@@ -135,9 +134,9 @@ class PostController extends Controller
     {
 
         $denuncia = Denuncia::create([
-            'nome' => $request->nome,
-            'assunto' => $request->assunto,
-            'mensagem' => $request->mensagem,
+            'nome' => $request->name,
+            'assunto' => $request->subject,
+            'mensagem' => $request->message,
         ]);
 
         $denuncia->hash = md5($denuncia->nome . $denuncia->created_at);
@@ -147,8 +146,8 @@ class PostController extends Controller
         $ficheiro = '';
 
         try {
-            if ($request->hasFile('ficheiro') && $request->file('ficheiro')->isValid()) {
-                $ficheiro = $request->ficheiro->store('denunciareclamacao');
+            if ($request->hasFile('file') && $request->file('file')->isValid()) {
+                $ficheiro = $request->file->store('denunciareclamacao');
                 $denuncia->ficheiro = $ficheiro;
                 $denuncia->save();
             }
