@@ -122,6 +122,7 @@
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/contact.js') }}"></script>
+    <script src="{{ asset('assets/website/js/contact-form.js') }}"></script>
 
 </body>
 

@@ -165,12 +165,12 @@ class PostController extends Controller
     {
 
         $mensagem = Mensagem::create([
-            'nome' => $request->nome,
+            'nome' => $request->name,
             'email' => $request->email,
-            'assunto' => $request->assunto,
-            'tipo_remetente' => $request->tipo_remetente,
-            'mensagem' => $request->mensagem,
-            'num_identificacao' => $request->num_identificacao
+            'assunto' => $request->subject,
+            'tipo_remetente' => $request->senderType,
+            'mensagem' => $request->message,
+            'num_identificacao' => $request->identification
         ]);
 
         $mensagem->hash = md5($mensagem->nome . $mensagem->created_at);
