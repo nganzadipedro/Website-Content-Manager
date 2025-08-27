@@ -45,29 +45,27 @@
             </div>
         </section>
 
-        <section class="section-feature">
-            <div class="row">
-                <div class="col-md-12 col-12">
-                    <div class="content">
-                        <div class="text-area">
-                            <h3 class="title-section">Em Destaque</h3>
-                            <h3 class="title-feature">ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
-                                ex sapien vitae pellentesque</h3>
-                            <p class="description">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                                pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-                                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec
-                            </p>
-                            <p class="description">
-                                Lorem ipsum dolor sit amet amet consectetur adipiscing elit. Lorem ipsum
-                            </p>
-                            <a href="">Saiba mais...</a>
+        @if ($noticia_destaque != null)
+            <section class="section-feature">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="content">
+                            <div class="text-area">
+                                <h3 class="title-section">Em Destaque</h3>
+                                <h3 class="title-feature">{{$noticia_destaque->titulo}}</h3>
+                                <p class="description">
+                                    {{ $noticia_destaque->texto_resumo }}
+                                </p>
+                                <a href="">Saiba mais...</a>
+                            </div>
+                            <img src="{{ asset('storage/app/public/' . $noticia_destaque->imagem) }}" alt="">
+                            <!-- <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}" alt=""> -->
                         </div>
-                        <img src="{{ asset('assets/website/img/noticias/img3.jpg') }}" alt="">
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
+
     </div>
 
     <section class="section-about">
@@ -177,13 +175,15 @@
                         <div class="slider-container">
                             <div class="slider-track">
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Nilton José Lopes Praia">
+                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                        alt="Nilton José Lopes Praia">
                                     <p>Nilton José Lopes Praia</p>
                                     <span class="card-number">Cédula Nº 1837</span>
                                     <span class="role">Presidente</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Lezly Edith Orobio Da Silva Cardoso">
+                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                        alt="Lezly Edith Orobio Da Silva Cardoso">
                                     <p>Lezly Edith Orobio Da Silva Cardoso</p>
                                     <span class="card-number">Cédula Nº 2914</span>
                                     <span class="role">Vice-Presidente</span>
@@ -231,7 +231,8 @@
                                     <span class="role">Conselheiro</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="José Rodrigues Vicente">
+                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                        alt="José Rodrigues Vicente">
                                     <p>José Rodrigues Vicente</p>
                                     <span class="card-number">Cédula Nº 3213</span>
                                     <span class="role">Conselheiro</span>
@@ -265,13 +266,15 @@
                                     <span class="role">Conselheiro</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Edvaldo Gonçalves Calitamba">
+                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                        alt="Edvaldo Gonçalves Calitamba">
                                     <p>Edvaldo Gonçalves Calitamba</p>
                                     <span class="card-number">Cédula Nº 2709</span>
                                     <span class="role">Conselheiro</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Ascânio Giovani Albino Do Nascimento">
+                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                        alt="Ascânio Giovani Albino Do Nascimento">
                                     <p>Ascânio Giovani Albino Do Nascimento</p>
                                     <span class="card-number">Cédula Nº 2620</span>
                                     <span class="role">Conselheiro</span>
@@ -285,7 +288,7 @@
         </div>
     </section>
 
-   @include('website.footer')
+    @include('website.footer')
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/index.js') }}"></script>

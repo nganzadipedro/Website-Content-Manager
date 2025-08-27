@@ -28,11 +28,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('news', 'Controllers\WebsiteController@news')->name('news');
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
     Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
-
-
-
-
-
+    
 });
 
 Route::group(['middleware' => 'auth'], function () {

@@ -137,7 +137,6 @@
 
 .news-page .section-news .others-news {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     border-top: solid 1px #e8e8e8;

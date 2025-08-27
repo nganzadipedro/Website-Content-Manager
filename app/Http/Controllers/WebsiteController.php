@@ -15,8 +15,9 @@ class WebsiteController extends Controller
     public function home(Request $request)
     {
 
+        $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $this->acesso_pagina('home');
-        return view('website.index');
+        return view('website.index', compact('noticia_destaque'));
 
     }
 
