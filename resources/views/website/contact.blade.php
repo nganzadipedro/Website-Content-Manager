@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{ asset('assets/website/css/contact.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/contact-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
+
 </head>
 
 <body class="contact-page">
@@ -73,21 +76,24 @@
                     <h2 class="contact-title-main">Envie-nos uma mensagem</h2>
                     <div class="contact-form">
                         <form id="contactForm">
+
+                            @csrf
+
                             <div class="mb-3 position-relative">
                                 <label for="name" class="form-label">Seu nome</label>
-                                <input type="text" class="form-control" id="name" required>
+                                <input type="text" class="form-control" maxlength="200" id="name">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="email" class="form-label">Seu e-mail</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" maxlength="100" id="email">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="subject" class="form-label">Assunto</label>
-                                <input type="text" class="form-control" id="subject" required>
+                                <input type="text" maxlength="200" class="form-control" id="subject">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="senderType" class="form-label">Tipo de Remetente</label>
-                                <select class="form-control" id="senderType" required>
+                                <select class="form-control" id="senderType">
                                     <option value="">Selecione</option>
                                     <option value="advogado">Advogado</option>
                                     <option value="particular">Particular</option>
@@ -96,14 +102,14 @@
                             <div class="mb-3 position-relative identification-field" style="display: none;">
                                 <label for="identification" class="form-label" id="identificationLabel">Número de
                                     Identificação</label>
-                                <input type="text" class="form-control" id="identification">
+                                <input type="text" maxlength="15" class="form-control" id="identification">
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="message" class="form-label">Sua mensagem</label>
-                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                                <textarea class="form-control" id="message" rows="5"></textarea>
                             </div>
                             <div class="text-start">
-                                <button type="submit" class="btn btn-signin">Enviar</button>
+                                <a id="btn-save" class="btn btn-signin">Enviar</a>
                             </div>
                         </form>
                     </div>
@@ -120,6 +126,10 @@
     </section>
 
     @include('website.footer')
+
+    <script src="{{ asset('assets/system/js/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/system/js/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/system/js/shared/functions.js') }}"></script>
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/contact.js') }}"></script>

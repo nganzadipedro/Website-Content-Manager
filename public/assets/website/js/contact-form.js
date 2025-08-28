@@ -87,7 +87,8 @@ document.getElementById('btn-save').addEventListener('click', function () {
       preConfirm: function () {
 
         return $.ajax({
-          url: "https://cpl.solucoesfirmes.tech/system/admin/message/post",
+          // url: "https://cpl.solucoesfirmes.tech/message/post",
+          url: "/message/post",
           headers: {
             'X-CSRF-TOKEN': $('input[name="_token"]').val()
           },
@@ -108,7 +109,12 @@ document.getElementById('btn-save').addEventListener('click', function () {
                 timer: 4000
               });
 
-              window.location.reload();
+              
+              setTimeout(() => {
+
+                window.location.reload();
+
+              }, 2000);
 
             }
           },

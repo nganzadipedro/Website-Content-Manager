@@ -88,12 +88,12 @@
                         <div class="row col-12">
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Nome Completo</label>
-                                <input type="text" class="form-control" id="name" name="name"
+                                <input type="text" maxlength="200" class="form-control" id="name" name="name"
                                     placeholder="Digite seu nome completo">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="subject" class="form-label">Assunto</label>
-                                <input type="text" class="form-control" id="subject" name="subject"
+                                <input type="text" maxlength="200" class="form-control" id="subject" name="subject"
                                     placeholder="Digite o assunto da denúncia/reclamação">
                             </div>
                         </div>
