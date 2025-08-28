@@ -1,0 +1,232 @@
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .members-page .title-page h3 {
+        font-size: 2rem;
+    }
+
+    .members-page .title-page h4 {
+        font-size: 1rem;
+    }
+
+    .members-page .section-statistics {
+        margin-top: 30px;
+        padding: 30px 0;
+        margin-bottom: 50px;
+    }
+
+    .members-page .section-statistics .content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .members-page .section-statistics .content .title-section {
+        font-size: 1.8rem;
+        margin-right: 0;
+        text-align: center;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .members-page .section-statistics .stats-card {
+        height: 200px;
+        width: 200px;
+    }
+
+    .members-page .section-statistics .stats-card .card-body span {
+        font-size: 2.5rem;
+    }
+
+    .members-page .members-section, 
+    .members-page .members-section2 {
+        padding: 40px 20px;
+    }
+
+    .members-page .members-section .section-title,
+    .members-page .members-section2 .section-title {
+        font-size: 1.8rem;
+    }
+
+    .members-page .members-section p,
+    .members-page .members-section2 p {
+        font-size: 1rem;
+    }
+
+    .members-page .members-section .list-container,
+    .members-page .members-section2 .list-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .members-page .members-section .list-column li,
+    .members-page .members-section2 .list-column li {
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    .members-page .members-section .member-actions,
+    .members-page .members-section2 .member-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .members-page .members-section .member-btn,
+    .members-page .members-section2 .member-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .members-page .search-section {
+        padding: 40px 20px;
+    }
+
+    .members-page .search-section .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .members-page .search-section .subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+
+    .members-page .search-section .search-form {
+        margin-bottom: 30px;
+    }
+
+    .members-page .search-section .search-input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .members-page .search-section #search-select,
+    .members-page .search-section input[type="text"],
+    .members-page .search-section button[type="submit"] {
+        width: 100%;
+        height: 44px;
+        font-size: 0.9rem;
+    }
+
+    .members-page .search-section .none-result {
+        font-size: 1rem;
+        margin-top: 30px;
+    }
+
+    .members-page .search-results ul {
+        margin: 30px 0;
+    }
+
+    .members-page .search-results li {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .members-page .search-results .member-info,
+    .members-page .search-results .member-details {
+        text-align: left;
+    }
+
+    .members-page .search-results .member-name {
+        font-size: 1rem;
+    }
+
+    .members-page .search-results .number-card {
+        align-self: flex-end;
+        padding: 5px 12px;
+        font-size: 0.9rem;
+    }
+
+    .members-page .search-section .search-links {
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 30px;
+    }
+
+    .members-page .search-section .updated-list {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .members-page .title-page h3 {
+        font-size: 2.2rem;
+    }
+
+    .members-page .title-page h4 {
+        font-size: 1rem;
+    }
+
+    .members-page .section-statistics .content .title-section {
+        font-size: 1.5rem;
+    }
+
+    .members-page .section-statistics .stats-card {
+        height: 160px;
+        width: 160px;
+    }
+
+    .members-page .section-statistics .stats-card .card-body h3 {
+        font-size: 0.9rem;
+    }
+
+    .members-page .section-statistics .stats-card .card-body span {
+        font-size: 2rem;
+    }
+
+    .members-page .members-section,
+    .members-page .members-section2 {
+        padding: 30px 15px;
+    }
+
+    .members-page .members-section .section-title,
+    .members-page .members-section2 .section-title {
+        font-size: 1.5rem;
+    }
+
+    .members-page .members-section p,
+    .members-page .members-section2 p {
+        font-size: 0.9rem;
+    }
+
+    .members-page .members-section .list-column li,
+    .members-page .members-section2 .list-column li {
+        font-size: 0.85rem;
+    }
+
+    .members-page .members-section .member-btn,
+    .members-page .members-section2 .member-btn {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .members-page .search-section .section-title {
+        font-size: 1.5rem;
+    }
+
+    .members-page .search-section .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .members-page .search-section #search-select,
+    .members-page .search-section input[type="text"],
+    .members-page .search-section button[type="submit"] {
+        height: 40px;
+        font-size: 0.85rem;
+    }
+
+    .members-page .search-results li {
+        padding: 12px;
+    }
+
+    .members-page .search-results .member-name {
+        font-size: 0.9rem;
+    }
+
+    .members-page .search-results .number-card {
+        font-size: 0.85rem;
+    }
+}

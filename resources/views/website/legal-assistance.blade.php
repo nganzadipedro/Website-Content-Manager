@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Assistência Judiciária</title>
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
@@ -11,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('assets/website/css/legal-assistance.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/complaints.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/responsive-complaints.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
 </head>
 
 <body class="main-page">
@@ -79,6 +82,9 @@
                 <div class="col-12">
                     <h3 class="form-title">Formulário de Denúncias e Reclamações</h3>
                     <form id="complaintForm">
+
+                        @csrf
+
                         <div class="row col-12">
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Nome Completo</label>
@@ -100,7 +106,7 @@
                             <label for="file" class="form-label">Anexar Arquivo</label>
                             <input type="file" class="form-control" id="file" name="file">
                         </div>
-                        <button class="btn btn-submit" id="btn-save">Enviar</button>
+                        <a class="btn btn-submit" id="btn-save">Enviar</a>
                     </form>
                 </div>
             </div>
@@ -111,6 +117,10 @@
 
 
 </body>
+
+<script src="{{ asset('assets/system/js/libs/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/system/js/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('assets/system/js/shared/functions.js') }}"></script>
 
 <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/website/js/index.js') }}"></script>

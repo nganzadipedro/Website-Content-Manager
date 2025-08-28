@@ -159,46 +159,47 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Animação de Pulsar para o botão "Enviar" quando preenchido
-  const form = document.getElementById('complaintForm');
-  const inputs = form.querySelectorAll('input, textarea');
-  const submitBtn = form.querySelector('.btn-submit');
+  // const form = document.getElementById('complaintForm');
+  // const inputs = form.querySelectorAll('input, textarea');
+  // const submitBtn = form.querySelector('.btn-submit');
 
-  let pulseInterval = null;
-  const checkForm = () => {
-    const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
-    if (allFilled && !pulseInterval) {
-      pulseInterval = setInterval(() => {
-        submitBtn.style.transform = 'scale(1.1)';
-        submitBtn.style.transition = 'transform 0.4s ease-in-out';
-        setTimeout(() => {
-          submitBtn.style.transform = 'scale(1)';
-        }, 400);
-      }, 2000);
-    } else if (!allFilled && pulseInterval) {
-      clearInterval(pulseInterval);
-      pulseInterval = null;
-      submitBtn.style.transform = 'scale(1)';
-    }
-  };
+  // let pulseInterval = null;
+  // const checkForm = () => {
+  //   const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+  //   if (allFilled && !pulseInterval) {
+  //     pulseInterval = setInterval(() => {
+  //       submitBtn.style.transform = 'scale(1.1)';
+  //       submitBtn.style.transition = 'transform 0.4s ease-in-out';
+  //       setTimeout(() => {
+  //         submitBtn.style.transform = 'scale(1)';
+  //       }, 400);
+  //     }, 2000);
+  //   } else if (!allFilled && pulseInterval) {
+  //     clearInterval(pulseInterval);
+  //     pulseInterval = null;
+  //     submitBtn.style.transform = 'scale(1)';
+  //   }
+  // };
 
-  inputs.forEach(input => input.addEventListener('input', checkForm));
+  // inputs.forEach(input => input.addEventListener('input', checkForm));
 
   // Feedback de envio do formulário
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+  // form.addEventListener('submit', (e) => {
+  //   e.preventDefault();
+  //   submitBtn.disabled = true;
+  //   submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
     
-    // Simulação de envio (remover ou ajustar para backend real)
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Enviar';
-      alert('Formulário enviado com sucesso! (Simulação)');
-      form.reset();
-      if (pulseInterval) {
-        clearInterval(pulseInterval);
-        pulseInterval = null;
-      }
-    }, 2000);
-  });
+  //   // Simulação de envio (remover ou ajustar para backend real)
+  //   setTimeout(() => {
+  //     submitBtn.disabled = false;
+  //     submitBtn.innerHTML = 'Enviar';
+  //     alert('Formulário enviado com sucesso! (Simulação)');
+  //     form.reset();
+  //     if (pulseInterval) {
+  //       clearInterval(pulseInterval);
+  //       pulseInterval = null;
+  //     }
+  //   }, 2000);
+  // });
+
 });

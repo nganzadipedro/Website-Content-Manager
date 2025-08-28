@@ -311,6 +311,7 @@
 
     @include('website.footer')
 
+    <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/members.js') }}"></script>
 
 </body>

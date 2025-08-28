@@ -19,7 +19,7 @@ function valida_formulario() {
     tem = false;
   }
   else if (message == '' || message == null) {
-    msgErro = "Digite o conteúdo da reclamação/denúncia";
+    msgErro = "Descreva a sua reclamação/denúncia";
     tem = false;
   }
   else if (file) {
@@ -48,6 +48,9 @@ document.getElementById('btn-save').addEventListener('click', function () {
 
   if (valida_formulario() === true) {
 
+    const form = document.getElementById('complaintForm');
+    const submitBtn = form.querySelector('.btn-submit');
+
     const formData = new FormData();
 
     const name = document.getElementById('name').value;
@@ -55,7 +58,7 @@ document.getElementById('btn-save').addEventListener('click', function () {
     const message = document.getElementById('message').value;
     const file = document.getElementById('file').files[0];
 
-    formData.append('nome', name);
+    formData.append('name', name);
     formData.append('subject', subject);
     formData.append('message', message);
     formData.append('file', file);
@@ -71,8 +74,14 @@ document.getElementById('btn-save').addEventListener('click', function () {
       cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
       preConfirm: function () {
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+
         return $.ajax({
-          url: "https://cpl.solucoesfirmes.tech/system/admin/complaint/post",
+
+          // url: "https://cpl.solucoesfirmes.tech/complaint/post",
+          url: "/complaint/post",
           headers: {
             'X-CSRF-TOKEN': $('input[name="_token"]').val()
           },
@@ -86,7 +95,7 @@ document.getElementById('btn-save').addEventListener('click', function () {
             console.log(res);
 
             if (res == 'sucesso') {
-        
+
               sweetAlert({
                 type: "success",
                 title: "Sucesso",
@@ -94,11 +103,21 @@ document.getElementById('btn-save').addEventListener('click', function () {
                 timer: 4000
               });
 
-              window.location.reload();
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'Enviar';
+
+              setTimeout(() => {
+
+                window.location.reload();
+
+              }, 2000);
 
             }
           },
           error: function (error) {
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Enviar';
 
             sweetAlert({
               type: "warning",
@@ -106,7 +125,9 @@ document.getElementById('btn-save').addEventListener('click', function () {
               text: 'Erro: ' + error.responseJSON.message,
               timer: 9000
             });
+
             console.log("Error: " + error.responseJSON.message);
+
           }
         });
       }
