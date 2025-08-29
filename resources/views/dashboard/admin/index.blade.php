@@ -642,26 +642,28 @@
                         <div class="widget-content">
                             <div class="vistorsBrowser">
 
-                                @foreach ($noticias as $noticia)
-                                    <div class="browser-list">
-                                        <div class="w-browser-details">
-                                            <div class="w-browser-info">
-                                                <h6>{{$noticia->titulo}}</h6>
-                                                <p class="browser-count">{{ $noticia->views . ' Visualizações' }} ({{ (($noticia->views * 100)/$total_views_noticias) }}%)</p>
-                                            </div>
-                                            <div class="w-browser-stats">
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-primary" role="progressbar"
-                                                        style="width: {{ ($noticia->views * 100)/$total_views_noticias }}%" aria-valuenow="90" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                @if ($total_views_noticias > 0)
+                                    @foreach ($noticias as $noticia)
+                                        <div class="browser-list">
+                                            <div class="w-browser-details">
+                                                <div class="w-browser-info">
+                                                    <h6>{{$noticia->titulo}}</h6>
+                                                    <p class="browser-count">{{ $noticia->views . ' Visualizações' }}
+                                                        ({{ (($noticia->views * 100) / $total_views_noticias) }}%)</p>
+                                                </div>
+                                                <div class="w-browser-stats">
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-gradient-primary" role="progressbar"
+                                                            style="width: {{ ($noticia->views * 100) / $total_views_noticias }}%"
+                                                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
 
                             </div>
-
                         </div>
                     </div>
                 </div>

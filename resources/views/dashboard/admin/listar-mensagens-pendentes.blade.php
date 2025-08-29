@@ -47,6 +47,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>ID</th>
+                                    <th>Nome</th>
                                     <th>Assunto</th>
                                     <th>Estado</th>
                                     <th class="no-content"></th>
@@ -57,11 +58,12 @@
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>
                                         <td>{{$item->id}}</td>
+                                        <td>{{$item->nome}}</td>
                                         <td>{{$item->assunto}}</td>
                                         <td>{{$item->estado}}</td>
                                         <td>
                                             <span>
-                                                <a href="{{ route('system.admin.detalhesadvogado', $item->hash) }}"
+                                                <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
                                                     class="btn btn-primary">
                                                     Detalhes
                                                 </a>

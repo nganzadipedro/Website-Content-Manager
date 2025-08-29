@@ -39,7 +39,16 @@ class PostController extends Controller
             // throw new Exception($error);
         }
 
-        // regista actividade no sistema
+        // os destques antigos deixam de ser destaques
+        $antigos = Noticia::where('e_destaque', 'sim')->where('id', '!=', $noticia->id)->get();
+        if (count($antigos) > 0) {
+
+            foreach ($antigos as $ant) {
+                $ant->e_destaque = 'nao';
+                $ant->save();
+            }
+
+        }
 
         ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova notícia ($noticia->titulo)", 'noticia', $noticia->id);
         return 'sucesso';

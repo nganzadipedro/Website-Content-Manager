@@ -20,7 +20,7 @@
 @yield('script-aux')
 
 
-<!-- <script>
+<script>
     window.addEventListener('swal', function (e) {
         Swal.fire(e.detail);
         setTimeout(() => {
@@ -35,4 +35,4 @@
     window.addEventListener('closeModal', function (e) {
         $(".fecharModal").click();
     });
-</script> -->
+</script>

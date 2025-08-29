@@ -61,7 +61,7 @@
                                         <td>{{$item->estado}}</td>
                                         <td>
                                             <span>
-                                                <a href="{{ route('system.admin.detalhesadvogado', $item->hash) }}"
+                                                <a href="{{ route('system.admin.detalhesdenuncia', $item->hash) }}"
                                                     class="btn btn-primary">
                                                     Detalhes
                                                 </a>

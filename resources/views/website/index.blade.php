@@ -58,8 +58,7 @@
                                 </p>
                                 <a href="">Saiba mais...</a>
                             </div>
-                            <img src="{{ asset('storage/app/public/' . $noticia_destaque->imagem) }}" alt="">
-                            <!-- <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}" alt=""> -->
+                            <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}" alt="{{ $noticia_destaque->titulo }}">
                         </div>
                     </div>
                 </div>

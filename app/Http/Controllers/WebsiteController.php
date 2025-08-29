@@ -61,8 +61,10 @@ class WebsiteController extends Controller
 
     public function news()
     {
+        $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
+        $noticias = Noticia::where('e_destaque', 'nao')->orderBy('id', 'desc')->take(5)->get();
         $this->acesso_pagina('noticias');
-        return view('website.news');
+        return view('website.news', compact('noticias', 'noticia_destaque'));
     }
 
 

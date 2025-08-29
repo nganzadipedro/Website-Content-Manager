@@ -43,7 +43,7 @@
             <ul class="navbar-item theme-brand flex-row text-center">
                 <li class="nav-item theme-logo">
                     <a href="{{ route('system.admin.dashboard')  }}">
-                        <img src="{{ asset('images/logo_oaa_cor.png') }}" class="navbar-logo" alt="logo">
+                        <!-- <img src="{{ asset('images/logo_oaa_cor.png') }}" class="navbar-logo" alt="logo"> -->
                     </a>
                 </li>
                 <li class="nav-item theme-text">
@@ -99,7 +99,7 @@
                     </div>
                 </li> -->
 
-                <!-- <li class="nav-item theme-toggle-item">
+                <li class="nav-item theme-toggle-item">
                     <a href="javascript:void(0);" class="nav-link theme-toggle">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -120,7 +120,7 @@
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                         </svg>
                     </a>
-                </li> -->
+                </li>
 <!-- 
                 <li class="nav-item dropdown notification-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"

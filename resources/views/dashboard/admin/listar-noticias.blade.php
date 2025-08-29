@@ -74,7 +74,7 @@
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                             <span>
-                                                <a href="{{ route('system.admin.detalhesadvogado', $item->hash) }}"
+                                                <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
                                                     class="btn btn-primary">
                                                     Detalhes
                                                 </a>
