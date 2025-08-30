@@ -31,6 +31,7 @@ Route::group(['middleware' => 'guest'], function () {
 
     Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('/message/post', 'Controllers\PostController@message_post');
+    Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
 
 });
 
@@ -57,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/messages/details/{hash}', 'Livewire\Admin\Detalhesmensagem')->name('detalhesmensagem');
                 Route::get('/complaints/details/{hash}', 'Livewire\Admin\Detalhesdenuncia')->name('detalhesdenuncia');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
+
+                Route::get('/view/atachment/{filename}', 'Controllers\PostController@getfile')->name('getfile');
 
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');

@@ -108,7 +108,7 @@
                 </div>
             </div>
 
-            @if (count($noticias) >= 2)
+            @if (count($noticias) >= 1)
                 <div class="row mt-4">
                     <div class="col-mb-12 col-lg-12 col-sm-12 col-12">
                         <div class="others-news">
@@ -118,7 +118,7 @@
                             @endphp
 
                             @foreach ($noticias as $not)
-                                @if ($conta >= 2)
+                                @if ($conta >= 1)
 
                                     @php
                                         $data = explode(' ', $not->created_at);

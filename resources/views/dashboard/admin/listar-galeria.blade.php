@@ -57,7 +57,7 @@
                                 @foreach ($lista_galeria as $imagem)
                                     <div class="col-lg-3 col-md-3 col-12">
                                         <div class="card style-2 mb-md-0 mb-4">
-                                            <img src="{{ asset('assets/template/src/assets/img/grid-blog-style-2.jpg') }}"
+                                            <img src="{{ asset('sysapp/storage/app/public/' . $imagem->imagem) }}"
                                                 class="card-img-top" alt="{{ $imagem->titulo }}">
                                             <div class="card-body px-0 pb-0">
                                                 <h6 class="card-title">{{ $imagem->titulo }}</h6>

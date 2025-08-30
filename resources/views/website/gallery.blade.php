@@ -2,9 +2,13 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Galeria</title>
+
     <!-- Links para arquivos CSS externos -->
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
@@ -47,169 +51,60 @@
             <!-- Contêiner da galeria de imagens -->
             <div class="gallery-container" id="galleryContainer">
 
-                <div class="image-card" data-category="institucional">
-                    <img src="{{ asset('assets/website/img/galeria/adv01.jpg') }}" alt="Reunião de Equipe">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
+                @foreach ($institucional as $item)
+                    <div class="image-card" data-category="institucional">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <div class="image-card-overlay">
+                            <span class="view-icon">&#128065;</span>
+                        </div>
+                        <div class="image-info">
+                            <p>{{$item->titulo}}</p>
+                        </div>
                     </div>
-                    <div class="image-info">
-                        <p>Guiados por princípios éticos</p>
-                    </div>
-                </div>
+                @endforeach
 
-                <div class="image-card" data-category="institucional">
-                    <img src="{{ asset('assets/website/img/galeria/adv02.jpg') }}" alt="Workshop de Inovação">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Guiados por princípios éticos</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="institucional">
-                    <img src="{{ asset('assets/website/img/galeria/adv03.jpg') }}" alt="Workshop de Inovação">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Guiados por princípios éticos</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="institucional">
-                    <img src="{{ asset('assets/website/img/galeria/adv04.jpg') }}" alt="Workshop de Inovação">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Guiados por princípios éticos</p>
-                    </div>
-                </div>
 
                 <!--RESPONSABILIDADE SOCIAL-->
-                <div class="image-card" data-category="responsabilidade-social">
-                    <img src="{{ asset('assets/website/img/galeria/adv01.jpg') }}" alt="Responsabilidade social">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
+                @foreach ($resp_social as $item)
+                    <div class="image-card" data-category="responsabilidade-social">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <div class="image-card-overlay">
+                            <span class="view-icon">&#128065;</span>
+                        </div>
+                        <div class="image-info">
+                            <p>{{$item->titulo}}</p>
+                        </div>
                     </div>
-                    <div class="image-info">
-                        <p>Cumprimento dos nossos deveres</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="responsabilidade-social">
-                    <img src="{{ asset('assets/website/img/galeria/adv02.jpg') }}" alt="Responsabilidade social">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Cumprimento dos nossos deveres</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="responsabilidade-social">
-                    <img src="{{ asset('assets/website/img/galeria/adv03.jpg') }}" alt="Responsabilidade social">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Cumprimento dos nossos deveres</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="responsabilidade-social">
-                    <img src="{{ asset('assets/website/img/galeria/adv04.jpg') }}" alt="Responsabilidade social">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Cumprimento dos nossos deveres</p>
-                    </div>
-                </div>
+                @endforeach
 
                 <!--FORMAÇÕES-->
-                <div class="image-card" data-category="formacoes">
-                    <img src="{{ asset('assets/website/img/galeria/academy07.jpg') }}" alt="Formação em Leis">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
+                @foreach ($formacoes as $item)
+                    <div class="image-card" data-category="formacoes">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <div class="image-card-overlay">
+                            <span class="view-icon">&#128065;</span>
+                        </div>
+                        <div class="image-info">
+                            <p>{{$item->titulo}}</p>
+                        </div>
                     </div>
-                    <div class="image-info">
-                        <p>Fortalecendo o conhecimento em leis</p>
-                    </div>
-                </div>
+                @endforeach
 
-                <div class="image-card" data-category="formacoes">
-                    <img src="{{ asset('assets/website/img/galeria/academy08.jpg') }}" alt="Formação em Leis">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo o conhecimento em leis</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="formacoes">
-                    <img src="{{ asset('assets/website/img/galeria/academy09.jpg') }}" alt="Formação em Leis">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo o conhecimento em leis</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="formacoes">
-                    <img src="{{ asset('assets/website/img/galeria/academy010.jpg') }}" alt="Formação em Leis">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo o conhecimento em leis</p>
-                    </div>
-                </div>
 
                 <!-- Eventos -->
-                <div class="image-card" data-category="eventos">
-                    <img src="{{ asset('assets/website/img/galeria/união.jpg') }}" alt="Fortalecendo laços com parceiros">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
+                @foreach ($eventos as $item)
+                    <div class="image-card" data-category="eventos">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}"
+                            alt="{{$item->titulo}}">
+                        <div class="image-card-overlay">
+                            <span class="view-icon">&#128065;</span>
+                        </div>
+                        <div class="image-info">
+                            <p>{{$item->titulo}}</p>
+                        </div>
                     </div>
-                    <div class="image-info">
-                        <p>Fortalecendo relações com parceiros</p>
-                    </div>
-                </div>
+                @endforeach
 
-                <div class="image-card" data-category="eventos">
-                    <img src="{{ asset('assets/website/img/galeria/transparence.jpg') }}" alt="Fortalecendo laços com parceiros">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo laços com parceiros</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="eventos">
-                    <img src="{{ asset('assets/website/img/galeria/pexels-august-de-richelieu-4427430.jpg') }}"
-                        alt="Fortalecendo laços com parceiros">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo laços com parceiros</p>
-                    </div>
-                </div>
-
-                <div class="image-card" data-category="eventos">
-                    <img src="{{ asset('assets/website/img/galeria/confiança.jpg') }}" alt="Fortalecendo laços com parceiros">
-                    <div class="image-card-overlay">
-                        <span class="view-icon">&#128065;</span>
-                    </div>
-                    <div class="image-info">
-                        <p>Fortalecendo laços com parceiros</p>
-                    </div>
-                </div>
             </div>
         </main>
     </div>

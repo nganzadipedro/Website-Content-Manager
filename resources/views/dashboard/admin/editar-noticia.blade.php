@@ -96,7 +96,7 @@
                                     <div class="col-lg-4 col-12">
                                         <div class="row">
                                             <div class="col-lg-12 col-12">
-                                                <img width="100%" src="{{ asset('storage/' . $noticia->imagem) }}" alt="" name="imagemExibida" id="imagemExibida">
+                                                <img width="100%" src="{{ asset('sysapp/storage/app/public/' . $noticia->imagem) }}" alt="{{ $noticia->titulo }}" name="imagemExibida" id="imagemExibida">
                                             </div>
                                         </div>
                                     </div>

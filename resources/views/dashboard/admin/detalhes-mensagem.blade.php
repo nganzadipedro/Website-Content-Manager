@@ -87,7 +87,7 @@
                                 <a wire:click="marcar_atendida()" class="btn btn-success">Marcar como atendida</a>
                             @endif
                             @if ($tipo == 'denuncia' && $mensagem->ficheiro != null)
-                                <a href="" target="_blank" class="btn btn-warning">Ver Ficheiro Anexado</a>
+                                <a href="{{ route('getfile',$mensagem->ficheiro) }}" target="_blank" class="btn btn-warning">Ver Ficheiro Anexado</a>
                             @endif
                         </div>
                     </div>

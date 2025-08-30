@@ -73,12 +73,12 @@
                                                 class="delete-news">
                                                 <i class="bi bi-trash"></i>
                                             </a>
-                                            <span>
+                                            <!-- <span>
                                                 <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
                                                     class="btn btn-primary">
                                                     Detalhes
                                                 </a>
-                                            </span>
+                                            </span> -->
 
                                         </td>
                                     </tr>

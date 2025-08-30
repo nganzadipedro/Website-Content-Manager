@@ -2,6 +2,7 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Início</title>
@@ -9,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/team-slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/website/css/brands-slider.css') }}">
+    
 </head>
 
 <body class="main-page">
@@ -58,7 +61,8 @@
                                 </p>
                                 <a href="">Saiba mais...</a>
                             </div>
-                            <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}" alt="{{ $noticia_destaque->titulo }}">
+                            <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}"
+                                alt="{{ $noticia_destaque->titulo }}">
                         </div>
                     </div>
                 </div>
@@ -287,11 +291,62 @@
         </div>
     </section>
 
+    <section class="section-brands">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+                    <h3 class="title">Nossos Parceiros</h3>
+                    <h4 class="subtitle">Colaborações que fortalecem nosso compromisso com a excelência.</h4>
+                    <div class="brands-slider" id="brands-slider">
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/10/27/MuCSnBxFpOQg2Kl.png"
+                                        alt="Brand 1">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/10/27/1olvMDK1ram-FD4.png"
+                                        alt="Brand 2">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/10/27/NTs7EMHlHtbJE3B.png"
+                                        alt="Brand 3">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/uploads/icon/2021/09/26/184ba634-a218-4d65-a2b4-f04626d05024.png"
+                                        alt="Brand 4">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/12/02/y8oyEHx3FaUihRV.png"
+                                        alt="Brand 5">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/12/02/_B1T-44r7kGbgWM.png"
+                                        alt="Brand 6">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/icons/2021/12/02/TUhJtD3NM0l-Vtq.png"
+                                        alt="Brand 7">
+                                </div>
+                                <div class="brand-logo">
+                                    <img src="https://www.logoai.com/oss/ai-images/0b087526e9464e769d18c1871fbe2440.png"
+                                        alt="Brand 8">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     @include('website.footer')
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/index.js') }}"></script>
     <script src="{{ asset('assets/website/js/team-slider.js') }}"></script>
+    <script src="{{ asset('assets/website/js/brands-slider.js') }}"></script>
 
 </body>
 

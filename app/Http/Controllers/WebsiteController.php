@@ -55,14 +55,21 @@ class WebsiteController extends Controller
 
     public function gallery()
     {
+
+        $institucional = Galeria::where('categoria', 'institucional')->orderBy('id', 'desc')->take(4)->get();
+        $formacoes = Galeria::where('categoria', 'formações')->orderBy('id', 'desc')->take(4)->get();
+        $eventos = Galeria::where('categoria', 'eventos')->orderBy('id', 'desc')->take(4)->get();
+        $resp_social = Galeria::where('categoria', 'responsabilidade social')->orderBy('id', 'desc')->take(4)->get();
+
         $this->acesso_pagina('galeria');
-        return view('website.gallery');
+        return view('website.gallery', compact('eventos', 'institucional', 'formacoes', 'resp_social'));
     }
 
     public function news()
     {
         $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $noticias = Noticia::where('e_destaque', 'nao')->orderBy('id', 'desc')->take(5)->get();
+        // dd($noticias);
         $this->acesso_pagina('noticias');
         return view('website.news', compact('noticias', 'noticia_destaque'));
     }

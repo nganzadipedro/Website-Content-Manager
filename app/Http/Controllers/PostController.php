@@ -8,6 +8,7 @@ use App\Models\Mensagem;
 use App\Models\Noticia;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -40,15 +41,22 @@ class PostController extends Controller
         }
 
         // os destques antigos deixam de ser destaques
-        $antigos = Noticia::where('e_destaque', 'sim')->where('id', '!=', $noticia->id)->get();
-        if (count($antigos) > 0) {
+        if ($noticia->e_destaque == 'sim') {
+            $antigos = Noticia::where('e_destaque', 'sim')->get();
+            if (count($antigos) > 0) {
 
-            foreach ($antigos as $ant) {
-                $ant->e_destaque = 'nao';
-                $ant->save();
+                foreach ($antigos as $ant) {
+                    $ant->e_destaque = 'nao';
+                    $ant->save();
+                }
+
             }
 
+            $noticia->e_destaque = 'sim';
+            $noticia->save();
+
         }
+
 
         ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova notícia ($noticia->titulo)", 'noticia', $noticia->id);
         return 'sucesso';
@@ -190,4 +198,36 @@ class PostController extends Controller
         return 'sucesso';
 
     }
+
+    public function getfile($filename)
+    {
+
+        $path = 'public/' . $filename;
+
+        if (!Storage::exists($path)) {
+            abort(404, 'Arquivo não encontrado.');
+        }
+
+        $file = Storage::path($path);
+
+        return response()->file($file, [
+            'Content-Type' => 'application/pdf',
+        ]);
+
+    }
+
+    public function gallery_views(Request $request)
+    {
+
+        $galeria = Galeria::where('hash', $request->hash)->first();
+        $galeria->views = $galeria->views + 1;
+        $galeria->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Operação realizada com sucesso.'
+        ]);
+
+    }
+
 }
