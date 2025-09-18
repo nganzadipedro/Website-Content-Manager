@@ -74,6 +74,16 @@ class WebsiteController extends Controller
         return view('website.news', compact('noticias', 'noticia_destaque'));
     }
 
+    public function news_details($hash)
+    {
+
+        $noticia = Noticia::where('hash', $hash)->first();
+        $noticia->views = $noticia->views + 1;
+        $noticia->save();
+        return view('website.news-details', compact('noticia'));
+
+    }
+
 
 
     public function acesso_pagina($pagina)

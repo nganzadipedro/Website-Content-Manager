@@ -61,7 +61,7 @@
                                 </p>
                                 <a href="">Saiba mais...</a>
                             </div>
-                            <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}"
+                            <img src="{{ asset('application/storage/app/public/' . $noticia_destaque->imagem) }}"
                                 alt="{{ $noticia_destaque->titulo }}">
                         </div>
                     </div>

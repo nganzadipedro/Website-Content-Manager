@@ -65,7 +65,7 @@
                     <div class="left-feature">
                         <div class="card-text">
                             <label for="" class="highlight">Em Destaque</label>
-                            <a class="title">{{$noticia_destaque->titulo}}</a>
+                            <a href="{{ route('news_details', $noticia_destaque->hash) }}" class="title">{{$noticia_destaque->titulo}}</a>
                             <p class="description">
                                 {{ $noticia_destaque->texto_resumo }}
                             </p>
@@ -75,7 +75,7 @@
                                         class="bi bi-eye"></i> {{ $noticia_destaque->views }}</span></label>
                         </div>
                         <div class="card-image w-100">
-                            <img src="{{ asset('sysapp/storage/app/public/' . $noticia_destaque->imagem) }}"
+                            <img src="{{ asset('application/storage/app/public/' . $noticia_destaque->imagem) }}"
                                 alt="{{ $noticia_destaque->titulo }}">
                         </div>
                     </div>
@@ -93,10 +93,10 @@
                         <div class="features">
                             <div class="card-news">
                                 <div class="card-image">
-                                    <img src="{{ asset('sysapp/storage/app/public/' . $noticias[0]->imagem) }}"
+                                    <img src="{{ asset('application/storage/app/public/' . $noticias[0]->imagem) }}"
                                         alt="{{ $noticias[0]->titulo }}">
                                 </div>
-                                <a class="card-title">{{ $noticias[0]->titulo }}</a>
+                                <a href="{{ route('news_details', $noticias[0]->hash) }}" class="card-title">{{ $noticias[0]->titulo }}</a>
                                 <label for="" class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
                                     {{$data[0]}} <span class="category">|
                                         {{ $noticias[0]->categoria }}</span><span class="views"><i class="bi bi-eye"></i>
@@ -127,11 +127,11 @@
 
                                     <div class="card-news">
                                         <div class="card-image">
-                                            <img src="{{ asset('sysapp/storage/app/public/' . $not->imagem) }}"
+                                            <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
                                                 alt="{{ $not->titulo }}">
                                         </div>
 
-                                        <a class="card-title">{{ $not->titulo }}</a>
+                                        <a href="{{ route('news_details', $not->hash) }}" class="card-title">{{ $not->titulo }}</a>
                                         <p class="card-description">
                                             {{ $not->texto_resumo }}
                                         </p>

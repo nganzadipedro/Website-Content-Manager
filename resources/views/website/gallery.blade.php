@@ -53,7 +53,7 @@
 
                 @foreach ($institucional as $item)
                     <div class="image-card" data-category="institucional">
-                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
                         <div class="image-card-overlay">
                             <span class="view-icon">&#128065;</span>
                         </div>
@@ -67,7 +67,7 @@
                 <!--RESPONSABILIDADE SOCIAL-->
                 @foreach ($resp_social as $item)
                     <div class="image-card" data-category="responsabilidade-social">
-                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
                         <div class="image-card-overlay">
                             <span class="view-icon">&#128065;</span>
                         </div>
@@ -80,7 +80,7 @@
                 <!--FORMAÇÕES-->
                 @foreach ($formacoes as $item)
                     <div class="image-card" data-category="formacoes">
-                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
+                        <img data-id="{{ $item->hash }}" src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="{{$item->titulo}}">
                         <div class="image-card-overlay">
                             <span class="view-icon">&#128065;</span>
                         </div>
@@ -94,7 +94,7 @@
                 <!-- Eventos -->
                 @foreach ($eventos as $item)
                     <div class="image-card" data-category="eventos">
-                        <img data-id="{{ $item->hash }}" src="{{ asset('sysapp/storage/app/public/' . $item->imagem) }}"
+                        <img data-id="{{ $item->hash }}" src="{{ asset('application/storage/app/public/' . $item->imagem) }}"
                             alt="{{$item->titulo}}">
                         <div class="image-card-overlay">
                             <span class="view-icon">&#128065;</span>

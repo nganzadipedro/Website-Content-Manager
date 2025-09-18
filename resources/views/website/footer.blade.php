@@ -13,11 +13,14 @@
                             <div>
                                 <h3>WEBSITE</h3>
                                 <ul>
-                                    <li><a href="">Início</a></li>
-                                    <li><a href="pages/services.html">Serviços</a></li>
-                                    <li><a href="pages/news.html">Notícias</a></li>
-                                    <li><a href="pages/gallery.html">Galeria</a></li>
-                                    <li><a href="pages/contact.html">Contactos</a></li>
+                                    <li><a href="{{ route('home') }}">Início</a></li>
+                                    <li><a href="{{ route('services') }}">Serviços</a></li>
+                                    <li><a href="{{ route('news') }}">Notícias</a></li>
+                                    <li><a href="{{ route('members') }}">Associados</a></li>
+                                    <li><a href="{{ route('comissions') }}">Comissões</a></li>
+                                    <li><a href="{{ route('legal_assistance') }}">A. Judiciária</a></li>
+                                    <li><a href="{{ route('gallery') }}">Galeria</a></li>
+                                    <li><a href="{{ route('contact') }}">Contactos</a></li>
                                 </ul>
                             </div>
                             <div>

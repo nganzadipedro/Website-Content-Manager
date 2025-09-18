@@ -28,6 +28,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('news', 'Controllers\WebsiteController@news')->name('news');
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
     Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
+    Route::get('news-details/{hash}', 'Controllers\WebsiteController@news_details')->name('news_details');
 
     Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('/message/post', 'Controllers\PostController@message_post');
