@@ -23,16 +23,16 @@ html {
 
 
 .news-details-page .details-section {
-    /* background-color: var(--cor-light-blue); */
-    background-color: #fff;
+    /* background-color: var(--cor-light-blue-3); */
+    /* background-color: #fff; */
     margin-top: 30px;
     padding-top: 40px;
-    margin-bottom: 60px;
+    padding-bottom: 60px;
 }
 
 .news-details-page .news-details-section {
     float: left;
-    width: 75%;
+    width: 70%;
 }
 
 .news-details-page .news-details-card {
@@ -81,7 +81,7 @@ html {
 
 .news-details-page .news-details-aside {
     float: left;
-    width: 25%;
+    width: 30%;
 }
 
 .news-details-page .news-details-aside-img {
@@ -98,6 +98,11 @@ html {
     font-weight: bold;
     text-decoration: none;
 }
+
+.news-details-page .news-details-aside .title:hover {
+    text-decoration: underline;
+}
+
 
 .news-details-page .news-details-aside .date-news {
     border-left: var(--cor-yellow-one) double 5px;

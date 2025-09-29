@@ -649,7 +649,7 @@
                                                 <div class="w-browser-info">
                                                     <h6>{{$noticia->titulo}}</h6>
                                                     <p class="browser-count">{{ $noticia->views . ' Visualizações' }}
-                                                        ({{ (($noticia->views * 100) / $total_views_noticias) }}%)</p>
+                                                        ({{ number_format((($noticia->views * 100) / $total_views_noticias), 1, ',', '.') }}%)</p>
                                                 </div>
                                                 <div class="w-browser-stats">
                                                     <div class="progress">

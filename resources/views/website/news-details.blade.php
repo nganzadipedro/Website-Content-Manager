@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/news-details.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/website/css/news-details-responsive.css') }}">
 </head>
 
 <body class="news-details-page">
@@ -34,51 +35,66 @@
     <section class="details-section">
 
         <div class="container">
+
+
+            @php
+
+                $meses = [
+                    '01' => 'Janeiro',
+                    '02' => 'Fevereiro',
+                    '03' => 'Março',
+                    '04' => 'Abril',
+                    '05' => 'Maio',
+                    '06' => 'Junho',
+                    '07' => 'Julho',
+                    '08' => 'Agosto',
+                    '09' => 'Setembro',
+                    '10' => 'Outubro',
+                    '11' => 'Novembro',
+                    '12' => 'Dezembro'
+                ];
+
+                $data_destaque = explode(' ', $noticia->created_at);
+                $data_destaque = explode('-', $data_destaque[0]);
+
+            @endphp
+
+
+
             <div class="row news-details-row p-2">
                 <section class="news-details-section fade-in">
                     <article class="card news-details-card">
-                        <img src="../assets/img/galeria/academy013.jpg" alt="" class="news-details-main-img">
+                        <img src="{{ asset('application/storage/app/public/' . $noticia->imagem) }}"
+                            alt="{{ $noticia->titulo }}" class="news-details-main-img">
                         <hr>
-                        <h5 class="title">O título da notícia pode ser muito extenso e precisamos saber como a página
-                            vai se comportar</h5>
-                        <label for="" class="date-news">12, Abril. 2025 <span class="category">| Actualidade</span><span
-                                class="views"><i class="bi bi-eye"></i> 1234</span></label>
-                        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-                            eligendi suscipit,
-                            perferendis vitae enim provident debitis? Quae labore voluptates, quam soluta animi
-                            similique laudantium quis cumque nulla corporis. Vel, ratione? Lorem ipsum dolor sit, amet
-                            consectetur adipisicing elit. Molestias aut illo sint repellat atque obcaecati saepe
-                            voluptas cum! Quisquam suscipit dolores rem explicabo illo sed eum porro nisi esse maxime?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa impedit animi tenetur,
-                            reiciendis autem excepturi veritatis at accusantium neque vitae, amet nostrum dicta ea,
-                            dolore perspiciatis! Vero perspiciatis dolorem rem. Lorem ipsum dolor sit amet consectetur,
-                            adipisicing elit. Totam omnis quas, placeat itaque eveniet accusamus corrupti maxime
-                            voluptate molestias sapiente veritatis architecto ipsa aut sunt doloremque ex laudantium
-                            ratione nam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ipsum nobis a
-                            provident rem rerum laboriosam et id? Ducimus fuga tenetur corporis eveniet soluta aut.
-                            Autem quasi ab alias asperiores. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Officiis temporibus fugiat accusamus doloribus soluta laudantium illum, cupiditate alias
-                            aliquam repudiandae cum voluptatum! Nostrum autem dolore maxime minima quam iusto quos.
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta ab perspiciatis quasi nam
-                            quia. Non enim cupiditate quibusdam modi alias, totam reprehenderit neque vel ipsam? Aut
-                            sequi nulla cum eaque?</p>
+                        <h5 class="title">{{$noticia->titulo}}</h5>
+                        <label for="" class="date-news">{{$data_destaque[2]}}, {{$meses[$data_destaque[1]]}}.
+                                {{$data_destaque[0]}} <span class="category">|
+                                {{$noticia->categoria}}</span><span class="views"><i class="bi bi-eye"></i>
+                                {{$noticia->views}}</span></label>
+                        <p class="description">{{$noticia->texto_completo}}</p>
                     </article>
                 </section>
                 <aside class="news-details-aside fade-in">
-                    <article class="card news-details-card">
-                        <img src="../assets/img/img-services.jpg" alt="Imagem da notícia"
-                            class="news-details-aside-img">
-                        <a href="" class="title">Título da notícia deste lado também pode ser extensa</a>
-                        <label for="" class="date-news">12, Abril. 2025 <span class="category">| Actualidade</span><span
-                                class="views"><i class="bi bi-eye"></i> 1234</span></label>
-                    </article>
-                    <article class="card news-details-card">
-                        <img src="../assets/img/galeria/academy013.jpg" alt="Imagem da notícia"
-                            class="news-details-aside-img">
-                        <a href="" class="title">Título da notícia deste lado também pode ser extensa</a>
-                        <label for="" class="date-news">12, Abril. 2025 <span class="category">| Actualidade</span><span
-                                class="views"><i class="bi bi-eye"></i> 1234</span></label>
-                    </article>
+                    @foreach ($outras_noticias as $not)
+
+
+                        @php
+
+                            $data = explode(' ', $not->created_at);
+                            $data = explode('-', $data[0]);
+
+                        @endphp
+
+                        <article class="card news-details-card">
+                            <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}" alt="{{$not->titulo}}"
+                                class="news-details-aside-img">
+                            <a href="{{ route('news_details', $not->hash) }}" class="title">{{$not->titulo}}</a>
+                            <label for="" class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
+                                            {{$data[0]}} <span class="category">| {{$not->categoria}}</span><span
+                                    class="views"><i class="bi bi-eye"></i> {{$not->views}}</span></label>
+                        </article>
+                    @endforeach
                 </aside>
             </div>
         </div>

@@ -59,7 +59,7 @@
                                 <p class="description">
                                     {{ $noticia_destaque->texto_resumo }}
                                 </p>
-                                <a href="">Saiba mais...</a>
+                                <a href="{{ route('news_details', $noticia_destaque->hash) }}">Saiba mais...</a>
                             </div>
                             <img src="{{ asset('application/storage/app/public/' . $noticia_destaque->imagem) }}"
                                 alt="{{ $noticia_destaque->titulo }}">

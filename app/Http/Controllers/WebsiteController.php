@@ -80,7 +80,11 @@ class WebsiteController extends Controller
         $noticia = Noticia::where('hash', $hash)->first();
         $noticia->views = $noticia->views + 1;
         $noticia->save();
-        return view('website.news-details', compact('noticia'));
+
+        $outras_noticias = Noticia::where('id', '!=', $noticia->id)
+        ->orderBy('id', 'desc')->take(2)->get();
+
+        return view('website.news-details', compact('noticia', 'outras_noticias'));
 
     }
 
