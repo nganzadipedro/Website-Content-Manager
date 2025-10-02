@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/website/css/members.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/members-responsive.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
 </head>
 
 <body class="members-page">
@@ -42,19 +44,19 @@
                         <div class="card stats-card text-center p-4">
                             <div class="card-body">
                                 <h3 class="card-title">Total de Associados</h3>
-                                <span class="display-5 ">2397</span>
+                                <span class="display-5 ">{{($total)}}</span>
                             </div>
                         </div>
                         <div class="card stats-card text-center p-4">
                             <div class="card-body">
-                                <h3 class="card-title">Homens</h3>
-                                <span class="display-5 ">1205</span>
+                                <h3 class="card-title">Advogados</h3>
+                                <span class="display-5 ">{{$advogados}}</span>
                             </div>
                         </div>
                         <div class="card stats-card text-center p-4">
                             <div class="card-body">
-                                <h3 class="card-title">Mulheres</h3>
-                                <span class="display-5 ">1098</span>
+                                <h3 class="card-title">Estagiários</h3>
+                                <span class="display-5 ">{{$estagiarios}}</span>
                             </div>
                         </div>
                     </div>
@@ -101,8 +103,8 @@
                                 </ul>
                             </div>
                             <div class="member-actions">
-                                <a href="#" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
-                                <a href="#" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
+                                <a href="{{ route('download_doc', 'req_advogado_estagiario.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
+                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
                                 <a href="#" class="member-btn">Inscrever-se pelo portal do CPL</a>
                             </div>
                         </div>
@@ -158,9 +160,9 @@
                                 </ul>
                             </div>
                             <div class="member-actions">
-                                <a href="#" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
-                                <a href="#" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
-                                <a href="#" class="member-btn">Inscrever-se pelo portal da OAA</a>
+                                <a href="{{ route('download_doc', 'req_advogado.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
+                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
+                                <a href="https://oaa.ao" target="_blank" class="member-btn">Inscrever-se pelo portal da OAA</a>
                             </div>
                         </div>
                     </div>
@@ -175,22 +177,24 @@
             <h3 class="section-title">Pesquisar Advogado</h3>
             <h4 class="subtitle">Encontre os advogados que fazem parte do conselho provincial de Luanda</h4>
             <form class="search-form">
+                @csrf
                 <div class="search-input-group">
                     <select id="search-select">
                         <option value="nome">Nome</option>
                         <option value="cedula">Cédula</option>
                         <option value="bi">Nº BI</option>
                     </select>
-                    <input type="text" placeholder="Digite sua pesquisa">
-                    <button type="submit">Pesquisar</button>
+                    <input type="text" id="text-search" placeholder="Digite sua pesquisa">
+                    <button type="submit" id="btn-search">Pesquisar</button>
                 </div>
             </form>
-            <!-- <p class="none-result">
+            
+            <p class="none-result" id="pg-none-result">
                 Não foi encontrado nenhum registo na nossa base de dados.
-            </p> -->
+            </p>
 
-            <!-- <div class="search-results">
-                <ul>
+            <div class="search-results" id="dv-search-results">
+                <ul id="ul-elements">
                     <li>
                         <div class="member-info">
                             <span class="member-name">Ricardo Afonso da Fonseca</span>
@@ -300,7 +304,7 @@
                         <span class="number-card">Cédula N.º 31290</span>
                     </li>
                 </ul>
-            </div> -->
+            </div>
 
             <div class="search-links">
                 <a href="#" class="updated-list">Ver lista actualizada dos Advogados</a>
@@ -310,6 +314,10 @@
     </section>
 
     @include('website.footer')
+
+    <script src="{{ asset('assets/system/js/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/system/js/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/system/js/shared/functions.js') }}"></script>
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/members.js') }}"></script>

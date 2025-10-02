@@ -29,10 +29,15 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
     Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
     Route::get('news-details/{hash}', 'Controllers\WebsiteController@news_details')->name('news_details');
+    Route::get('download-document/{file}', 'Controllers\WebsiteController@download_document')->name('download_doc');
 
     Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('/message/post', 'Controllers\PostController@message_post');
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
+    Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
+
+
+    Route::get('/trata-dados', 'Controllers\WebsiteController@trans_dados');
 
 });
 

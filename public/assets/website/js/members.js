@@ -70,3 +70,131 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+$("#dv-search-results").hide();
+$("#pg-none-result").hide();
+
+document.getElementById('btn-search').addEventListener('click', function () {
+
+    if (valida_formulario() === true) {
+
+        const formData = new FormData();
+
+        const text_search = document.getElementById('text-search').value;
+        const search_select = document.getElementById('search-select').value;
+
+        formData.append('text_search', text_search);
+        formData.append('search_select', search_select);
+
+        const dvrs = document.getElementById('dv-search-results');
+        const ul_elements = document.getElementById('ul-elements');
+        dvrs.style.display = 'none';
+
+        return $.ajax({
+            url: "/search-lawyer/post",
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+            },
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (res) {
+
+                console.log(res);
+
+                var elementos = '';
+                var num_cedula = '';
+                ul_elements.innerHTML = elementos;
+
+                if (res.rows.length == 0) {
+
+                    $("#pg-none-result").show();
+
+                } else {
+
+                    $("#pg-none-result").hide();
+                    dvrs.style.display = 'block';
+
+                    res.rows.forEach(item => {
+
+                        if (item.categoria == 'Estagiario') {
+                            num_cedula = item.num_estagiario;
+
+                            elementos += `<li>
+                        <div class="member-info">
+                            <span class="member-name">${item.nome}</span>
+                            <div>Email: ${item.email}</div>
+                            <div>Telefone: ${item.telefone1}</div>
+                        </div>
+                        <div class="member-details">
+                            <div>Cédula Patrono: [ Não Definido ] </div>
+                            <div>Nome Patrono: [ Não Definido ] </div>
+                        </div>
+                        <span class="number-card">Cédula N.º ${num_cedula}</span>
+                    </li>`;
+
+                        }
+                        else {
+                            num_cedula = item.num_estagiario;
+
+                            elementos += `<li>
+                        <div class="member-info">
+                            <span class="member-name">${item.nome}</span>
+                            <div>Email: ${item.email}</div>
+                            <div>Telefone: ${item.telefone1}</div>
+                        </div>
+                        <span class="number-card">Cédula N.º ${num_cedula}</span>
+                    </li>`;
+
+                        }
+
+                    });
+
+                    ul_elements.innerHTML = elementos;
+
+                }
+
+            },
+            error: function (error) {
+
+                sweetAlert({
+                    type: "warning",
+                    title: "Erro " + error.status,
+                    text: 'Erro: ' + error.responseJSON.message,
+                    timer: 9000
+                });
+                console.log("Error: " + error.responseJSON.message);
+            }
+        });
+
+    }
+
+});
+
+function valida_formulario() {
+
+    var msgErro = '';
+    var tem = true;
+
+    const text_search = document.getElementById('text-search').value;
+
+
+    if (text_search == '' || text_search == null) {
+        msgErro = "Digite o que deseja pesquisar";
+        tem = false;
+    }
+
+    if (tem == false) {
+        sweetAlert({
+            type: "warning",
+            title: "Aviso!",
+            text: msgErro,
+            timer: 4000
+        });
+    }
+
+    return tem;
+
+}

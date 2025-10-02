@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Platform\Advogado;
 use App\Models\Denuncia;
 use App\Models\Galeria;
 use App\Models\Mensagem;
 use App\Models\Noticia;
+use App\Models\Pessoa;
+use App\Models\User;
 use App\Models\Website;
 use Auth;
+use DB;
+use Hash;
 use Illuminate\Http\Request;
+use Storage;
 
 class WebsiteController extends Controller
 {
@@ -37,8 +43,11 @@ class WebsiteController extends Controller
 
     public function members()
     {
+        $advogados = Advogado::where('categoria', 'Advogado')->count();
+        $estagiarios = Advogado::where('categoria', 'Estagiario')->count();
+        $total = $advogados + $estagiarios;
         $this->acesso_pagina('associados');
-        return view('website.members');
+        return view('website.members', compact('advogados', 'estagiarios', 'total'));
     }
 
     public function services()
@@ -82,13 +91,11 @@ class WebsiteController extends Controller
         $noticia->save();
 
         $outras_noticias = Noticia::where('id', '!=', $noticia->id)
-        ->orderBy('id', 'desc')->take(2)->get();
+            ->orderBy('id', 'desc')->take(2)->get();
 
         return view('website.news-details', compact('noticia', 'outras_noticias'));
 
     }
-
-
 
     public function acesso_pagina($pagina)
     {
@@ -97,6 +104,79 @@ class WebsiteController extends Controller
             'pagina' => $pagina
         ]);
 
+    }
+
+    public function trans_dados()
+    {
+
+        $dados = DB::select("select * from db_oaa_old where conselho like '%Luanda%' and lido = 0");
+
+        foreach ($dados as $linha) {
+
+            set_time_limit(0);
+
+            $tel1 = $tel2 = null;
+            if ($linha->contactos != null && $linha->contactos != "") {
+                $tels = explode(" ", $linha->contactos);
+                if (is_array($tels)) {
+
+                    if (isset($tels[0])) {
+                        $tel1 = $tels[0];
+                    }
+                    if (isset($tels[1])) {
+                        $tel2 = $tels[1];
+                    }
+                }
+            }
+
+            // insere a pessoa
+            $pessoa = Pessoa::create([
+                'nome' => $linha->nome_completo,
+                'num_documento' => $linha->num_bi,
+                'email' => $linha->email,
+                'telefone1' => $tel1,
+                'telefone2' => $tel2,
+                'documento' => "Bilhete de Identidade",
+            ]);
+
+            // insere na tabela de advogado
+            $adv = Advogado::create([
+                'pessoa_id' => $pessoa->id,
+                'categoria' => $linha->categoria,
+                'num_associado' => $linha->num_associado,
+                'num_estagiario' => $linha->num_estagiario,
+            ]);
+
+            $adv->hash = md5($pessoa->id . $adv->created_at . $pessoa->created_at);
+            $adv->codigo = 'CPL' . $adv->id;
+            $adv->save();
+
+            // insere usuário
+            $senha = 'CPL' . $pessoa->id . $adv->id;
+            $user = User::create([
+                'password' => Hash::make($senha),
+                'two_factor' => 'não',
+                'estado' => 'inativo',
+                'pessoa_id' => $pessoa->id,
+                'permissao_id' => 3
+            ]);
+
+            $res = DB::update("update db_oaa_old set lido = 1 where id = $linha->id");
+
+        }
+
+    }
+
+    public function download_document($file)
+    {
+
+        $path = storage_path('app/public/docspdf/' . $file);
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }
+
+        abort(404, 'Arquivo não encontrado');
     }
 
 }
