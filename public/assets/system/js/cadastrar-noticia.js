@@ -24,7 +24,7 @@ function valida_formulario() {
 
     const titulo = document.getElementById('titulo').value;
     const texto_resumo = document.getElementById('texto_resumo').value;
-    const texto_completo = document.getElementById('texto_completo').value;
+    const texto_completo = tinymce.get('texto_completo').getContent();
     const categoria = document.getElementById('categoria').value;
     const imagem = document.getElementById('imagem').files[0];
     const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
@@ -77,7 +77,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
 
         const titulo = document.getElementById('titulo').value;
         const texto_resumo = document.getElementById('texto_resumo').value;
-        const texto_completo = document.getElementById('texto_completo').value;
+        const texto_completo = tinymce.get('texto_completo').getContent();
         const categoria = document.getElementById('categoria').value;
         const imagem = document.getElementById('imagem').files[0];
         const e_destaque = document.getElementById('e_destaque').value;
@@ -122,7 +122,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
                                 text: 'A notícia foi cadastrada com sucesso',
                                 timer: 6000
                             });
-                            
+
                             window.location.href = '/system/admin/newslater/list';
 
                         }

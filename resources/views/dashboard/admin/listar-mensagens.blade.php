@@ -9,7 +9,7 @@
 @endsection
 
 <style>
-    .card-title-page {
+      .card-title-page {
         width: 100%;
         background-color: #fff;
         margin: 20px 0px;
@@ -74,6 +74,7 @@
                             </tbody>
                         </table>
                     </div>
+                      <a href="{{route('system.admin.listmessages', 'not-solved')}}" class="btn btn-primary mt-3 mb-5">Mensagens Pendentes</a>
                 </div>
 
             </div>

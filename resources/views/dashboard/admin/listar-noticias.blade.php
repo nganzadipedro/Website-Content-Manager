@@ -40,7 +40,7 @@
 
             <div class="row layout-top-spacing">
 
-                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                <div class="col-xl-12 col-lg-12 col-sm-12">
                     <div class="widget-content widget-content-area br-8">
                         <table id="zero-config" class="table dt-table-hover" style="width:100%">
                             <thead>
@@ -66,26 +66,29 @@
                                         <td>
 
                                             <a href="{{ route('system.admin.editnoticia', $item->hash) }}"
-                                                    style="cursor:pointer; font-size: 24px;">
-                                                    <i class="bi bi-pencil"></i>
+                                                style="cursor:pointer; font-size: 24px;">
+                                                <i class="bi bi-pencil"></i>
                                             </a>
                                             <a data-id="{{ $item->id }}" style="cursor:pointer; font-size: 24px;"
                                                 class="delete-news">
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                             <!-- <span>
-                                                <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
-                                                    class="btn btn-primary">
-                                                    Detalhes
-                                                </a>
-                                            </span> -->
+                                                        <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
+                                                            class="btn btn-primary">
+                                                            Detalhes
+                                                        </a>
+                                                    </span> -->
 
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
+
+                    <a href="{{route('system.admin.cadnoticia')}}" class="btn btn-primary mt-3">+ Nova Notícia +</a>
                 </div>
 
             </div>

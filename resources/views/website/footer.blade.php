@@ -26,26 +26,26 @@
                             <div>
                                 <h3>INSTITUCIONAL</h3>
                                 <ul>
-                                    <li><a href="">ORDEM DOS ADVOGADOS DE ANGOLA</a></li>
-                                    <li><a href="">CEF</a></li>
+                                    <li><a target="_blank" href="https://oaa.ao">ORDEM DOS ADVOGADOS DE ANGOLA</a></li>
+                                    <li><a target="_blank" href="https://cef-oaa.org">CEF</a></li>
                                 </ul>
                             </div>
                             <div>
                                 <h3>JUSTIÇA</h3>
                                 <ul>
-                                    <li><a href="">TRIBUNAL CONSTITUCIONAL</a></li>
-                                    <li><a href="">TRIBUNAL SUPREMO</a></li>
-                                    <li><a href="">TRIBUNAL DE CONTAS</a></li>
-                                    <li><a href="">PROCURADORIA GERAL DA REPÚBLICA</a></li>
+                                    <li><a target="_blank" href="https://www.tribunalconstitucional.ao/">TRIBUNAL CONSTITUCIONAL</a></li>
+                                    <li><a target="_blank" href="https://tribunalsupremo.ao/">TRIBUNAL SUPREMO</a></li>
+                                    <li><a target="_blank" href="https://tcontas.ao/">TRIBUNAL DE CONTAS</a></li>
+                                    <li><a target="_blank" href="https://www.ministeriospublicoscplp.org/membros/angola/1">PROCURADORIA GERAL DA REPÚBLICA</a></li>
                                 </ul>
                             </div>
                             <div>
                                 <h3>SIGA-NOS NAS REDES SOCIAIS</h3>
                                 <ul>
-                                    <li><a href="">Facebook</a></li>
-                                    <li><a href="">Linkedin</a></li>
-                                    <li><a href="">Instagram</a></li>
-                                    <li><a href="">Youtube</a></li>
+                                    <li><a target="_blank" href="https://www.facebook.com/cploaa">Facebook</a></li>
+                                    <li><a href="#">Linkedin</a></li>
+                                    <li><a href="#">Instagram</a></li>
+                                    <li><a href="#">Youtube</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -10,7 +10,7 @@
 <style>
     .card-title-page {
         width: 100%;
-        background-color:rgb(229, 229, 229);
+        background-color: #fff;
         margin: 20px 0px;
         padding: 20px;
         text-align: center;
@@ -19,8 +19,8 @@
     }
 
     .card-title-page h3 {
-       font-weight: bold;
-       color: #000;
+        font-weight: bold;
+        color: #000;
     }
 </style>
 

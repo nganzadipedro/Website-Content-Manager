@@ -75,6 +75,8 @@
 
     @include('website.footer')
 
+    <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 
 </html>

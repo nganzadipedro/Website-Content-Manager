@@ -11,7 +11,7 @@
 <style>
     .card-title-page {
         width: 100%;
-        background-color: #e2e2e2ff;
+        background-color: #fff;
         margin: 20px 0px;
         padding: 20px;
         text-align: center;
@@ -72,6 +72,8 @@
                             </tbody>
                         </table>
                     </div>
+                    <a href="{{route('system.admin.listdenuncias', 'not-solved')}}"
+                        class="btn btn-primary mt-3 mb-5">Denúncias/Reclamações Pendentes</a>
                 </div>
 
             </div>

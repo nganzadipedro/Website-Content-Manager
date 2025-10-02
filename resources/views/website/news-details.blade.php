@@ -72,7 +72,7 @@
                                 {{$data_destaque[0]}} <span class="category">|
                                 {{$noticia->categoria}}</span><span class="views"><i class="bi bi-eye"></i>
                                 {{$noticia->views}}</span></label>
-                        <p class="description">{{$noticia->texto_completo}}</p>
+                        <p class="description">{!! $noticia->texto_completo !!}</p>
                     </article>
                 </section>
                 <aside class="news-details-aside fade-in">

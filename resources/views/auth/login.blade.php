@@ -49,8 +49,8 @@
 
                 <div
                     class="col-6 d-lg-flex d-none h-100 my-auto top-0 start-0 text-center justify-content-center flex-column">
-                    <div class="auth-cover-bg-image"></div>
-                    <div class="auth-overlay"></div>
+                    <!-- <div class="auth-cover-bg-image"></div>
+                    <div class="auth-overlay"></div> -->
 
                     <div class="auth-cover">
 
@@ -58,10 +58,10 @@
 
                             <img src="{{ asset('images/logo_oaa_cor.png') }}" alt="auth-img">
 
-                            <h5 class="mt-3 text-white font-weight-bolder">Conselho Provincial de Luanda da Ordem
+                            <h5 class="mt-3">Conselho Provincial de Luanda da Ordem
                                 dos Advogados de Angola
                             </h5>
-                            <h5 class="text-white"> = Gestor de Conteúdos do Website = </h5>
+                            <h5 class=""> = Sistema de Gestão de Informações = </h5>
                         </div>
 
                     </div>

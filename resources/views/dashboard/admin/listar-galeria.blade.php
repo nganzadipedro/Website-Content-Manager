@@ -11,7 +11,7 @@
 <style>
     .card-title-page {
         width: 100%;
-        background-color: rgb(229, 229, 229);
+        background-color: #fff;
         margin: 20px 0px;
         padding: 20px;
         text-align: center;
@@ -43,19 +43,18 @@
                 <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                     <div class="widget-content widget-content-area br-8">
 
-                        <div class="row mt-4 mb-4" style="padding: 10px;">
+                        <div class="row mt-4 mb-2" style="padding: 10px;">
 
                             @if (count($lista_galeria) == 0)
 
-                                <div class="alert alert-light-warning text-center"
-                                    role="alert">
+                                <div class="alert alert-light-warning text-center" role="alert">
                                     Não existe nenhuma imagem adicionada na galeria</button>
                                 </div>
 
                             @else
 
                                 @foreach ($lista_galeria as $imagem)
-                                    <div class="col-lg-3 col-md-3 col-12">
+                                    <div class="col-lg-3 col-md-3 col-12 mb-3">
                                         <div class="card style-2 mb-md-0 mb-4">
                                             <img src="{{ asset('application/storage/app/public/' . $imagem->imagem) }}"
                                                 class="card-img-top" alt="{{ $imagem->titulo }}">
@@ -77,9 +76,10 @@
 
                             @endif
 
-
                         </div>
                     </div>
+                    <a href="{{route('system.admin.cadgaleria')}}" class="btn btn-primary mt-3 mb-5">+ Adicionar Imagem
+                        +</a>
                 </div>
 
             </div>

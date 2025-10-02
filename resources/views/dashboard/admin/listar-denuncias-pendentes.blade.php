@@ -9,9 +9,9 @@
 @endsection
 
 <style>
-    .card-title-page {
+       .card-title-page {
         width: 100%;
-        background-color: #e2e2e2ff;
+        background-color: #fff;
         margin: 20px 0px;
         padding: 20px;
         text-align: center;
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <div class="card-title-page">
-                        <h4>Listagem das denúncias pendentes</h4>
+                        <h4>Denúncias/Reclamações Pendentes</h4>
                     </div>
                 </div>
             </div>
@@ -74,6 +74,7 @@
                             </tbody>
                         </table>
                     </div>
+                     <a href="{{route('system.admin.listdenuncias', 'solved')}}" class="btn btn-success mt-3 mb-5">Denúncias/Reclamações Atendidas</a>
                 </div>
 
             </div>

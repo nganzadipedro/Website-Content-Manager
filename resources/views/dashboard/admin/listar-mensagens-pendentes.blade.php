@@ -74,6 +74,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <a href="{{route('system.admin.listmessages', 'solved')}}" class="btn btn-success mt-3 mb-5">Mensagens Atendidas</a>
                 </div>
 
             </div>

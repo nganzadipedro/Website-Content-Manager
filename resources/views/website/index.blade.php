@@ -31,7 +31,7 @@
                             <img src="{{ asset('assets/website/img/dr_nilton_praia_2.png') }}" alt="">
                         </div>
                         <div class="description order-sm-1 col-md-6">
-                            <h2>Nilton Praia</h2>
+                            <h2>Nilton José Lopes Praia</h2>
                             <span>Presidente do CPL-OAA</span>
                             <h3>Mensagem do Presidente</h3>
                             <p>
