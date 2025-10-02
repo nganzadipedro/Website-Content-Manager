@@ -167,6 +167,28 @@ class WebsiteController extends Controller
 
     }
 
+    public function list_lawyers()
+    {
+
+        $lista = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')->where('app_advogado.categoria', 'Advogado')
+            ->select('pessoa.*', 'app_advogado.categoria', 'app_advogado.num_associado', 'app_advogado.num_estagiario')
+            ->get();
+
+        return view('website.list-lawyers', compact('lista'));
+
+    }
+
+    public function list_trainee()
+    {
+
+        $lista = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')->where('app_advogado.categoria', 'Estagiario')
+            ->select('pessoa.*', 'app_advogado.categoria', 'app_advogado.num_associado', 'app_advogado.num_estagiario')
+            ->get();
+
+        return view('website.list-trainee', compact('lista'));
+
+    }
+
     public function download_document($file)
     {
 

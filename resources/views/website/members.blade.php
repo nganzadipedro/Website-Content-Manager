@@ -307,8 +307,8 @@
             </div>
 
             <div class="search-links">
-                <a href="#" class="updated-list">Ver lista actualizada dos Advogados</a>
-                <a href="#" class="updated-list">Ver lista actualizada dos Advogados estagiários</a>
+                <a href="{{ route('list_lawyers') }}" target="_blank" class="updated-list">Ver lista actualizada dos Advogados</a>
+                <a href="{{ route('list_trainee') }}" target="_blank" class="updated-list">Ver lista actualizada dos Advogados estagiários</a>
             </div>
         </div>
     </section>

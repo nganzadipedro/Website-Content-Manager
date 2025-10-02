@@ -1,0 +1,80 @@
+.list-lawyers-page .title-page {
+    margin-top: 80px;
+}
+
+.list-lawyers-page .title-page h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-black);
+}
+
+.list-lawyers-page .title-page h4 {
+    font-size: 1.2rem;
+    color: var(--cor-gray);
+}
+
+.list-lawyers-page .section-table {
+    margin-top: 40px;
+    margin-bottom: 60px;
+
+}
+
+.list-lawyers-page .section-table .content {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+/* estilo geral da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* remove espaçamento entre bordas */
+    margin: 20px 0;
+    font-size: 14px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+
+}
+
+table thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--cor-light-blue-3);
+    color: #fff;
+    z-index: 2;
+    padding: 12px;
+}
+
+/* corpo */
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* zebra */
+}
+
+tbody td {
+    padding: 12px;
+    color: #333;
+}
+
+/* hover */
+tbody tr:hover {
+    background-color: var(--cor-light-blue);
+    transition: background-color 0.3s ease;
+}
+
+/* links na tabela */
+table a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table a:hover {
+    text-decoration: underline;
+}

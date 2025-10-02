@@ -29,6 +29,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
     Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
     Route::get('news-details/{hash}', 'Controllers\WebsiteController@news_details')->name('news_details');
+    Route::get('list-lawyers', 'Controllers\WebsiteController@list_lawyers')->name('list_lawyers');
+    Route::get('list-trainee', 'Controllers\WebsiteController@list_trainee')->name('list_trainee');
     Route::get('download-document/{file}', 'Controllers\WebsiteController@download_document')->name('download_doc');
 
     Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
