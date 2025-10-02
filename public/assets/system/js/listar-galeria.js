@@ -13,6 +13,7 @@ $(document).on('click', '.delete-image', function (e) {
         confirmButtonColor: "#34c38f",
         cancelButtonColor: "#f46a6a",
         confirmButtonText: "Eliminar!",
+        confirmButtonText: "Eliminar!",
         cancelButtonText: "Cancelar",
         showLoaderOnConfirm: true,
         preConfirm: function () {

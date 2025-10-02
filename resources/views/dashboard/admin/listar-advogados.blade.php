@@ -1,5 +1,4 @@
 @section('css-aux')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css"
@@ -9,7 +8,7 @@
 @endsection
 
 <style>
-       .card-title-page {
+    .card-title-page {
         width: 100%;
         background-color: #fff;
         margin: 20px 0px;
@@ -33,7 +32,9 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <div class="card-title-page">
-                        <h3>Denúncias/Reclamações Pendentes</h3>
+                        <h3>Listagem geral de advogados</h3>
+                        <!-- <a href="">Mulheres</a>
+                        <a href="">Homens</a> -->
                     </div>
                 </div>
             </div>
@@ -48,25 +49,25 @@
                                     <th>#</th>
                                     <th>ID</th>
                                     <th>Nome</th>
-                                    <th>Assunto</th>
-                                    <th>Estado</th>
-                                    <th class="no-content"></th>
+                                    <th>Categoria</th>
+                                    <th>Nº Cédula</th>
+                                    <th>Nº Bilhete</th>
+                                    <th class="no-content">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($lista_denuncias as $item)
+                                @foreach ($lista_advogados as $item)
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>
                                         <td>{{$item->id}}</td>
-                                        <td>{{$item->nome}}</td>
-                                        <td>{{$item->assunto}}</td>
-                                        <td>{{$item->estado}}</td>
+                                        <td>{{$item->getpessoa->nome}}</td>
+                                        <td>{{$item->categoria}}</td>
+                                        <td>{{$item->num_associado}}</td>
+                                        <td>{{$item->getpessoa->num_documento}}</td>
                                         <td>
-                                            <span>
-                                                <a href="{{ route('system.admin.detalhesdenuncia', $item->hash) }}"
-                                                    class="btn btn-primary">
-                                                    Detalhes
-                                                </a>
+
+                                            <span style="cursor:pointer;" class="btn-edit" data-id="{{ $item->hash }}">
+                                                <i data-feather="edit"></i>
                                             </span>
                                         </td>
                                     </tr>
@@ -74,21 +75,14 @@
                             </tbody>
                         </table>
                     </div>
-                     <a href="{{route('system.admin.listdenuncias', 'solved')}}" class="btn btn-success mt-3 mb-5">Denúncias/Reclamações Atendidas</a>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
 </div>
 
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
-    <script src="{{ asset('assets/system/js/listar-noticia.js') }}"></script>
     <script>
         $('#zero-config').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
@@ -106,4 +100,5 @@
             "pageLength": 10
         });
     </script>
+    <script src="{{ asset('assets/system/js/listar-advogados.js') }}"></script>
 @endsection

@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <div class="card-title-page">
-                        <h4>Listagem das mensagens atendidas</h4>
+                        <h3>Listagem das mensagens atendidas</h3>
                     </div>
                 </div>
             </div>

@@ -68,7 +68,10 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
 
                 Route::get('/view/atachment/{filename}', 'Controllers\PostController@getfile')->name('getfile');
-
+                Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
+                Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
+                Route::get('/list/undefined', 'Livewire\Admin\Listarindefinidos')->name('list_undefined');
+                Route::get('/edit-data/member/{hash}', 'Livewire\Admin\Editarassociado')->name('edit_member');
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
                 Route::post('/gallery/post', 'Controllers\PostController@gallery_post');

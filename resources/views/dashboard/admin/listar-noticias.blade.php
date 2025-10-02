@@ -11,7 +11,7 @@
 <style>
     .card-title-page {
         width: 100%;
-        background-color: rgb(229, 229, 229);
+        background-color: #fff;
         margin: 20px 0px;
         padding: 20px;
         text-align: center;
@@ -74,11 +74,11 @@
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                             <!-- <span>
-                                                        <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
-                                                            class="btn btn-primary">
-                                                            Detalhes
-                                                        </a>
-                                                    </span> -->
+                                                            <a href="{{ route('system.admin.detalhesmensagem', $item->hash) }}"
+                                                                class="btn btn-primary">
+                                                                Detalhes
+                                                            </a>
+                                                        </span> -->
 
                                         </td>
                                     </tr>

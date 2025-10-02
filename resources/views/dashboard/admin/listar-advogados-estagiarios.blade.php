@@ -33,8 +33,8 @@
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <div class="card-title-page">
                         <h3>Listagem geral de advogados estagiários</h3>
-                        <a href="">Mulheres</a>
-                        <a href="">Homens</a>
+                        <!-- <a href="">Mulheres</a>
+                        <a href="">Homens</a> -->
                     </div>
                 </div>
             </div>
@@ -48,8 +48,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>ID</th>
-                                    <th>Código</th>
                                     <th>Nome</th>
+                                    <th>Categoria</th>
                                     <th>Nº Cédula</th>
                                     <th>Nº Bilhete</th>
                                     <th class="no-content">Action</th>
@@ -60,19 +60,16 @@
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>
                                         <td>{{$item->id}}</td>
-                                        <td>{{$item->codigo}}</td>
                                         <td>{{$item->getpessoa->nome}}</td>
-                                        <td>{{$item->num_cedula_advogado}}</td>
+                                        <td>{{$item->categoria}}</td>
+                                        <td>{{$item->num_estagiario}}</td>
                                         <td>{{$item->getpessoa->num_documento}}</td>
                                         <td>
 
-                                            <span style="cursor:pointer;">
+                                            <span style="cursor:pointer;" class="btn-edit" data-id="{{ $item->hash }}">
                                                 <i data-feather="edit"></i>
                                             </span>
-                                            <span style="cursor:pointer;">
-                                                <i data-feather="trash"></i>
-                                            </span>
-
+                                        
                                         </td>
                                     </tr>
                                 @endforeach
@@ -109,4 +106,5 @@
             "pageLength": 10
         });
     </script>
+    <script src="{{ asset('assets/system/js/listar-advogados.js') }}"></script>
 @endsection
