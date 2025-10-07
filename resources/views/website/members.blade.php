@@ -105,7 +105,7 @@
                             <div class="member-actions">
                                 <a href="{{ route('download_doc', 'req_advogado_estagiario.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
                                 <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
-                                <a href="#" class="member-btn">Inscrever-se pelo portal do CPL</a>
+                                <a href="{{ url('/register-member') }}" class="member-btn">Inscrever-se pelo portal do CPL</a>
                             </div>
                         </div>
                     </div>

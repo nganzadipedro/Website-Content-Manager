@@ -40,6 +40,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 
     Route::get('/trata-dados', 'Controllers\WebsiteController@trans_dados');
+    Route::get('/register-member', 'Controllers\UserController@register_member');
 
 });
 
@@ -80,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/newslater/delete', 'Controllers\PostController@delete_news');
                 Route::post('/gallery/delete', 'Controllers\PostController@delete_gallery');
                 Route::post('/newslater/update', 'Controllers\PostController@newslater_update');
+                Route::post('/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
 
             });
         });

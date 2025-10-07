@@ -46,21 +46,21 @@
 
                             @csrf
 
-                            <input type="hidden" name="hash_noticia" id="hash_noticia" value="{{ $advogado->hash }}">
+                            <input type="hidden" name="advogado_id" id="advogado_id" value="{{ $advogado->id }}">
 
                             <div class="row mt-3">
 
                                 <div class="col-lg-6 col-6">
                                     <div class="form-group">
-                                        <label for="titulo">Nome completo</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="nome">Nome completo</label>
+                                        <input type="text" name="nome" maxlength="255" class="form-control form-control-sm" id="nome"
                                             value="{{ $advogado->getpessoa->nome }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-6">
                                     <div class="form-group">
-                                        <label for="titulo">Email</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="email">Email</label>
+                                        <input type="text" name="email" maxlength="100" class="form-control form-control-sm" id="email"
                                             value="{{ $advogado->getpessoa->email }}">
                                     </div>
                                 </div>
@@ -71,30 +71,30 @@
 
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Documento de Identificação</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="documento">Documento de Identificação</label>
+                                        <input type="text" name="documento" maxlength="50" class="form-control form-control-sm" id="documento"
                                             value="{{ $advogado->getpessoa->documento }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Nº Documento</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="num_documento">Nº Documento</label>
+                                        <input type="text" id="num_documento" maxlength="30" class="form-control form-control-sm" name="num_documento"
                                             value="{{ $advogado->getpessoa->num_documento }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Nº Telefone</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="telefone1">Nº Telefone</label>
+                                        <input type="text" id="telefone1" maxlength="9" class="form-control form-control-sm" name="telefone1"
                                             value="{{ $advogado->getpessoa->telefone1 }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Nº Telefone Alternativo</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="telefone2">Nº Telefone Alternativo</label>
+                                        <input type="text" id="telefone2" maxlength="9" class="form-control form-control-sm" name="telefone2"
                                             value="{{ $advogado->getpessoa->telefone2 }}">
                                     </div>
                                 </div>
@@ -115,8 +115,8 @@
 
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="genero">Categoria</label>
-                                        <select class="form-control form-control-sm" name="genero" id="genero">
+                                        <label for="categoria">Categoria</label>
+                                        <select class="form-control form-control-sm" name="categoria" id="categoria">
                                             <option {{ $advogado->categoria == 'Estagiario' ? 'selected' : '' }}
                                                 value="Estagiario">Estagiario</option>
                                             <option {{ $advogado->categoria == 'Advogado' ? 'selected' : '' }}
@@ -129,15 +129,15 @@
 
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Nº Cédula Advogado</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="num_associado">Nº Cédula Advogado</label>
+                                        <input type="text" id="num_associado" maxlength="7" class="form-control form-control-sm" name="num_associado"
                                             value="{{ $advogado->num_associado }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-3">
                                     <div class="form-group">
-                                        <label for="titulo">Nº Cédula Estagiário</label>
-                                        <input type="text" id="titulo" class="form-control form-control-sm" id="titulo"
+                                        <label for="num_estagiario">Nº Cédula Estagiário</label>
+                                        <input type="text" id="num_estagiario" maxlength="7" class="form-control form-control-sm" name="num_estagiario"
                                             value="{{ $advogado->num_estagiario }}">
                                     </div>
                                 </div>
@@ -153,16 +153,16 @@
 
                                     <div class="col-lg-6 col-6">
                                         <div class="form-group">
-                                            <label for="titulo">Nome do patrono</label>
-                                            <input type="text" id="titulo" class="form-control form-control-sm"
-                                                id="titulo" value="{{ $advogado->nome_patrono }}">
+                                            <label for="nome_patrono">Nome do patrono</label>
+                                            <input type="text" id="nome_patrono" class="form-control form-control-sm"
+                                                name="nome_patrono" maxlength="80" value="{{ $advogado->nome_patrono }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-3">
                                         <div class="form-group">
-                                            <label for="titulo">Email do patrono</label>
-                                            <input type="text" id="titulo" class="form-control form-control-sm"
-                                                id="titulo" value="{{ $advogado->email_patrono }}">
+                                            <label for="email_patrono">Email do patrono</label>
+                                            <input type="text" id="email_patrono" class="form-control form-control-sm"
+                                                name="email_patrono" maxlength="150" value="{{ $advogado->email_patrono }}">
                                         </div>
                                     </div>
 
@@ -170,7 +170,7 @@
                                         <div class="form-group">
                                             <label for="telefone_patrono">Nº Telefone do Patrono</label>
                                             <input type="text" id="telefone_patrono"
-                                                class="form-control form-control-sm" name="telefone_patrono"
+                                                class="form-control form-control-sm" maxlength="9" name="telefone_patrono"
                                                 value="{{ $advogado->telefone_patrono }}">
                                         </div>
                                     </div>
@@ -183,14 +183,14 @@
                                         <div class="form-group">
                                             <label for="nome_escritorio">Nome do escritório</label>
                                             <input type="text" id="nome_escritorio" class="form-control form-control-sm"
-                                                id="nome_escritorio" value="{{ $advogado->nome_escritorio }}">
+                                                name="nome_escritorio" maxlength="100" value="{{ $advogado->nome_escritorio }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-6">
                                         <div class="form-group">
                                             <label for="endereco_escritorio">Endereço do escritório</label>
                                             <input type="text" id="endereco_escritorio"
-                                                class="form-control form-control-sm" id="endereco_escritorio"
+                                                class="form-control form-control-sm" maxlength="200" name="endereco_escritorio"
                                                 value="{{ $advogado->endereco_escritorio }}">
                                         </div>
                                     </div>
@@ -217,5 +217,5 @@
 
 @section('script-aux')
     <script src="{{ asset('assets/template/src/assets/js/scrollspyNav.js') }}"></script>
-    <script src="{{ asset('assets/system/js/editar-noticia.js') }}"></script>
+    <script src="{{ asset('assets/system/js/actualizar-dados-advogado.js') }}"></script>
 @endsection
