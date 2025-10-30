@@ -75,6 +75,7 @@
                             </tbody>
                         </table>
                     </div>
+                       <a href="{{route('system.admin.export_lawyers')}}" class="btn btn-success mt-3 mb-5">Exportar em Excel</a>
                 </div>
             </div>
         </div>

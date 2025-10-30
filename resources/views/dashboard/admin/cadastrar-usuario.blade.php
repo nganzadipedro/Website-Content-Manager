@@ -5,6 +5,16 @@
 
 <div>
 
+ <style>
+        .title-page {
+            font-size: 20px !important;
+            font-weight: bold !important;
+            color: #fff !important;
+            background-color: #3c7bb2ff !important;
+            display: inline-block !important;
+        }
+    </style>
+
     <div class="container">
 
         <div class="container">
@@ -16,7 +26,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Cadastrar Usuários</h4>
+                                    <h4 class="title-page">Cadastrar Usuários</h4>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +121,9 @@
                                             class="form-control form-control-sm">
                                             <option>Selecione...</option>
                                             @foreach ($permissoes as $perm)
-                                                <option value="{{$perm->id}}">{{$perm->descricao}}</option>
+                                                @if ($perm->id != 3)
+                                                    <option value="{{$perm->id}}">{{$perm->descricao}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('nivel_acesso')

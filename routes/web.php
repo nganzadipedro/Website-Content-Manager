@@ -38,7 +38,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
-
     Route::get('/trata-dados', 'Controllers\WebsiteController@trans_dados');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
@@ -57,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
                 });
 
                 Route::get('/dashboard', 'Livewire\Admin\Dashboard')->name('dashboard');
+                Route::get('/dashboard-system', 'Livewire\Admin\Dashboardsistema')->name('dashboard_system');
                 Route::get('/newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
                 Route::get('/gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
                 Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
@@ -66,13 +66,16 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
                 Route::get('/messages/details/{hash}', 'Livewire\Admin\Detalhesmensagem')->name('detalhesmensagem');
                 Route::get('/complaints/details/{hash}', 'Livewire\Admin\Detalhesdenuncia')->name('detalhesdenuncia');
-                Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
-
+            
                 Route::get('/view/atachment/{filename}', 'Controllers\PostController@getfile')->name('getfile');
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
                 Route::get('/list/undefined', 'Livewire\Admin\Listarindefinidos')->name('list_undefined');
                 Route::get('/edit-data/member/{hash}', 'Livewire\Admin\Editarassociado')->name('edit_member');
+
+                Route::get('/new/user', 'Livewire\Admin\Cadastrarusuario')->name('new_user');
+                Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
+                Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
                 Route::post('/gallery/post', 'Controllers\PostController@gallery_post');
@@ -82,6 +85,10 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/gallery/delete', 'Controllers\PostController@delete_gallery');
                 Route::post('/newslater/update', 'Controllers\PostController@newslater_update');
                 Route::post('/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
+
+                Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
+                Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
+                Route::get('/export-trainees', 'Controllers\AdvogadoController@export_trainees')->name('export_trainees');
 
             });
         });

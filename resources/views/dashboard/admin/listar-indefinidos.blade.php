@@ -67,17 +67,16 @@
                                         <td>{{$item->num_estagiario}}</td>
                                         <td>{{$item->getpessoa->num_documento}}</td>
                                         <td>
-
-                                             <span style="cursor:pointer;" class="btn-edit" data-id="{{ $item->hash }}">
+                                            <span style="cursor:pointer;" class="btn-edit" data-id="{{ $item->hash }}">
                                                 <i data-feather="edit"></i>
                                             </span>
-                            
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                    <a href="{{route('system.admin.export_undefined')}}" class="btn btn-success mt-3 mb-5">Exportar em Excel</a>
                 </div>
             </div>
         </div>

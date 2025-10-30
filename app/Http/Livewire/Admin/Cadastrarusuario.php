@@ -27,9 +27,9 @@ class Cadastrarusuario extends Component
         'email' => 'required|email|unique:pessoa',
         'genero' => 'required',
         'documento' => 'required',
-        'num_documento' => 'required|unique:pessoa',
+        'num_documento' => 'required|unique:pessoa|max:14|min:14',
         'telefone1' => 'required|unique:pessoa',
-        'telefone2' => 'required|unique:pessoa',
+        // 'telefone2' => 'required|unique:pessoa',
         'nivel_acesso' => 'required',
     ];
 
@@ -80,6 +80,7 @@ class Cadastrarusuario extends Component
         $this->num_documento = null;
 
         session()->flash('message', 'Usuário cadastrado com sucesso!');
+        return redirect()->route('system.admin.listusuario');
 
     }
 }

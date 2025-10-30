@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Listaindefinidosexport;
+use App\Exports\Listaestagiariosexport;
+use App\Exports\Listaadvogadosexport;
 use App\Models\Denuncia;
 use App\Models\Galeria;
 use App\Models\Mensagem;
@@ -11,6 +14,7 @@ use App\Models\Platform\Advogado;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdvogadoController extends Controller
 {
@@ -77,6 +81,30 @@ class AdvogadoController extends Controller
 
         ActividadesistemaController::inserir(Auth::id(), "Actualizou os dados do advogado ($pessoa->nome)", 'geral', $pessoa->id);
         return 'sucesso';
+
+    }
+
+    public function export_undefined()
+    {
+
+        $nome_file = 'lista_advogados_por_especificar';
+        return Excel::download(new Listaindefinidosexport(), $nome_file . '.xlsx');
+
+    }
+
+    public function export_trainees()
+    {
+
+        $nome_file = 'lista_advogados_estagiarios';
+        return Excel::download(new Listaestagiariosexport(), $nome_file . '.xlsx');
+
+    }
+
+    public function export_lawyers()
+    {
+
+        $nome_file = 'lista_advogados';
+        return Excel::download(new Listaadvogadosexport(), $nome_file . '.xlsx');
 
     }
 
