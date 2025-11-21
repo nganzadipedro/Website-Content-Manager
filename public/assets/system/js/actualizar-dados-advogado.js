@@ -156,7 +156,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
             showLoaderOnConfirm: true,
             preConfirm: function () {
                 return $.ajax({
-                    url: "/system/admin/lawyier/update_data",
+                    url: "/system/lawyier/update_data",
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     },

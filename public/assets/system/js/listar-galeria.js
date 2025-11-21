@@ -18,7 +18,7 @@ $(document).on('click', '.delete-image', function (e) {
         showLoaderOnConfirm: true,
         preConfirm: function () {
             return $.ajax({
-                url: "/system/admin/gallery/delete",
+                url: "/system/gallery/delete",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

@@ -85,7 +85,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
             showLoaderOnConfirm: true,
             preConfirm: function () {
                 return $.ajax({
-                    url: "/system/admin/gallery/post",
+                    url: "/system/gallery/post",
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     },

@@ -17,7 +17,7 @@ $(document).on('click', '.delete-news', function (e) {
         showLoaderOnConfirm: true,
         preConfirm: function () {
             return $.ajax({
-                url: "/system/admin/newslater/delete",
+                url: "/system/newslater/delete",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

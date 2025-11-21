@@ -207,7 +207,7 @@
                 </a>
                 <ul class="dropdown-menu submenu list-unstyled" id="dashboard" data-bs-parent="#accordionExample">
                     <li class="active">
-                        <a href="{{ route('system.admin.dashboard') }}"> Dados Resumo </a>
+                        <a href="{{ route('system.gestor.dashboard') }}"> Dados Resumo </a>
                     </li>
                 </ul>
             </li>
@@ -244,10 +244,10 @@
                 </a>
                 <ul class="dropdown-menu submenu list-unstyled" id="apps" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="{{route('system.admin.cadnoticia')}}"> Cadastrar </a>
+                        <a href="{{route('system.gestor.cadnoticia')}}"> Cadastrar </a>
                     </li>
                     <li>
-                        <a href="{{route('system.admin.listnoticia')}}"> Listar </a>
+                        <a href="{{route('system.gestor.listnoticia')}}"> Listar </a>
                     </li>
                 </ul>
             </li>
@@ -284,10 +284,10 @@
                 </a>
                 <ul class="dropdown-menu submenu list-unstyled" id="components" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="{{route('system.admin.cadgaleria')}}"> Adicionar Imagem</a>
+                        <a href="{{route('system.gestor.cadgaleria')}}"> Adicionar Imagem</a>
                     </li>
                     <li>
-                        <a href="{{route('system.admin.listgaleria')}}"> Listar Imagens </a>
+                        <a href="{{route('system.gestor.listgaleria')}}"> Listar Imagens </a>
                     </li>
                 </ul>
             </li>
@@ -316,10 +316,10 @@
                 </a>
                 <ul class="dropdown-menu submenu list-unstyled" id="components" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="{{route('system.admin.listmessages', 'not-solved')}}"> Pendentes</a>
+                        <a href="{{route('system.gestor.listmessages', 'not-solved')}}"> Pendentes</a>
                     </li>
                     <li>
-                        <a href="{{route('system.admin.listmessages', 'solved')}}"> Atendidas </a>
+                        <a href="{{route('system.gestor.listmessages', 'solved')}}"> Atendidas </a>
                     </li>
                 </ul>
             </li>
@@ -348,10 +348,10 @@
                 </a>
                 <ul class="dropdown-menu submenu list-unstyled" id="components" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="{{route('system.admin.listdenuncias', 'not-solved')}}"> Pendentes</a>
+                        <a href="{{route('system.gestor.listdenuncias', 'not-solved')}}"> Pendentes</a>
                     </li>
                     <li>
-                        <a href="{{route('system.admin.listdenuncias', 'solved')}}"> Atendidas </a>
+                        <a href="{{route('system.gestor.listdenuncias', 'solved')}}"> Atendidas </a>
                     </li>
                 </ul>
             </li>

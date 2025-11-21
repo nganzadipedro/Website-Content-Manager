@@ -5,13 +5,15 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conselho Provincial de Luanda da Ordem dos Advogados de Angola">
+    <meta name="author" content="Conselho Provincial de Luanda da Ordem dos Advogados de Angola">
     <title>Início</title>
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/team-slider.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/brands-slider.css') }}">
-    
+
 </head>
 
 <body class="main-page">
@@ -27,20 +29,40 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                     <div class="content">
-                        <div class="img-advogado order-sm-0 col-md-6">
+                        <div class="img-advogado">
                             <img src="{{ asset('assets/website/img/dr_nilton_praia_2.png') }}" alt="">
                         </div>
-                        <div class="description order-sm-1 col-md-6">
+                         <div class="description">
                             <h2>Nilton José Lopes Praia</h2>
                             <span>Presidente do CPL-OAA</span>
-                            <h3>Mensagem do Presidente</h3>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                                pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-                                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-                                egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper
-                                vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-                                himenaeos.
+                                Ilustres Colegas,<br>
+                                Caros Cidadãos,<br><br>
+                                O Conselho Provincial de Luanda da Ordem dos Advogados de Angola (CPL) reafirma, através
+                                desta mensagem, o seu compromisso inabalável com a defesa do Estado Democrático de
+                                Direito, com a protecção dos direitos, liberdades e garantias fundamentais e com a
+                                dignidade do exercício da Advocacia na nossa província.<br><br>
+                                Vivemos um tempo de grandes desafios sociais, económicos e institucionais, em que a
+                                Advocacia assume um papel cada vez mais determinante na promoção da justiça e na
+                                salvaguarda dos direitos dos cidadãos. O CPL continuará a trabalhar para fortalecer a
+                                confiança do público na Justiça e para valorizar o papel do Advogado enquanto órgão
+                                auxiliar e essencial ao funcionamento de um Estado de Direito moderno, transparente e
+                                inclusivo.<br><br>
+                                A nossa actuação continuará assente na independência, na ética, na deontologia e na
+                                excelência profissional. Estamos empenhados em elevar a qualidade dos serviços prestados
+                                aos nossos associados, reforçar as acções de formação, assegurar maior celeridade
+                                administrativa e promover iniciativas de responsabilidade social que aproximem a
+                                Advocacia da comunidade. Aos Advogados e Advogados Estagiários, reitero o apelo à união,
+                                colegialidade e
+                                participação activa na vida da nossa instituição. É com o contributo de todos que
+                                edificaremos uma Ordem mais forte, mais presente e mais preparada para os desafios do
+                                futuro.<br><br>
+                                Ao público em geral, renovamos o nosso compromisso de servir com transparência, rigor e
+                                sentido de missão, garantindo que a Advocacia continue a ser voz da cidadania e
+                                instrumento de protecção da justiça e da liberdade.
+                                O Conselho Provincial de Luanda permanece aberto ao diálogo, à colaboração e à melhoria
+                                contínua. Juntos, continuaremos a honrar a nobre missão da Advocacia angolana.
+
                             </p>
                         </div>
                     </div>
@@ -79,26 +101,30 @@
                         <h3 class="title">Quem Somos?</h3>
                         <h4 class="subtitle">O Conselho Provincial de Luanda da Ordem dos Advogados de Angola</h4>
                         <p class="description">
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                            pellentesque
-                            sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                            urna tempor.
-                            Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
-                            lacinia
-                            integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
-                            torquent per
-                            conubia nostra inceptos himenaeos.
+                            O Conselho Provincial de Luanda da Ordem dos Advogados de Angola é a estrutura
+                            representativa da classe dos Advogados e Advogados Estagiários na maior e mais dinâmica
+                            província do país. Trabalhamos para garantir a dignidade, a independência e a
+                            responsabilidade no exercício da Advocacia, promovendo a defesa dos direitos, liberdades e
+                            garantias dos cidadãos e contribuindo para o fortalecimento do Estado Democrático de
+                            Direito.
                         </p>
                         <p class="description">
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                            pellentesque
-                            sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                            urna tempor.
-                            Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
-                            lacinia
-                            integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
-                            torquent per
-                            conubia nostra inceptos himenaeos.
+                            A nossa actuação está assente numa missão clara: assegurar o cumprimento das normas
+                            deontológicas, valorizar o papel social da Advocacia e garantir que a classe exerça a sua
+                            função com excelência técnica, ética e autonomia. Orientamo-nos por uma visão de
+                            modernidade, boa governação e compromisso público, procurando ser um Conselho Provincial de
+                            referência nacional na defesa intransigente da classe e na promoção de uma Justiça mais
+                            próxima, eficiente e confiável.
+                            <br><br>
+                            Inspiramo-nos nos valores que definem a melhor prática da Advocacia: independência, ética,
+                            legalidade, excelência profissional, solidariedade, responsabilidade social e transparência.
+                            Cada uma das nossas iniciativas reflecte estes princípios, reforçando o prestígio da Ordem
+                            dos Advogados de Angola e contribuindo para uma relação construtiva entre os profissionais
+                            do Direito, as instituições e a sociedade.
+
+                            Somos uma entidade comprometida com a formação contínua, o rigor institucional e o serviço
+                            público, trabalhando diariamente para fortalecer a imagem da Advocacia em Luanda e criar
+                            condições para uma Justiça mais fiel aos seus princípios e à dignidade humana.
                         </p>
                     </div>
                 </div>
@@ -106,8 +132,8 @@
         </div>
     </section>
 
-    <div class="container">
-        <section class="section-values">
+     <section class="section-values">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     <div class="content">
@@ -117,13 +143,10 @@
                                 <h3>MISSÃO</h3>
                             </div>
                             <p class="description">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                                pellentesque sem placerat. In id cursus mi pretium etiam duis sem convallis. Tempus duis
-                                eu
-                                aenean sed sem urna tempor etiam. Pulvinar Vivamus etiam lacunei metus etiam bibendum
-                                egestas. Iaculis massa justo lacinia lorem nunc posuere. Ut etiam semper viverra
-                                id class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-                                himenaeos.
+                                Garantir a defesa do Estado Democrático de Direito, assegurar o cumprimento das normas
+                                deontológicas da Advocacia e promover o exercício digno, independente e responsável da
+                                profissão, contribuindo para o acesso efectivo à justiça e para a protecção dos
+                                direitos, liberdades e garantias dos cidadãos na Província de Luanda.
                             </p>
                         </div>
                         <div class="item">
@@ -132,41 +155,71 @@
                                 <h3>VISÃO</h3>
                             </div>
                             <p class="description">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                                pellentesque sem placerat. In id cursus mi pretium etiam duis sem convallis. Tempus duis
-                                eu
-                                aenean sed sem urna tempor etiam. Pulvinar Vivamus etiam lacunei metus etiam bibendum
-                                egestas. Iaculis massa justo lacinia lorem nunc posuere. Ut etiam semper viverra
-                                id class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-                                himenaeos.
+                                Ser um Conselho Provincial de referência nacional na boa governação institucional, na
+                                defesa intransigente da classe e na promoção de uma Advocacia tecnicamente qualificada,
+                                ética, moderna e socialmente comprometida, fortalecendo a confiança do público na
+                                Justiça e o prestígio da Ordem dos Advogados de Angola.
                             </p>
                         </div>
-                        <div class="item">
+                    </div>
+
+                    <div class="content-values">
+                        <div class="img-advogado">
+                            <img src="{{ asset('assets/website/img/galeria/student05.jpg') }}" alt="">
+                        </div>
+                        <div class="description-values">
                             <div class="title">
                                 <img src="{{ asset('assets/website/icons/law.png') }}" alt="">
                                 <h3>VALORES</h3>
                             </div>
-                            <p class="description">
-                                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-                                pellentesque sem placerat. In id cursus mi pretium etiam duis sem convallis. Tempus duis
-                                eu
-                                aenean sed sem urna tempor etiam. Pulvinar Vivamus etiam lacunei metus etiam bibendum
-                                egestas. Iaculis massa justo lacinia lorem nunc posuere. Ut etiam semper viverra
-                                id class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-                                himenaeos.
-                            </p>
+                            <div class="items">
+                                <div class="item">
+                                    <h4>Independência</h4>
+                                    <p>Actuamos com autonomia funcional, técnica e institucional, assegurando que a
+                                        Advocacia mantém a sua liberdade de pensamento e de intervenção pública.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Ética e Deontologia</h4>
+                                    <p>Pautamos toda a actuação pelos princípios éticos, pelo sigilo profissional, pela
+                                        lealdade, transparência e rigor.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Justiça e Legalidade</h4>
+                                    <p>Promovemos a defesa dos direitos fundamentais, o respeito pela lei e o
+                                        cumprimento das garantias processuais.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Excelência Profissional</h4>
+                                    <p>Estimamos a formação contínua, a competência técnica e a elevação da Advocacia
+                                        como serviço essencial à sociedade.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Solidariedade e Colegialidade</h4>
+                                    <p>Valorizamos o espírito de união, respeito mútuo e apoio entre os Advogados e
+                                        Advogados Estagiários.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Responsabilidade Social</h4>
+                                    <p>Actuamos com compromisso público, promovendo iniciativas de acesso à justiça,
+                                        educação jurídica e intervenção cívica.</p>
+                                </div>
+                                <div class="item">
+                                    <h4>Transparência e Boa Governação</h4>
+                                    <p>Promovemos gestão responsável, eficiência administrativa e comunicação clara com
+                                        os associados e a sociedade.</p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="scroll-down-arrow">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-
-    <div class="scroll-down-arrow">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+        </div>
+    </section>
 
     <section class="section-team">
         <div class="container">

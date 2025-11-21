@@ -37,10 +37,20 @@
                                         <td>{{$item->getpermissao->descricao}}</td>
                                         <td>
 
-                                            <span style="cursor:pointer;">
+                                            <a href="{{ route('system.admin.edit_user', $item->id) }}">
+
+                                                <i data-feather="edit"></i>
+
+
+                                            </a>
+
+                                            <a href="{{ route('system.admin.detalhes_user', $item->id) }}">
+
                                                 <i data-feather="eye"></i>
-                                            </span>
-                       
+
+
+                                            </a>
+
                                         </td>
                                     </tr>
                                 @endforeach

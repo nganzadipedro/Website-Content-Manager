@@ -101,7 +101,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
             showLoaderOnConfirm: true,
             preConfirm: function () {
                 return $.ajax({
-                    url: "/system/admin/newslater/post",
+                    url: "/system/newslater/post",
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     },

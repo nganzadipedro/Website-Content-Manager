@@ -117,29 +117,42 @@
 /* Responsividade para section-values */
 @media (max-width: 991.98px) {
     .section-values .content {
-        flex-wrap: wrap;
-        gap: 15px;
+        flex-direction: column;
+        gap: 20px;
     }
 
-    .section-values .content .item {
-        flex: 1 1 calc(50% - 15px);
-        box-sizing: border-box;
+    .section-values .content-values {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .section-values .content-values .img-advogado img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    .section-values .description-values .items {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 767.98px) {
-    .section-values .content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .section-values .content .item {
-        flex: 1 1 100%;
+    .section-values .content-values .img-advogado {
         margin-bottom: 20px;
     }
 
-    .section-values .content .item:last-child {
-        margin-bottom: 0;
+    .section-values .description-values .title h3 {
+        font-size: 1.8rem;
+    }
+
+    .section-values .description-values .items .item h4 {
+        font-size: 1.1rem;
+    }
+
+    .section-values .description-values .items .item p {
+        font-size: 0.9rem;
     }
 }
 

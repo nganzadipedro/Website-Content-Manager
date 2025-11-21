@@ -47,6 +47,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('logout', 'Controllers\Auth\LoginController@logout')->name('logout');
 
+    Route::post('system/newslater/post', 'Controllers\PostController@newslater_post');
+    Route::post('system/gallery/post', 'Controllers\PostController@gallery_post');
+    Route::post('system/complaint/post', 'Controllers\PostController@complaint_post');
+    Route::post('system/message/post', 'Controllers\PostController@message_post');
+    Route::post('system/newslater/delete', 'Controllers\PostController@delete_news');
+    Route::post('system/gallery/delete', 'Controllers\PostController@delete_gallery');
+    Route::post('system/newslater/update', 'Controllers\PostController@newslater_update');
+    Route::post('system/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
+
     Route::prefix('system')->name('system.')->group(function () {
 
         Route::group(['middleware' => 'admin'], function () {
@@ -66,7 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
                 Route::get('/messages/details/{hash}', 'Livewire\Admin\Detalhesmensagem')->name('detalhesmensagem');
                 Route::get('/complaints/details/{hash}', 'Livewire\Admin\Detalhesdenuncia')->name('detalhesdenuncia');
-            
+
                 Route::get('/view/atachment/{filename}', 'Controllers\PostController@getfile')->name('getfile');
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
@@ -76,6 +85,54 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/new/user', 'Livewire\Admin\Cadastrarusuario')->name('new_user');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
                 Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
+                Route::get('/users/edit/{id}', 'Livewire\Admin\Editarusuario')->name('edit_user');
+                Route::get('/users/details/{id}', 'Livewire\Admin\Detalhesusuario')->name('detalhes_user');
+
+                Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
+                Route::post('/gallery/post', 'Controllers\PostController@gallery_post');
+                Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
+                Route::post('/message/post', 'Controllers\PostController@message_post');
+                Route::post('/newslater/delete', 'Controllers\PostController@delete_news');
+                Route::post('/gallery/delete', 'Controllers\PostController@delete_gallery');
+                Route::post('/newslater/update', 'Controllers\PostController@newslater_update');
+                Route::post('/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
+
+                Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
+                Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
+                Route::get('/export-trainees', 'Controllers\AdvogadoController@export_trainees')->name('export_trainees');
+
+            });
+        });
+
+        Route::group(['middleware' => 'gestor'], function () {
+            Route::prefix('gestor')->name('gestor.')->group(function () {
+                Route::get('/', function () {
+                    return redirect('/system/gestor/dashboard');
+                });
+
+                Route::get('/dashboard', 'Livewire\Admin\Dashboard')->name('dashboard');
+                Route::get('/dashboard-system', 'Livewire\Admin\Dashboardsistema')->name('dashboard_system');
+                Route::get('/newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
+                Route::get('/gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
+                Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
+                Route::get('/gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
+                Route::get('/messages/list/{tipo}', 'Livewire\Admin\Listarmensagens')->name('listmessages');
+                Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
+                Route::get('/newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
+                Route::get('/messages/details/{hash}', 'Livewire\Admin\Detalhesmensagem')->name('detalhesmensagem');
+                Route::get('/complaints/details/{hash}', 'Livewire\Admin\Detalhesdenuncia')->name('detalhesdenuncia');
+
+                Route::get('/view/atachment/{filename}', 'Controllers\PostController@getfile')->name('getfile');
+                Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
+                Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
+                Route::get('/list/undefined', 'Livewire\Admin\Listarindefinidos')->name('list_undefined');
+                Route::get('/edit-data/member/{hash}', 'Livewire\Admin\Editarassociado')->name('edit_member');
+
+                Route::get('/new/user', 'Livewire\Admin\Cadastrarusuario')->name('new_user');
+                Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
+                Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
+                Route::get('/users/edit/{id}', 'Livewire\Admin\Editarusuario')->name('edit_user');
+                Route::get('/users/details/{id}', 'Livewire\Admin\Detalhesusuario')->name('detalhes_user');
 
                 Route::post('/newslater/post', 'Controllers\PostController@newslater_post');
                 Route::post('/gallery/post', 'Controllers\PostController@gallery_post');

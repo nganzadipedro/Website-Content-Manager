@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Http\Controllers\ActividadesistemaController;
+use App\Http\Controllers\MailController;
 use App\Models\Permissao;
 use App\Models\Pessoa;
 use App\Models\User;
@@ -69,6 +71,13 @@ class Cadastrarusuario extends Component
             'estado' => 'ativo',
             'password' => Hash::make($senha)
         ]);
+
+        $nome = $this->nome_completo;
+        ActividadesistemaController::inserir(null, "Cadastrou um novo usuário: $nome", 'user', $user->id);
+
+        // envia email para o usuário
+        $ob = new MailController();
+        $res = $ob->mailUsuario($this->email, $this->nome_completo, $this->telefone1, $this->num_documento, $senha, $this->nivel_acesso);
 
         $this->nome_completo = null;
         $this->genero = null;
