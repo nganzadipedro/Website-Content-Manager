@@ -25,7 +25,6 @@
     }
 }
 
-
 /* Responsividade para section-menu */
 @media (max-width: 991.98px) {
     .section-menu .navbar-nav {
@@ -296,18 +295,18 @@
     }
 
     .main-page .section-feature .content .text-area .title-section {
-    font-weight: bold;
-    border-left: var(--cor-yellow-one) solid 10px;
-    padding-left: 10px;
-    color: var(--cor-gray);
-    font-size: 2rem;
+        font-weight: bold;
+        border-left: var(--cor-yellow-one) solid 10px;
+        padding-left: 10px;
+        color: var(--cor-gray);
+        font-size: 2rem;
     }
 
     .main-page .section-feature .content .text-area .title-feature {
-    padding: 8px 0px;
-    font-weight: bold;
-    font-size: 1.8rem;
-    color: var(--cor-black);
+        padding: 8px 0px;
+        font-weight: bold;
+        font-size: 1.8rem;
+        color: var(--cor-black);
     }
 
     .main-page .section-feature .content .text-area a {
@@ -332,7 +331,8 @@
     }
 
     .main-page .section-feature .content .text-area .title-section {
-        font-size: 2.5rem; /* Alinhado com section-team */
+        font-size: 2.5rem;
+        /* Alinhado com section-team */
     }
 
     .main-page .section-feature .content .text-area .title-feature {
@@ -356,13 +356,13 @@
     }
 
     .main-page .section-feature .content .text-area .title-section {
-        font-size: 2rem; /* Alinhado com section-team para telas pequenas */
+        font-size: 2rem;
+        /* Alinhado com section-team para telas pequenas */
     }
 
     .main-page .section-feature .content .text-area .title-feature {
         font-size: 1.4rem;
     }
-
 
     .main-page .section-feature .content .text-area a {
         font-size: 0.8rem;
@@ -372,5 +372,34 @@
     .main-page .section-feature .content img {
         width: 100%;
         max-width: 250px;
+    }
+}
+
+@media (min-width: 992px) {
+    .valores-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .valores-grid .ultimo-valor {
+        grid-column: 1 / 3;
+        justify-self: center;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .valores-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .valores-grid .item {
+        padding: 18px;
+    }
+
+    .valores-grid .ultimo-valor {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        max-width: 100%;
     }
 }

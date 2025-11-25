@@ -32,7 +32,7 @@
                         <div class="img-advogado">
                             <img src="{{ asset('assets/website/img/dr_nilton_praia_2.png') }}" alt="">
                         </div>
-                         <div class="description">
+                        <div class="description">
                             <h2>Nilton José Lopes Praia</h2>
                             <span>Presidente do CPL-OAA</span>
                             <p>
@@ -69,9 +69,11 @@
                 </div>
             </div>
         </section>
+    </div>
 
-        @if ($noticia_destaque != null)
-            <section class="section-feature">
+    @if ($noticia_destaque != null)
+        <section class="section-feature">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <div class="content">
@@ -88,10 +90,9 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        @endif
-
-    </div>
+            </div>
+        </section>
+    @endif
 
     <section class="section-about">
         <div class="container">
@@ -132,7 +133,7 @@
         </div>
     </section>
 
-     <section class="section-values">
+    <section class="section-values">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-xs-12">
@@ -164,15 +165,14 @@
                     </div>
 
                     <div class="content-values">
-                        <div class="img-advogado">
-                            <img src="{{ asset('assets/website/img/galeria/student05.jpg') }}" alt="">
-                        </div>
                         <div class="description-values">
                             <div class="title">
                                 <img src="{{ asset('assets/website/icons/law.png') }}" alt="">
                                 <h3>VALORES</h3>
                             </div>
-                            <div class="items">
+
+                            <!-- Grid com Bootstrap: 1 coluna em mobile, 2 colunas em md+ -->
+                            <div class="items valores-grid">
                                 <div class="item">
                                     <h4>Independência</h4>
                                     <p>Actuamos com autonomia funcional, técnica e institucional, assegurando que a
@@ -200,10 +200,10 @@
                                 </div>
                                 <div class="item">
                                     <h4>Responsabilidade Social</h4>
-                                    <p>Actuamos com compromisso público, promovendo iniciativas de acesso à justiça,
-                                        educação jurídica e intervenção cívica.</p>
+                                    <p>Actuamos comando com compromisso público, promovendo iniciativas de acesso à
+                                        justiça, educação jurídica e intervenção cívica.</p>
                                 </div>
-                                <div class="item">
+                                <div class="item ultimo-valor">
                                     <h4>Transparência e Boa Governação</h4>
                                     <p>Promovemos gestão responsável, eficiência administrativa e comunicação clara com
                                         os associados e a sociedade.</p>
@@ -211,6 +211,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="scroll-down-arrow">
                         <span></span>
                         <span></span>
