@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conselho Provincial de Luanda da Ordem dos Advogados de Angola">
+    <meta name="author" content="Conselho Provincial de Luanda da Ordem dos Advogados de Angola">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Assistência Judiciária</title>
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">

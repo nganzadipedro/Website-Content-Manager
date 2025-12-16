@@ -17,7 +17,8 @@
                                 Judiciária</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Galeria</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contactos</a></li>
-                        <li class="nav-item"><a class="nav-link btn-signin" href="{{ route('login') }}">Área Reservada</a></li>
+                        <li class="nav-item"><a class="nav-link btn-signin" href="{{ route('login') }}">Área
+                                Reservada</a></li>
                     </ul>
                 </div>
             </nav>
