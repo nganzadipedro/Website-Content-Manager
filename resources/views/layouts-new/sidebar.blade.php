@@ -38,7 +38,7 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Fronteiras
+                                Registo de Entradas
                             </span>
                         </a>
                         <div class="dropdown-menu">
@@ -72,23 +72,14 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Movimentos
+                                Pedidos de AJ
                             </span>
                         </a>
                         <div class="dropdown-menu">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="./alerts.html">
-                                        Novo Movimento
-                                    </a>
-                                    <a class="dropdown-item" href="./alerts.html">
-                                        Entradas
-                                    </a>
-                                    <a class="dropdown-item" href="./accordion.html">
-                                        Saídas
-                                    </a>
-                                    <a class="dropdown-item" href="./accordion.html">
-                                        Lista Geral
+                                        Pendentes
                                     </a>
                                 </div>
                             </div>

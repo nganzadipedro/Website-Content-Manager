@@ -107,7 +107,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
                                 timer: 6000
                             });
                             
-                            window.location.href = '/system/admin/gallery/list';
+                            window.location.href = '/gallery/list';
 
                         }
                         else if (res == 'documento') {

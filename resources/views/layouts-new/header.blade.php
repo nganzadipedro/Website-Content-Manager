@@ -6,8 +6,8 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-                <img src="{{ asset('assets/template/dist/img/logo.jpg') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-                SGF - PGF
+                <img src="{{ asset('images/logo_oaa_cor.png') }}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                CPL-OAA | Sistema de Gestão de Informações |
             </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">

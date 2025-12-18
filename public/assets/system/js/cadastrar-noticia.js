@@ -123,7 +123,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
                                 timer: 6000
                             });
 
-                            window.location.href = '/system/admin/newslater/list';
+                            window.location.href = '/newslater/list';
 
                         }
                         else if (res == 'documento') {

@@ -89,6 +89,6 @@ class Dashboard extends Component
             ->whereYear('created_at', $anoAtual)
             ->count();
 
-        return view('dashboard.admin.index')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.index')->extends('layouts-new.app')->section('content');
     }
 }

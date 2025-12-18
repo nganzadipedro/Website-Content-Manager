@@ -8,6 +8,6 @@ class Cadastrarnoticia extends Component
 {
     public function render()
     {
-         return view('dashboard.admin.cadastrar-noticia')->extends('layouts.main')->section('content');
+         return view('dashboard.admin.cadastrar-noticia')->extends('layouts-new.app')->section('content');
     }
 }

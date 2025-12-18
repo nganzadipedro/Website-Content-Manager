@@ -12,6 +12,6 @@ class Listargaleria extends Component
     public function render()
     {
         $this->lista_galeria = Galeria::orderBy('id', 'desc')->get();
-        return view('dashboard.admin.listar-galeria')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.listar-galeria')->extends('layouts-new.app')->section('content');
     }
 }

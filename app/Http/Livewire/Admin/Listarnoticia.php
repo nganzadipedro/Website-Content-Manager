@@ -11,8 +11,7 @@ class Listarnoticia extends Component
     public $lista_noticias;
     public function render()
     {
-
         $this->lista_noticias = Noticia::orderBy('id', 'desc')->get();
-        return view('dashboard.admin.listar-noticias')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.listar-noticias')->extends('layouts-new.app')->section('content');
     }
 }

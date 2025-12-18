@@ -89,7 +89,7 @@
                     <h3 class="mt-3 text-center">Conselho Provincial de Luanda da Ordem
                         dos Advogados de Angola
                     </h3>
-                    <h5 class="text-center"> = Sistema de Gestão de Informações = </h5>
+                    <h4 class="text-center"> = Sistema de Gestão de Informações = </h4>
                 </div>
             </div>
         </div>

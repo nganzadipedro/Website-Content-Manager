@@ -8,6 +8,6 @@ class Cadastrargaleria extends Component
 {
     public function render()
     {
-        return view('dashboard.admin.cadastrar-galeria')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.cadastrar-galeria')->extends('layouts-new.app')->section('content');
     }
 }
