@@ -17,7 +17,7 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">
+                            <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-primary">
                                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="h1 mb-3">1230</div>
+                                <div class="h1 mb-3">{{ $vetor_acessos[0] }}</div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-baseline">
-                                    <div class="h1 mb-0 me-2">300</div>
+                                    <div class="h1 mb-0 me-2">{{ $vetor_acessos[1] }}</div>
 
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-baseline">
-                                    <div class="h1 mb-3 me-2">82</div>
+                                    <div class="h1 mb-3 me-2">{{ $vetor_acessos[2] }}</div>
 
                                 </div>
 
@@ -93,13 +93,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
-                                    <div class="subheader">Postos Fronteiriços</div>
+                                    <div class="subheader">Registos de Entrada</div>
                                     <div class="ms-auto lh-1">
 
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-baseline">
-                                    <div class="h1 mb-3 me-2">86</div>
+                                    <div class="h1 mb-3 me-2">{{ $registos_entrada }}</div>
                                     <div class="me-auto">
 
                                     </div>
@@ -122,11 +122,9 @@
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                         <ul class="list-inline list-inline-dots mb-0">
                             <li class="list-inline-item">
-                                Copyright &copy; 2023
-                                <a href="." class="link-secondary">Polícia de Guarda Fronteira</a>.
-
+                                Copyright &copy; 2025
+                                <a href="." class="link-secondary">Conselho Provincial de Luanda da Ordem dos Advogados de Angola</a>.
                             </li>
-
                         </ul>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 
-class GestorMiddleware
+class SecretariaMiddleware
 {
     /**
      * Handle an incoming request.

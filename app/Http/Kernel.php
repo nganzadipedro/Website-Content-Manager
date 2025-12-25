@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
      *
      * @var array<string, class-string|string>
      */
+    
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -65,7 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'advogado' => \App\Http\Middleware\AdvogadoMiddleware::class,
-        'gestor' => \App\Http\Middleware\GestorMiddleware::class,
+        'secretaria' => \App\Http\Middleware\SecretariaMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class
     ];
 }

@@ -7,6 +7,7 @@ use App\Models\Candidatura;
 use App\Models\Fio\Candidaturaformacao;
 use App\Models\Fio\Formacao;
 use App\Models\Noticia;
+use App\Models\Registoentrada;
 use App\Models\Website;
 use Livewire\Component;
 use Carbon\Carbon;
@@ -20,6 +21,8 @@ class Dashboard extends Component
     public $noticias = array();
     public $total_views_noticias = 0;
 
+    public $registos_entrada = 0;
+
     public function render()
     {
 
@@ -30,6 +33,7 @@ class Dashboard extends Component
         $anoAtual = Carbon::now()->year;
 
         $this->vetor_acessos[0] = Website::where('pagina', 'home')->count();
+        $this->registos_entrada = Registoentrada::count();
         $this->noticias = Noticia::orderBy('views', 'desc')->take(5)->get();
         $this->vetor_acessos[1] = Website::where('pagina', 'home')->whereBetween('created_at', [$inicioSemana, $fimSemana])->count();
         $this->vetor_acessos[2] = Website::where('pagina', 'home')->whereMonth('created_at', $mesAtual)

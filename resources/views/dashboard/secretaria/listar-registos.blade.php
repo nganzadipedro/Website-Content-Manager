@@ -21,15 +21,9 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Listagem das notícias cadastradas</h3>
-                            <div class="markdown text-secondary">
-                                Encontre na tabela abaixo a lista de todas as notícias cadastradas no sistema.
-                            </div>
+                            <h3 class="h1">Listagem dos registos de entrada</h3>
                             <div class="mt-3">
-                                <a href="{{ route('cadnoticia') }}" class="btn btn-info" rel="noopener">Cadastrar nova
-                                    notícia</a>
-                                <a href="{{ route('manage_website') }}" class="btn btn-warning" target="_blank"
-                                    rel="noopener">Gerenciar Website</a>
+                                <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-info" rel="noopener">+ Novo Registo de Entrada +</a>
                             </div>
                         </div>
                     </div>
@@ -49,29 +43,27 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>ID</th>
-                                        <th>Título</th>
-                                        <th>Destaque</th>
-                                        <th>Categoria</th>
-                                        <th>Views</th>
+                                        <th>Nº Processo</th>
+                                        <th>Assunto</th>
+                                        <th>Data de Entrada</th>
+                                        <th>Proveniência</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($lista_noticias as $item)
+                                    @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$item->id}}</td>
-                                            <td>{{$item->titulo}}</td>
-                                            <td>{{$item->e_destaque}}</td>
-                                            <td>{{$item->categoria}}</td>
-                                            <td>{{$item->views}}</td>
+                                            <td>{{$item->codigo}}</td>
+                                            <td>{{$item->assunto}}</td>
+                                            <td>{{$item->data_entrada}}</td>
+                                            <td>{{$item->proveniencia}}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('editnoticia', $item->hash) }}">
+                                                <a class="btn btn-primary" href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
                                                     Editar
                                                 </a>
-                                                <a data-id="{{ $item->id }}" class="btn btn-danger delete-news">
-                                                    Eliminar
+                                                <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}" class="btn btn-info">
+                                                    Detalhes
                                                 </a>
                                             </td>
 

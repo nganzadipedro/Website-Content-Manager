@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/newslater/update', 'Controllers\PostController@newslater_update');
     Route::post('system/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
 
+    Route::get('system/getDaysWeek', 'Controllers\SystemController@diasUteis')->name('get_days_week');
+    Route::get('system/getDaysMonth', 'Controllers\SystemController@registosPorDiaMesAtual')->name('get_days_month');
+    Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
+
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
 
     Route::prefix('system')->name('system.')->group(function () {
@@ -95,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
                 Route::get('/users/edit/{id}', 'Livewire\Admin\Editarusuario')->name('edit_user');
                 Route::get('/users/details/{id}', 'Livewire\Admin\Detalhesusuario')->name('detalhes_user');
+
+
 
                 Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
                 Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
@@ -137,6 +143,23 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
                 Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
                 Route::get('/export-trainees', 'Controllers\AdvogadoController@export_trainees')->name('export_trainees');
+
+            });
+        });
+
+        Route::group(['middleware' => 'secretaria'], function () {
+            Route::prefix('secretaria')->name('secretaria.')->group(function () {
+
+                Route::get('/', function () {
+                    return redirect('/system/Secretaria/dashboard');
+                });
+
+                Route::get('/dashboard', 'Livewire\Secretaria\Dashboard')->name('dashboard');
+
+                Route::get('/new/process', 'Livewire\Secretaria\Registarentrada')->name('registar_entrada');
+                Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
+                Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
 
             });
         });

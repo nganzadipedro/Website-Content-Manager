@@ -58,7 +58,6 @@ class PostController extends Controller
 
         }
 
-
         ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova notícia ($noticia->titulo)", 'noticia', $noticia->id);
         return 'sucesso';
 

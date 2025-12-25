@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Livewire\Secretaria;
+
+use App\Http\Controllers\ActividadesistemaController;
+use App\Models\Registoentrada;
+use Auth;
+use Livewire\Component;
+
+class Registarentrada extends Component
+{
+
+    public $destinatario;
+    public $data_entrada;
+    public $assunto;
+    public $observacao;
+    public $tipo_documento;
+    public $proveniencia;
+
+    public function render()
+    {
+        return view('dashboard.secretaria.registar-entrada')->extends('layouts-new.app')->section('content');
+    }
+
+    public function salvar()
+    {
+
+        if ($this->assunto == '' || $this->assunto == null) {
+            $this->mensagem('Digite o assunto', 'warning');
+        } else if ($this->proveniencia == '' || $this->proveniencia == null) {
+            $this->mensagem('Informe a proveniência', 'warning');
+        } else if ($this->data_entrada == '' || $this->data_entrada == null) {
+            $this->mensagem('Informe a data de entrada', 'warning');
+        } else {
+
+            $registo = Registoentrada::create([
+                'assunto' => $this->assunto,
+                'proveniencia' => $this->proveniencia,
+                'data_entrada' => $this->data_entrada,
+                'observacao' => $this->observacao,
+                'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
+                'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,
+                'user_id' => Auth::user()->id
+            ]);
+
+            $registo->hash = md5($registo->created_at . $registo->id . $registo->user_id);
+            $registo->numero = $registo->id;
+            $registo->save();
+            $registo->codigo = $registo->numero . '/2025';
+            $registo->save();
+
+            ActividadesistemaController::inserir(Auth::id(), "Registo de entrada do processo na secretária ($registo->assunto)", 'registo-entrada', $registo->id);
+
+            $this->mensagemRefresh('Registo efectuado com sucesso', 'success');
+
+        }
+
+    }
+
+    private function mensagem($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal2', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
+    }
+
+    private function mensagemRefresh($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
+    }
+}

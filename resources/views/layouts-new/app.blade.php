@@ -15,6 +15,14 @@
   <link href="{{ asset('assets/template/dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
+  <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+  <!--datatable responsive css-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
   @yield('css-aux')
 
   <style>
@@ -28,6 +36,8 @@
       font-feature-settings: "cv03", "cv04", "cv11";
     }
   </style>
+
+  @livewireStyles
 </head>
 
 <body>
@@ -155,6 +165,8 @@
   </div>
 
   @include('layouts-new.footer-assets')
+
+  @livewireScripts
 
 </body>
 
