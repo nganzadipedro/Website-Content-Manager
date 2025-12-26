@@ -244,7 +244,7 @@
 
                     @if (Auth::user()->permissao_id == 3)
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('system.secretaria.dashboard') }}">
+                            <a class="nav-link" href="{{ route('system.areatecnica.dashboard') }}">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -315,7 +315,7 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./alerts.html">
+                                        <a class="dropdown-item" href="{{ route('system.areatecnica.listar_pedidos_pendentes') }}">
                                             Pendentes
                                         </a>
                                     </div>

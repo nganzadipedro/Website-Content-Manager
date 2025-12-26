@@ -113,7 +113,7 @@ class SystemController extends Controller
 
         $registo = Registoentrada::find($request->registo_id);
         $registo->encaminhado = $request->encaminhar_para;
-        $registo->estado = 'em tratamento';
+        $registo->estado = 'pendente';
         $registo->nota_encaminhamento = $request->nota;
         $registo->save();
 

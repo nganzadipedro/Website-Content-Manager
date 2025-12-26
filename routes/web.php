@@ -175,7 +175,9 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+                Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
 
             });
         });
