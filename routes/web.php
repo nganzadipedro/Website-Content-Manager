@@ -63,7 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
 
     Route::get('system/getDaysWeek', 'Controllers\SystemController@diasUteis')->name('get_days_week');
+    Route::get('system/getDaysWeekAssistance', 'Controllers\SystemController@diasUteisAssistencia')->name('get_days_week_assistance');
     Route::get('system/getDaysMonth', 'Controllers\SystemController@registosPorDiaMesAtual')->name('get_days_month');
+    Route::get('system/getDaysMonthAssistance', 'Controllers\SystemController@registosPorDiaMesAtualAssistencia')->name('get_days_month_assistance');
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
 
@@ -176,6 +178,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
+                Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Secretaria;
 
 use App\Models\Anexosregisto;
 use App\Models\Historicosistema;
+use App\Models\Pedidoassistencia;
 use App\Models\Registoentrada;
 use Auth;
 use Livewire\Component;
@@ -20,6 +21,8 @@ class Detalhesregisto extends Component
     public $proveniencia;
     public $registo;
     public $hash_registo;
+
+    public $pedido_assistencia;
 
     public $historico_registo = array();
     public $anexos_registo = array();
@@ -48,14 +51,13 @@ class Detalhesregisto extends Component
             ->get();
 
         $this->anexos_registo = Anexosregisto::where('registo_id', $this->registo->id)->get();
+        $this->pedido_assistencia = Pedidoassistencia::where('registo_entrada_id', $this->registo->id)->first();
 
         if (Auth::user()->permissao_id == 3) {
             return view('dashboard.areatecnica.detalhes-registos')->extends('layouts-new.app')->section('content');
         } else if (Auth::user()->permissao_id == 2) {
             return view('dashboard.secretaria.detalhes-registos')->extends('layouts-new.app')->section('content');
         }
-
-
 
     }
 }

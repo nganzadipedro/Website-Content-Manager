@@ -318,6 +318,9 @@
                                         <a class="dropdown-item" href="{{ route('system.areatecnica.listar_pedidos_pendentes') }}">
                                             Pendentes
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('system.areatecnica.listar_pedidos_arquivados') }}">
+                                            Arquivados
+                                        </a>
                                     </div>
                                 </div>
                             </div>

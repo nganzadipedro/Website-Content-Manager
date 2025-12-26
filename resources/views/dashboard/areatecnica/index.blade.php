@@ -36,7 +36,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="subheader">Total de Registos</div>
+                                <div class="subheader">Total de Pedidos de AJ</div>
                                 <div class="ms-auto lh-1">
                                     <div class="dropdown">
 
@@ -51,7 +51,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="subheader">Registos da Semana</div>
+                                <div class="subheader">Pedidos da Semana</div>
                                 <div class="ms-auto lh-1">
 
                                 </div>
@@ -68,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="subheader">Registos do mês</div>
+                                <div class="subheader">Pedidos do mês</div>
                                 <div class="ms-auto lh-1">
 
                                 </div>
@@ -86,7 +86,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="subheader">Registos do Ano</div>
+                                <div class="subheader">Pedidos do Ano</div>
                                 <div class="ms-auto lh-1">
 
                                 </div>
@@ -133,7 +133,7 @@
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function () {
 
-            fetch("{{ route('get_days_week') }}")
+            fetch("{{ route('get_days_week_assistance') }}")
                 .then(response => response.json())
                 .then(dias => {
                     console.log(dias);
@@ -223,7 +223,7 @@
         document.addEventListener("DOMContentLoaded", function () {
 
 
-            fetch("{{ route('get_days_month') }}")
+            fetch("{{ route('get_days_month_assistance') }}")
                 .then(response => response.json())
                 .then(dias => {
 

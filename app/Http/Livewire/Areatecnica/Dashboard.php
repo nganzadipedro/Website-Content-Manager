@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Areatecnica;
 
+use App\Models\Pedidoassistencia;
 use Livewire\Component;
 use App\Models\Registoentrada;
 use Carbon\Carbon;
@@ -20,12 +21,12 @@ class Dashboard extends Component
         $mesAtual = Carbon::now()->month;
         $anoAtual = Carbon::now()->year;
 
-        $this->registos_entrada = Registoentrada::count();
-        $this->vetor_registos[0] = Registoentrada::whereBetween('created_at', [$inicioSemana, $fimSemana])->count();
-        $this->vetor_registos[1] = Registoentrada::whereMonth('created_at', $mesAtual)
+        $this->registos_entrada = Pedidoassistencia::count();
+        $this->vetor_registos[0] = Pedidoassistencia::whereBetween('created_at', [$inicioSemana, $fimSemana])->count();
+        $this->vetor_registos[1] = Pedidoassistencia::whereMonth('created_at', $mesAtual)
             ->whereYear('created_at', $anoAtual)
             ->count();
-        $this->vetor_registos[2] = Registoentrada::whereYear('created_at', $anoAtual)
+        $this->vetor_registos[2] = Pedidoassistencia::whereYear('created_at', $anoAtual)
             ->count();
 
 

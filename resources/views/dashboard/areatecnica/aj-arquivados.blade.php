@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Pedidos de Assistência Pendentes</h3>
+                            <h3 class="h1">Pedidos de Assistência Arquivados</h3>
                         </div>
                     </div>
                 </div>
@@ -30,10 +30,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
-                                        <th>Assunto</th>
-                                        <th>Data de Entrada</th>
                                         <th>Requerente</th>
-                                        <th></th>
+                                        <th>Natureza</th>
+                                        <th>Localização</th>
+                                        <th>Usuário</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -41,18 +41,13 @@
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$item->codigo}}</td>
-                                            <td>{{$item->assunto}}</td>
-                                            <td>{{$item->data_entrada}}</td>
-                                            <td>{{$item->proveniencia}}</td>
+                                            <td>{{$item->getregisto->codigo}}</td>
+                                            <td>{{$item->getregisto->proveniencia}}</td>
+                                            <td>{{$item->natureza}}</td>
+                                            <td>{{$item->localizacao}}</td>
+                                            <td>{{$item->getuser->getpessoa->nome}}</td>
                                             <td>
-                                                <a href="{{ route('system.areatecnica.arquivar_pedido', $item->hash) }}"
-                                                    class="btn btn-success">
-                                                    Arquivar
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
+                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
                                                     class="btn btn-info">
                                                     Detalhes
                                                 </a>

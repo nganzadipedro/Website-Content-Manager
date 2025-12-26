@@ -67,7 +67,7 @@
                                             <br>
                                             <br>
                                             @if ($registo->encaminhado != 'Não')
-                                            Nota de Encaminhamento: {{ $registo->encaminhado }}  <br><br>
+                                                Nota de Encaminhamento: {{ $registo->encaminhado }} <br><br>
                                             @endif
 
                                             Registado Por: {{ $registo->getuser->getpessoa->nome }}
@@ -77,7 +77,95 @@
                                     <div class="tab-pane" id="tabs-anexos-1">
 
                                         <div class="row">
-                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12">
+
+                                            <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xl-8">
+
+                                                <h3>Anexos</h3>
+                                                @if ($this->pedido_assistencia == null)
+                                                    <div class="alert alert-info">
+                                                        O formulário para adicionar anexos está indisponível.
+                                                        Este processo ainda não está registado na área técnica.
+                                                    </div>
+                                                @endif
+
+                                                @if ($this->pedido_assistencia)
+                                                    <form class="">
+
+                                                        @csrf
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-xl-12 col-12">
+
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="titulo">Título</label>
+                                                                            <input type="text" name="titulo"
+                                                                                class="form-control" id="titulo" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <input type="hidden" id="registo_id" name="registo_id"
+                                                                    value="{{ $registo->id }}">
+
+                                                                <div class="row mt-3">
+
+
+                                                                    <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                                        <div class="form-group">
+                                                                            <label for="tipo_documento">Tipo de
+                                                                                Anexo</label>
+                                                                            <select clang="form-control" name="tipo_anexo"
+                                                                                id="tipo_anexo" class="form-control">
+                                                                                <option value="Documento" selected>
+                                                                                    Documento</option>
+                                                                                <option value="Fotografia">Fotografia
+                                                                                </option>
+                                                                                <option value="Áudio">Áudio</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-lg-9 col-xl-9 col-md-9 col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="observacao">Observação</label>
+                                                                            <input type="text" name="observacao"
+                                                                                class="form-control" id="observacao"
+                                                                                value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-lg-12 col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="anexo">Carregue o Anexo</label>
+                                                                            <input type="file" name="anexo"
+                                                                                class="form-control" id="anexo" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-lg-12 col-12">
+                                                                        <a id="btn-salvar-anexo"
+                                                                            class="btn btn-success mt-4">Salvar Anexo</a>
+                                                                        <a href="{{ route('system.secretaria.dashboard') }}"
+                                                                            class="btn btn-danger mt-4">Cancelar</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                @endif
+
+
+                                            </div>
+
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xl-4">
                                                 <h3>Anexos Carregados</h3>
 
                                                 <div class="card">
@@ -131,19 +219,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                                            <a href="#"
-                                                                                                                                class="list-group-item-actions">
-                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                                    class="icon text-secondary" width="24" height="24"
-                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                                    stroke-linejoin="round">
-                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                                    <path
-                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                                                </svg>
-                                                                                                                            </a>
-                                                                                                                        </div> -->
+                                                                                                                                            <a href="#"
+                                                                                                                                                class="list-group-item-actions">
+                                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                                    class="icon text-secondary" width="24" height="24"
+                                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                                    stroke-linejoin="round">
+                                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                                    <path
+                                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                                </svg>
+                                                                                                                                            </a>
+                                                                                                                                        </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach
