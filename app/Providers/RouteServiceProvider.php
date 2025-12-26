@@ -20,7 +20,8 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = [
         1 => '/system/admin/dashboard',
         2 => '/system/secretaria/dashboard',
-        3 => '/system/advogado/dashboard'
+        3 => '/system/areatecnica/dashboard',
+        4 => '/system/advogado/dashboard'
     ];
 
     /**

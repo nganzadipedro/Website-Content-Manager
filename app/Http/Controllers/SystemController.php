@@ -8,6 +8,7 @@ use App\Models\Galeria;
 use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Platform\Advogado;
+use App\Models\Registoentrada;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -89,7 +90,7 @@ class SystemController extends Controller
         $anexo->save();
 
         //faz upload da imagem
-        $imagem = '';
+        $ficheiro = '';
 
         try {
             if ($request->hasFile('anexo') && $request->file('anexo')->isValid()) {
@@ -103,6 +104,21 @@ class SystemController extends Controller
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Adicionou um anexo para o processo ($anexo->titulo)", 'registo-entrada', $anexo->registo_id);
+        return 'sucesso';
+
+    }
+
+      public function encaminhar_post(Request $request)
+    {
+
+        $registo = Registoentrada::find($request->registo_id);
+        $registo->encaminhado = $request->encaminhar_para;
+        $registo->estado = 'em tratamento';
+        $registo->nota_encaminhamento = $request->nota;
+        $registo->save();
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
         return 'sucesso';
 
     }

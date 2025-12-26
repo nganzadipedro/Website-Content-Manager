@@ -22,10 +22,10 @@
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Listagem dos registos de entrada</h3>
-                            <div class="mt-3">
+                            <!-- <div class="mt-3">
                                 <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-info"
                                     rel="noopener">+ Novo Registo de Entrada +</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                         <th>Assunto</th>
                                         <th>Data de Entrada</th>
                                         <th>Proveniência</th>
-                                        <th></th>
+                                        
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -60,18 +60,9 @@
                                             <td>{{$item->assunto}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
+                                           
                                             <td>
-                                                @if (Auth::user()->permissao_id == 2)
-                                                    @if ($item->encaminhado == 'Não')
-                                                        <a class="btn btn-primary"
-                                                            href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
-                                                            Editar
-                                                        </a>
-                                                    @endif
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
+                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
                                                     class="btn btn-info">
                                                     Detalhes
                                                 </a>

@@ -37,7 +37,8 @@ class LoginController extends Controller
     protected $for = [
         1 => 'system.admin.dashboard',
         2 => 'system.secretaria.dashboard',
-        3 => 'system.advogado.dashboard',
+        3 => 'system.areatecnica.dashboard',
+        4 => 'system.advogado.dashboard',
     ];
 
     /**

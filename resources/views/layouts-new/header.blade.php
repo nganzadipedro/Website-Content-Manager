@@ -147,15 +147,18 @@
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm" style="background-image: url({{ asset('images/user-icon.png') }})"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>User Admin Geral</div>
-                        <div class="mt-1 small text-secondary">Admin Geral</div>
+                        <div>{{ Auth::user()->getpessoa->nome }}</div>
+                        <div class="mt-1 small text-secondary">{{ Auth::user()->getpermissao->descricao}}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="./profile.html" class="dropdown-item">Perfil</a>
                     <div class="dropdown-divider"></div>
-                    <a href="./settings.html" class="dropdown-item">Definições</a>
-                    <a href="./sign-in.html" class="dropdown-item">Sair</a>
+                    <a href="{{ route('profile_user') }}" class="dropdown-item">Definições</a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item">Sair</a>
+                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

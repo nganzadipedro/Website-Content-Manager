@@ -37,6 +37,33 @@ function valida_formulario() {
 
 }
 
+function valida_formulario_2() {
+
+    var msgErro = '';
+    var tem = true;
+
+    const nota = document.getElementById('nota').value;
+    const encaminhar_para = document.getElementById('encaminhar_para').value;
+
+    if (encaminhar_para == '' || encaminhar_para == null) {
+        msgErro = "Escolha o destino onde pretende encaminhar o processo";
+        tem = false;
+    }
+
+    if (tem == false) {
+        sweetAlert({
+            type: "warning",
+            title: "Aviso!",
+            text: msgErro,
+            timer: 4000
+        });
+
+    }
+
+    return tem;
+
+}
+
 document.getElementById('btn-salvar-anexo').addEventListener('click', function () {
 
 
@@ -84,6 +111,77 @@ document.getElementById('btn-salvar-anexo').addEventListener('click', function (
                                 type: "success",
                                 title: "Sucesso",
                                 text: 'O anexo foi adicionado com sucesso',
+                                timer: 4000
+                            });
+
+                            window.location.reload();
+
+                        }
+
+                    },
+                    error: function (error) {
+
+                        sweetAlert({
+                            type: "warning",
+                            title: "Erro " + error.status,
+                            text: 'Erro: ' + error.responseJSON.message,
+                            timer: 9000
+                        });
+                        console.log("Error: " + error.responseJSON.message);
+                    }
+                });
+            }
+        });
+
+    }
+
+});
+
+
+document.getElementById('btn-confirmar').addEventListener('click', function () {
+
+
+    if (valida_formulario_2() === true) {
+
+        const formData = new FormData();
+
+        const nota = document.getElementById('nota').value;
+        const encaminhar_para = document.getElementById('encaminhar_para').value;
+        const registo_id = document.getElementById('registo_id').value;
+
+        formData.append('nota', nota);
+        formData.append('encaminhar_para', encaminhar_para);
+        formData.append('registo_id', registo_id);
+
+        Swal.fire({
+            title: "Confirmação",
+            text: "Tem certeza que deseja encaminhar este processo? Em caso afirmativo, clique em Submeter e aguarde a conclusão da operação.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#34c38f",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Submeter!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return $.ajax({
+                    url: "/system/encaminhar/post",
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (res) {
+
+                        console.log(res);
+                        if (res == 'sucesso') {
+                            sweetAlert({
+                                type: "success",
+                                title: "Sucesso",
+                                text: 'O processo foi encaminhado com sucesso',
                                 timer: 4000
                             });
 

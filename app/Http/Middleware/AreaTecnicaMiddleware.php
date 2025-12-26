@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 
-class AdvogadoMiddleware
+class AreaTecnicaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class AdvogadoMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->permissao_id != 4) {
+        if (Auth::user()->permissao_id != 3) {
             return redirect(
                 RouteServiceProvider::HOME[
                     Auth::user()->permissao_id

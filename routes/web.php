@@ -65,8 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getDaysWeek', 'Controllers\SystemController@diasUteis')->name('get_days_week');
     Route::get('system/getDaysMonth', 'Controllers\SystemController@registosPorDiaMesAtual')->name('get_days_month');
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
+    Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
 
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
+    Route::get('system/profile', 'Livewire\Geral\Perfil')->name('profile_user');
 
     Route::prefix('system')->name('system.')->group(function () {
 
@@ -158,6 +160,20 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/new/process', 'Livewire\Secretaria\Registarentrada')->name('registar_entrada');
                 Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
+                Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+
+            });
+        });
+
+        Route::group(['middleware' => 'areatecnica'], function () {
+            Route::prefix('areatecnica')->name('areatecnica.')->group(function () {
+
+                Route::get('/', function () {
+                    return redirect('/system/areatecnica/dashboard');
+                });
+
+                Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
 

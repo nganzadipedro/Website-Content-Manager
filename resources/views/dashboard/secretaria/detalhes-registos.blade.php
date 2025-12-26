@@ -79,6 +79,9 @@
                                             </div>
                                             <br>
                                             <br>
+                                            @if ($registo->encaminhado != 'Não')
+                                            Nota de Encaminhamento: {{ $registo->encaminhado }}  <br><br>
+                                            @endif
 
                                             Registado Por: {{ $registo->getuser->getpessoa->nome }}
 
@@ -106,7 +109,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <input type="hidden" id="registo_id" name="registo_id" value="{{ $registo->id }}">
+                                                            <input type="hidden" id="registo_id" name="registo_id"
+                                                                value="{{ $registo->id }}">
 
                                                             <div class="row mt-3">
 
@@ -178,7 +182,8 @@
                                                                 class="list-group-item list-group-item-action active">
                                                                 [{{ $anexo->tipo_anexo }}] {{ $anexo->titulo }}
                                                                 <br>
-                                                                <small class="text-muted">{{ $anexo->observacao }}</small>  <br>
+                                                                <small class="text-muted">{{ $anexo->observacao }}</small>
+                                                                <br>
                                                                 <small class="text-muted">{{ $anexo->created_at }}</small>
                                                             </a>
 
@@ -213,19 +218,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                        <a href="#"
-                                                                                                            class="list-group-item-actions">
-                                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                class="icon text-secondary" width="24" height="24"
-                                                                                                                viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                stroke-linejoin="round">
-                                                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                <path
-                                                                                                                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                            </svg>
-                                                                                                        </a>
-                                                                                                    </div> -->
+                                                                                                                            <a href="#"
+                                                                                                                                class="list-group-item-actions">
+                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                    class="icon text-secondary" width="24" height="24"
+                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                    stroke-linejoin="round">
+                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                    <path
+                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                </svg>
+                                                                                                                            </a>
+                                                                                                                        </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -233,10 +238,63 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabs-settings-1">
-                                        <h4>Operações</h4>
+                                        <h4>Encaminhar Processo</h4>
                                         <div>
-                                            <a href="{{ route('system.secretaria.editar_registo', $registo->hash) }}"
-                                                class="btn btn-primary">Editar Registo</a>
+
+                                            @if ($registo->encaminhado == 'Não')
+                                                <form class="">
+
+                                                    @csrf
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-xl-12 col-12">
+
+                                                            <div class="row">
+
+                                                                <div class="col-lg-6 col-12 col-md-6 col-xl-6">
+                                                                    <div class="form-group">
+                                                                        <label for="tipo_documento">Encaminhar Para</label>
+                                                                        <select clang="form-control" name="encaminhar_para"
+                                                                            id="encaminhar_para" class="form-control">
+                                                                            <option value="Área Técnica" selected>
+                                                                                Área Técnica</option>
+                                                                            <option value="Presidente">Presidente
+                                                                            </option>
+                                                                            <option value="Conselheiro">Conselheiro</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6 col-12 col-md-6 col-xl-6">
+                                                                    <div class="form-group">
+                                                                        <label for="nota">Nota de encaminhamento</label>
+                                                                        <input type="text" name="nota" class="form-control"
+                                                                            id="nota" value="">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <input type="hidden" id="registo_id" name="registo_id"
+                                                                value="{{ $registo->id }}">
+
+                                                            <div class="row mt-3">
+                                                                <div class="col-lg-12 col-12">
+                                                                    <a id="btn-confirmar"
+                                                                        class="btn btn-success mt-4">Confirmar</a>
+                                                                    <a href="{{ route('system.secretaria.dashboard') }}"
+                                                                        class="btn btn-danger mt-4">Cancelar</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            @else
+                                                <div class="alert alert-success m-3">
+                                                    Este processo já foi encaminhado para {{ $registo->encaminhado }}
+                                                </div>
+                                            @endif
+
+
                                         </div>
                                     </div>
                                 </div>
