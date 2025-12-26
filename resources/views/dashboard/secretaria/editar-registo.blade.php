@@ -128,10 +128,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-
-@section('script-aux')
-    <script src="{{ asset('assets/system/js/cadastrar-galeria.js') }}"></script>
-@endsection

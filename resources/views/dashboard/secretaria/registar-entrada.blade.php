@@ -18,7 +18,7 @@
             <div class="container-xl">
                 <div class="row row-cards">
                     <div class="col-12">
-                        <form action="https://httpbin.org/post" method="post" class="card">
+                        <form class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Registo de Entrada</h4>
                             </div>
@@ -98,7 +98,7 @@
 
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
-                                                <a wire:click="salvar()" class="btn btn-success mt-4">Salvar</a>
+                                                <a wire:click="salvar" class="btn btn-success mt-4">Salvar</a>
                                                 <a href="{{ route('system.secretaria.dashboard') }}"
                                                     class="btn btn-danger mt-4">Cancelar</a>
                                             </div>
@@ -122,8 +122,3 @@
     </div>
 
 </div>
-
-
-@section('script-aux')
-    <script src="{{ asset('assets/system/js/cadastrar-galeria.js') }}"></script>
-@endsection

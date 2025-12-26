@@ -84,7 +84,6 @@
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
-    <script src="{{ asset('assets/system/js/listar-noticia.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
