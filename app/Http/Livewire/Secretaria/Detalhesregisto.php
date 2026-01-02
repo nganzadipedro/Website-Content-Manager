@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Secretaria;
 use App\Models\Anexosregisto;
 use App\Models\Historicosistema;
 use App\Models\Pedidoassistencia;
+use App\Models\Platform\Advogado;
 use App\Models\Registoentrada;
 use Auth;
 use Livewire\Component;
@@ -26,6 +27,7 @@ class Detalhesregisto extends Component
 
     public $historico_registo = array();
     public $anexos_registo = array();
+    public $lista_advogados = array();
 
     public function mount($hash)
     {
@@ -57,6 +59,10 @@ class Detalhesregisto extends Component
             return view('dashboard.areatecnica.detalhes-registos')->extends('layouts-new.app')->section('content');
         } else if (Auth::user()->permissao_id == 2) {
             return view('dashboard.secretaria.detalhes-registos')->extends('layouts-new.app')->section('content');
+        }
+        else if (Auth::user()->permissao_id == 1) {
+            $this->lista_advogados = Advogado::where('categoria', 'Advogado')->get();
+            return view('dashboard.admin.detalhes-registos')->extends('layouts-new.app')->section('content');
         }
 
     }

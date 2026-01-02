@@ -43,10 +43,20 @@ function valida_formulario_2() {
     var tem = true;
 
     const nota = document.getElementById('nota').value;
+    const tipo_processo_id = document.getElementById('tipo_processo_id').value;
+    const permissao_user_id = document.getElementById('permissao_user_id').value;
     const encaminhar_para = document.getElementById('encaminhar_para').value;
-
+    
     if (encaminhar_para == '' || encaminhar_para == null) {
         msgErro = "Escolha o destino onde pretende encaminhar o processo";
+        tem = false;
+    }
+    else if (encaminhar_para != 'Presidente' && tipo_processo_id == 1 && permissao_user_id == 2) {
+        msgErro = "Este tipo de processo deve ser encaminhado para o Presidente";
+        tem = false;
+    }
+    else if (encaminhar_para != 'Área Técnica' && (tipo_processo_id == 2 || tipo_processo_id == 3) && permissao_user_id == 2) {
+        msgErro = "Este tipo de processo deve ser encaminhado para a Área Técnica";
         tem = false;
     }
 

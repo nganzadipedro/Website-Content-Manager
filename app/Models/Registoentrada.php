@@ -21,6 +21,7 @@ class Registoentrada extends Model
         'observacao',
         'data_entrada',
         'tipo_documento',
+        'tipo_processo_id',
         'tipo_registo',
         'destinatario',
         'user_id',
@@ -32,6 +33,10 @@ class Registoentrada extends Model
 
     public function getUser(){
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function gettipoprocesso(){
+        return $this->belongsTo(Tipoprocesso::class, 'tipo_processo_id', 'id');
     }
 
 }

@@ -38,11 +38,25 @@
                                         </div>
 
                                         <div class="row mt-4">
-                                            <div class="col-lg-12 col-12">
+                                            <div class="col-lg-9 col-md-9 col-12">
                                                 <div class="form-group">
                                                     <label for="assunto">Assunto</label>
                                                     <input type="text" wire:model="assunto" name="assunto"
                                                         class="form-control" id="assunto" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
+                                                    <label for="tipo_processo_id">Tipo de Processo</label>
+                                                    <select wire:model="tipo_processo_id" clang="form-control"
+                                                        name="tipo_processo_id" id="tipo_processo_id"
+                                                        class="form-control">
+                                                        @foreach ($tipos_processo as $tipo)
+                                                            <option value="{{$tipo->id}}">{{$tipo->descricao}}</option>
+                                                        @endforeach
+
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

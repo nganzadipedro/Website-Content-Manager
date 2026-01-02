@@ -98,13 +98,15 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/undefined', 'Livewire\Admin\Listarindefinidos')->name('list_undefined');
                 Route::get('/edit-data/member/{hash}', 'Livewire\Admin\Editarassociado')->name('edit_member');
 
+                Route::get('/assistance/list/{tipo}', 'Livewire\Admin\Listarassistencia')->name('list_assistencia');
+                Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+                Route::get('/set/lawyer/{hash}', 'Livewire\Admin\Atribuiradvogado')->name('atribuir_advogado');
+
                 Route::get('/new/user', 'Livewire\Admin\Cadastrarusuario')->name('new_user');
                 Route::get('/users/list', 'Livewire\Admin\Listarusuario')->name('listusuario');
                 Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
                 Route::get('/users/edit/{id}', 'Livewire\Admin\Editarusuario')->name('edit_user');
                 Route::get('/users/details/{id}', 'Livewire\Admin\Detalhesusuario')->name('detalhes_user');
-
-
 
                 Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
                 Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
@@ -164,6 +166,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+                Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
 
             });
         });

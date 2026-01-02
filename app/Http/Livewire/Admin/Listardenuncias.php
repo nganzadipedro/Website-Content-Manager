@@ -19,10 +19,10 @@ class Listardenuncias extends Component
     {
         if ($this->tipo_form == 'solved') {
             $this->lista_denuncias = Denuncia::where('estado', 'atendida')->orderBy('updated_at', 'desc')->get();
-            return view('dashboard.admin.listar-denuncias')->extends('layouts.main')->section('content');
+            return view('dashboard.admin.listar-denuncias')->extends('layouts-new.app')->section('content');
         } else {
             $this->lista_denuncias = Denuncia::where('estado', 'pendente')->orderBy('id', 'asc')->get();
-            return view('dashboard.admin.listar-denuncias-pendentes')->extends('layouts.main')->section('content');
+            return view('dashboard.admin.listar-denuncias-pendentes')->extends('layouts-new.app')->section('content');
         }
     }
 }

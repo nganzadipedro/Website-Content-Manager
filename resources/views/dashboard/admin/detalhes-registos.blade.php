@@ -56,7 +56,7 @@
 
                                             Nº do Processo: {{ $registo->codigo }} <br><br>
                                             Proveniência: {{ $registo->proveniencia }} <br><br>
-                                            
+
                                             <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
                                             Data de Entrada: {{ $registo->data_entrada }} <br><br>
                                             Data de Registo no Sistema: {{ $registo->created_at }} <br><br>
@@ -82,7 +82,7 @@
                                             <br>
                                             <br>
                                             @if ($registo->encaminhado != 'Não')
-                                            Nota de Encaminhamento: {{ $registo->nota_encaminhamento }}  <br><br>
+                                                Nota de Encaminhamento: {{ $registo->nota_encaminhamento }} <br><br>
                                             @endif
 
                                             Registado Por: {{ $registo->getuser->getpessoa->nome }}
@@ -195,7 +195,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="tab-pane" id="tabs-profile-1">
                                         <h3>Histórico do Processo</h3>
 
@@ -220,19 +219,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                                            <a href="#"
-                                                                                                                                class="list-group-item-actions">
-                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                                    class="icon text-secondary" width="24" height="24"
-                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                                    stroke-linejoin="round">
-                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                                    <path
-                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                                                </svg>
-                                                                                                                            </a>
-                                                                                                                        </div> -->
+                                                                                                                                            <a href="#"
+                                                                                                                                                class="list-group-item-actions">
+                                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                                    class="icon text-secondary" width="24" height="24"
+                                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                                    stroke-linejoin="round">
+                                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                                    <path
+                                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                                </svg>
+                                                                                                                                            </a>
+                                                                                                                                        </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -253,8 +252,10 @@
 
                                                             <div class="row">
 
-                                                            <input type="hidden" id="tipo_processo_id" value="{{ $registo->tipo_processo_id }}">
-                                                            <input type="hidden" id="permissao_user_id" value="{{ Auth::user()->permissao_id }}">
+                                                                <input type="hidden" id="tipo_processo_id"
+                                                                    value="{{ $registo->tipo_processo_id }}">
+                                                                <input type="hidden" id="permissao_user_id"
+                                                                    value="{{ Auth::user()->permissao_id }}">
 
                                                                 <div class="col-lg-6 col-12 col-md-6 col-xl-6">
                                                                     <div class="form-group">
@@ -298,7 +299,6 @@
                                                     Este processo já foi encaminhado para {{ $registo->encaminhado }}
                                                 </div>
                                             @endif
-
 
                                         </div>
                                     </div>
