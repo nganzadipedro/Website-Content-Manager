@@ -4,13 +4,14 @@ namespace App\Http\Livewire\Areatecnica;
 
 use App\Http\Controllers\ActividadesistemaController;
 use App\Models\Advogadoatribuido;
+use App\Models\Inscricaoadvogado;
 use App\Models\Pedidoassistencia;
 use App\Models\Registoentrada;
 use Illuminate\Support\Str;
 use Auth;
 use Livewire\Component;
 
-class Arquivarpedido extends Component
+class Registarinscricao extends Component
 {
 
     public $hash_pedido;
@@ -22,17 +23,20 @@ class Arquivarpedido extends Component
     public $tipo_documento;
     public $proveniencia;
 
+    public $telefone1;
+    public $telefone2;
+    public $email;
+
     public $sexo;
     public $natureza;
     public $localizacao;
     public $observacao2;
+    public $acto_pretendido;
     public $advogado_atribuido;
     public $nome_advogado;
     public $cedula_advogado;
     public $telefone_advogado;
     public $email_advogado;
-
-
 
     public function mount($hash)
     {
@@ -49,49 +53,55 @@ class Arquivarpedido extends Component
     }
     public function render()
     {
-
-        $this->advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $this->registo->id)->first();
-        
-        if($this->advogado_atribuido->advogado_id != null){
-            $this->nome_advogado = $this->advogado_atribuido->getadvogado->getpessoa->nome;
-            $this->cedula_advogado = $this->advogado_atribuido->getadvogado->num_associado;
-            $this->telefone_advogado = $this->advogado_atribuido->getadvogado->getpessoa->telefone1;
-            $this->email_advogado = $this->advogado_atribuido->getadvogado->getpessoa->email;
-        }
-        else{
-            $this->nome_advogado = $this->advogado_atribuido->nome_completo;
-            $this->cedula_advogado = $this->advogado_atribuido->cedula;
-            $this->telefone_advogado = $this->advogado_atribuido->telefone;
-            $this->email_advogado = $this->advogado_atribuido->email;
-        }
-
-        return view('dashboard.areatecnica.arquivar-pedido')->extends('layouts-new.app')->section('content');
+        return view('dashboard.areatecnica.registar-inscricao')->extends('layouts-new.app')->section('content');
     }
 
     public function salvar()
     {
 
-        if ($this->localizacao == '' || $this->localizacao == null) {
-            $this->mensagem('Informe a localização onde será arquivado', 'warning');
+        if ($this->sexo == '' || $this->sexo == null) {
+            $this->mensagem('Informe o sexo', 'warning');
+        } else if ($this->telefone1 == '' || $this->telefone1 == null) {
+            $this->mensagem('Informe o nº de telefone principal', 'warning');
+        } else if ($this->telefone2 == '' || $this->telefone2 == null) {
+            $this->mensagem('Informe o nº de telefone alternativo', 'warning');
+        } else if ($this->email == '' || $this->email == null) {
+            $this->mensagem('Informe o email', 'warning');
+        } else if ($this->registo->tipo_processo_id == 3 && ($this->acto_pretendido == '' || $this->acto_pretendido == null)) {
+            $this->mensagem('Informe o acto pretendido', 'warning');
         } else {
-            $this->registo->estado = 'arquivado';
+
+            $this->registo->estado = 'em tratamento';
             $this->registo->save();
 
-            $pedido = Pedidoassistencia::create([
+            $numero = '';
+            if ($this->registo->tipo_processo_id == 2) {
+                $numero = Inscricaoadvogado::where('tipo_processo_id', 2)->whereYear('created_at', now()->year)->count() + 1;
+            }
+            else {
+                $numero = Inscricaoadvogado::where('tipo_processo_id', 3)->whereYear('created_at', now()->year)->count() + 1;
+            }
+
+            $inscricao = Inscricaoadvogado::create([
                 'hash' => Str::uuid(),
+                'numero' => $numero,
+                'codigo' => "$numero/" . now()->year,
                 'observacao' => $this->observacao2,
+                'tipo_processo_id' => $this->registo->tipo_processo_id,
                 'sexo' => $this->sexo == null ? 'Não Definido' : $this->sexo,
-                'natureza' => $this->natureza == null ? 'Não Definido' : $this->natureza,
-                'localizacao' => $this->localizacao,
+                'telefone1' => $this->telefone1,
+                'telefone2' => $this->telefone2,
+                'email' => $this->email,
+                'acto_pretendido' => $this->acto_pretendido,
                 'registo_entrada_id' => $this->registo->id,
                 'user_id' => Auth::user()->id
             ]);
 
-            $msg = "Pedido de assistência arquivado pela Área Técnica.";
+            $msg = "Processo de inscrição registado pela área técnica.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
-            ActividadesistemaController::inserir(Auth::id(), "Arquivou o pedido de assistência jurídica ($pedido->id)", 'user', $pedido->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
             $this->mensagem($msg, 'success');
-            return redirect()->route('system.areatecnica.listar_pedidos_pendentes');
+            return redirect()->route('system.areatecnica.listar_advogados_pendentes');
 
         }
 

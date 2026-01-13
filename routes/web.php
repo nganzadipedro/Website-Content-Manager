@@ -181,9 +181,16 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
+                Route::get('/list/subscription', 'Livewire\Areatecnica\Advpendentes')->name('listar_advogados_pendentes');
+                Route::get('/list/subscription-trainee', 'Livewire\Areatecnica\Advestpendentes')->name('listar_estagiarios_pendentes');
+                Route::get('/list/subscription/registed', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
+                Route::get('/list/subscription-trainee/registed', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
+                Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
                 Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
+                Route::get('/regist/subscription/{hash}', 'Livewire\Areatecnica\Registarinscricao')->name('registar_inscricao');
+                Route::get('/regist/despacho/{hash}', 'Livewire\Areatecnica\Registardespacho')->name('registar_despacho');
 
             });
         });

@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Pedidos de Assistência Pendentes</h3>
+                            <h3 class="h1">Inscrições Para Advogados Estagiários Pendentes</h3>
                         </div>
                     </div>
                 </div>
@@ -29,10 +29,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nº Processo</th>
+                                        <th>Nº Proc. Secretaria</th>
                                         <th>Assunto</th>
                                         <th>Data de Entrada</th>
                                         <th>Requerente</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -45,16 +46,19 @@
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
+                                                <a href="{{ route('system.areatecnica.registar_inscricao', $item->hash) }}"
+                                                    class="btn btn-success">
+                                                    Registar
+                                                </a>
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
                                                     class="btn btn-info">
                                                     Detalhes
                                                 </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>

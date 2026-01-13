@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Pedidos de Assistência Pendentes</h3>
+                            <h3 class="h1">Pedidos de Assistência Deferidos</h3>
                         </div>
                     </div>
                 </div>
@@ -34,6 +34,7 @@
                                         <th>Data de Entrada</th>
                                         <th>Requerente</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,12 @@
                                             <td>{{$item->assunto}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
+                                            <td>
+                                                <a href="{{ route('system.areatecnica.arquivar_pedido', $item->hash) }}"
+                                                    class="btn btn-success">
+                                                    Arquivar
+                                                </a>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
                                                     class="btn btn-info">

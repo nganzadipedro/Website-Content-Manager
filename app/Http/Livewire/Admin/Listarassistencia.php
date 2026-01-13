@@ -22,9 +22,9 @@ class Listarassistencia extends Component
             ->where('tipo_processo_id', 1)->where('estado','pendente')->get();
             return view('dashboard.admin.aj-pendentes')->extends('layouts-new.app')->section('content');
         } elseif ($this->tipo == 'solved') {
-             $this->lista = Registoentrada::where('encaminhado', 'Presidente')
-            ->where('tipo_processo_id', 1)->where('estado','pendente')->get();
-            return view('dashboard.admin.listar-pendentes')->extends('layouts-new.app')->section('content');
+             $this->lista = Registoentrada::where('encaminhado', 'Área Técnica')
+            ->where('tipo_processo_id', 1)->get();
+            return view('dashboard.admin.aj-deferidos')->extends('layouts-new.app')->section('content');
         }
     }
 }

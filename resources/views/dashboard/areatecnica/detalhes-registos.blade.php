@@ -81,14 +81,14 @@
                                             <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xl-8">
 
                                                 <h3>Anexos</h3>
-                                                @if ($this->pedido_assistencia == null)
+                                                @if ($this->pedido_assistencia == null && $this->inscricao_advogado == null)
                                                     <div class="alert alert-info">
                                                         O formulário para adicionar anexos está indisponível.
                                                         Este processo ainda não está registado na área técnica.
                                                     </div>
                                                 @endif
 
-                                                @if ($this->pedido_assistencia)
+                                                @if ($this->pedido_assistencia != null || $this->inscricao_advogado != null)
                                                     <form class="">
 
                                                         @csrf

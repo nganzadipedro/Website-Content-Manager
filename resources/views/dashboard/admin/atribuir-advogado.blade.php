@@ -184,7 +184,7 @@
                                                     <div class="col-lg-12 col-12">
                                                         <a wire:click="confirmar_atribuicao"
                                                             class="btn btn-success mt-4">Confirmar</a>
-                                                        <a wire:click="$set('advogado_selecionado', null)"
+                                                        <a wire:click="cancelar_selecao"
                                                             class="btn btn-danger mt-4">Cancelar</a>
                                                     </div>
                                                 </div>

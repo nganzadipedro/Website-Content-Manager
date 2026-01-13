@@ -7,7 +7,7 @@
                 <div class="row g-2 align-items-center">
                     <div class="col">
                         <h2 class="page-title">
-                            Arquivar Pedido de Assistência
+                            {{ $registo->tipo_processo_id == 2 ? 'Registar Inscrição de Advogados' : 'Registar Inscrição de Advogados Estagiários' }}
                         </h2>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="col-12">
                         <form action="https://httpbin.org/post" method="post" class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Arquivar Pedido de Assistência</h4>
+                                <h4 class="card-title">{{ $registo->tipo_processo_id == 2 ? 'Registar Inscrição de Advogados' : 'Registar Inscrição de Advogados Estagiários' }}</h4>
                             </div>
                             <div class="card-body">
 
@@ -45,6 +45,7 @@
                                                         <strong> Assunto: {{ $registo->assunto }}</strong><br>
                                                         Data de Entrada: {{ $registo->data_entrada }}<br>
                                                         Data de Registo na Secretaria: {{ $registo->created_at }}<br>
+                                                        Tipo de Processo: {{ $registo->gettipoprocesso->descricao }}<br>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xl-6 col-12">
@@ -53,11 +54,8 @@
                                                         Estado: {{ $registo->estado }}<br>
                                                         Destinatário: {{ $registo->destinatario }}<br>
                                                         Encaminhado: {{ $registo->encaminhado }}<br>
-                                                        Advogado: {{ $nome_advogado }}<br>
-                                                        Cédula: {{ $cedula_advogado }} | Telefone: {{ $telefone_advogado }}<br>
-                                                        Email: {{ $email_advogado }}<br>
                                                     </p>
-                                                    
+
 
                                                 </div>
                                             </div>
@@ -71,7 +69,7 @@
                                                     <label for="sexo">Sexo</label>
                                                     <select wire:model="sexo" name="sexo" id="sexo"
                                                         class="form-control">
-                                                        <option value="Não Definido" selected>Não Definido</option>
+                                                        <option selected>Não Definido</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>
                                                     </select>
@@ -80,41 +78,63 @@
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <label for="natureza">Natureza</label>
-                                                    <select wire:model="natureza" name="natureza" id="natureza"
-                                                        class="form-control">
-                                                        <option value="Não Definido" selected>Não Definido</option>
-                                                        <option value="Crime">Crime</option>
-                                                        <option value="Laboral">Laboral</option>
-                                                        <option value="Família">Família</option>
-                                                        <option value="Cível">Cível</option>
-                                                    </select>
+                                                    <label for="telefone1">Telefone 1</label>
+                                                    <input type="number" maxlength="9" wire:model="telefone1"
+                                                        name="telefone1" class="form-control" id="telefone1" value="">
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <label for="localizacao">Localização</label>
-                                                    <input type="text" wire:model="localizacao" name="localizacao"
-                                                        class="form-control" id="localizacao" value="">
+                                                    <label for="telefone2">Telefone 2</label>
+                                                    <input type="number" maxlength="9" wire:model="telefone2"
+                                                        name="telefone2" class="form-control" id="telefone2" value="">
                                                 </div>
                                             </div>
                                         </div>
 
+
                                         <div class="row mt-4">
-                                            <div class="col-lg-12 col-12 col-md-12">
+                                            <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" maxlength="255" wire:model="email" name="email"
+                                                        class="form-control" id="email" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" wire:model="observacao2" name="observacao2"
-                                                        class="form-control" id="observacao2" value="">
+                                                    <input type="text" maxlength="255" wire:model="observacao2"
+                                                        name="observacao2" class="form-control" id="observacao2"
+                                                        value="">
                                                 </div>
                                             </div>
                                         </div>
+
+                                        @if ($registo->tipo_processo_id == 3)
+                                            <div class="row mt-4">
+                                                <div class="col-lg-6 col-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="acto_pretendido">Acto Pretendido</label>
+                                                        <select wire:model="acto_pretendido" name="acto_pretendido"
+                                                            id="acto_pretendido" class="form-control">
+                                                            <option selected>Não Definido</option>
+                                                            <option value="Inscrição" selected>Inscrição</option>
+                                                            <option value="Reinscrição">Reinscrição</option>
+                                                            <option value="Indicação de Patrono">Indicação de Patrono
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
 
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
                                                 <a wire:click="salvar()" class="btn btn-success mt-4">Salvar</a>
-                                                <a href="{{ route('system.areatecnica.listar_pedidos_pendentes') }}"
+                                                <a href="{{ route('system.areatecnica.listar_advogados_pendentes') }}"
                                                     class="btn btn-danger mt-4">Cancelar</a>
                                             </div>
                                         </div>

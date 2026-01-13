@@ -42,6 +42,8 @@ class Registarentrada extends Component
 
             date_default_timezone_set("Africa/Luanda");
 
+            $numero = Registoentrada::whereYear('created_at',  now()->year)->count() + 1;
+
             $registo = Registoentrada::create([
                 'assunto' => $this->assunto,
                 'proveniencia' => $this->proveniencia,
@@ -54,9 +56,9 @@ class Registarentrada extends Component
             ]);
 
             $registo->hash = md5($registo->created_at . $registo->id . $registo->user_id);
-            $registo->numero = $registo->id;
+            $registo->numero = $numero;
             $registo->save();
-            $registo->codigo = $registo->numero . '/2025';
+            $registo->codigo = "$numero/" . now()->year;
             $registo->save();
 
             ActividadesistemaController::inserir(Auth::id(), "Registo de entrada do processo na secretária ($registo->assunto)", 'registo-entrada', $registo->id);

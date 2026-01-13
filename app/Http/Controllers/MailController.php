@@ -167,71 +167,53 @@ class MailController extends Controller
 
     }
 
-    public function resetSenha($nome, $email, $token)
+       public function mailDespacho($email, $nome, $mensagem, $data_despacho)
     {
 
         // mensagem do email
         $mensagem = "
-        <h2 style='color: #2F5496; font-weight: bold;'>Exame Nacional de Acesso à Advocacia | Recuperação de senha</h2>
+        <h2 style='color: #2F5496; font-weight: bold;'>CPL - OAA || Inscrição OAA</h2>
         <hr>
         <p>
-        Exmo(a). Senhor(a) $nome,<br><br>
-        Recebemos uma solicitação para recuperar a sua senha de acesso na nossa plataforma.<br>
-        Se você reconhece essa acção, clique no link abaixo para prosseguir:
-        </p>
-        <p>
-        Link para redefinir a senha: <a href='https://enoaa.cef-oaa.org/reset-password/$token'>Redefinir a minha senha</a>. <br><br>
-        </p>
-        <hr>
-        <p>
-        OBS: NÃO RESPONDA ESTE EMAIL.<br><br>
-        Atenciosamente, <br><br>
-        CEF-OAA<br>
-        CEF-OAA | Urbanização Nova Vida, Rua 69, Casa n.º 7164, Kilamba Kiaxi, Luanda, Angola<br>
-        Tel.: +244924956 037 | +244 935542465<br>
-        E-mail:geral@cef-oaa.org | www.cef-oaa.org
-        </p>     
+        Exmo/a Dr.(ª) $nome<br><br>
+        Por despacho datado de $data_despacho do Conselho Provincial de Luanda, que incidiu sobre o seu processo de inscrição, somos a transcrever o seguinte despacho:<br><br>
+        <strong>$mensagem</strong><br><br><br>
+        <strong>Para mais informações, contacte a secretaria deste Conselho.<br>
+        Largo João Seca, Casa n.º 6, R/C - Telef. 928 410 082<br><br></strong>
+        Sem mais de momento, atenciosamente,<br>
+        Assistente Administrativo<br>
+        Conselho Provincial de Luanda<br>
+        Ordem dos Advogados de Angola<br>
+        </p>       
         ";
 
         $dados_email = [
-            "personalizations" => [
-                [
-                    "to" => [
-                        [
-                            "email" => $email,
-                            "name" => $nome
-                        ]
-                    ],
-                    "subject" => "ENOAA - 2024 | Recuperação de Senha"
-                ]
-            ],
-            "content" => [
-                [
-                    "type" => "text/html",
-                    "value" => $mensagem
-                ]
-            ],
             "from" => [
-                "email" => "suporte.inscricao.enoaa@cef-oaa.org",
-                "name" => "CEF - OAA"
+                "email" => "suporte.tecnico@cpl-oaa.ao",
+                "name" => "CPL - OAA"
             ],
-            "reply_to" => [
-                "email" => "suporte.inscricao.enoaa@cef-oaa.org",
-                "name" => "CEF - OAA"
-            ]
-        ];
+            "to" => [
+                [
+                    "email" => $email,
+                    "name" => $nome
+                ]
+            ],
 
+            "subject" => "CPL - OAA | Despacho",
+            "html" => $mensagem,
+            "category" => "CPL - Despacho"
+        ];
 
         $data = json_encode($dados_email);
         $curl = curl_init();
 
         $httpHeader = [
-            "Authorization: " . "Bearer " . $this->sendgridApiKey,
+            "Authorization: " . "Bearer " . env('MAILTRAP_API_KEY'),
             "Content-Type: application/json",
         ];
 
         $opts = [
-            CURLOPT_URL => "https://api.sendgrid.com/v3/mail/send",
+            CURLOPT_URL => "https://send.api.mailtrap.io/api/send",
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_RETURNTRANSFER => true,
@@ -247,11 +229,14 @@ class MailController extends Controller
         $err = curl_error($curl);
         curl_close($curl);
 
-        if ($response == "") {
+        $response = json_decode($response);
+
+        if ($response->success == true) {
             return true;
         } else {
             return false;
         }
+
     }
 
 }

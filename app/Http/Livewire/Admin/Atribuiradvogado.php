@@ -15,7 +15,7 @@ class Atribuiradvogado extends Component
     public $hash_registo;
     public $registo;
     public $lista_advogados = array();
-    public $advogado_selecionado;
+    public $advogado_selecionado = null;
     public $outro_advogado = false;
 
     public $observacao;
@@ -49,6 +49,12 @@ class Atribuiradvogado extends Component
             $this->outro_advogado = false;
         }
 
+    }
+
+    public function cancelar_selecao()
+    {
+        $this->advogado_selecionado = null;
+        $this->outro_advogado = false;
     }
 
     public function atribuir_outro()

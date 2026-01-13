@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Pedidos de Assistência Pendentes</h3>
+                            <h3 class="h1">Inscrições Para Advogados Estagiários Registados</h3>
                         </div>
                     </div>
                 </div>
@@ -30,30 +30,36 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
-                                        <th>Assunto</th>
-                                        <th>Data de Entrada</th>
                                         <th>Requerente</th>
+                                        <th>Email</th>
+                                        <th>Tipo de Processo</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
-                                            <td>{{$item->assunto}}</td>
-                                            <td>{{$item->data_entrada}}</td>
-                                            <td>{{$item->proveniencia}}</td>
+                                            <td>{{$item->getregistoentrada->proveniencia}}</td>
+                                            <td>{{$item->email}}</td>
+                                            <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
                                             <td>
-                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
+                                                <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
+                                                    class="btn btn-success">
+                                                    Registar + Informações
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregistoentrada->hash) }}"
                                                     class="btn btn-info">
                                                     Detalhes
                                                 </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
-
 
                                 </tbody>
                             </table>
