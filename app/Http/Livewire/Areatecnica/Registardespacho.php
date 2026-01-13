@@ -8,6 +8,7 @@ use App\Http\Controllers\OmbalaController;
 use App\Models\Inscricaoadvogado;
 use App\Models\Registoentrada;
 use Auth;
+use \PDF;
 use Livewire\Component;
 
 class Registardespacho extends Component
@@ -129,11 +130,9 @@ class Registardespacho extends Component
 
         if ($this->data_remessa_cn != null && $this->cedula_disponivel == 'Sim' && ($this->numero_cedula == null || $this->numero_cedula == '')) {
             $this->mensagem('Por favor, insira o número da cédula.', 'warning');
-        }
-        else if($this->data_remessa_cn != null && $this->cedula_disponivel == 'Sim' && ($this->data_emissao_cedula == null || $this->data_emissao_cedula == '')){
+        } else if ($this->data_remessa_cn != null && $this->cedula_disponivel == 'Sim' && ($this->data_emissao_cedula == null || $this->data_emissao_cedula == '')) {
             $this->mensagem('Por favor, insira a data de emissão da cédula.', 'warning');
-        }
-        else {
+        } else {
             $registo_inscricao_old = Inscricaoadvogado::where('registo_entrada_id', $this->registo->id)->first();
             if ($registo_inscricao_old->data_remessa_cn != $this->inscricao_advogado->data_remessa_cn) {
                 $msg = "Actualizou a data de remessa para o CN ($this->data_remessa_cn).";

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anexosregisto;
 use App\Models\Denuncia;
 use App\Models\Galeria;
+use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Platform\Advogado;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
+use \PDF;
 
 class SystemController extends Controller
 {
@@ -46,7 +48,7 @@ class SystemController extends Controller
         return response()->json($resultado);
     }
 
-     public function diasUteisAssistencia(): JsonResponse
+    public function diasUteisAssistencia(): JsonResponse
     {
         $inicio = Carbon::now()->startOfWeek();      // Segunda
         $fim = Carbon::now()->startOfWeek()->addDays(4)->endOfDay(); // Sexta
@@ -102,7 +104,7 @@ class SystemController extends Controller
         return response()->json($resultado);
     }
 
-      public function registosPorDiaMesAtualAssistencia()
+    public function registosPorDiaMesAtualAssistencia()
     {
         $inicioMes = Carbon::now()->startOfMonth();
         $fimMes = Carbon::now()->endOfMonth();
@@ -131,7 +133,7 @@ class SystemController extends Controller
         return response()->json($resultado);
     }
 
-     public function anexo_post(Request $request)
+    public function anexo_post(Request $request)
     {
 
         $anexo = Anexosregisto::create([
@@ -164,7 +166,7 @@ class SystemController extends Controller
 
     }
 
-      public function encaminhar_post(Request $request)
+    public function encaminhar_post(Request $request)
     {
 
         $registo = Registoentrada::find($request->registo_id);
@@ -176,6 +178,45 @@ class SystemController extends Controller
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
         return 'sucesso';
+
+    }
+
+    public function documento_despacho($hash_inscricao)
+    {
+
+        $inscricao_advogado = Inscricaoadvogado::where('hash', $hash_inscricao)->first();
+        $registo = Registoentrada::find($inscricao_advogado->registo_entrada_id);
+
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.documento-despacho', [
+            'nome_requerente' => $registo->proveniencia,
+            'data_despacho' => $inscricao_advogado->data_despacho,
+            'mensagem_despacho' => $inscricao_advogado->texto_despacho,
+            'data' => $data_emissao
+        ]);
+
+        return $pdf->stream();
 
     }
 

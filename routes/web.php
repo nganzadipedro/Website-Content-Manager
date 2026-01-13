@@ -191,6 +191,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
                 Route::get('/regist/subscription/{hash}', 'Livewire\Areatecnica\Registarinscricao')->name('registar_inscricao');
                 Route::get('/regist/despacho/{hash}', 'Livewire\Areatecnica\Registardespacho')->name('registar_despacho');
+                Route::get('/documento/despacho-indeferido/{hash}', 'Controllers\SystemController@documento_despacho')->name('documento_despacho');
 
             });
         });

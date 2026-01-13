@@ -59,6 +59,9 @@
                                                         Telefone 1: {{ $inscricao_advogado->telefone1 }}<br>
                                                         Telefone 2: {{ $inscricao_advogado->telefone2 }}<br>
                                                         Email: {{ $inscricao_advogado->email }}<br>
+                                                        @if($inscricao_advogado->despacho == 'Indeferido')
+                                                        <a target="_blank" href="{{ route('system.areatecnica.documento_despacho', $inscricao_advogado->hash) }}">[ Imprimir Documento de Despacho ]</a>
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>
