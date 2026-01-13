@@ -75,6 +75,63 @@ class SystemController extends Controller
         return response()->json($resultado);
     }
 
+    public function diasUteisInscricaoAdvogado(): JsonResponse
+    {
+        $inicio = Carbon::now()->startOfWeek();      // Segunda
+        $fim = Carbon::now()->startOfWeek()->addDays(4)->endOfDay(); // Sexta
+
+        // Busca contagem agrupada por dia
+        $registos = DB::table('inscricao_advogado')
+            ->selectRaw('DATE(created_at) as dia, COUNT(*) as total')
+            ->where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$inicio, $fim])
+            ->groupBy('dia')
+            ->orderBy('dia')
+            ->get()
+            ->keyBy('dia');
+
+        // Garante todos os dias (mesmo sem registos)
+        $resultado = collect(range(0, 4))->map(function ($i) use ($inicio, $registos) {
+            $dia = $inicio->copy()->addDays($i)->format('Y-m-d');
+
+            return [
+                'dia' => $dia,
+                'valor' => $registos[$dia]->total ?? 0
+            ];
+        });
+
+        return response()->json($resultado);
+    }
+
+    public function diasUteisInscricaoEstagiario(): JsonResponse
+    {
+        $inicio = Carbon::now()->startOfWeek();      // Segunda
+        $fim = Carbon::now()->startOfWeek()->addDays(4)->endOfDay(); // Sexta
+
+        // Busca contagem agrupada por dia
+        $registos = DB::table('inscricao_advogado')
+            ->selectRaw('DATE(created_at) as dia, COUNT(*) as total')
+            ->where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$inicio, $fim])
+            ->groupBy('dia')
+            ->orderBy('dia')
+            ->get()
+            ->keyBy('dia');
+
+        // Garante todos os dias (mesmo sem registos)
+        $resultado = collect(range(0, 4))->map(function ($i) use ($inicio, $registos) {
+            $dia = $inicio->copy()->addDays($i)->format('Y-m-d');
+
+            return [
+                'dia' => $dia,
+                'valor' => $registos[$dia]->total ?? 0
+            ];
+        });
+
+        return response()->json($resultado);
+    }
+
+
     public function registosPorDiaMesAtual()
     {
         $inicioMes = Carbon::now()->startOfMonth();
@@ -112,6 +169,66 @@ class SystemController extends Controller
         // Query: conta registos agrupados por dia
         $registos = DB::table('pedido_assistencia')
             ->selectRaw('DATE(created_at) as dia, COUNT(*) as total')
+            ->whereBetween('created_at', [$inicioMes, $fimMes])
+            ->groupBy('dia')
+            ->orderBy('dia')
+            ->get()
+            ->keyBy('dia');
+
+        $diasNoMes = $inicioMes->daysInMonth;
+
+        // Monta o resultado com todos os dias do mês
+        $resultado = collect(range(1, $diasNoMes))->map(function ($dia) use ($inicioMes, $registos) {
+            $data = $inicioMes->copy()->day($dia)->format('Y-m-d');
+
+            return [
+                'dia' => $data,
+                'valor' => $registos[$data]->total ?? 0
+            ];
+        });
+
+        return response()->json($resultado);
+    }
+
+    public function registosPorDiaMesAtualInscricaoAdvogado()
+    {
+        $inicioMes = Carbon::now()->startOfMonth();
+        $fimMes = Carbon::now()->endOfMonth();
+
+        // Query: conta registos agrupados por dia
+        $registos = DB::table('inscricao_advogado')
+            ->selectRaw('DATE(created_at) as dia, COUNT(*) as total')
+            ->where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$inicioMes, $fimMes])
+            ->groupBy('dia')
+            ->orderBy('dia')
+            ->get()
+            ->keyBy('dia');
+
+        $diasNoMes = $inicioMes->daysInMonth;
+
+        // Monta o resultado com todos os dias do mês
+        $resultado = collect(range(1, $diasNoMes))->map(function ($dia) use ($inicioMes, $registos) {
+            $data = $inicioMes->copy()->day($dia)->format('Y-m-d');
+
+            return [
+                'dia' => $data,
+                'valor' => $registos[$data]->total ?? 0
+            ];
+        });
+
+        return response()->json($resultado);
+    }
+
+    public function registosPorDiaMesAtualInscricaoEstagiario()
+    {
+        $inicioMes = Carbon::now()->startOfMonth();
+        $fimMes = Carbon::now()->endOfMonth();
+
+        // Query: conta registos agrupados por dia
+        $registos = DB::table('inscricao_advogado')
+            ->selectRaw('DATE(created_at) as dia, COUNT(*) as total')
+            ->where('tipo_processo_id', 3)
             ->whereBetween('created_at', [$inicioMes, $fimMes])
             ->groupBy('dia')
             ->orderBy('dia')

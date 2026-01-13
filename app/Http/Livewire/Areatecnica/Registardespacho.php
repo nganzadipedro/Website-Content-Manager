@@ -97,6 +97,9 @@ class Registardespacho extends Component
                 $obmsg = new OmbalaController();
                 $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
 
+                $msg = "Processo de inscrição despachado como $this->despacho.";
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
+
             } else if ($this->despacho == 'Indeferido') {
 
                 $this->inscricao_advogado->texto_despacho = $this->mensagem_despacho;
@@ -113,16 +116,16 @@ class Registardespacho extends Component
                 $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
                 $ob->mailDespacho($email, $nome, $this->mensagem_despacho, $data_despacho);
 
+                $msg = "Processo de inscrição despachado como $this->despacho, com a seguinte mensagem: $this->mensagem_despacho.";
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
+
             }
 
-            $msg = "Processo de inscrição despachado como $this->despacho, com a seguinte mensagem: $this->mensagem_despacho";
-            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
             $msg = "Registou a emissão de despacho para o processo de inscrição.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'user', $this->registo->id);
 
             $this->mensagemRefresh('Despacho registado com sucesso e notificação enviada ao advogado.', 'success');
         }
-
     }
 
     public function actualizar_dados()

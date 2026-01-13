@@ -11,20 +11,6 @@
                         Dashboard
                     </h2>
                 </div>
-                <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
-                            Novo Registo de Assistência Judiciária
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -101,10 +87,148 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row row-deck row-cards mt-3">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Total de Inscrições de Advogados</div>
+                                <div class="ms-auto lh-1">
+                                    <div class="dropdown">
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h1 mb-3">{{ $inscricao_advogados }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições da Semana</div>
+                                <div class="ms-auto lh-1">
 
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-0 me-2">{{ $vetor_registos[3] }}</div>
 
+                            </div>
+                        </div>
+                        <div id="chart-isadv" class="chart-sm"></div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições do mês</div>
+                                <div class="ms-auto lh-1">
+
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-3 me-2">{{ $vetor_registos[4] }}</div>
+
+                            </div>
+                            <div id="chart-imadv" class="chart-sm"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições do Ano</div>
+                                <div class="ms-auto lh-1">
+
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-3 me-2">{{ $vetor_registos[5] }}</div>
+                                <div class="me-auto">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-deck row-cards mt-3">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Total de Inscrições de Advogados Estagiários</div>
+                                <div class="ms-auto lh-1">
+                                    <div class="dropdown">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h1 mb-3">{{ $inscricao_estagiarios }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições da Semana</div>
+                                <div class="ms-auto lh-1">
+
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-0 me-2">{{ $vetor_registos[6] }}</div>
+
+                            </div>
+                        </div>
+                        <div id="chart-isadvest" class="chart-sm"></div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições do mês</div>
+                                <div class="ms-auto lh-1">
+
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-3 me-2">{{ $vetor_registos[7] }}</div>
+
+                            </div>
+                            <div id="chart-imadvest" class="chart-sm"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Inscrições do Ano</div>
+                                <div class="ms-auto lh-1">
+
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-baseline">
+                                <div class="h1 mb-3 me-2">{{ $vetor_registos[8] }}</div>
+                                <div class="me-auto">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -171,7 +295,7 @@
                             curve: "smooth",
                         },
                         series: [{
-                            name: 'Registos no dia',
+                            name: 'Pedidos de AJ',
                             data: serie
                         }],
                         tooltip: {
@@ -214,8 +338,186 @@
                     console.error('Erro ao buscar dias da semana:', error);
                 });
 
-        });
-        // @formatter:on
+            });
+            // @formatter:on
+    </script>
+
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("{{ route('get_days_week_inscricao_advogado') }}")
+                .then(response => response.json())
+                .then(dias => {
+                    console.log(dias);
+
+                    const serie = dias.map(item => ({
+                        x: new Date(item.dia).getTime(),
+                        y: item.valor
+                    }));
+
+                    const options = {
+                        chart: {
+                            type: "area",
+                            fontFamily: 'inherit',
+                            height: 40.0,
+                            sparkline: {
+                                enabled: true
+                            },
+                            animations: {
+                                enabled: false
+                            },
+                        },
+                        xaxis: {
+                            type: 'datetime'
+                        },
+                        dataLabels: {
+                            enabled: false,
+                        },
+                        fill: {
+                            opacity: .16,
+                            type: 'solid'
+                        },
+                        stroke: {
+                            width: 2,
+                            lineCap: "round",
+                            curve: "smooth",
+                        },
+                        series: [{
+                            name: 'Inscrições de Advogados',
+                            data: serie
+                        }],
+                        tooltip: {
+                            theme: 'dark'
+                        },
+                        grid: {
+                            strokeDashArray: 4,
+                        },
+                        xaxis: {
+                            labels: {
+                                padding: 0,
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                            type: 'datetime',
+                        },
+                        yaxis: {
+                            labels: {
+                                padding: 4
+                            },
+                        },
+                        colors: [tabler.getColor("primary")],
+                        legend: {
+                            show: false,
+                        },
+                    };
+
+                    window.ApexCharts && (new ApexCharts(
+                        document.getElementById("chart-isadv"),
+                        options
+                    )).render();
+
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dias da semana:', error);
+                });
+
+            });
+            // @formatter:on
+    </script>
+
+        <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("{{ route('get_days_week_inscricao_estagiario') }}")
+                .then(response => response.json())
+                .then(dias => {
+                    console.log(dias);
+
+                    const serie = dias.map(item => ({
+                        x: new Date(item.dia).getTime(),
+                        y: item.valor
+                    }));
+
+                    const options = {
+                        chart: {
+                            type: "area",
+                            fontFamily: 'inherit',
+                            height: 40.0,
+                            sparkline: {
+                                enabled: true
+                            },
+                            animations: {
+                                enabled: false
+                            },
+                        },
+                        xaxis: {
+                            type: 'datetime'
+                        },
+                        dataLabels: {
+                            enabled: false,
+                        },
+                        fill: {
+                            opacity: .16,
+                            type: 'solid'
+                        },
+                        stroke: {
+                            width: 2,
+                            lineCap: "round",
+                            curve: "smooth",
+                        },
+                        series: [{
+                            name: 'Inscrições de Advogados Estagiários',
+                            data: serie
+                        }],
+                        tooltip: {
+                            theme: 'dark'
+                        },
+                        grid: {
+                            strokeDashArray: 4,
+                        },
+                        xaxis: {
+                            labels: {
+                                padding: 0,
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                            type: 'datetime',
+                        },
+                        yaxis: {
+                            labels: {
+                                padding: 4
+                            },
+                        },
+                        colors: [tabler.getColor("primary")],
+                        legend: {
+                            show: false,
+                        },
+                    };
+
+                    window.ApexCharts && (new ApexCharts(
+                        document.getElementById("chart-isadvest"),
+                        options
+                    )).render();
+
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dias da semana:', error);
+                });
+
+            });
+            // @formatter:on
     </script>
 
     <script>
@@ -267,7 +569,7 @@
                             curve: "smooth",
                         },
                         series: [{
-                            name: 'Registos no dia',
+                            name: 'Pedidos de AJ',
                             data: serie
                         }],
                         tooltip: {
@@ -314,5 +616,192 @@
         });
         // @formatter:on
     </script>
+
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("{{ route('get_days_month_inscricao_advogado') }}")
+                .then(response => response.json())
+                .then(dias => {
+
+                    console.log(dias);
+
+                    const serie = dias.map(item => ({
+                        x: new Date(item.dia).getTime(),
+                        y: item.valor
+                    }));
+
+                    const options = {
+                        chart: {
+                            type: "bar",
+                            fontFamily: 'inherit',
+                            height: 40.0,
+                            sparkline: {
+                                enabled: true
+                            },
+                            animations: {
+                                enabled: false
+                            },
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '50%',
+                            }
+                        },
+                        xaxis: {
+                            type: 'datetime'
+                        },
+                        dataLabels: {
+                            enabled: false,
+                        },
+                        fill: {
+                            opacity: 1,
+                            type: 'solid'
+                        },
+                        stroke: {
+                            width: 2,
+                            lineCap: "round",
+                            curve: "smooth",
+                        },
+                        series: [{
+                            name: 'Inscrição de Advogados',
+                            data: serie
+                        }],
+                        tooltip: {
+                            theme: 'dark'
+                        },
+                        grid: {
+                            strokeDashArray: 4,
+                        },
+                        xaxis: {
+                            labels: {
+                                padding: 0,
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                            type: 'datetime',
+                        },
+                        yaxis: {
+                            labels: {
+                                padding: 4
+                            },
+                        },
+                        colors: [tabler.getColor("primary")],
+                        legend: {
+                            show: false,
+                        },
+                    };
+
+                    window.ApexCharts && (new ApexCharts(
+                        document.getElementById("chart-imadv"),
+                        options
+                    )).render();
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dias do mês:', error);
+                });
+        });
+        // @formatter:on
+    </script>
+
+        <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function () {
+
+            fetch("{{ route('get_days_month_inscricao_estagiario') }}")
+                .then(response => response.json())
+                .then(dias => {
+
+                    console.log(dias);
+
+                    const serie = dias.map(item => ({
+                        x: new Date(item.dia).getTime(),
+                        y: item.valor
+                    }));
+
+                    const options = {
+                        chart: {
+                            type: "bar",
+                            fontFamily: 'inherit',
+                            height: 40.0,
+                            sparkline: {
+                                enabled: true
+                            },
+                            animations: {
+                                enabled: false
+                            },
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '50%',
+                            }
+                        },
+                        xaxis: {
+                            type: 'datetime'
+                        },
+                        dataLabels: {
+                            enabled: false,
+                        },
+                        fill: {
+                            opacity: 1,
+                            type: 'solid'
+                        },
+                        stroke: {
+                            width: 2,
+                            lineCap: "round",
+                            curve: "smooth",
+                        },
+                        series: [{
+                            name: 'Inscrição de Advogados Estagiários',
+                            data: serie
+                        }],
+                        tooltip: {
+                            theme: 'dark'
+                        },
+                        grid: {
+                            strokeDashArray: 4,
+                        },
+                        xaxis: {
+                            labels: {
+                                padding: 0,
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                            type: 'datetime',
+                        },
+                        yaxis: {
+                            labels: {
+                                padding: 4
+                            },
+                        },
+                        colors: [tabler.getColor("primary")],
+                        legend: {
+                            show: false,
+                        },
+                    };
+
+                    window.ApexCharts && (new ApexCharts(
+                        document.getElementById("chart-imadvest"),
+                        options
+                    )).render();
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dias do mês:', error);
+                });
+        });
+        // @formatter:on
+    </script>
+
 
 @endsection

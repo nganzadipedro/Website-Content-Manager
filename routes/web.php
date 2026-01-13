@@ -64,8 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('system/getDaysWeek', 'Controllers\SystemController@diasUteis')->name('get_days_week');
     Route::get('system/getDaysWeekAssistance', 'Controllers\SystemController@diasUteisAssistencia')->name('get_days_week_assistance');
+    Route::get('system/getDaysWeekInscricaoAdvogado', 'Controllers\SystemController@diasUteisInscricaoAdvogado')->name('get_days_week_inscricao_advogado');
+    Route::get('system/getDaysWeekInscricaoEstagiario', 'Controllers\SystemController@diasUteisInscricaoEstagiario')->name('get_days_week_inscricao_estagiario');
     Route::get('system/getDaysMonth', 'Controllers\SystemController@registosPorDiaMesAtual')->name('get_days_month');
     Route::get('system/getDaysMonthAssistance', 'Controllers\SystemController@registosPorDiaMesAtualAssistencia')->name('get_days_month_assistance');
+    Route::get('system/getDaysMonthInscricaoAdvogado', 'Controllers\SystemController@registosPorDiaMesAtualInscricaoAdvogado')->name('get_days_month_inscricao_advogado');
+    Route::get('system/getDaysMonthInscricaoEstagiario', 'Controllers\SystemController@registosPorDiaMesAtualInscricaoEstagiario')->name('get_days_month_inscricao_estagiario');
+    
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
 
