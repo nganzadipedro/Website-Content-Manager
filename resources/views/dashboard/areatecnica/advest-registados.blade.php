@@ -31,7 +31,7 @@
                                         <th>#</th>
                                         <th>Nº Processo</th>
                                         <th>Requerente</th>
-                                        <th>Email</th>
+                                        <th>Despacho</th>
                                         <th>Tipo de Processo</th>
                                         <th></th>
                                         <th></th>
@@ -44,7 +44,7 @@
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
-                                            <td>{{$item->email}}</td>
+                                            <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
                                             <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
                                             <td>
                                                 <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"

@@ -71,6 +71,7 @@
                                                     <label for="sexo">Sexo</label>
                                                     <select wire:model="sexo" name="sexo" id="sexo"
                                                         class="form-control">
+                                                        <option selected>Selecione...</option>
                                                         <option value="Não Definido" selected>Não Definido</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>

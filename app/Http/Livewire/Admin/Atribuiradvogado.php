@@ -126,7 +126,6 @@ class Atribuiradvogado extends Component
                     ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
                     $this->mensagemRefresh('Advogado atribuído com sucesso', 'success');
                 }
-
             }
         }
     }

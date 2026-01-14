@@ -113,9 +113,14 @@ class Registardespacho extends Component
                 $data_despacho = $this->data_despacho;
                 $ob = new MailController();
                 $obmsg = new OmbalaController();
-                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
-                $ob->mailDespacho($email, $nome, $this->mensagem_despacho, $data_despacho);
-
+                
+                try {
+                    $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+                    $ob->mailDespacho($email, $nome, $this->mensagem_despacho, $data_despacho);
+                } catch (\Throwable $th) {
+                    
+                }
+            
                 $msg = "Processo de inscrição despachado como $this->despacho, com a seguinte mensagem: $this->mensagem_despacho.";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
 

@@ -55,8 +55,16 @@ class Arquivarpedido extends Component
         if($this->advogado_atribuido->advogado_id != null){
             $this->nome_advogado = $this->advogado_atribuido->getadvogado->getpessoa->nome;
             $this->cedula_advogado = $this->advogado_atribuido->getadvogado->num_associado;
-            $this->telefone_advogado = $this->advogado_atribuido->getadvogado->getpessoa->telefone1;
-            $this->email_advogado = $this->advogado_atribuido->getadvogado->getpessoa->email;
+            $telefone = $this->advogado_atribuido->getadvogado->getpessoa->telefone1;
+            if($telefone == null){
+                $telefone = $this->advogado_atribuido->telefone;
+            }
+            $this->telefone_advogado = $telefone;
+            $email = $this->advogado_atribuido->getadvogado->getpessoa->email;
+            if($email == null){
+                $email = $this->advogado_atribuido->email;
+            }
+            $this->email_advogado = $email;
         }
         else{
             $this->nome_advogado = $this->advogado_atribuido->nome_completo;

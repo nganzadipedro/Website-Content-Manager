@@ -30,6 +30,7 @@ class Detalhesregisto extends Component
     public $historico_registo = array();
     public $anexos_registo = array();
     public $lista_advogados = array();
+    public $arquivado;
 
     public function mount($hash)
     {

@@ -46,6 +46,12 @@
                                             <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
                                             Data de Entrada: {{ $registo->data_entrada }} <br><br>
                                             Data de Registo no Sistema: {{ $registo->created_at }} <br><br>
+                                            @if ($registo->estado == 'arquivado')
+                                                Localização: {{ $pedido_assistencia->localizacao }} <br><br>
+                                                Sexo: {{ $pedido_assistencia->sexo }} <br><br>
+                                                Natureza: {{ $pedido_assistencia->natureza }} <br><br>
+                                                Observação (Arquivo): {{ $pedido_assistencia->observacao }} <br><br>
+                                            @endif
                                             <div class="btn-group w-100" role="group">
                                                 <input type="radio" class="btn-check" name="btn-radio-dropdown"
                                                     id="btn-radio-dropdown-1" autocomplete="off" checked>
