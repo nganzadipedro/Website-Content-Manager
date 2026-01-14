@@ -17,6 +17,7 @@ class Registarentrada extends Component
     public $observacao;
     public $tipo_processo_id;
     public $tipo_documento;
+    public $telefone;
     public $proveniencia;
 
     public $tipos_processo = array();
@@ -38,17 +39,20 @@ class Registarentrada extends Component
             $this->mensagem('Informe a proveniência', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
+        } else if ($this->telefone == '' || $this->telefone == null) {
+            $this->mensagem('Digite o número de telefone', 'warning');
         } else {
 
             date_default_timezone_set("Africa/Luanda");
 
-            $numero = Registoentrada::whereYear('created_at',  now()->year)->count() + 1;
+            $numero = Registoentrada::whereYear('created_at', now()->year)->count() + 1;
 
             $registo = Registoentrada::create([
                 'assunto' => $this->assunto,
                 'proveniencia' => $this->proveniencia,
                 'data_entrada' => $this->data_entrada,
                 'observacao' => $this->observacao,
+                'telefone' => $this->telefone,
                 'tipo_processo_id' => $this->tipo_processo_id,
                 'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
                 'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,

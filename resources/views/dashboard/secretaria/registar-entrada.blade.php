@@ -89,14 +89,21 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="destinatario">Destinatário</label>
-                                                    <select clang="form-control" wire:model="destinatario"
+                                                    <select class="form-control" wire:model="destinatario"
                                                         name="destinatario" id="destinatario" class="form-control">
                                                         <option value="CPL-OAA" selected>CPL-OAA</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-9 col-xl-9 col-md-9 col-12">
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
+                                                    <label for="telefone">Telefone</label>
+                                                    <input class="form-control" wire:model="telefone" maxlength="9" type="text" name="telefone" id="telefone" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-xl-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="observacao">Observação</label>
                                                     <input type="text" wire:model="observacao" name="observacao"
