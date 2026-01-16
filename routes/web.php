@@ -116,6 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
                 Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');
                 Route::get('/export-trainees', 'Controllers\AdvogadoController@export_trainees')->name('export_trainees');
+                Route::get('/generate/report', 'Livewire\Secretaria\Gerarrelatorio')->name('generate_report');
 
             });
         });

@@ -13,6 +13,7 @@ class Listarestagiarios extends Component
     public function render()
     {
         $this->lista_advogados = Advogado::where('categoria', 'Estagiario')->get();
-        return view('dashboard.admin.listar-advogados-estagiarios')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.listar-advogados-estagiarios')->extends('layouts-new.app')->section('content');
+
     }
 }

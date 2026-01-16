@@ -39,6 +39,7 @@ class LoginController extends Controller
         2 => 'system.secretaria.dashboard',
         3 => 'system.areatecnica.dashboard',
         4 => 'system.advogado.dashboard',
+        5 => 'system.admin.dashboard',
     ];
 
     /**

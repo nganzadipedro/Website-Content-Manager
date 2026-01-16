@@ -18,7 +18,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->permissao_id != 1) {
+        if (Auth::user()->permissao_id != 1 && Auth::user()->permissao_id != 5) {
             return redirect(
                 RouteServiceProvider::HOME[
                     Auth::user()->permissao_id

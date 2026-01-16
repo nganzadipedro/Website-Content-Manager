@@ -13,6 +13,6 @@ class Listaradvogados extends Component
     public function render()
     {
         $this->lista_advogados = Advogado::where('categoria', 'Advogado')->get();
-        return view('dashboard.admin.listar-advogados')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.listar-advogados')->extends('layouts-new.app')->section('content');
     }
 }

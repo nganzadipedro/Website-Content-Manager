@@ -4,7 +4,7 @@
             <div class="container-xl">
                 <ul class="navbar-nav">
 
-                    @if (Auth::user()->permissao_id == 1)
+                    @if (Auth::user()->permissao_id == 1 || Auth::user()->permissao_id == 5)
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ route('system.admin.dashboard') }}">
                                 <span
@@ -82,10 +82,10 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./alerts.html">
+                                        <a class="dropdown-item" href="{{ route('system.admin.list_lawyers') }}">
                                             Advogados
                                         </a>
-                                        <a class="dropdown-item" href="./alerts.html">
+                                        <a class="dropdown-item" href="{{ route('system.admin.list_trainees') }}">
                                             Advogados Estagiários
                                         </a>
                                     </div>
@@ -93,6 +93,7 @@
                             </div>
                         </li>
 
+                        @if (Auth::user()->permissao_id == 1)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -126,6 +127,8 @@
                                 </div>
                             </div>
                         </li>
+                        @endif
+                        
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -150,11 +153,8 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./alerts.html">
-                                            Gráficos Estatísticos
-                                        </a>
-                                        <a class="dropdown-item" href="./alerts.html">
-                                            Documentos Analíticos
+                                        <a class="dropdown-item" href="{{ route('system.admin.generate_report') }}">
+                                            Gerar Relatório
                                         </a>
                                     </div>
                                 </div>

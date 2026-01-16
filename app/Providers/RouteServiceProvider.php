@@ -21,7 +21,8 @@ class RouteServiceProvider extends ServiceProvider
         1 => '/system/admin/dashboard',
         2 => '/system/secretaria/dashboard',
         3 => '/system/areatecnica/dashboard',
-        4 => '/system/advogado/dashboard'
+        4 => '/system/advogado/dashboard',
+        5 => '/system/admin/dashboard',
     ];
 
     /**
