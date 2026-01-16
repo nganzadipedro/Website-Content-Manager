@@ -22,10 +22,13 @@
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Listagem dos registos de entrada</h3>
+                            @if (Auth::user()->permissao_id == 2)
                             <div class="mt-3">
                                 <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-info"
                                     rel="noopener">+ Novo Registo de Entrada +</a>
                             </div>
+                            @endif
+                            
                         </div>
                     </div>
                 </div>
@@ -72,12 +75,22 @@
                                                     @endif
                                                 @endif
                                             </td>
+                                             @if (Auth::user()->permissao_id == 2)
                                             <td>
                                                 <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
                                                     class="btn btn-info">
                                                     Detalhes
                                                 </a>
                                             </td>
+                                             @endif
+                                              @if (Auth::user()->permissao_id == 6)
+                                            <td>
+                                                <a href="{{ route('system.recepcionista.detalhes_registo', $item->hash) }}"
+                                                    class="btn btn-info">
+                                                    Detalhes
+                                                </a>
+                                            </td>
+                                            @endif
 
                                         </tr>
                                     @endforeach

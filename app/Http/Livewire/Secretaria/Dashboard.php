@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Secretaria;
 
 use App\Models\Registoentrada;
+use Auth;
 use Livewire\Component;
 use Carbon\Carbon;
 
@@ -29,6 +30,11 @@ class Dashboard extends Component
             ->count();
 
 
-        return view('dashboard.secretaria.index')->extends('layouts-new.app')->section('content');
+        if (Auth::user()->permissao_id == 2) {
+            return view('dashboard.secretaria.index')->extends('layouts-new.app')->section('content');
+        } else if (Auth::user()->permissao_id == 6) {
+            return view('dashboard.recepcionista.index')->extends('layouts-new.app')->section('content');
+        }
+
     }
 }

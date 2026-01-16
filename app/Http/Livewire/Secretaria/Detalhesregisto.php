@@ -64,6 +64,9 @@ class Detalhesregisto extends Component
         } else if (Auth::user()->permissao_id == 2) {
             return view('dashboard.secretaria.detalhes-registos')->extends('layouts-new.app')->section('content');
         }
+        else if (Auth::user()->permissao_id == 6) {
+            return view('dashboard.recepcionista.detalhes-registos')->extends('layouts-new.app')->section('content');
+        }
         else if (Auth::user()->permissao_id == 1) {
             $this->lista_advogados = Advogado::where('categoria', 'Advogado')->get();
             return view('dashboard.admin.detalhes-registos')->extends('layouts-new.app')->section('content');

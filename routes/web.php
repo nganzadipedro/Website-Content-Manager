@@ -178,6 +178,20 @@ Route::group(['middleware' => 'auth'], function () {
             });
         });
 
+        Route::group(['middleware' => 'recepcionista'], function () {
+            Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
+
+                Route::get('/', function () {
+                    return redirect('/system/Secretaria/dashboard');
+                });
+
+                Route::get('/dashboard', 'Livewire\Secretaria\Dashboard')->name('dashboard');
+                Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+
+            });
+        });
+
         Route::group(['middleware' => 'areatecnica'], function () {
             Route::prefix('areatecnica')->name('areatecnica.')->group(function () {
 
