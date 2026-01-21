@@ -206,6 +206,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/subscription', 'Livewire\Areatecnica\Advpendentes')->name('listar_advogados_pendentes');
                 Route::get('/list/subscription-trainee', 'Livewire\Areatecnica\Advestpendentes')->name('listar_estagiarios_pendentes');
                 Route::get('/list/subscription/registed', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
+                Route::get('/list/lawyers-cn', 'Livewire\Areatecnica\Listacn')->name('listar_advogados_cn');
                 Route::get('/list/map-distribution', 'Livewire\Areatecnica\Mapadistribuicao')->name('listar_mapa_distribuicao');
                 Route::get('/list/subscription-trainee/registed', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
                 Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');

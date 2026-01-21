@@ -430,6 +430,10 @@
                                             href="{{ route('system.areatecnica.listar_advogados_registados') }}">
                                             Registados
                                         </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.listar_advogados_cn') }}">
+                                            Lista CN
+                                        </a>
                                     </div>
                                 </div>
                             </div>

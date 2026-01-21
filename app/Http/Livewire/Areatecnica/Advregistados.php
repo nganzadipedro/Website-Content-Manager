@@ -15,8 +15,10 @@ class Advregistados extends Component
     {
         $this->lista_conselheiros = User::where('permissao_id', 5)->get();
         $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
-        ->where('estado_distribuicao', 'Distribuido')
-        ->orderBy('id', 'desc')->get();
+            ->where('estado_distribuicao', 'Distribuido')
+            ->whereNull('numero_cedula')
+            ->where('cedula_disponivel', 'Não')
+            ->orderBy('id', 'desc')->get();
         return view('dashboard.areatecnica.adv-registados')->extends('layouts-new.app')->section('content');
     }
 }

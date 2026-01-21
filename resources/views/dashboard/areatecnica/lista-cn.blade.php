@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Inscrições Para Advogados Estagiários Registados</h3>
+                            <h3 class="h1">Advogados com a Cédula Definitiva</h3>
                         </div>
                     </div>
                 </div>
@@ -30,10 +30,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
-                                        <th>Requerente</th>
-                                        <th>Despacho</th>
-                                        <th>Tipo de Processo</th>
-                                        <th></th>
+                                        <th>Nome Advogado</th>
+                                        <th>Nº Cédula</th>
+                                        <th>Data de Inscrição</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -44,23 +43,8 @@
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
-                                            <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
-                                            <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
-                                            <td>
-                                                <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
-                                                    class="badge bg-green-lt">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                        <path d="M13.5 6.5l4 4" />
-                                                        <path d="M16 19h6" />
-                                                        <path d="M19 16v6" />
-                                                    </svg>
-                                                </a>
-                                            </td>
+                                            <td>{{$item->numero_cedula}}</td>
+                                            <td>{{$item->data_emissao_cedula}}</td>
                                             <td>
                                                 <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregistoentrada->hash) }}"
                                                     class="badge bg-blue-lt">
