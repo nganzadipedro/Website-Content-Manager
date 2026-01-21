@@ -421,13 +421,14 @@
                                             href="{{ route('system.areatecnica.listar_advogados_pendentes') }}">
                                             Pendentes
                                         </a>
+                                        
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao') }}">
+                                            Mapa de Distribuição
+                                        </a>
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_advogados_registados') }}">
                                             Registados
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="#">
-                                            Mapa de Distribuição
                                         </a>
                                     </div>
                                 </div>
@@ -464,10 +465,6 @@
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_estagiarios_registados') }}">
                                             Registados
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_pedidos_deferidos') }}">
-                                            Mapa de Distribuição
                                         </a>
                                     </div>
                                 </div>

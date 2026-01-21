@@ -38,11 +38,16 @@ class Inscricaoadvogado extends Model
         'data_emissao_cedula',
         'numero',
         'numero_cedula',
+        'estado_distribuicao',
         'codigo'
     ];
 
     public function getUser(){
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function getconselheiro(){
+        return $this->belongsTo(User::class, 'conselheiro_id', 'id');
     }
 
     public function getregistoentrada(){
