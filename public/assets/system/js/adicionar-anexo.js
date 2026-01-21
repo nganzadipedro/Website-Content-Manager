@@ -34,7 +34,6 @@ function valida_formulario() {
     }
 
     return tem;
-
 }
 
 function valida_formulario_2() {

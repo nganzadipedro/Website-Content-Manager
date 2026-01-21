@@ -298,6 +298,43 @@ class SystemController extends Controller
 
     }
 
+    public function distribuicao_post(Request $request)
+    {
+
+        $registo = Inscricaoadvogado::find($request->inscricao_id);
+        if ($registo->observacao_distribuicao != $request->observacao_distribuicao) {
+            
+        $registo->observacao_distribuicao = $request->observacao_distribuicao;
+            $registo->save();
+            ActividadesistemaController::inserir(Auth::id(), "Registou uma observação ao fazer a distribuição do processo", 'registo-entrada', $registo->id);
+        
+        }
+        if($registo->data_levantamento_distribuicao != $request->data_levantamento_distribuicao){
+
+            $registo->data_levantamento_distribuicao = $request->data_levantamento_distribuicao;
+            $registo->save();
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data de levantamento do processo para a análise do Conselheiro", 'registo-entrada', $registo->id);
+        }
+        if($registo->data_entrega_distribuicao != $request->data_entrega_distribuicao){
+
+            $registo->data_entrega_distribuicao = $request->data_entrega_distribuicao;
+            $registo->save();
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data de entrega do processo pelo Conselheiro", 'registo-entrada', $registo->id);
+        }
+        $registo->conselheiro_id = $request->conselheiro_id;
+        $registo->save();
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+        return 'sucesso';
+
+    }
+
+    public function getDataInscricaoAdvogadoById($id){
+        $inscricao = Inscricaoadvogado::find($id);
+        return response()->json($inscricao);
+    }
+
     public function documento_despacho($hash_inscricao)
     {
 

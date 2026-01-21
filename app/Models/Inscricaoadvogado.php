@@ -16,6 +16,9 @@ class Inscricaoadvogado extends Model
     protected $fillable = [
         'hash',
         'observacao',
+        'observacao_distribuicao',
+        'data_levantamento_distribuicao',
+        'data_entrega_distribuicao',
         'texto_despacho',
         'sexo',
         'acto_pretendido',
@@ -24,6 +27,7 @@ class Inscricaoadvogado extends Model
         'acto_pretendido',
         'despacho',
         'user_id',
+        'conselheiro_id',
         'telefone1',
         'telefone2',
         'email',
