@@ -14,6 +14,9 @@ class Editarregisto extends Component
     public $destinatario;
     public $data_entrada;
     public $assunto;
+    public $titulo;
+    public $outro_titulo;
+    public $telefone;
     public $observacao;
     public $tipo_documento;
     public $tipo_processo_id;
@@ -31,6 +34,13 @@ class Editarregisto extends Component
 
         $this->assunto = $this->registo->assunto;
         $this->destinatario = $this->registo->destinatario;
+        if ($this->registo->titulo != 'Advogado' && $this->registo->titulo != 'Cidadão' && $this->registo->titulo != 'Provedoria') {
+            $this->titulo = 'Outro';
+            $this->outro_titulo = $this->registo->titulo;
+        } else {
+            $this->titulo = $this->registo->titulo;
+        }
+        $this->telefone = $this->registo->telefone;
         $this->data_entrada = $this->registo->data_entrada;
         $this->tipo_processo_id = $this->registo->tipo_processo_id;
         $this->observacao = $this->registo->observacao;
@@ -53,8 +63,14 @@ class Editarregisto extends Component
             $this->mensagem('Escolha o tipo de processo', 'warning');
         } else if ($this->proveniencia == '' || $this->proveniencia == null) {
             $this->mensagem('Informe a proveniência', 'warning');
+        } else if ($this->titulo == '' || $this->titulo == null) {
+            $this->mensagem('Informe o título/função', 'warning');
+        } else if ($this->titulo == 'Outro' && ($this->outro_titulo == null || $this->outro_titulo == '')) {
+            $this->mensagem('Informe o título/função', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
+        } else if ($this->telefone == '' || $this->telefone == null) {
+            $this->mensagem('Digite o número de telefone', 'warning');
         } else {
 
             $registo_antigo = Registoentrada::where('hash', $this->hash_registo)->first();
@@ -65,6 +81,8 @@ class Editarregisto extends Component
             $this->registo->proveniencia = $this->proveniencia;
             $this->registo->data_entrada = $this->data_entrada;
             $this->registo->observacao = $this->observacao;
+            $this->registo->telefone = $this->telefone;
+            $this->registo->titulo = $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo;
             $this->registo->tipo_processo_id = $this->tipo_processo_id;
             $this->registo->destinatario = $this->destinatario;
             $this->registo->tipo_documento = $this->tipo_documento;
@@ -91,6 +109,12 @@ class Editarregisto extends Component
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
             }
 
+             if ($registo_antigo->titulo != $this->registo->titulo) {
+                $msg = "Actualizou o título/função do registo de ($registo_antigo->titulo) para (" . $this->registo->titulo . ")";
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
+            }
+
             if ($registo_antigo->data_entrada != $this->registo->data_entrada) {
                 $msg = "Actualizou a data de entrada do registo de ($registo_antigo->data_entrada) para (" . $this->registo->data_entrada . ")";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
@@ -109,6 +133,12 @@ class Editarregisto extends Component
 
             if ($registo_antigo->destinatario != $this->registo->destinatario) {
                 $msg = "Actualizou o destinatário do registo de ($registo_antigo->destinatario) para (" . $this->registo->destinatario . ")";
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
+            }
+
+            if ($registo_antigo->telefone != $this->registo->telefone) {
+                $msg = "Actualizou o número de telefone do registo de ($registo_antigo->telefone) para (" . $this->registo->telefone . ")";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
             }

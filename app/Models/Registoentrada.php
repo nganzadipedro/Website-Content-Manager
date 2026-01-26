@@ -27,6 +27,7 @@ class Registoentrada extends Model
         'user_id',
         'estado',
         'telefone',
+        'titulo',
         'numero',
         'nota_encaminhamento',
         'encaminhado'

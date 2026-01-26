@@ -18,6 +18,8 @@ class Registarentrada extends Component
     public $tipo_processo_id;
     public $tipo_documento;
     public $telefone;
+    public $titulo;
+    public $outro_titulo;
     public $proveniencia;
 
     public $tipos_processo = array();
@@ -31,12 +33,17 @@ class Registarentrada extends Component
     public function salvar()
     {
 
+        
         if ($this->assunto == '' || $this->assunto == null) {
             $this->mensagem('Digite o assunto', 'warning');
         } else if ($this->tipo_processo_id == '' || $this->tipo_processo_id == null) {
             $this->mensagem('Escolha o tipo de processo', 'warning');
         } else if ($this->proveniencia == '' || $this->proveniencia == null) {
             $this->mensagem('Informe a proveniência', 'warning');
+        } else if ($this->titulo == '' || $this->titulo == null) {
+            $this->mensagem('Informe o título/função', 'warning');
+        } else if ($this->titulo == 'Outro' && ($this->outro_titulo == null || $this->outro_titulo == '')) {
+            $this->mensagem('Informe o título/função', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
         } else if ($this->telefone == '' || $this->telefone == null) {
@@ -53,6 +60,7 @@ class Registarentrada extends Component
                 'data_entrada' => $this->data_entrada,
                 'observacao' => $this->observacao,
                 'telefone' => $this->telefone,
+                'titulo' => $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo,
                 'tipo_processo_id' => $this->tipo_processo_id,
                 'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
                 'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,
@@ -69,6 +77,8 @@ class Registarentrada extends Component
             ActividadesistemaController::inserir(Auth::id(), "Registou uma entrada de processo na secretária ($registo->assunto)", 'user', Auth::id());
 
             $this->mensagemRefresh('Registo efectuado com sucesso', 'success');
+
+            return redirect()->route('system.secretaria.listar_registos');
 
         }
 

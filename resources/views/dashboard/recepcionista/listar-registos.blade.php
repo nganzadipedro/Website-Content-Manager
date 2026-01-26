@@ -48,6 +48,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
+                                        <th>Assunto</th>
                                         <th>Tipo</th>
                                         <th>Data de Entrada</th>
                                         <th>Proveniência</th>
@@ -61,6 +62,7 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
+                                            <td>{{$item->assunto}}</td>
                                             <td>{{$item->gettipoprocesso->descricao}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
@@ -81,43 +83,48 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
-                                                    class="badge bg-blue-lt">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
-                                                        <path d="M9 15h-2" />
-                                                        <path d="M13 12h-6" />
-                                                        <path d="M11 9h-4" />
-                                                    </svg>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                @if ($item->tipo_processo_id == 1)
-                                                    <a href="{{ route('system.secretaria.documento_assistencia', $item->hash) }}"
-                                                        class="badge bg-green-lt">
+                                            @if (Auth::user()->permissao_id == 2)
+                                                <td>
+                                                    <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
+                                                        class="badge bg-blue-lt">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-file-export">
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
                                                             <path
-                                                                d="M11.5 21h-4.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v5m-5 6h7m-3 -3l3 3l-3 3" />
+                                                                d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+                                                            <path d="M9 15h-2" />
+                                                            <path d="M13 12h-6" />
+                                                            <path d="M11 9h-4" />
                                                         </svg>
                                                     </a>
-                                                @endif
-                                            </td>
+                                                </td>
+                                            @endif
+                                            @if (Auth::user()->permissao_id == 6)
+                                                <td>
+                                                    <a href="{{ route('system.recepcionista.detalhes_registo', $item->hash) }}"
+                                                        class="badge bg-blue-lt">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+                                                            <path d="M9 15h-2" />
+                                                            <path d="M13 12h-6" />
+                                                            <path d="M11 9h-4" />
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>

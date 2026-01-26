@@ -72,6 +72,34 @@
 
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
+                                                    <label for="titulo">Título/Função</label>
+                                                    <select wire:model="titulo" clang="form-control" name="titulo"
+                                                        id="titulo" class="form-control">
+                                                        <option selected>Selecione...</option>
+                                                        <option value="Cidadão">Cidadão Comum</option>
+                                                        <option value="Advogado">Advogado</option>
+                                                        <option value="Provedoria">Provedoria</option>
+                                                        <option value="Outro">Outro</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            @if ($this->titulo == 'Outro')
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="tipo_documento">Título/Função</label>
+                                                        <input type="text" class="form-control" maxlength="100"
+                                                            wire:model="outro_titulo">
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                        </div>
+
+                                        <div class="row mt-3">
+
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
                                                     <label for="tipo_documento">Tipo de Documento</label>
                                                     <select wire:model="tipo_documento" clang="form-control"
                                                         name="tipo_documento" id="tipo_documento" class="form-control">
@@ -89,10 +117,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-
-                                        <div class="row mt-3">
-
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="destinatario">Destinatário</label>
@@ -103,11 +127,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-9 col-xl-9 col-md-9 col-12">
+                                            <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="observacao">Observação</label>
-                                                    <input type="text" wire:model="observacao" name="observacao"
-                                                        class="form-control" id="observacao" value="">
+                                                    <label for="telefone">Telefone</label>
+                                                    <input class="form-control" wire:model="telefone" maxlength="9"
+                                                        type="text" name="telefone" id="telefone" value="">
                                                 </div>
                                             </div>
 
@@ -116,6 +140,13 @@
 
                                         <div class="row mt-3">
 
+                                            <div class="col-lg-6 col-xl-6 col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="observacao">Observação</label>
+                                                    <input type="text" wire:model="observacao" name="observacao"
+                                                        class="form-control" id="observacao" value="">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row mt-3">

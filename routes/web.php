@@ -38,7 +38,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
-    Route::get('/trata-dados', 'Controllers\WebsiteController@trans_dados');
+    Route::get('/trata-dados', 'Controllers\SystemController@trata_bd_antiga');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
 });
@@ -175,6 +175,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
                 Route::get('/generate/report', 'Livewire\Secretaria\Gerarrelatorio')->name('generate_report');
+                Route::get('/document/assistance/{hash}', 'Livewire\Secretaria\Documentoassistencia')->name('documento_assistencia');
 
             });
         });

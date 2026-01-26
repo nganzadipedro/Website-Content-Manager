@@ -380,4 +380,70 @@ class SystemController extends Controller
 
     }
 
+    public function trata_bd_antiga()
+    {
+
+        $dados = DB::select('select * from registos2026');
+
+        foreach ($dados as $dado) {
+
+        set_time_limit(0);
+
+            date_default_timezone_set("Africa/Luanda");
+            $numero = Registoentrada::whereYear('created_at', now()->year)->count() + 1;
+
+            $titulo = '';
+            $proveniencia = '';
+            $tipo_processo_id = 1;
+            if(str_contains($dado->proveniencia, '(')) {
+                $partes = explode('(', $dado->proveniencia);
+                $proveniencia = trim($partes[0]);
+                $partes = explode(')', $partes[1]);
+                $titulo = trim($partes[0]);
+            }
+            else{
+                $proveniencia = $dado->proveniencia;
+                $titulo = 'Cidadão';
+            }
+
+            if(str_contains($dado->assunto, 'Inscrição para Advogado')) {
+                $tipo_processo_id = 2;
+            } else if(str_contains($dado->assunto, 'Pedido de AJ')) {
+                $tipo_processo_id = 1;
+            }
+            else if(str_contains($dado->assunto, 'Reinscrição')) {
+                $tipo_processo_id = 2;
+            }
+            else if(str_contains($dado->assunto, 'Solicitação de Declaração')) {
+                $tipo_processo_id = 5;
+            }
+            else if(str_contains($dado->assunto, 'mudança de patrono')) {
+                $tipo_processo_id = 6;
+            }
+            else{
+                $tipo_processo_id = 4;
+            }
+
+            $registo = Registoentrada::create([
+                'assunto' => $dado->assunto,
+                'proveniencia' => $proveniencia,
+                'data_entrada' => $dado->data_entrada,
+                'titulo' => $titulo,
+                'tipo_processo_id' => $tipo_processo_id,
+                'destinatario' => 'CPL-OAA',
+                'tipo_documento' => 'Requerimento',
+                'user_id' => 4055
+            ]);
+
+            $registo->hash = md5($registo->created_at . $registo->id . $registo->user_id);
+            $registo->numero = $numero;
+            $registo->save();
+            $registo->codigo = "$numero/" . now()->year;
+            $registo->created_at = $dado->data_bd != null ? $dado->data_bd : '2026-01-12 12:00:00';
+            $registo->save();
+
+        }
+
+    }
+
 }

@@ -12,7 +12,7 @@
   <link href="{{ asset('assets/new-template/dist/css/tabler-flags.min.css?1692870487') }}" rel="stylesheet" />
   <link href="{{ asset('assets/new-template/dist/css/tabler-payments.min.css?1692870487') }}" rel="stylesheet" />
   <link href="{{ asset('assets/new-template/dist/css/tabler-vendors.min.css?1692870487') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/template/dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/new-template/dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
@@ -41,7 +41,7 @@
 </head>
 
 <body>
-  <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+  <script src="{{ asset('assets/new-template/dist/js/demo-theme.min.js?1692870487') }}"></script>
   <div class="page">
     <!-- Navbar -->
 
