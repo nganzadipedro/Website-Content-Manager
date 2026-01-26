@@ -48,6 +48,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
+                                        <th>Assunto</th>
                                         <th>Tipo</th>
                                         <th>Data de Entrada</th>
                                         <th>Proveniência</th>
@@ -61,6 +62,7 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
+                                            <td>{{ mb_strimwidth($item->assunto, 0, 40, '...', 'UTF-8') }}</td>
                                             <td>{{$item->gettipoprocesso->descricao}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>

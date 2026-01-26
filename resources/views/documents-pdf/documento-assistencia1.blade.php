@@ -20,12 +20,17 @@
         margin-top: -10px;
     }
 
+    .centro-estudo {
+        margin-top: -2px;
+    }
+
     .destinatarios {
         color: black;
         font-weight: bold;
         position: relative;
-        left: 300px;
-        font-size: 12px;
+        top: -20px;
+        left: 320px;
+        font-size: 13px;
         width: 370px;
         overflow-wrap: break-word;
     }
@@ -41,7 +46,7 @@
     }
 
     .referencia-data p {
-        font-size: 12px;
+        font-size: 13px;
         display: inline-block;
         width: 48%;
     }
@@ -57,7 +62,7 @@
         /* margin-top: -50px; */
         text-align: justify;
         line-height: 1.8;
-        font-size: 12px;
+        font-size: 13px;
         font-family: minhafonte;
     }
 
@@ -69,7 +74,7 @@
     .assinatura {
         margin-top: 50px;
         text-align: center;
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .assinatura .linha {
@@ -122,7 +127,7 @@
 </div>
 
 <div class="corpo">
-    Ilustre(s) Colega(s),<br><br>
+    Ilustre(s) Colega(s),<br>
     <p class="pg1">
         Serve o presente para informar o(a)s Ilustre(s) Colega(s) que nos termos da alínea d), do n.º 1, do art.º 7.º,
         do Dec. Lei n.º 15/95, de 10 de Novembro, foi indicado(a) para intervir no processo de patrocínio judiciário

@@ -22,13 +22,6 @@
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Listagem dos registos de entrada</h3>
-                            @if (Auth::user()->permissao_id == 2)
-                                <div class="mt-3">
-                                    <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-info"
-                                        rel="noopener">+ Novo Registo de Entrada +</a>
-                                </div>
-                            @endif
-
                         </div>
                     </div>
                 </div>
@@ -53,8 +46,6 @@
                                         <th>Data de Entrada</th>
                                         <th>Proveniência</th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,63 +53,26 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
-                                            <td>{{$item->assunto}}</td>
+                                            <td>{{ mb_strimwidth($item->assunto, 0, 40, '...', 'UTF-8') }}</td>
                                             <td>{{$item->gettipoprocesso->descricao}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
-                                                @if (Auth::user()->permissao_id == 2)
-                                                    @if ($item->encaminhado == 'Não')
-                                                        <a class="badge bg-yellow-lt"
-                                                            href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                                <path d="M13.5 6.5l4 4" />
-                                                            </svg>
-                                                        </a>
-                                                    @endif
-                                                @endif
+                                                <a href="{{ route('system.recepcionista.detalhes_registo', $item->hash) }}"
+                                                    class="badge bg-blue-lt">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+                                                        <path d="M9 15h-2" />
+                                                        <path d="M13 12h-6" />
+                                                        <path d="M11 9h-4" />
+                                                    </svg>
+                                                </a>
                                             </td>
-                                            @if (Auth::user()->permissao_id == 2)
-                                                <td>
-                                                    <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
-                                                        class="badge bg-blue-lt">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
-                                                            <path d="M9 15h-2" />
-                                                            <path d="M13 12h-6" />
-                                                            <path d="M11 9h-4" />
-                                                        </svg>
-                                                    </a>
-                                                </td>
-                                            @endif
-                                            @if (Auth::user()->permissao_id == 6)
-                                                <td>
-                                                    <a href="{{ route('system.recepcionista.detalhes_registo', $item->hash) }}"
-                                                        class="badge bg-blue-lt">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
-                                                            <path d="M9 15h-2" />
-                                                            <path d="M13 12h-6" />
-                                                            <path d="M11 9h-4" />
-                                                        </svg>
-                                                    </a>
-                                                </td>
-                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
