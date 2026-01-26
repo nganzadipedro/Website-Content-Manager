@@ -8,6 +8,7 @@ use App\Models\Fio\Atribuicaoalunoprova;
 use App\Models\Fio\Avaliacaoaluno;
 use App\Models\Fio\Pagamento;
 use App\Models\Fio\Actividadesistema;
+use Hash;
 use Illuminate\Http\Request;
 use App\Lib\Traits\UserTrait;
 use App\Models\AdminInstituicao;
@@ -33,7 +34,8 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
 
-    public function register_member(){
+    public function register_member()
+    {
 
         return view('auth.inscricao');
 
@@ -61,6 +63,27 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function updateSenha(Request $request)
+    {
+
+        $usuario = User::find(Auth::user()->id);
+
+        // verificação da senha
+        if (strlen($request->nova_senha) >= 6) {
+
+            $usuario->password = Hash::make($request->nova_senha);
+            $usuario->save();
+
+            // gerar historico
+            ActividadesistemaController::inserir(Auth::id(), "Alterou a sua senha de acesso ao sistema", 'user', Auth::id());
+
+            return 'sucesso';
+        } else {
+            return 'seguranca';
+        }
+
+    }
 
     public function insertAdmin()
     {

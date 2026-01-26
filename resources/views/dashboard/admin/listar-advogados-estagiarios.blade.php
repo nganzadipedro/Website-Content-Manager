@@ -40,27 +40,34 @@
                                 <tbody>
                                     @foreach ($lista_advogados as $item)
                                         <tr>
-                                        <td>{{$loop->index + 1}}</td>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{$item->getpessoa->nome}}</td>
-                                        <td>{{$item->categoria}}</td>
-                                        <td>{{$item->num_associado}}</td>
-                                        <td>{{$item->getpessoa->num_documento}}</td>
-                                        <td>
-                                            <a href="{{ route('system.admin.detalhes_registo', $item->hash) }}"
-                                                class="btn btn-info">
-                                                Detalhes
-                                            </a>
-                                        </td>
-
+                                            <td>{{$loop->index + 1}}</td>
+                                            <td>{{$item->id}}</td>
+                                            <td>{{$item->getpessoa->nome}}</td>
+                                            <td>{{$item->categoria}}</td>
+                                            <td>{{$item->num_associado}}</td>
+                                            <td>{{$item->getpessoa->num_documento}}</td>
+                                            <td>
+                                                <a class="badge bg-blue-lt"
+                                                    href="{{ route('system.admin.detalhes_registo', $item->hash) }}"
+                                                    title="Detalhes do Advogado">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+                                                        <path d="M9 15h-2" />
+                                                        <path d="M13 12h-6" />
+                                                        <path d="M11 9h-4" />
+                                                    </svg>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

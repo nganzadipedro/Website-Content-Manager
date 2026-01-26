@@ -67,11 +67,12 @@
                                     </div>
                                 </div>
                                 <h3 class="card-title mt-4">Email</h3>
-                                <p class="card-subtitle">Este email será usado para comunicações e acessar o sistema</p>
+                                <p class="card-subtitle">Este email será usado para notificações e acessar o sistema</p>
                                 <div>
                                     <div class="row g-2">
                                         <div class="col-auto">
-                                            <input type="text" wire:model="email" class="form-control w-auto" value="{{ $pessoa->email }}">
+                                            <input type="text" wire:model="email" class="form-control w-auto"
+                                                value="{{ $pessoa->email }}">
                                         </div>
                                         <div class="col-auto"><a wire:click="actualizarEmail()" class="btn">
                                                 Actualizar Email
@@ -82,7 +83,8 @@
                                 <p class="card-subtitle">Se alterar a senha, deverá usá-la na próxima vez que acessar o
                                     sistema</p>
                                 <div>
-                                    <a href="#" class="btn">
+                                    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal-report"
+                                        class="btn">
                                         Definir nova senha
                                     </a>
                                 </div>
@@ -98,6 +100,42 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Definir nova senha</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="usuario_id" id="usuario_id" value="{{ Auth::user()->id }}">
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Nova senha</label>
+                                <input type="password" class="form-control" name="nova_senha" id="nova_senha">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Confirmar nova senha</label>
+                                <input type="password" class="form-control" name="confirmar_nova_senha"
+                                    id="confirmar_nova_senha">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-12">
+                        <a id="btn-nova-senha" class="btn btn-success mt-4">Salvar</a>
+                        <a href="{{ route('profile_user') }}"
+                            class="btn btn-danger mt-4">Cancelar</a>
                     </div>
                 </div>
             </div>

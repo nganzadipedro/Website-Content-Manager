@@ -71,7 +71,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getDaysMonthAssistance', 'Controllers\SystemController@registosPorDiaMesAtualAssistencia')->name('get_days_month_assistance');
     Route::get('system/getDaysMonthInscricaoAdvogado', 'Controllers\SystemController@registosPorDiaMesAtualInscricaoAdvogado')->name('get_days_month_inscricao_advogado');
     Route::get('system/getDaysMonthInscricaoEstagiario', 'Controllers\SystemController@registosPorDiaMesAtualInscricaoEstagiario')->name('get_days_month_inscricao_estagiario');
-    
+
+    Route::post('/alterar/senha', 'Controllers\UserController@updateSenha');
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');

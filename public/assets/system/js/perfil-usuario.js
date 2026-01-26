@@ -1,13 +1,13 @@
 
 function actualizaSenha() {
 
-    var antiga = $("#senha_antiga").val();
-    var nova = $("#nova").val();
+    var nova_senha = $("#nova_senha").val();
+    var confirmar_nova_senha = $("#confirmar_nova_senha").val();
 
     var form = new FormData();
 
-    form.append('antiga', antiga);
-    form.append('nova', nova);
+    form.append('nova_senha', nova_senha);
+    form.append('confirmar_nova_senha', confirmar_nova_senha);
 
     Swal.fire({
         title: "Tem certeza que pretende actualizar a sua senha?",
@@ -50,14 +50,6 @@ function actualizaSenha() {
                             type: "warning",
                             title: "Aviso!",
                             text: 'A senha informada não obedece os requisitos pedidos',
-                            timer: 4000
-                        });
-                    }
-                    else if (res == 'incorrecta') {
-                        sweetAlert({
-                            type: "warning",
-                            title: "Aviso!",
-                            text: 'A senha antiga está incorrecta',
                             timer: 4000
                         });
                     }
@@ -151,7 +143,7 @@ $("#btn-update-foto").click(function () {
 });
 
 
-$("#btn-update-senha").click(function () {
+$("#btn-nova-senha").click(function () {
 
     // valida o formulário
     if (validaForm1() == true) {
@@ -166,26 +158,21 @@ $("#btn-update-senha").click(function () {
 
 function validaForm1() {
 
-    var senha_antiga = document.getElementById('senha_antiga').value;
-    var nova_senha = document.getElementById('nova').value;
-    var confirmar = document.getElementById('confirmar').value;
+    var nova_senha = document.getElementById('nova_senha').value;
+    var confirmar = document.getElementById('confirmar_nova_senha').value;
 
     var msgErro = '';
     var tem = true;
 
     var re = /\S+@\S+\.\S+/;
 
-    if (senha_antiga == '' || senha_antiga == null) {
-        tem = false;
-        msgErro = 'Digite a senha antiga';
-    }
-    else if (nova_senha == '' || nova_senha == null) {
+    if (nova_senha == '' || nova_senha == null) {
         tem = false;
         msgErro = 'Digite a nova senha';
     }
     else if (nova_senha.length < 8) {
         tem = false;
-        msgErro = 'A nova senha deve ter pelo menos 8 caracteres';
+        msgErro = 'A nova senha deve ter pelo menos 6 caracteres';
     }
     else if (confirmar == '' || confirmar == null) {
         tem = false;

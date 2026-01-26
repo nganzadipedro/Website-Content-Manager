@@ -6,6 +6,7 @@ use App\Http\Controllers\ActividadesistemaController;
 use App\Models\Permissao;
 use App\Models\Pessoa;
 use App\Models\User;
+use Auth;
 use Livewire\Component;
 
 class Editarusuario extends Component
@@ -53,7 +54,7 @@ class Editarusuario extends Component
     public function render()
     {
         $this->permissoes = Permissao::all();
-        return view('dashboard.admin.editar-usuario')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.editar-usuario')->extends('layouts-new.app')->section('content');
     }
 
     public function salvar()
@@ -79,8 +80,36 @@ class Editarusuario extends Component
 
         $nome = $this->nome_completo;
 
-        ActividadesistemaController::inserir(null, "Atualizou os dados do usuário:$nome", 'user', $user->id);
-        session()->flash('message', 'Dados do usuário atualizados com sucesso!');
+        ActividadesistemaController::inserir(Auth::user()->id, "Atualizou os dados do usuário:$nome", 'user', $user->id);
+        $this->mensagemRefresh('Dados atualizados com sucesso!', 'success');
 
+    }
+
+     private function mensagem($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal2', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
+    }
+
+    private function mensagemRefresh($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Permissao;
 use App\Models\Pessoa;
 use App\Models\User;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Cadastrarusuario extends Component
@@ -88,8 +89,39 @@ class Cadastrarusuario extends Component
         $this->documento = null;
         $this->num_documento = null;
 
-        session()->flash('message', 'Usuário cadastrado com sucesso!');
+        $nome = $this->nome_completo;
+        ActividadesistemaController::inserir(Auth::user()->id, "Inseriu um novo usuário no sistema:$nome", 'user', $user->id);
+
+        $this->mensagemRefresh('Dados atualizados com sucesso!', 'success');
         return redirect()->route('system.admin.listusuario');
 
+    }
+
+    private function mensagem($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal2', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
+    }
+
+    private function mensagemRefresh($msg, $icon)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => '',
+            'text' => $msg,
+            'timer' => 5000,
+            'icon' => $icon,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'timerProgressBar' => true,
+            'position' => 'center'
+        ]);
     }
 }

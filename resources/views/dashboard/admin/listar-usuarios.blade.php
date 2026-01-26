@@ -46,7 +46,7 @@
                                             <td>{{$item->getpermissao->descricao}}</td>
                                             <td>
 
-                                                <a class="badge bg-yellow-lt"
+                                                <a title="Editar Usuário" class="badge bg-yellow-lt"
                                                     href="{{ route('system.admin.edit_user', $item->id) }}">
 
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -60,7 +60,7 @@
 
                                                 </a>
 
-                                                <a class="badge bg-blue-lt"
+                                                <a title="Detalhes do Usuário" class="badge bg-blue-lt"
                                                     href="{{ route('system.admin.detalhes_user', $item->id) }}">
 
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
