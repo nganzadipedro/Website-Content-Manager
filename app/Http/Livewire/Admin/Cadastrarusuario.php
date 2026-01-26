@@ -38,7 +38,7 @@ class Cadastrarusuario extends Component
     public function render()
     {
         $this->permissoes = Permissao::all();
-        return view('dashboard.admin.cadastrar-usuario')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.cadastrar-usuario')->extends('layouts-new.app')->section('content');
     }
 
     public function salvar()
@@ -48,7 +48,7 @@ class Cadastrarusuario extends Component
         $this->validate($this->rules);
 
         $pessoa = Pessoa::create([
-            'nome' => strtoupper($this->nome_completo),
+            'nome' => mb_strtoupper($this->nome_completo, 'UTF-8'),
             'genero' => $this->genero,
             'documento' => $this->documento,
             'num_documento' => $this->num_documento,

@@ -92,50 +92,12 @@
         border: solid 1px black;
     }
 
-    .identificador-candidato {
-        text-align: center;
-        width: 50px;
-        height: 50px;
-        position: fixed;
-        top: 800px;
-        left: 40px;
-    }
-
-    #img_1 {
-        position: relative;
-        left: 50px;
-    }
-
-    .centro-estudo {
-        margin-top: -2px;
-    }
-
     .barra {
         display: block;
         border: solid 1px black;
         position: relative;
         top: -30px;
     }
-
-    .declaracao {
-        margin-top: 30px;
-        margin-bottom: 20px;
-        text-align: center;
-        font-size: 25px;
-    }
-
-    .bold {
-        font-family: minhafontebold;
-        font-weight: 700;
-    }
-
-    /* .img-fundo{
-        position: fixed;
-        top: 230px;
-        left: 100px;
-        opacity: 0.1;
-        z-index: -100;
-    } */
 </style>
 
 <div class="cabecalho">

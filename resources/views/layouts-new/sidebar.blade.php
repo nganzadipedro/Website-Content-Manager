@@ -117,10 +117,10 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="./alerts.html">
+                                        <a class="dropdown-item" href="{{ route('system.admin.new_user') }}">
                                             Cadastrar
                                         </a>
-                                        <a class="dropdown-item" href="./alerts.html">
+                                        <a class="dropdown-item" href="{{ route('system.admin.listusuario') }}">
                                             Listar
                                         </a>
                                     </div>
