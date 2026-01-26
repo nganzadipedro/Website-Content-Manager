@@ -67,7 +67,7 @@
                                             <td>
                                                 @if (Auth::user()->permissao_id == 2)
                                                     @if ($item->encaminhado == 'Não')
-                                                        <a class="badge bg-yellow-lt"
+                                                        <a title="Editar Registo" class="badge bg-yellow-lt"
                                                             href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -82,7 +82,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
+                                                <a title="Detalhes do Registo" href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -99,7 +99,7 @@
                                             </td>
                                             <td>
                                                 @if ($item->tipo_processo_id == 1)
-                                                    <a href="{{ route('system.secretaria.documento_assistencia', $item->hash) }}"
+                                                    <a title="Emitir Documento" href="{{ route('system.secretaria.documento_assistencia', $item->hash) }}"
                                                         class="badge bg-green-lt">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -126,6 +126,12 @@
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();

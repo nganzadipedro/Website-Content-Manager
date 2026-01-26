@@ -145,7 +145,9 @@
 
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
-                                                <a wire:click="salvar" class="btn btn-success mt-4">Salvar</a>
+                                                <button type="button" wire:click="salvar" class="btn btn-success mt-4">
+                                                    Salvar
+                                                </button>
                                                 <a href="{{ route('system.secretaria.dashboard') }}"
                                                     class="btn btn-danger mt-4">Cancelar</a>
                                             </div>

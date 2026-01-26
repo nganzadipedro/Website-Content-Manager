@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advogadoatribuido;
 use App\Models\Anexosregisto;
 use App\Models\Denuncia;
 use App\Models\Galeria;
@@ -380,6 +381,79 @@ class SystemController extends Controller
 
     }
 
+    public function documento_assistencia($hash_registo)
+    {
+
+        $registo_entrada = Registoentrada::where('hash', $hash_registo)->first();
+        $advogado_atribuido = null;
+        $inscricao_advogado = null;
+
+        $nome_advogado = '';
+        $telefone_advogado = '';
+        $email_advogado = '';
+        $categoria_advogado = '';
+        $endereco_advogado = '';
+
+        if ($registo_entrada) {
+            $inscricao_advogado = Inscricaoadvogado::where('registo_entrada_id', $registo_entrada->id)->first();
+            $advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $registo_entrada->id)->first();
+        }
+
+        if ($advogado_atribuido) {
+            if ($advogado_atribuido->advogado_id != null) {
+                $nome_advogado = $advogado_atribuido->getadvogado->getpessoa->nome;
+                $telefone_advogado = $advogado_atribuido->getadvogado->getpessoa->telefone;
+                $email_advogado = $advogado_atribuido->getadvogado->getpessoa->email;
+                $categoria_advogado = $advogado_atribuido->getadvogado->categoria;
+                $endereco_advogado = $advogado_atribuido->getadvogado->endereco;
+            } else {
+                $nome_advogado = $advogado_atribuido->nome_completo;
+                $telefone_advogado = $advogado_atribuido->telefone;
+                $email_advogado = $advogado_atribuido->email;
+                $categoria_advogado = $advogado_atribuido->categoria;
+                $endereco_advogado = $advogado_atribuido->endereco;
+            }
+        } else {
+            $nome_advogado = 'Não atribuído';
+            $telefone_advogado = 'Não atribuído';
+            $email_advogado = 'Não atribuído';
+            $categoria_advogado = 'Não atribuído';
+            $endereco_advogado = 'Não atribuído';
+        }
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.documento-assistencia1', [
+            'nome_advogado' => $nome_advogado,
+            'telefone_advogado' => $telefone_advogado,
+            'email_advogado' => $email_advogado,
+            'categoria_advogado' => $categoria_advogado,
+            'endereco_advogado' => $endereco_advogado
+        ]);
+
+        return $pdf->stream();
+
+    }
+
     public function trata_bd_antiga()
     {
 
@@ -387,7 +461,7 @@ class SystemController extends Controller
 
         foreach ($dados as $dado) {
 
-        set_time_limit(0);
+            set_time_limit(0);
 
             date_default_timezone_set("Africa/Luanda");
             $numero = Registoentrada::whereYear('created_at', now()->year)->count() + 1;
@@ -395,32 +469,27 @@ class SystemController extends Controller
             $titulo = '';
             $proveniencia = '';
             $tipo_processo_id = 1;
-            if(str_contains($dado->proveniencia, '(')) {
+            if (str_contains($dado->proveniencia, '(')) {
                 $partes = explode('(', $dado->proveniencia);
                 $proveniencia = trim($partes[0]);
                 $partes = explode(')', $partes[1]);
                 $titulo = trim($partes[0]);
-            }
-            else{
+            } else {
                 $proveniencia = $dado->proveniencia;
                 $titulo = 'Cidadão';
             }
 
-            if(str_contains($dado->assunto, 'Inscrição para Advogado')) {
+            if (str_contains($dado->assunto, 'Inscrição para Advogado')) {
                 $tipo_processo_id = 2;
-            } else if(str_contains($dado->assunto, 'Pedido de AJ')) {
+            } else if (str_contains($dado->assunto, 'Pedido de AJ')) {
                 $tipo_processo_id = 1;
-            }
-            else if(str_contains($dado->assunto, 'Reinscrição')) {
+            } else if (str_contains($dado->assunto, 'Reinscrição')) {
                 $tipo_processo_id = 2;
-            }
-            else if(str_contains($dado->assunto, 'Solicitação de Declaração')) {
+            } else if (str_contains($dado->assunto, 'Solicitação de Declaração')) {
                 $tipo_processo_id = 5;
-            }
-            else if(str_contains($dado->assunto, 'mudança de patrono')) {
+            } else if (str_contains($dado->assunto, 'mudança de patrono')) {
                 $tipo_processo_id = 6;
-            }
-            else{
+            } else {
                 $tipo_processo_id = 4;
             }
 

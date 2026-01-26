@@ -39,6 +39,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
     Route::get('/trata-dados', 'Controllers\SystemController@trata_bd_antiga');
+    Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
 });
