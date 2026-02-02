@@ -51,22 +51,21 @@ class Arquivarpedido extends Component
     {
 
         $this->advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $this->registo->id)->first();
-        
-        if($this->advogado_atribuido->advogado_id != null){
+
+        if ($this->advogado_atribuido->advogado_id != null) {
             $this->nome_advogado = $this->advogado_atribuido->getadvogado->getpessoa->nome;
             $this->cedula_advogado = $this->advogado_atribuido->getadvogado->num_associado;
             $telefone = $this->advogado_atribuido->getadvogado->getpessoa->telefone1;
-            if($telefone == null){
+            if ($telefone == null) {
                 $telefone = $this->advogado_atribuido->telefone;
             }
             $this->telefone_advogado = $telefone;
             $email = $this->advogado_atribuido->getadvogado->getpessoa->email;
-            if($email == null){
+            if ($email == null) {
                 $email = $this->advogado_atribuido->email;
             }
             $this->email_advogado = $email;
-        }
-        else{
+        } else {
             $this->nome_advogado = $this->advogado_atribuido->nome_completo;
             $this->cedula_advogado = $this->advogado_atribuido->cedula;
             $this->telefone_advogado = $this->advogado_atribuido->telefone;
@@ -85,8 +84,12 @@ class Arquivarpedido extends Component
             $this->registo->estado = 'arquivado';
             $this->registo->save();
 
+            $numero = Pedidoassistencia::whereYear('created_at', now()->year)->count() + 1;
+
             $pedido = Pedidoassistencia::create([
                 'hash' => Str::uuid(),
+                'numero' => $numero,
+                'codigo' => $numero . '/' . now()->year,
                 'observacao' => $this->observacao2,
                 'sexo' => $this->sexo == null ? 'Não Definido' : $this->sexo,
                 'natureza' => $this->natureza == null ? 'Não Definido' : $this->natureza,
@@ -99,7 +102,7 @@ class Arquivarpedido extends Component
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $this->registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Arquivou o pedido de assistência jurídica ($pedido->id)", 'user', $pedido->id);
             $this->mensagem($msg, 'success');
-            return redirect()->route('system.areatecnica.listar_pedidos_pendentes');
+            return redirect()->route('system.areatecnica.listar_pedidos_arquivados');
 
         }
 

@@ -16,6 +16,8 @@ class Pedidoassistencia extends Model
     protected $fillable = [
         'hash',
         'observacao',
+        'numero',
+        'codigo',
         'sexo',
         'natureza',
         'localizacao',

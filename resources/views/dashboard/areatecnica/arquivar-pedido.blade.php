@@ -95,7 +95,7 @@
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
-                                                    <label for="localizacao">Localização</label>
+                                                    <label for="localizacao">Pasta de Arquivo</label>
                                                     <input type="text" wire:model="localizacao" name="localizacao"
                                                         class="form-control" id="localizacao" value="">
                                                 </div>

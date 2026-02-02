@@ -22,6 +22,8 @@ class Editarregisto extends Component
     public $tipo_processo_id;
     public $proveniencia;
 
+    public $outro_tipo_processo;
+
     public $registo;
     public $hash_registo;
     public $tipos_processo = array();
@@ -43,6 +45,7 @@ class Editarregisto extends Component
         $this->telefone = $this->registo->telefone;
         $this->data_entrada = $this->registo->data_entrada;
         $this->tipo_processo_id = $this->registo->tipo_processo_id;
+        $this->outro_tipo_processo = $this->registo->outro_tipo_processo;
         $this->observacao = $this->registo->observacao;
         $this->tipo_documento = $this->registo->tipo_documento;
         $this->proveniencia = $this->registo->proveniencia;
@@ -69,9 +72,10 @@ class Editarregisto extends Component
             $this->mensagem('Informe o título/função', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
-        } else if ($this->telefone == '' || $this->telefone == null) {
-            $this->mensagem('Digite o número de telefone', 'warning');
-        } else {
+        } else if($this->tipo_processo_id == 9 && ($this->outro_tipo_processo == null || $this->outro_tipo_processo == '')){
+            $this->mensagem('Informe o outro tipo de processo', 'warning');
+        }
+        else {
 
             $registo_antigo = Registoentrada::where('hash', $this->hash_registo)->first();
 
@@ -84,6 +88,7 @@ class Editarregisto extends Component
             $this->registo->telefone = $this->telefone;
             $this->registo->titulo = $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo;
             $this->registo->tipo_processo_id = $this->tipo_processo_id;
+            $this->registo->outro_tipo_processo = $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo;
             $this->registo->destinatario = $this->destinatario;
             $this->registo->tipo_documento = $this->tipo_documento;
             $this->registo->save();
@@ -98,9 +103,11 @@ class Editarregisto extends Component
                 $processo_antigo = $registo_antigo->gettipoprocesso->descricao;
                 $processo_novo = $this->registo->gettipoprocesso->descricao;
                 $msg = "Actualizou o tipo de processo do registo de ($processo_antigo) para ($processo_novo)";
+                if ($this->registo->tipo_processo_id == 9) {
+                    $msg = "Actualizou o tipo de processo do registo de ($processo_antigo) para (Outro - " . $this->registo->outro_tipo_processo . ")";
+                }
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
-
             }
 
             if ($registo_antigo->proveniencia != $this->registo->proveniencia) {

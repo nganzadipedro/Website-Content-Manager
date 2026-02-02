@@ -82,6 +82,7 @@ class Editarusuario extends Component
 
         ActividadesistemaController::inserir(Auth::user()->id, "Atualizou os dados do usuário:$nome", 'user', $user->id);
         $this->mensagemRefresh('Dados atualizados com sucesso!', 'success');
+        return redirect()->route('system.admin.listusuario');
 
     }
 

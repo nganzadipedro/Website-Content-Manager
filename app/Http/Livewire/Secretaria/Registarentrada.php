@@ -17,6 +17,7 @@ class Registarentrada extends Component
     public $observacao;
     public $tipo_processo_id;
     public $tipo_documento;
+    public $outro_tipo_processo;
     public $telefone;
     public $titulo;
     public $outro_titulo;
@@ -33,7 +34,7 @@ class Registarentrada extends Component
     public function salvar()
     {
 
-        
+
         if ($this->assunto == '' || $this->assunto == null) {
             $this->mensagem('Digite o assunto', 'warning');
         } else if ($this->tipo_processo_id == '' || $this->tipo_processo_id == null) {
@@ -46,8 +47,8 @@ class Registarentrada extends Component
             $this->mensagem('Informe o título/função', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
-        } else if ($this->telefone == '' || $this->telefone == null) {
-            $this->mensagem('Digite o número de telefone', 'warning');
+        } else if ($this->tipo_processo_id == 9 && ($this->outro_tipo_processo == null || $this->outro_tipo_processo == '')) {
+            $this->mensagem('Informe o outro tipo de processo', 'warning');
         } else {
 
             date_default_timezone_set("Africa/Luanda");
@@ -62,6 +63,7 @@ class Registarentrada extends Component
                 'telefone' => $this->telefone,
                 'titulo' => $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo,
                 'tipo_processo_id' => $this->tipo_processo_id,
+                'outro_tipo_processo' => $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo,
                 'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
                 'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,
                 'user_id' => Auth::user()->id

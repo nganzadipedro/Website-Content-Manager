@@ -45,7 +45,7 @@
                                                         <strong> Assunto: {{ $registo->assunto }}</strong><br>
                                                         Data de Entrada: {{ $registo->data_entrada }}<br>
                                                         Data de Registo na Secretaria: {{ $registo->created_at }}<br>
-                                                        Tipo de Processo: {{ $registo->gettipoprocesso->descricao }}<br>
+                                                        Tipo de Processo: {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }} <br>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xl-6 col-12">
@@ -79,7 +79,7 @@
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone1">Telefone 1</label>
-                                                    <input type="number" maxlength="9" wire:model="telefone1"
+                                                    <input type="text" maxlength="9" wire:model="telefone1"
                                                         name="telefone1" class="form-control" id="telefone1" value="">
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone2">Telefone 2</label>
-                                                    <input type="number" maxlength="9" wire:model="telefone2"
+                                                    <input type="text" maxlength="9" wire:model="telefone2"
                                                         name="telefone2" class="form-control" id="telefone2" value="">
                                                 </div>
                                             </div>

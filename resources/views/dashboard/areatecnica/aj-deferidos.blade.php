@@ -46,15 +46,33 @@
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
-                                                <a href="{{ route('system.areatecnica.arquivar_pedido', $item->hash) }}"
-                                                    class="btn btn-success">
-                                                    Arquivar
+                                                <a title="Registar" class="badge bg-yellow-lt"
+                                                    href="{{ route('system.areatecnica.arquivar_pedido', $item->hash) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                    </svg>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
-                                                    class="btn btn-info">
-                                                    Detalhes
+                                                <a title="Detalhes do Registo"
+                                                    href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}"
+                                                    class="badge bg-blue-lt">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-align-box-left-middle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
+                                                        <path d="M9 15h-2" />
+                                                        <path d="M13 12h-6" />
+                                                        <path d="M11 9h-4" />
+                                                    </svg>
                                                 </a>
                                             </td>
 

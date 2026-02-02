@@ -12,7 +12,7 @@ class Listarusuario extends Component
     public function render()
     {
 
-        $this->lista_usuarios = User::where('permissao_id', '!=', 3)->get();
+        $this->lista_usuarios = User::where('permissao_id', '!=', 4)->get();
         return view('dashboard.admin.listar-usuarios')->extends('layouts-new.app')->section('content');
 
     }

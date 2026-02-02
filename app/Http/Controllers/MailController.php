@@ -75,6 +75,8 @@ class MailController extends Controller
 
         $response = json_decode($response);
 
+        return $response;
+
         if ($response->success == true) {
             return true;
         } else {

@@ -30,6 +30,7 @@ class Registoentrada extends Model
         'titulo',
         'numero',
         'nota_encaminhamento',
+        'outro_tipo_processo',
         'encaminhado'
     ];
 

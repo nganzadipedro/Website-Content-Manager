@@ -60,7 +60,7 @@
                                             <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
                                             Data de Entrada: {{ $registo->data_entrada }} <br><br>
                                             Data de Registo no Sistema: {{ $registo->created_at }} <br><br>
-                                            Tipo de Processo: {{ $registo->gettipoprocesso->descricao }} <br><br>
+                                            Tipo de Processo: {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }} <br><br>
                                             <div class="btn-group w-100" role="group">
                                                 <input type="radio" class="btn-check" name="btn-radio-dropdown"
                                                     id="btn-radio-dropdown-1" autocomplete="off" checked>

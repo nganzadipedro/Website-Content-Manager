@@ -38,7 +38,7 @@
                                         </div>
 
                                         <div class="row mt-4">
-                                            <div class="col-lg-9 col-md-9 col-12">
+                                            <div class="col-lg-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="assunto">Assunto</label>
                                                     <input type="text" wire:model="assunto" name="assunto"
@@ -55,10 +55,21 @@
                                                         @foreach ($tipos_processo as $tipo)
                                                             <option value="{{$tipo->id}}">{{$tipo->descricao}}</option>
                                                         @endforeach
-
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            @if ($tipo_processo_id == 9)
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="outro_tipo_processo_">Tipo de Processo</label>
+                                                        <input type="text" wire:model="outro_tipo_processo"
+                                                            name="outro_tipo_processo" maxlength="100" class="form-control">
+                                                    </div>
+                                                </div>
+                                            @endif
+
+
                                         </div>
 
                                         <div class="row mt-3">

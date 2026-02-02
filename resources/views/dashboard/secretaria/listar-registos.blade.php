@@ -63,7 +63,7 @@
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{ mb_strimwidth($item->assunto, 0, 40, '...', 'UTF-8') }}</td>
-                                            <td>{{$item->gettipoprocesso->descricao}}</td>
+                                            <td>{{$item->tipo_processo_id == 9 ? $item->outro_tipo_processo : $item->gettipoprocesso->descricao}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>

@@ -35,19 +35,33 @@
                                         <th>Localização</th>
                                         <th>Usuário</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$item->getregisto->codigo}}</td>
+                                            <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregisto->proveniencia}}</td>
                                             <td>{{$item->natureza}}</td>
                                             <td>{{$item->localizacao}}</td>
                                             <td>{{$item->getuser->getpessoa->nome}}</td>
                                             <td>
-                                                <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
+                                                <a title="Editar Registo" class="badge bg-yellow-lt"
+                                                    href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a title="Detalhes do Registo" href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"

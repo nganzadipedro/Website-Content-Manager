@@ -77,8 +77,8 @@ class Cadastrarusuario extends Component
         ActividadesistemaController::inserir(null, "Cadastrou um novo usuário: $nome", 'user', $user->id);
 
         // envia email para o usuário
-        $ob = new MailController();
-        $res = $ob->mailUsuario($this->email, $this->nome_completo, $this->telefone1, $this->num_documento, $senha, $this->nivel_acesso);
+        // $ob = new MailController();
+        // $res = $ob->mailUsuario($this->email, $this->nome_completo, $this->telefone1, $this->num_documento, $senha, $this->nivel_acesso);
 
         $this->nome_completo = null;
         $this->genero = null;
@@ -92,7 +92,7 @@ class Cadastrarusuario extends Component
         $nome = $this->nome_completo;
         ActividadesistemaController::inserir(Auth::user()->id, "Inseriu um novo usuário no sistema:$nome", 'user', $user->id);
 
-        $this->mensagemRefresh('Dados atualizados com sucesso!', 'success');
+        $this->mensagemRefresh('Dados cadastrados com sucesso!', 'success');
         return redirect()->route('system.admin.listusuario');
 
     }

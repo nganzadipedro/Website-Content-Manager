@@ -25,7 +25,7 @@ class Detalhesusuario extends Component
 
     public function render()
     {
-        return view('dashboard.admin.detalhes-usuario')->extends('layouts.main')->section('content');
+        return view('dashboard.admin.detalhes-usuario')->extends('layouts-new.app')->section('content');
     }
 
     public function desactivar()
@@ -57,7 +57,7 @@ class Detalhesusuario extends Component
         $this->user->save();    
 
         // enviar email com as credenciais de acesso
-        $mailController->mailCredenciais(
+        $res = $mailController->mailCredenciais(
             $this->pessoa->email,
             $this->pessoa->nome,
             $senha,
