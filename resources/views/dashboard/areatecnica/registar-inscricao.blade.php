@@ -20,7 +20,9 @@
                     <div class="col-12">
                         <form action="https://httpbin.org/post" method="post" class="card">
                             <div class="card-header">
-                                <h4 class="card-title">{{ $registo->tipo_processo_id == 2 ? 'Registar Inscrição de Advogados' : 'Registar Inscrição de Advogados Estagiários' }}</h4>
+                                <h4 class="card-title">
+                                    {{ $registo->tipo_processo_id == 2 ? 'Registar Inscrição de Advogados' : 'Registar Inscrição de Advogados Estagiários' }}
+                                </h4>
                             </div>
                             <div class="card-body">
 
@@ -45,7 +47,9 @@
                                                         <strong> Assunto: {{ $registo->assunto }}</strong><br>
                                                         Data de Entrada: {{ $registo->data_entrada }}<br>
                                                         Data de Registo na Secretaria: {{ $registo->created_at }}<br>
-                                                        Tipo de Processo: {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }} <br>
+                                                        Tipo de Processo:
+                                                        {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }}
+                                                        <br>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xl-6 col-12">
@@ -55,19 +59,21 @@
                                                         Destinatário: {{ $registo->destinatario }}<br>
                                                         Encaminhado: {{ $registo->encaminhado }}<br>
                                                     </p>
-
-
                                                 </div>
                                             </div>
                                         </div>
 
-
                                         <div class="row mt-4">
+
+                                            <input type="hidden" value="{{ $registo->tipo_processo_id }}"
+                                                id="tipo_processo_id" name="tipo_processo_id">
+                                            <input type="hidden" value="{{ $registo->id }}"
+                                                id="registo_entrada_id" name="registo_entrada_i">
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="sexo">Sexo</label>
-                                                    <select wire:model="sexo" name="sexo" id="sexo"
+                                                    <select name="sexo" id="sexo"
                                                         class="form-control">
                                                         <option selected>Não Definido</option>
                                                         <option value="Masculino">Masculino</option>
@@ -79,7 +85,7 @@
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone1">Telefone 1</label>
-                                                    <input type="text" maxlength="9" wire:model="telefone1"
+                                                    <input type="text" maxlength="9"
                                                         name="telefone1" class="form-control" id="telefone1" value="">
                                                 </div>
                                             </div>
@@ -87,7 +93,7 @@
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone2">Telefone 2</label>
-                                                    <input type="text" maxlength="9" wire:model="telefone2"
+                                                    <input type="text" maxlength="9"
                                                         name="telefone2" class="form-control" id="telefone2" value="">
                                                 </div>
                                             </div>
@@ -98,14 +104,14 @@
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="email">Email</label>
-                                                    <input type="email" maxlength="255" wire:model="email" name="email"
+                                                    <input type="email" maxlength="255" name="email"
                                                         class="form-control" id="email" value="">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" maxlength="255" wire:model="observacao2"
+                                                    <input type="text" maxlength="255"
                                                         name="observacao2" class="form-control" id="observacao2"
                                                         value="">
                                                 </div>
@@ -117,7 +123,7 @@
                                                 <div class="col-lg-6 col-12 col-md-6">
                                                     <div class="form-group">
                                                         <label for="acto_pretendido">Acto Pretendido</label>
-                                                        <select wire:model="acto_pretendido" name="acto_pretendido"
+                                                        <select name="acto_pretendido"
                                                             id="acto_pretendido" class="form-control">
                                                             <option selected>Não Definido</option>
                                                             <option value="Inscrição" selected>Inscrição</option>
@@ -133,7 +139,7 @@
 
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
-                                                <a wire:click="salvar()" class="btn btn-success mt-4">Salvar</a>
+                                                <a id="btn-registar-inscricao" class="btn btn-success mt-4">Salvar</a>
                                                 <a href="{{ route('system.areatecnica.listar_advogados_pendentes') }}"
                                                     class="btn btn-danger mt-4">Cancelar</a>
                                             </div>
@@ -157,3 +163,7 @@
     </div>
 
 </div>
+
+@section('script-aux')
+    <script src="{{ asset('assets/system/js/registar-inscricao.js') }}"></script>
+@endsection

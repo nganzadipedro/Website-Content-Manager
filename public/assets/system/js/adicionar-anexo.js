@@ -50,8 +50,8 @@ function valida_formulario_2() {
         msgErro = "Escolha o destino onde pretende encaminhar o processo";
         tem = false;
     }
-    else if (encaminhar_para != 'Presidente' && tipo_processo_id == 1 && permissao_user_id == 2) {
-        msgErro = "Este tipo de processo deve ser encaminhado para o Presidente";
+    else if ((encaminhar_para != 'Presidente' && encaminhar_para != 'Conselheiro') && tipo_processo_id == 1 && permissao_user_id == 2) {
+        msgErro = "Este tipo de processo deve ser encaminhado para o Presidente ou COnselheiro";
         tem = false;
     }
     else if (encaminhar_para != 'Área Técnica' && (tipo_processo_id == 2 || tipo_processo_id == 3) && permissao_user_id == 2) {

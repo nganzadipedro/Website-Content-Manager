@@ -16,6 +16,7 @@ use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use \PDF;
@@ -332,6 +333,43 @@ class SystemController extends Controller
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+        return 'sucesso';
+
+    }
+
+    public function registo_inscricao_post(Request $request)
+    {
+
+        $registo = Registoentrada::find($request->registo_entrada_id);
+        $registo->estado = 'em tratamento';
+        $registo->save();
+
+        $numero = '';
+        if ($registo->tipo_processo_id == 2) {
+            $numero = Inscricaoadvogado::where('tipo_processo_id', 2)->whereYear('created_at', now()->year)->count() + 1;
+        }
+        else {
+            $numero = Inscricaoadvogado::where('tipo_processo_id', 3)->whereYear('created_at', now()->year)->count() + 1;
+        }
+
+        $inscricao = Inscricaoadvogado::create([
+            'hash' => Str::uuid(),
+            'numero' => $numero,
+            'codigo' => "$numero/" . now()->year,
+            'observacao' => $request->observacao2,
+            'tipo_processo_id' => $registo->tipo_processo_id,
+            'sexo' => $request->sexo == null ? 'Não Definido' : $request->sexo,
+            'telefone1' => $request->telefone1,
+            'telefone2' => $request->telefone2,
+            'email' => $request->email,
+            'acto_pretendido' => $request->acto_pretendido,
+            'registo_entrada_id' => $registo->id,
+            'user_id' => Auth::user()->id
+        ]);
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
         return 'sucesso';
 
     }

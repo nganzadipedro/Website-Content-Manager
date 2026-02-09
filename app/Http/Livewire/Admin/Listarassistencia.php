@@ -19,6 +19,7 @@ class Listarassistencia extends Component
     {
         if ($this->tipo == 'not-solved') {
             $this->lista = Registoentrada::where('encaminhado', 'Presidente')
+            ->orWhere('encaminhado', 'Conselheiro')
             ->where('tipo_processo_id', 1)->where('estado','pendente')->get();
             return view('dashboard.admin.aj-pendentes')->extends('layouts-new.app')->section('content');
         } elseif ($this->tipo == 'solved') {
