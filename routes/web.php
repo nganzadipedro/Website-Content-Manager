@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
     Route::post('system/registo-despacho/post', 'Controllers\SystemController@registo_despacho_post');
+    Route::post('system/actualizar-despacho/post', 'Controllers\SystemController@actualizar_despacho_post');
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
     Route::get('system/profile', 'Livewire\Geral\Perfil')->name('profile_user');
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');

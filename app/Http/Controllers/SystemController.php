@@ -430,6 +430,43 @@ class SystemController extends Controller
 
     }
 
+    public function actualizar_despacho_post(Request $request)
+    {
+
+        $registo_inscricao_old = Inscricaoadvogado::where('registo_entrada_id', $request->registo_entrada_id)->first();
+        if ($registo_inscricao_old->data_remessa_cn != $request->data_remessa_cn) {
+            $msg = "Actualizou a data de remessa para o CN ($request->data_remessa_cn).";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_inscricao_old->id);
+        }
+        if ($registo_inscricao_old->data_emissao_cedula != $request->data_emissao_cedula) {
+            $msg = "Actualizou a data de emissão da cédula ($request->data_emissao_cedula).";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_inscricao_old->id);
+        }
+        if ($registo_inscricao_old->numero_cedula != $request->numero_cedula) {
+            $msg = "Actualizou o número da cédula ($request->numero_cedula).";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_inscricao_old->id);
+        }
+        if ($registo_inscricao_old->cedula_disponivel != $request->cedula_disponivel) {
+            $msg = "Actualizou o estado de disponibilidade da cédula. Cédula disponível: $request->cedula_disponivel.";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_inscricao_old->id);
+        }
+        if ($registo_inscricao_old->data_cerimonia != $request->data_cerimonia) {
+            $msg = "Actualizou a data da cerimónia ($request->data_cerimonia).";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_inscricao_old->id);
+        }
+
+        $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
+        $inscricao_advogado->data_remessa_cn = $request->data_remessa_cn;
+        $inscricao_advogado->cedula_disponivel = $request->cedula_disponivel;
+        $inscricao_advogado->numero_cedula = $request->numero_cedula;
+        $inscricao_advogado->data_emissao_cedula = $request->data_emissao_cedula;
+        $inscricao_advogado->data_cerimonia = $request->data_cerimonia;
+        $inscricao_advogado->save();
+        
+        return 'sucesso';
+
+    }
+
     public function getDataInscricaoAdvogadoById($id)
     {
         $inscricao = Inscricaoadvogado::find($id);

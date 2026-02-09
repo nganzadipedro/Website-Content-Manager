@@ -85,7 +85,7 @@ document.getElementById('btn-registar-despacho').addEventListener('click', funct
                                 timer: 3000
                             });
 
-                            window.location.href = "/system/areatecnica/list/subscription/registed";
+                            window.location.reload();
 
                         }
                     },
