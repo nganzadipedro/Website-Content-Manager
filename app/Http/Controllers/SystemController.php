@@ -347,8 +347,7 @@ class SystemController extends Controller
         $numero = '';
         if ($registo->tipo_processo_id == 2) {
             $numero = Inscricaoadvogado::where('tipo_processo_id', 2)->whereYear('created_at', now()->year)->count() + 1;
-        }
-        else {
+        } else {
             $numero = Inscricaoadvogado::where('tipo_processo_id', 3)->whereYear('created_at', now()->year)->count() + 1;
         }
 
@@ -370,6 +369,63 @@ class SystemController extends Controller
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+        return 'sucesso';
+
+    }
+
+    public function registo_despacho_post(Request $request)
+    {
+
+        $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
+        $registo = Registoentrada::find($request->registo_entrada_id);
+
+        if ($request->despacho == 'Deferido') {
+
+            $inscricao_advogado->texto_despacho = $request->mensagem_despacho;
+            $inscricao_advogado->despacho = $request->despacho;
+            $inscricao_advogado->data_despacho = $request->data_despacho;
+            $inscricao_advogado->save();
+
+            $registo->estado = 'deferido';
+            $registo->save();
+
+            $telefone = $inscricao_advogado->telefone1;
+            $obmsg = new OmbalaController();
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+
+            $msg = "Processo de inscrição despachado como $request->despacho.";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+
+        } else if ($request->despacho == 'Indeferido') {
+
+            $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
+            $inscricao_advogado->texto_despacho = $request->mensagem_despacho;
+            $inscricao_advogado->despacho = $request->despacho;
+            $inscricao_advogado->data_despacho = $request->data_despacho;
+            $inscricao_advogado->save();
+
+            $nome = $registo->proveniencia;
+            $email = $inscricao_advogado->email;
+            $telefone = $inscricao_advogado->telefone1;
+            $data_despacho = $request->data_despacho;
+            $ob = new MailController();
+            $obmsg = new OmbalaController();
+
+            try {
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+                $ob->mailDespacho($email, $nome, $request->mensagem_despacho, $data_despacho);
+            } catch (\Throwable $th) {
+
+            }
+
+            $msg = "Processo de inscrição despachado como $request->despacho, com a seguinte mensagem: $request->mensagem_despacho.";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+
+        }
+
+        $msg = "Registou a emissão de despacho para o processo de inscrição.";
+        ActividadesistemaController::inserir(Auth::id(), $msg, 'user', $registo->id);
+
         return 'sucesso';
 
     }

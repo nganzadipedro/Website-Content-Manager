@@ -3,27 +3,22 @@ function valida_formulario() {
     var msgErro = '';
     var tem = true;
 
-    const sexo = document.getElementById('sexo').value;
-    const telefone1 = document.getElementById('telefone1').value;
-    const telefone2 = document.getElementById('telefone2').value;
-    const email = document.getElementById('email').value;
-    const observacao2 = document.getElementById('observacao2').value;
-    const tipo_processo_id = document.getElementById('tipo_processo_id').value;
-    const acto_pretendido = '';
-    if (tipo_processo_id == 3) {
-        acto_pretendido = document.getElementById('acto_pretendido').value;
-    }
+    const registo_entrada_id = document.getElementById('registo_entrada_id').value;
+    const inscricao_advogado_id = document.getElementById('inscricao_advogado_id').value;
+    const despacho = document.getElementById('despacho').value;
+    const data_despacho = document.getElementById('data_despacho').value;
+    const mensagem_despacho = document.getElementById('mensagem_despacho').value;
 
-    if (sexo == '' || sexo == null) {
-        msgErro = "Escolha o sexo";
+    if (despacho == '' || despacho == null) {
+        msgErro = "Preencha o campo despacho";
         tem = false;
     }
-    else if (telefone1 == '' || telefone1 == null) {
-        msgErro = "Digite o número de telefone principal";
+    else if (data_despacho == '' || data_despacho == null) {
+        msgErro = "Digite a data do despacho";
         tem = false;
     }
-    else if (tipo_processo_id == 3 && (acto_pretendido == '' || acto_pretendido == null)) {
-        msgErro = "Especifique o acto pretendido";
+    else if (despacho == 'Indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)) {
+        msgErro = "Digite a mensagem do despacho";
         tem = false;
     }
 
@@ -40,32 +35,22 @@ function valida_formulario() {
     return tem;
 }
 
-document.getElementById('btn-registar-inscricao').addEventListener('click', function () {
+document.getElementById('btn-registar-despacho').addEventListener('click', function () {
 
 
     if (valida_formulario() === true) {
 
         const formData = new FormData();
-
-        const sexo = document.getElementById('sexo').value;
-        const telefone1 = document.getElementById('telefone1').value;
-        const telefone2 = document.getElementById('telefone2').value;
-        const email = document.getElementById('email').value;
-        const observacao2 = document.getElementById('observacao2').value;
-        const tipo_processo_id = document.getElementById('tipo_processo_id').value;
-        const acto_pretendido = '';
-        if (tipo_processo_id == 3) {
-            acto_pretendido = document.getElementById('acto_pretendido').value;
-        }
         const registo_entrada_id = document.getElementById('registo_entrada_id').value;
+        const inscricao_advogado_id = document.getElementById('inscricao_advogado_id').value;
+        const despacho = document.getElementById('despacho').value;
+        const data_despacho = document.getElementById('data_despacho').value;
+        const mensagem_despacho = document.getElementById('mensagem_despacho').value;
 
-        formData.append('sexo', sexo);
-        formData.append('telefone1', telefone1);
-        formData.append('telefone2', telefone2);
-        formData.append('email', email);
-        formData.append('observacao2', observacao2);
-        formData.append('acto_pretendido', acto_pretendido);
-        formData.append('tipo_processo_id', tipo_processo_id);
+        formData.append('inscricao_advogado_id', inscricao_advogado_id);
+        formData.append('despacho', despacho);
+        formData.append('data_despacho', data_despacho);
+        formData.append('mensagem_despacho', mensagem_despacho);
         formData.append('registo_entrada_id', registo_entrada_id);
 
         Swal.fire({
@@ -80,7 +65,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
             showLoaderOnConfirm: true,
             preConfirm: function () {
                 return $.ajax({
-                    url: "/system/registo-inscricao/post",
+                    url: "/system/registo-despacho/post",
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     },
@@ -100,7 +85,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                                 timer: 3000
                             });
 
-                            window.location.href = "/system/areatecnica/list/subscription";
+                            window.location.href = "/system/areatecnica/list/subscription/registed";
 
                         }
                     },

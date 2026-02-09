@@ -75,7 +75,7 @@
                                                     <label for="sexo">Sexo</label>
                                                     <select name="sexo" id="sexo"
                                                         class="form-control">
-                                                        <option selected>Não Definido</option>
+                                                        <option value="" selected>Não Definido</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>
                                                     </select>

@@ -34,6 +34,9 @@
 
                                 @csrf
 
+                                <input type="hidden" name="registo_entrada_id" id="registo_entrada_id" value="{{ $registo->id }}">
+                                <input type="hidden" name="inscricao_advogado_id" id="inscricao_advogado_id" value="{{ $inscricao_advogado->id }}">
+
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-xl-12 col-12">
 
@@ -130,7 +133,7 @@
 
                                             <div class="row mt-3">
                                                 <div class="col-lg-12 col-12">
-                                                    <a wire:click="actualizar_dados()" class="btn btn-success mt-4">Actualizar Dados</a>
+                                                    <a id="btn-actualizar-dados" class="btn btn-success mt-4">Actualizar Dados</a>
                                                 </div>
                                             </div>
 
@@ -140,9 +143,9 @@
                                                 <div class="col-lg-6 col-12 col-md-6">
                                                     <div class="form-group">
                                                         <label for="despacho">Despacho</label>
-                                                        <select wire:model="despacho" name="despacho" id="despacho"
+                                                        <select name="despacho" id="despacho"
                                                             class="form-control">
-                                                            <option selected>Não definido</option>
+                                                            <option value="" selected>Não definido</option>
                                                             <option value="Deferido">Deferido</option>
                                                             <option value="Indeferido">Indeferido</option>
                                                         </select>
@@ -152,7 +155,7 @@
                                                 <div class="col-lg-6 col-12 col-md-6">
                                                     <div class="form-group">
                                                         <label for="data_despacho">Data do despacho</label>
-                                                        <input type="date" wire:model="data_despacho" name="data_despacho"
+                                                        <input type="date" name="data_despacho"
                                                             class="form-control" id="data_despacho" value="">
                                                     </div>
                                                 </div>
@@ -162,7 +165,7 @@
                                                 <div class="col-lg-12 col-12 col-md-12">
                                                     <div class="form-group">
                                                         <label for="mensagem_despacho">Mensagem do despacho</label>
-                                                        <input type="text" maxlength="255" wire:model="mensagem_despacho"
+                                                        <input type="text" maxlength="255"
                                                             name="mensagem_despacho" class="form-control"
                                                             id="mensagem_despacho" value="">
                                                     </div>
@@ -171,7 +174,7 @@
 
                                             <div class="row mt-3">
                                                 <div class="col-lg-12 col-12">
-                                                    <a wire:click="salvar()" class="btn btn-success mt-4">Salvar</a>
+                                                    <a id="btn-registar-despacho" class="btn btn-success mt-4">Salvar</a>
                                                     <a href="{{ route('system.areatecnica.listar_advogados_pendentes') }}"
                                                         class="btn btn-danger mt-4">Cancelar</a>
                                                 </div>
@@ -191,3 +194,7 @@
     </div>
 
 </div>
+
+@section('script-aux')
+    <script src="{{ asset('assets/system/js/registar-despacho.js') }}"></script>
+@endsection
