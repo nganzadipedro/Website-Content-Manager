@@ -28,6 +28,8 @@ class PostController extends Controller
         $noticia->hash = md5($noticia->tittulo . $noticia->created_at);
         $noticia->save();
 
+        $id_noticia = $noticia->id;
+
         //faz upload da imagem
         $imagem = '';
 
@@ -43,6 +45,7 @@ class PostController extends Controller
 
         // os destques antigos deixam de ser destaques
         if ($noticia->e_destaque == 'sim') {
+
             $antigos = Noticia::where('e_destaque', 'sim')->get();
             if (count($antigos) > 0) {
 
@@ -50,11 +53,11 @@ class PostController extends Controller
                     $ant->e_destaque = 'nao';
                     $ant->save();
                 }
-
             }
 
-            $noticia->e_destaque = 'sim';
-            $noticia->save();
+            $noticia_last = Noticia::find($id_noticia);
+            $noticia_last->e_destaque = 'sim';
+            $noticia_last->save();
 
         }
 
@@ -253,16 +256,15 @@ class PostController extends Controller
                 ->get();
         }
 
-        if(count($res) == 0){
+        if (count($res) == 0) {
             return [
                 'has_rows' => 'false'
             ];
-        }
-        else{
-              return [
+        } else {
+            return [
                 'has_rows' => 'true',
                 'rows' => $res
-              ];
+            ];
         }
     }
 

@@ -19,6 +19,7 @@ class Registarentrada extends Component
     public $tipo_documento;
     public $outro_tipo_processo;
     public $telefone;
+    public $telefone2;
     public $titulo;
     public $outro_titulo;
     public $proveniencia;
@@ -61,6 +62,7 @@ class Registarentrada extends Component
                 'data_entrada' => $this->data_entrada,
                 'observacao' => $this->observacao,
                 'telefone' => $this->telefone,
+                'telefone2' => $this->telefone2,
                 'titulo' => $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo,
                 'tipo_processo_id' => $this->tipo_processo_id,
                 'outro_tipo_processo' => $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo,

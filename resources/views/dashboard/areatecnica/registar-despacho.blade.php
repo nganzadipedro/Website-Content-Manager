@@ -63,6 +63,8 @@
                                                         Tipo de documento: {{ $registo->tipo_documento }}<br>
                                                         Estado: {{ $registo->estado }}<br>
                                                         Despacho: {{ $inscricao_advogado->despacho }}<br>
+                                                        Data de Despacho: {{ $inscricao_advogado->data_despacho }}<br>
+                                                        Data de Remessa ao CN: {{ $inscricao_advogado->data_remessa_cn }}<br>
                                                         Telefone 1: {{ $inscricao_advogado->telefone1 }}<br>
                                                         Telefone 2: {{ $inscricao_advogado->telefone2 }}<br>
                                                         Email: {{ $inscricao_advogado->email }}<br>
@@ -150,7 +152,7 @@
                                                     <div class="form-group">
                                                         <label for="despacho">Despacho</label>
                                                         <select name="despacho" id="despacho" class="form-control">
-                                                            <option value="" selected>Não definido</option>
+                                                            <option value="" selected>Escolha a opção...</option>
                                                             <option value="Deferido">Deferido</option>
                                                             <option value="Indeferido">Indeferido</option>
                                                         </select>

@@ -133,6 +133,13 @@
 
 
                                         <div class="row mt-3">
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
+                                                    <label for="telefone2">Telefone alternativo</label>
+                                                    <input class="form-control" wire:model="telefone2" maxlength="9"
+                                                        type="text" name="telefone2" id="telefone2" value="">
+                                                </div>
+                                            </div>
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="observacao">Observação</label>

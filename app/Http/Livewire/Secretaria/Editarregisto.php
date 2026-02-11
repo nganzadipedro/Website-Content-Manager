@@ -17,6 +17,7 @@ class Editarregisto extends Component
     public $titulo;
     public $outro_titulo;
     public $telefone;
+    public $telefone2;
     public $observacao;
     public $tipo_documento;
     public $tipo_processo_id;
@@ -43,6 +44,7 @@ class Editarregisto extends Component
             $this->titulo = $this->registo->titulo;
         }
         $this->telefone = $this->registo->telefone;
+        $this->telefone2 = $this->registo->telefone2;
         $this->data_entrada = $this->registo->data_entrada;
         $this->tipo_processo_id = $this->registo->tipo_processo_id;
         $this->outro_tipo_processo = $this->registo->outro_tipo_processo;
@@ -86,6 +88,7 @@ class Editarregisto extends Component
             $this->registo->data_entrada = $this->data_entrada;
             $this->registo->observacao = $this->observacao;
             $this->registo->telefone = $this->telefone;
+            $this->registo->telefone2 = $this->telefone2;
             $this->registo->titulo = $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo;
             $this->registo->tipo_processo_id = $this->tipo_processo_id;
             $this->registo->outro_tipo_processo = $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo;
@@ -146,6 +149,12 @@ class Editarregisto extends Component
 
             if ($registo_antigo->telefone != $this->registo->telefone) {
                 $msg = "Actualizou o número de telefone do registo de ($registo_antigo->telefone) para (" . $this->registo->telefone . ")";
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
+                ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
+            }
+
+            if ($registo_antigo->telefone2 != $this->registo->telefone2) {
+                $msg = "Actualizou o número de telefone alternativo do registo de ($registo_antigo->telefone2) para (" . $this->registo->telefone2 . ")";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
             }
