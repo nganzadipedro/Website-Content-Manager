@@ -38,7 +38,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
-    Route::get('/trata-dados', 'Controllers\SystemController@trata_bd_antiga');
+    Route::get('/trata-dados', 'Controllers\UserController@encaminha_inscricao');
     Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
@@ -76,12 +76,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
+    Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
+    Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
     Route::post('system/registo-despacho/post', 'Controllers\SystemController@registo_despacho_post');
     Route::post('system/actualizar-despacho/post', 'Controllers\SystemController@actualizar_despacho_post');
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
     Route::get('system/profile', 'Livewire\Geral\Perfil')->name('profile_user');
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');
+    Route::get('system/getAdvogadoById/{id}', 'Controllers\SystemController@getAdvogadoById');
 
     Route::prefix('system')->name('system.')->group(function () {
 
@@ -175,6 +178,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Secretaria\Dashboard')->name('dashboard');
 
                 Route::get('/new/process', 'Livewire\Secretaria\Registarentrada')->name('registar_entrada');
+                Route::get('/new/request-intervention', 'Livewire\Secretaria\Pedidointervencaocadastrar')->name('registar_pedido_intervencao');
                 Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');

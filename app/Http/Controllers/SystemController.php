@@ -9,6 +9,8 @@ use App\Models\Galeria;
 use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
 use App\Models\Noticia;
+use App\Models\Pedidointervencao;
+use App\Models\Pessoa;
 use App\Models\Platform\Advogado;
 use App\Models\Registoentrada;
 use App\Models\User;
@@ -337,6 +339,111 @@ class SystemController extends Controller
 
     }
 
+    public function pedido_intervencao_post(Request $request)
+    {
+
+        // verifica se já esxite na bd
+        $existe = Pedidointervencao::where('advogado_id', $request->advogado_id)
+            ->where('tipo_processo', $request->tipo_processo)->first();
+
+        if ($existe != null) {
+            return 'duplicado';
+        } else {
+            // inserir na tabela de pedido de intervanção
+            $pedido_interv = Pedidointervencao::create([
+                'user_id' => Auth::user()->id,
+                'advogado_id' => $request->advogado_id,
+                'tipo_processo' => $request->tipo_processo,
+                'hash' => Str::uuid(),
+            ]);
+
+            // actualizar dados da pessoa na base de dados
+            $advogado = Advogado::find($request->advogado_id);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+
+            $pessoa->telefone1 = $request->telefone1;
+            $pessoa->telefone2 = $request->telefone2;
+            $pessoa->email = $request->email;
+            $pessoa->save();
+
+            $advogado->categoria = $request->categoria;
+            $advogado->num_associado = $request->categoria == 'Advogado' ? $request->num_cedula : $request->num_associado;
+            $advogado->num_estagiario = $request->categoria == 'Estagiario' ? $request->num_cedula : $request->num_estagiario;
+            $advogado->nome_patrono = $request->nome_patrono;
+            $advogado->email_patrono = $request->email_patrono;
+            $advogado->telefone_patrono = $request->telefone_patrono;
+            $advogado->nome_escritorio = $request->nome_escritorio;
+            $advogado->municipio_id = $request->municipio_id;
+            $advogado->endereco_escritorio = $request->endereco_escritorio;
+            $advogado->save();
+
+            return 'sucesso';
+
+        }
+
+
+
+
+
+
+    }
+
+    public function pedido_intervencao_novo_post(Request $request)
+    {
+
+        // verifica se já esxite na bd
+        $existe = Advogado::where('categoria', $request->categoria)
+            ->where('num_associado', $request->num_cedula)->first();
+        if ($existe) {
+            return 'duplicado';
+        }
+
+        $existe = Advogado::where('categoria', $request->categoria)
+            ->where('num_estagiario', $request->num_cedula)->first();
+        if ($existe) {
+            return 'duplicado';
+        }
+
+        // insere na tabela pessoa;
+        $pessoa = Pessoa::create([
+            'nome' => $request->nome_advogado,
+            'num_documento' => $request->num_documento,
+            'email' => $request->email,
+            'telefone1' => $request->telefone1,
+            'telefone2' => $request->telefone2,
+            'documento' => 'Bilhete de Identidade',
+            'genero' => $request->genero
+        ]);
+
+        $conta = Advogado::count() + 1;
+
+        // insere na tabela de advogado
+        $advogado = Advogado::create([
+            'categoria' => $request->categoria,
+            'num_associado' => $request->categoria == 'Advogado' ? $request->num_cedula : null,
+            'num_estagiario' => $request->categoria == 'Estagiario' ? $request->num_cedula : null,
+            'pessoa_id' => $pessoa->id,
+            'codigo' => 'CPL' . $conta,
+            'nome_patrono' => $request->nome_patrono,
+            'email_patrono' => $request->email_patrono,
+            'telefone_patrono' => $request->telefone_patrono,
+            'nome_escritorio' => $request->nome_escritorio,
+            'municipio_id' => $request->municipio_id,
+            'endereco_escritorio' => $request->endereco_escritorio,
+            'hash' => Str::uuid()
+        ]);
+
+        // inserir na tabela de pedido de intervanção
+        $pedido_interv = Pedidointervencao::create([
+            'user_id' => Auth::user()->id,
+            'advogado_id' => $advogado->id,
+            'tipo_processo' => $request->tipo_processo,
+            'hash' => Str::uuid()
+        ]);
+
+        return 'sucesso';
+
+    }
     public function registo_inscricao_post(Request $request)
     {
 
@@ -483,6 +590,12 @@ class SystemController extends Controller
     {
         $inscricao = Inscricaoadvogado::find($id);
         return response()->json($inscricao);
+    }
+
+    public function getAdvogadoById($id)
+    {
+        $advogado = Advogado::find($id);
+        return response()->json($advogado);
     }
 
     public function documento_despacho($hash_inscricao)

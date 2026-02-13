@@ -26,6 +26,7 @@ class Advogado extends Model
         'nome_patrono',
         'email_patrono',
         'telefone_patrono',
+        'municipio_id',
         'nome_escritorio',
         'endereco_escritorio',
         'categoria'

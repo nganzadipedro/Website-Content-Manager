@@ -8,6 +8,8 @@ use App\Models\Fio\Atribuicaoalunoprova;
 use App\Models\Fio\Avaliacaoaluno;
 use App\Models\Fio\Pagamento;
 use App\Models\Fio\Actividadesistema;
+use App\Models\Inscricaoadvogado;
+use App\Models\Registoentrada;
 use Hash;
 use Illuminate\Http\Request;
 use App\Lib\Traits\UserTrait;
@@ -33,6 +35,27 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
+
+    public function encaminha_inscricao()
+    {
+
+        $inscricaos = Registoentrada::where('tipo_processo_id', 3)
+            ->where('encaminhado', 'Não')
+            ->get();
+
+        // dd($inscricaos);
+
+        foreach ($inscricaos as $registo) {
+
+            $registo->encaminhado = 'Área Técnica';
+            $registo->estado = 'pendente';
+            $registo->save();
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(4055, "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+
+        }
+
+    }
 
     public function register_member()
     {
