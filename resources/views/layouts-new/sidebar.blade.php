@@ -231,17 +231,17 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Pedidos de Intervenção
+                                    Defesas Oficiosas
                                 </span>
                             </a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
                                         <a class="dropdown-item" href="{{ route('system.secretaria.registar_pedido_intervencao') }}">
-                                            Cadastrar
+                                            Adicionar pedido
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.listar_registos') }}">
-                                            Listar
+                                        <a class="dropdown-item" href="{{ route('system.secretaria.pedido_intervencao_listar') }}">
+                                            Pedidos registados
                                         </a>
                                     </div>
                                 </div>

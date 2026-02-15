@@ -444,6 +444,17 @@ class SystemController extends Controller
         return 'sucesso';
 
     }
+
+    public function pedido_intervencao_delete(Request $request)
+    {
+        $pedido_id = $request->pedido_id;
+
+        $pedido = Pedidointervencao::find($pedido_id);
+        $pedido->delete();
+
+        return 'sucesso';
+    }
+
     public function registo_inscricao_post(Request $request)
     {
 

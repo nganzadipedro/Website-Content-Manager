@@ -156,13 +156,8 @@
                             </div>
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                                 <label for="tipo_processo" class="form-label">Tipo de Processo a Intervir</label>
-                                <select name="tipo_processo" id="tipo_processo" class="form-control">
-                                    <option value="" selected>Selecione...</option>
-                                    <option value="Civil">Civil</option>
-                                    <option value="Penal">Penal</option>
-                                    <option value="Laboral">Laboral</option>
-                                    <option value="Familiar">Familiar</option>
-                                </select>
+                                <input type="text" maxlength="200" class="form-control" name="tipo_processo"
+                                id="tipo_processo" value="">
                             </div>
                         </div>
                     </div>
@@ -293,13 +288,8 @@
                             </div>
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                                 <label for="new_tipo_processo" class="form-label">Tipo de Processo a Intervir</label>
-                                <select name="new_tipo_processo" id="new_tipo_processo" class="form-control">
-                                    <option value="" selected>Selecione...</option>
-                                    <option value="Civil">Civil</option>
-                                    <option value="Penal">Penal</option>
-                                    <option value="Laboral">Laboral</option>
-                                    <option value="Familiar">Familiar</option>
-                                </select>
+                                <input type="text" maxlength="100" class="form-control" name="new_nome_patrono"
+                                id="new_nome_patrono" value="">
                             </div>
                         </div>
                     </div>

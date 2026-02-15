@@ -88,53 +88,69 @@
                                     </div>
                                 </div>
 
+                                <div class="mt-3"></div>
 
+                                <div class="accordion" id="accordion-example">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading-2">
+                                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-2" aria-expanded="true">
+                                                Lista de advogados que solicitaram defesas oficiosas
+                                            </button>
+                                        </h2>
+                                        <div id="collapse-2" class="accordion-collapse collapse"
+                                            data-bs-parent="#accordion-example">
+                                            <div class="accordion-body pt-0">
 
-
-                                <div class="row mt-4">
-                                    <div wire:ignore class="col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xl-6">
-                                        <h3 class="text-center">Lista de Advogados</h3>
-                                        <div wire:ignore class="table-responsive">
-                                            <table id="myTable"
-                                                class="table card-table table-vcenter text-nowrap datatable"
-                                                wire:ignore>
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Cédula</th>
-                                                        <th>Nome Completo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($lista_advogados as $item)
-                                                        <tr>
-                                                            <td>{{$loop->index + 1}}</td>
-                                                            <td>{{$item->num_associado}}</td>
-                                                            <td>
-                                                                <a class="link-advogado"
-                                                                    wire:click="escolherAdvogado({{ $item->id }})">
-                                                                    {{$item->getpessoa->nome}}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-
-                                                </tbody>
-                                            </table>
+                                                <div class="row">
+                                                    <div wire:ignore
+                                                        class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12">
+                                                        <div wire:ignore class="table-responsive">
+                                                            <table id="myTable"
+                                                                class="table card-table table-vcenter text-nowrap datatable"
+                                                                wire:ignore>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Cédula</th>
+                                                                        <th>Nome Completo</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($lista_advogados as $item)
+                                                                        <tr>
+                                                                            <td>{{$loop->index + 1}}</td>
+                                                                            <td>{{$item->num_associado}}</td>
+                                                                            <td>
+                                                                                <a class="link-advogado"
+                                                                                    wire:click="escolherAdvogado({{ $item->id }})">
+                                                                                    {{$item->getpessoa->nome}}
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xl-6">
-                                        <h3 class="text-center">Atribuir Advogado</h3>
+                                </div>
 
-                                        @if ($registo->estado == 'deferido' || $registo->estado == 'arquivado')
-                                            <div class="alert alert-success text-center">
-                                                <h4>
-                                                    Para este pedido de assistência jurídica já foi atribuído um advogado.
-                                                </h4>
-                                            </div>
-                                        @endif
-                                        
-@if ($registo->estado != 'deferido' && $registo->estado != 'arquivado')
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xl-6">
+                                    <h3 class="text-center">Atribuir Advogado</h3>
+
+                                    @if ($registo->estado == 'deferido' || $registo->estado == 'arquivado')
+                                        <div class="alert alert-success text-center">
+                                            <h4>
+                                                Para este pedido de assistência jurídica já foi atribuído um advogado.
+                                            </h4>
+                                        </div>
+                                    @endif
+
+                                    @if ($registo->estado != 'deferido' && $registo->estado != 'arquivado')
                                         <div class="alert alert-primary">
                                             @if ($this->advogado_selecionado == null && $this->outro_advogado == false)
                                                 <h4 class="alert alert-info text-center">
@@ -207,17 +223,16 @@
                                                                 <div class="col-lg-6 col-12 col-md-6 col-xl-6">
                                                                     <div class="form-group">
                                                                         <label for="num_cedula">Nº Cédula</label>
-                                                                        <input type="text" wire:model="cedula"
-                                                                            name="num_cedula" class="form-control"
-                                                                            id="num_cedula" value="">
+                                                                        <input type="text" wire:model="cedula" name="num_cedula"
+                                                                            class="form-control" id="num_cedula" value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6 col-12 col-md-6 col-xl-6">
                                                                     <div class="form-group">
                                                                         <label for="telefone">Telefone</label>
                                                                         <input type="number" wire:model="telefone"
-                                                                            name="telefone" class="form-control"
-                                                                            maxlength="9" id="telefone" value="">
+                                                                            name="telefone" class="form-control" maxlength="9"
+                                                                            id="telefone" value="">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -260,9 +275,10 @@
                                                 </form>
                                             @endif
                                         </div>
-                                        @endif
-                                    </div>
+                                    @endif
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -277,10 +293,8 @@
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script>
         $(document).ready(function () {
-            // $('#myTable').DataTable();
-
             $('#myTable').DataTable({
-                paging: false, // Desabilita a paginação
+                paging: true, // Desabilita a paginação
                 searching: true // Habilita a barra de pesquisa
             });
         });
