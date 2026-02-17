@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
+    Route::post('system/atribuir-advogado/post', 'Controllers\SystemController@atribuir_advogado_post');
+    Route::post('system/atribuir-advogado/delete', 'Controllers\SystemController@atribuir_advogado_delete');
     Route::post('system/registo-despacho/post', 'Controllers\SystemController@registo_despacho_post');
     Route::post('system/actualizar-despacho/post', 'Controllers\SystemController@actualizar_despacho_post');
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
@@ -122,6 +124,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/users/members', 'Livewire\Admin\Listarassociados')->name('listassociados');
                 Route::get('/users/edit/{id}', 'Livewire\Admin\Editarusuario')->name('edit_user');
                 Route::get('/users/details/{id}', 'Livewire\Admin\Detalhesusuario')->name('detalhes_user');
+
+                Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
 
                 Route::get('/export-undefined', 'Controllers\AdvogadoController@export_undefined')->name('export_undefined');
                 Route::get('/export-lawyers', 'Controllers\AdvogadoController@export_lawyers')->name('export_lawyers');

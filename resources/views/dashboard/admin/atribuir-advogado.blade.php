@@ -41,244 +41,98 @@
                             <div class="card-header">
                                 <h3 class="text-center">Formulário de Atribuição de Advogados para Assistências
                                     Judiciárias</h3>
+
+                                <input type="hidden" id="registo_id" name="registo_id" value="{{ $registo->id }}">
                             </div>
                             <div class="card-body">
-                                <div class="accordion" id="accordion-example">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-1">
-                                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapse-1" aria-expanded="true">
-                                                Detalhes do Pedido de Assistência Jurídica
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-1" class="accordion-collapse collapse"
-                                            data-bs-parent="#accordion-example">
-                                            <div class="accordion-body pt-0">
 
-                                                <div class="alert alert-primary">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-xl-6 col-12">
+                                <div class="alert alert-primary">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-xl-6 col-12">
+                                            <p class="detalhes">
+                                                Nº do Processo: {{ $registo->codigo }} <br>
+                                                <strong>Requerente: {{ $registo->proveniencia }}</strong> <br>
+                                                Assunto: {{ $registo->assunto }} <br>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-xl-6 col-12">
+                                            <p class="detalhes">
+                                                Data de Entrada: {{ $registo->data_entrada }} <br>
+                                                Data de Registo na Secretaria:
+                                                {{ $registo->created_at }} <br>
+                                                Nota de encaminhamento: {{ $registo->nota_encaminhamento }} <br>
 
-                                                            <p class="detalhes">
-                                                                Nº do Processo: {{ $registo->codigo }} <br>
-                                                                Requerente: {{ $registo->proveniencia }} <br>
-                                                                <strong> Assunto: {{ $registo->assunto }}</strong> <br>
-                                                                Data de Entrada: {{ $registo->data_entrada }} <br>
-                                                                Data de Registo na Secretaria:
-                                                                {{ $registo->created_at }} <br>
-                                                            </p>
+                                                <a href="#" class="btn btn-info mt-3" style="cursor: pointer;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modal-advogados-atribuidos">Ver
+                                                    advogados atribuídos ({{ count($advogados_atribuidos) }})</a>
+                                                <a wire:click="confirmar_atribuicao" class="btn btn-success mt-3"
+                                                    style="cursor: pointer;">
+                                                    Confirmar</a>
 
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-xl-6 col-12">
-
-                                                            <p class="detalhes">
-                                                                Tipo de documento: {{ $registo->tipo_documento }} <br>
-                                                                Estado: {{ $registo->estado }} <br>
-                                                                Destinatário: {{ $registo->destinatario }} <br>
-                                                                Encaminhado: {{ $registo->encaminhado }} <br>
-                                                                Nota de Encaminhamento:
-                                                                {{ $registo->nota_encaminhamento }} <br>
-                                                            </p>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mt-3"></div>
 
-                                <div class="accordion" id="accordion-example">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-2">
-                                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapse-2" aria-expanded="true">
-                                                Lista de advogados que solicitaram defesas oficiosas
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-2" class="accordion-collapse collapse"
-                                            data-bs-parent="#accordion-example">
-                                            <div class="accordion-body pt-0">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-xs-12">
+                                        <div wire:ignore class="table-responsive">
+                                            <table id="myTable2"
+                                                class="table card-table table-vcenter text-nowrap datatable"
+                                                wire:ignore>
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Cédula</th>
+                                                        <th>Nome Completo</th>
+                                                        <th>Categoria</th>
+                                                        <th>Tipo de Processo</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($lista_advogados as $item)
+                                                        <tr>
+                                                            <td>{{ $loop->index + 1 }}</td>
+                                                            <td>{{ $item->getadvogado->categoria == 'Estagiario' ? $item->getadvogado->num_estagiario : $item->getadvogado->num_associado }}
+                                                            </td>
+                                                            <td>
+                                                                {{$item->getadvogado->getpessoa->nome}}
+                                                            </td>
+                                                            <td>{{ $item->getadvogado->categoria }}</td>
+                                                            <td>{{ $item->tipo_processo }}</td>
 
-                                                <div class="row">
-                                                    <div wire:ignore
-                                                        class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12">
-                                                        <div wire:ignore class="table-responsive">
-                                                            <table id="myTable"
-                                                                class="table card-table table-vcenter text-nowrap datatable"
-                                                                wire:ignore>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Cédula</th>
-                                                                        <th>Nome Completo</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($lista_advogados as $item)
-                                                                        <tr>
-                                                                            <td>{{$loop->index + 1}}</td>
-                                                                            <td>{{$item->num_associado}}</td>
-                                                                            <td>
-                                                                                <a class="link-advogado"
-                                                                                    wire:click="escolherAdvogado({{ $item->id }})">
-                                                                                    {{$item->getpessoa->nome}}
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                            <td>
+                                                                <a title="Adicionar" data-id="{{ $item->advogado_id }}"
+                                                                    class="btn-adicionar badge bg-blue-lt"
+                                                                    style="cursor: pointer;" data-bs-toggle="modal"
+                                                                    data-bs-target="#modal-adicionar">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                        <path d="M12 5l0 14" />
+                                                                        <path d="M5 12l14 0" />
+                                                                    </svg>
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
+                                        <a href="#" class="btn btn-info mt-5" style="cursor: pointer;"
+                                            data-bs-toggle="modal" data-bs-target="#modal-lista-advogados">Lista
+                                            geral de advogados</a>
                                     </div>
+
                                 </div>
-
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xl-6">
-                                    <h3 class="text-center">Atribuir Advogado</h3>
-
-                                    @if ($registo->estado == 'deferido' || $registo->estado == 'arquivado')
-                                        <div class="alert alert-success text-center">
-                                            <h4>
-                                                Para este pedido de assistência jurídica já foi atribuído um advogado.
-                                            </h4>
-                                        </div>
-                                    @endif
-
-                                    @if ($registo->estado != 'deferido' && $registo->estado != 'arquivado')
-                                        <div class="alert alert-primary">
-                                            @if ($this->advogado_selecionado == null && $this->outro_advogado == false)
-                                                <h4 class="alert alert-info text-center">
-                                                    Selecione um advogado da base de dados, a partir da lista apresentada à
-                                                    esquerda.<br><br>
-                                                    Caso deseja atribuir outro advogado <a class="btn-outro"
-                                                        wire:click="atribuir_outro()">Clique Aqui</a>
-                                                </h4>
-                                            @endif
-                                            @if ($this->advogado_selecionado != null && $this->outro_advogado == false)
-                                                <strong>Cédula: </strong> {{ $advogado_selecionado->num_associado }}
-                                                <br><br>
-                                                <strong>Nome Completo: </strong>
-                                                {{ $advogado_selecionado->getpessoa->nome }}
-                                                <br><br>
-                                                <strong>Contacto: </strong>
-                                                {{ $advogado_selecionado->getpessoa->telefone1 }}
-                                                <br><br>
-                                                <strong>Email: </strong> {{ $advogado_selecionado->getpessoa->email }}
-                                                <br><br>
-
-                                                @if ($this->advogado_selecionado->getpessoa->telefone1 == null)
-                                                    <div class="row mt-3">
-                                                        <div class="col-lg-12 col-12 col-md-12 col-xl-12">
-                                                            <div class="form-group">
-                                                                <label for="telefone">Telefone</label>
-                                                                <input type="number" wire:model="telefone" name="telefone"
-                                                                    class="form-control" maxlength="9" id="telefone" value="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-                                                @if ($this->advogado_selecionado->getpessoa->email == null)
-                                                    <div class="row mt-3">
-                                                        <div class="col-lg-12 col-12 col-md-12 col-xl-12">
-                                                            <div class="form-group">
-                                                                <label for="email">Email</label>
-                                                                <input type="email" wire:model="email" name="email"
-                                                                    class="form-control" maxlength="255" id="email" value="">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-                                                <div class="row mt-3">
-                                                    <div class="col-lg-12 col-12">
-                                                        <a wire:click="confirmar_atribuicao"
-                                                            class="btn btn-success mt-4">Confirmar</a>
-                                                        <a wire:click="cancelar_selecao"
-                                                            class="btn btn-danger mt-4">Cancelar</a>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @if ($this->outro_advogado == true)
-                                                <form class="">
-
-                                                    @csrf
-
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-xl-12 col-12">
-
-                                                            <div class="row">
-
-                                                                <input type="hidden" id="tipo_processo_id"
-                                                                    value="{{ $registo->tipo_processo_id }}">
-                                                                <input type="hidden" id="permissao_user_id"
-                                                                    value="{{ Auth::user()->permissao_id }}">
-
-                                                                <div class="col-lg-6 col-12 col-md-6 col-xl-6">
-                                                                    <div class="form-group">
-                                                                        <label for="num_cedula">Nº Cédula</label>
-                                                                        <input type="text" wire:model="cedula" name="num_cedula"
-                                                                            class="form-control" id="num_cedula" value="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-12 col-md-6 col-xl-6">
-                                                                    <div class="form-group">
-                                                                        <label for="telefone">Telefone</label>
-                                                                        <input type="number" wire:model="telefone"
-                                                                            name="telefone" class="form-control" maxlength="9"
-                                                                            id="telefone" value="">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row mt-3">
-                                                                <div class="col-lg-12 col-12 col-md-12 col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label for="nome_completo">Nome Completo</label>
-                                                                        <input type="text" wire:model="nome_completo"
-                                                                            name="nome_completo" class="form-control"
-                                                                            maxlength="255" id="nome_completo" value="">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row mt-3">
-                                                                <div class="col-lg-12 col-12 col-md-12 col-xl-12">
-                                                                    <div class="form-group">
-                                                                        <label for="email">Email</label>
-                                                                        <input type="email" wire:model="email" name="email"
-                                                                            class="form-control" maxlength="255" id="email"
-                                                                            value="">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="hidden" id="registo_id" name="registo_id"
-                                                                value="{{ $registo->id }}">
-
-                                                            <div class="row mt-3">
-                                                                <div class="col-lg-12 col-12">
-                                                                    <a wire:click="confirmar_atribuicao"
-                                                                        class="btn btn-success mt-4">Confirmar</a>
-                                                                    <a wire:click="$set('outro_advogado', false)"
-                                                                        class="btn btn-danger mt-4">Cancelar</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            @endif
-                                        </div>
-                                    @endif
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -286,15 +140,117 @@
             </div>
         </div>
     </div>
+
+    <div class="modal modal-blur fade" id="modal-lista-advogados" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lista geral dos advogados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div wire:ignore class="table-responsive">
+                        <table id="myTable" class="table card-table table-vcenter text-nowrap datatable" wire:ignore>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cédula</th>
+                                    <th>Nome Completo</th>
+                                    <th>Categoria</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($lista_advogados_geral as $item)
+                                    <tr>
+                                        <td>{{$loop->index + 1}}</td>
+                                        <td>{{$item->num_associado}}</td>
+                                        <td>
+                                            <a data-id="{{ $item->id }}" class="link-advogado btn-adicionar">
+                                                {{$item->getpessoa->nome}}
+                                            </a>
+                                        </td>
+                                        <td>{{$item->categoria}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-blur fade" id="modal-advogados-atribuidos" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Advogados atribuidos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div wire:ignore class="table-responsive">
+                        <table id="myTable" class="table card-table table-vcenter text-nowrap datatable" wire:ignore>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cédula</th>
+                                    <th>Nome Completo</th>
+                                    <th>Categoria</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($advogados_atribuidos as $item)
+                                    <tr>
+                                        <td>{{$loop->index + 1}}</td>
+                                        <td>{{ $item->getadvogado->categoria == 'Estagiario' ? $item->getadvogado->num_estagiario : $item->getadvogado->num_associado }}
+                                        </td>
+                                        <td>
+                                            <a data-id="{{ $item->id }}" class="">
+                                                {{$item->getadvogado->getpessoa->nome}}
+                                            </a>
+                                        </td>
+                                        <td>{{$item->getadvogado->categoria}}</td>
+                                        <td>
+                                            <a title="remover" data-id="{{ $item->id }}" style="cursor: pointer;"
+                                                class="btn-remover badge bg-red-lt">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @section('script-aux')
-    <!-- <script src="{{ asset('assets/system/js/adicionar-anexo.js') }}"></script> -->
+    <script src="{{ asset('assets/system/js/atribuir-advogado.js') }}"></script>
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
-                paging: true, // Desabilita a paginação
+                paging: false, // Desabilita a paginação
+                searching: true // Habilita a barra de pesquisa
+            });
+
+            $('#myTable2').DataTable({
+                paging: false, // Desabilita a paginação
                 searching: true // Habilita a barra de pesquisa
             });
         });

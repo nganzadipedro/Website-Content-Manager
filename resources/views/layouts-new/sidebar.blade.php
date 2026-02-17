@@ -40,6 +40,36 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
+                                    Registo de Entradas
+                                </span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-menu-columns">
+                                    <div class="dropdown-menu-column">
+                                        <a class="dropdown-item" href="{{ route('system.admin.listar_registos') }}">
+                                            Listar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                        <path d="M12 12l8 -4.5" />
+                                        <path d="M12 12l0 9" />
+                                        <path d="M12 12l-8 -4.5" />
+                                        <path d="M16 5.25l-8 4.5" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
                                     Pedidos de Assistência Jurídica
                                 </span>
                             </a>
@@ -94,41 +124,41 @@
                         </li>
 
                         @if (Auth::user()->permissao_id == 1)
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Usuários
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.admin.new_user') }}">
-                                            Cadastrar
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('system.admin.listusuario') }}">
-                                            Listar
-                                        </a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Usuários
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{{ route('system.admin.new_user') }}">
+                                                Cadastrar
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('system.admin.listusuario') }}">
+                                                Listar
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
                         @endif
-                        
+
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -237,10 +267,12 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.registar_pedido_intervencao') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.registar_pedido_intervencao') }}">
                                             Adicionar pedido
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.pedido_intervencao_listar') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar') }}">
                                             Pedidos registados
                                         </a>
                                     </div>
@@ -305,8 +337,7 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.secretaria.generate_report') }}">
+                                        <a class="dropdown-item" href="{{ route('system.secretaria.generate_report') }}">
                                             Gerar Relatório
                                         </a>
                                     </div>
@@ -454,7 +485,7 @@
                                             href="{{ route('system.areatecnica.listar_advogados_pendentes') }}">
                                             Pendentes
                                         </a>
-                                        
+
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_mapa_distribuicao') }}">
                                             Mapa de Distribuição
@@ -472,7 +503,7 @@
                             </div>
                         </li>
 
-                         <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 <span

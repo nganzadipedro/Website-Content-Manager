@@ -17,8 +17,9 @@ class Listarregistos extends Component
             return view('dashboard.secretaria.listar-registos')->extends('layouts-new.app')->section('content');
         } elseif (Auth::user()->permissao_id == 3) {
             return view('dashboard.areatecnica.listar-registos')->extends('layouts-new.app')->section('content');
-        }
-        elseif (Auth::user()->permissao_id == 6) {
+        } else if (Auth::user()->permissao_id == 1 || Auth::user()->permissao_id == 5) {
+            return view('dashboard.admin.listar-registos')->extends('layouts-new.app')->section('content');
+        } elseif (Auth::user()->permissao_id == 6) {
             return view('dashboard.recepcionista.listar-registos')->extends('layouts-new.app')->section('content');
         }
     }

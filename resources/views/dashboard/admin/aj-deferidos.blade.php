@@ -23,7 +23,6 @@
             <div class="row row-cards">
                 <div class="col-12">
                     <div class="card">
-
                         <div class="table-responsive">
                             <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -32,9 +31,7 @@
                                         <th>Nº Processo</th>
                                         <th>Assunto</th>
                                         <th>Tipo de Processo</th>
-                                        <th>Data de Entrada</th>
                                         <th>Requerente</th>
-                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -45,21 +42,13 @@
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->assunto}}</td>
                                             <td>{{$item->gettipoprocesso->descricao}}</td>
-                                            <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
                                                 <a href="{{ route('system.admin.atribuir_advogado', $item->hash) }}"
                                                     class="btn btn-success">
-                                                    Novo Advogado
+                                                    Substituir Advogados
                                                 </a>
                                             </td>
-                                            <td>
-                                                <a href="{{ route('system.admin.detalhes_registo', $item->hash) }}"
-                                                    class="btn btn-info">
-                                                    Detalhes
-                                                </a>
-                                            </td>
-
                                         </tr>
                                     @endforeach
 

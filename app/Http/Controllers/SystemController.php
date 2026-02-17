@@ -455,6 +455,49 @@ class SystemController extends Controller
         return 'sucesso';
     }
 
+    public function atribuir_advogado_post(Request $request)
+    {
+
+        $registo = Registoentrada::find($request->registo_id);
+        $advogado = Advogado::find($request->advogado_id);
+
+        $existe = Advogadoatribuido::where('registo_entrada_id', $registo->id)
+            ->where('advogado_id', $advogado->id)
+            ->first();
+
+        if ($existe) {
+            return 'duplicado';
+        }
+
+        $atribuicao = Advogadoatribuido::create([
+            'registo_entrada_id' => $registo->id,
+            'advogado_id' => $advogado->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $nome_advogado = $advogado->getpessoa->nome;
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Atribuição de advogado para a assistência judiciária", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Atribuiu o advogado $nome_advogado para a assistência judiciária", 'user', auth()->user()->id);
+
+        return 'sucesso';
+
+    }
+
+    public function atribuir_advogado_delete(Request $request)
+    {
+
+        $registo = Registoentrada::find($request->registo_id);
+        $id = $request->id;
+
+        $existe = Advogadoatribuido::find($id);
+        $existe->delete();
+        
+        return 'sucesso';
+
+    }
+
     public function registo_inscricao_post(Request $request)
     {
 
