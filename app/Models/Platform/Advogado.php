@@ -19,6 +19,7 @@ class Advogado extends Model
         'codigo',
         'hash',
         'num_associado',
+        'nome_profissional',
         'num_estagiario',
         'doc_bilhete',
         'doc_cedula_estagiario',

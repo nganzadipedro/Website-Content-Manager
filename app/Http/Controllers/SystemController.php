@@ -392,16 +392,18 @@ class SystemController extends Controller
     {
 
         // verifica se já esxite na bd
-        $existe = Advogado::where('categoria', $request->categoria)
-            ->where('num_associado', $request->num_cedula)->first();
-        if ($existe) {
-            return 'duplicado';
-        }
-
-        $existe = Advogado::where('categoria', $request->categoria)
-            ->where('num_estagiario', $request->num_cedula)->first();
-        if ($existe) {
-            return 'duplicado';
+        if ($request->categoria == 'Advogado') {
+            $existe = Advogado::where('categoria', 'Advogado')
+                ->where('num_associado', $request->num_cedula)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        } else {
+            $existe = Advogado::where('categoria', 'Estagiario')
+                ->where('num_estagiario', $request->num_cedula)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
         }
 
         // insere na tabela pessoa;
@@ -438,6 +440,64 @@ class SystemController extends Controller
             'user_id' => Auth::user()->id,
             'advogado_id' => $advogado->id,
             'tipo_processo' => $request->tipo_processo,
+            'hash' => Str::uuid()
+        ]);
+
+        return 'sucesso';
+
+    }
+
+    public function registo_associado_post(Request $request)
+    {
+
+        // verifica se já esxite na bd
+        if ($request->categoria == 'Advogado') {
+            $existe = Advogado::where('categoria', 'Advogado')
+                ->where('num_associado', $request->num_associado)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        } else {
+            $existe = Advogado::where('categoria', 'Estagiario')
+                ->where('num_estagiario', $request->num_estagiario)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        $existe = Pessoa::where('num_documento', $request->num_bi)
+            ->first();
+        if ($existe) {
+            return 'bilhete';
+        }
+
+        // insere na tabela pessoa;
+        $pessoa = Pessoa::create([
+            'nome' => mb_strtoupper($request->nome_completo, 'UTF-8'),
+            'num_documento' => $request->num_bi,
+            'email' => $request->email,
+            'telefone1' => $request->telefone1,
+            'telefone2' => $request->telefone2,
+            'documento' => 'Bilhete de Identidade',
+            'genero' => $request->sexo
+        ]);
+
+        $conta = Advogado::count() + 1;
+
+        // insere na tabela de advogado
+        $advogado = Advogado::create([
+            'categoria' => $request->categoria,
+            'nome_profissional' => $request->nome_profissional,
+            'num_associado' => $request->num_associado,
+            'num_estagiario' => $request->num_estagiario,
+            'pessoa_id' => $pessoa->id,
+            'codigo' => 'CPL' . $conta,
+            'nome_patrono' => $request->nome_patrono,
+            'email_patrono' => $request->email_patrono,
+            'telefone_patrono' => $request->tel_patrono,
+            'nome_escritorio' => $request->nome_escritorio,
+            'municipio_id' => $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est,
+            'endereco_escritorio' => $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est,
             'hash' => Str::uuid()
         ]);
 
@@ -493,7 +553,7 @@ class SystemController extends Controller
 
         $existe = Advogadoatribuido::find($id);
         $existe->delete();
-        
+
         return 'sucesso';
 
     }
@@ -822,7 +882,5 @@ class SystemController extends Controller
             $registo->save();
 
         }
-
     }
-
 }
