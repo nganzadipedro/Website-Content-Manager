@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Listaaguardacerimoniaexport;
 use App\Exports\Listaindefinidosexport;
 use App\Exports\Listaestagiariosexport;
 use App\Exports\Listaadvogadosexport;
@@ -106,6 +107,13 @@ class AdvogadoController extends Controller
         $nome_file = 'lista_advogados';
         return Excel::download(new Listaadvogadosexport(), $nome_file . '.xlsx');
 
+    }
+
+    public function export_waiting_cerimony()
+    {
+
+        $nome_file = 'lista_aguardando_cerimonia';
+        return Excel::download(new Listaaguardacerimoniaexport(), $nome_file . '.xlsx');
     }
 
 }

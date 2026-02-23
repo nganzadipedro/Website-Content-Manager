@@ -43,8 +43,8 @@ class WebsiteController extends Controller
 
     public function members()
     {
-        $advogados = Advogado::where('categoria', 'Advogado')->count();
-        $estagiarios = Advogado::where('categoria', 'Estagiario')->count();
+        $advogados = Advogado::where('categoria', 'Advogado')->where('estado', 'Registado')->count();
+        $estagiarios = Advogado::where('categoria', 'Estagiario')->where('estado', 'Registado')->count();
         $total = $advogados + $estagiarios;
         $this->acesso_pagina('associados');
         return view('website.members', compact('advogados', 'estagiarios', 'total'));
@@ -191,11 +191,21 @@ class WebsiteController extends Controller
 
     public function download_document($file)
     {
-
         $path = storage_path('app/public/docspdf/' . $file);
 
+        $tipo_ficheiro = explode('.', $file);
+        $extensao = $tipo_ficheiro[1];
+
         if (file_exists($path)) {
-            return response()->download($path);
+            if ($extensao == 'docx' || $extensao == 'doc') {
+                $response = response()->download($path);
+                $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                return $response;
+            } else if ($extensao == 'pdf' || $extensao == 'PDF') {
+                $response = response()->download($path);
+                $response->headers->set('Content-Type', 'application/pdf');
+                return $response;
+            }
         }
 
         abort(404, 'Arquivo não encontrado');

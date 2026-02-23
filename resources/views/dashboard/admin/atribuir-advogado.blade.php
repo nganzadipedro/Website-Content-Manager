@@ -53,6 +53,8 @@
                                                 Nº do Processo: {{ $registo->codigo }} <br>
                                                 <strong>Requerente: {{ $registo->proveniencia }}</strong> <br>
                                                 Assunto: {{ $registo->assunto }} <br>
+                                                Endereço do Requerente: {{ $registo->endereco_requerente }} <br>
+                                                Município do Requerente: {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}
                                             </p>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-xl-6 col-12">
@@ -61,6 +63,7 @@
                                                 Data de Registo na Secretaria:
                                                 {{ $registo->created_at }} <br>
                                                 Nota de encaminhamento: {{ $registo->nota_encaminhamento }} <br>
+                                                Contactos: {{ $registo->telefone }}/{{ $registo->telefone2 }} <br>
 
                                                 <a href="#" class="btn btn-info mt-3" style="cursor: pointer;"
                                                     data-bs-toggle="modal"
@@ -90,6 +93,8 @@
                                                         <th>Nome Completo</th>
                                                         <th>Categoria</th>
                                                         <th>Tipo de Processo</th>
+                                                        <th>Município</th>
+                                                        <th>Endereço</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -104,6 +109,8 @@
                                                             </td>
                                                             <td>{{ $item->getadvogado->categoria }}</td>
                                                             <td>{{ $item->tipo_processo }}</td>
+                                                            <td>{{ $item->getadvogado->municipio_id == null ? '' : $item->getadvogado->getmunicipio->descricao }}</td>
+                                                            <td>{{ $item->getadvogado->endereco_escritorio }}</td>
 
                                                             <td>
                                                                 <a title="Adicionar" data-id="{{ $item->advogado_id }}"
@@ -157,6 +164,8 @@
                                     <th>Cédula</th>
                                     <th>Nome Completo</th>
                                     <th>Categoria</th>
+                                    <th>Município</th>
+                                    <th>Endereço</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,6 +179,8 @@
                                             </a>
                                         </td>
                                         <td>{{$item->categoria}}</td>
+                                        <td>{{ $item->municipio_id == null ? '' : $item->getmunicipio->descricao }}</td>
+                                        <td>{{ $item->endereco_escritorio }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

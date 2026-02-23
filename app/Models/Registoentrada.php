@@ -31,6 +31,8 @@ class Registoentrada extends Model
         'titulo',
         'numero',
         'nota_encaminhamento',
+        'municipio_requerente',
+        'endereco_requerente',
         'outro_tipo_processo',
         'encaminhado'
     ];
@@ -41,6 +43,10 @@ class Registoentrada extends Model
 
     public function gettipoprocesso(){
         return $this->belongsTo(Tipoprocesso::class, 'tipo_processo_id', 'id');
+    }
+
+    public function getmunicipio(){
+        return $this->belongsTo(Municipio::class, 'municipio_requerente', 'id');
     }
 
 }

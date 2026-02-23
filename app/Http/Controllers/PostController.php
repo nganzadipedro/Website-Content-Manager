@@ -241,17 +241,20 @@ class PostController extends Controller
 
         if ($criterio == 'nome') {
             $res = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')->where('pessoa.nome', 'LIKE', "%{$texto_filtro}%")
+                ->where('app_advogado.estado', 'Registado')
                 ->select('pessoa.*', 'app_advogado.categoria', 'app_advogado.num_associado', 'app_advogado.num_estagiario')
                 ->get();
         } else if ($criterio == 'cedula') {
             $res = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')->where('app_advogado.num_associado', 'LIKE', "%{$texto_filtro}%")
                 ->orWhere('app_advogado.num_estagiario', 'LIKE', "%{$texto_filtro}%")
+                ->where('app_advogado.estado', 'Registado')
                 ->select('pessoa.*', 'app_advogado.categoria', 'app_advogado.num_associado', 'app_advogado.num_estagiario')
                 ->get();
 
 
         } else if ($criterio == 'bi') {
             $res = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')->where('pessoa.num_documento', 'LIKE', "%{$texto_filtro}%")
+                ->where('app_advogado.estado', 'Registado')
                 ->select('pessoa.*', 'app_advogado.categoria', 'app_advogado.num_associado', 'app_advogado.num_estagiario')
                 ->get();
         }

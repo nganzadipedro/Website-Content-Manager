@@ -90,6 +90,35 @@
 
                                         </div>
 
+                                        @if($tipo_processo_id == 1)
+                                            <div class="row mt-3">
+
+                                                <div class="col-lg-6 col-xl-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="endereco_requerente">Endereço do requerente</label>
+                                                        <input type="text" wire:model="endereco_requerente"
+                                                            name="endereco_requerente" maxlength="200" class="form-control"
+                                                            id="endereco_requerente" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="municipio_requerente">Município</label>
+                                                        <select wire:model="municipio_requerente" clang="form-control"
+                                                            name="municipio_requerente" id="municipio_requerente"
+                                                            class="form-control">
+                                                            <option selected>Selecione...</option>
+                                                            @foreach ($municipios as $muni)
+                                                                <option value="{{$muni->id}}">{{$muni->descricao}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        @endif
+
                                         <div class="row mt-3">
 
                                             <div class="col-lg-3 col-12 col-md-3">
@@ -128,9 +157,7 @@
                                                         type="text" name="telefone" id="telefone" value="">
                                                 </div>
                                             </div>
-
                                         </div>
-
 
                                         <div class="row mt-3">
                                             <div class="col-lg-3 col-12 col-md-3">

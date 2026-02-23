@@ -84,33 +84,25 @@
                             </p>
                             <div class="list-container">
                                 <ul class="list-column section-one-list">
-                                    <li>Ser admitido no Exame Nacional de Acesso à Advocacia;</li>
-                                    <li>Requerimento ao Presidente do Conselho Provincial de Luanda/ Declaração de
-                                        compatibilidade de funções. Art.º 4.º do EOAA;</li>
-                                    <li>Boletim de inscrição assinado;</li>
-                                    <li>Certificado de Licenciatura (Diploma) ou declaração com notas - cópia
-                                        autenticada;</li>
-                                    <li>Se for formado no exterior do país, deverá apresentar o certificado de
-                                        licenciatura em direito autenticado pelos serviços consulares e uma declaração
-                                        de reconhecimento dos estudos (cópia autenticada);</li>
-                                    <li>Certificado de Registo Criminal;</li>
-                                    <li>Fotocópia a cores do BI;</li>
-                                    <li>3 Fotografias tipo passe, a cores;</li>
+                                    <li>Requerimento de inscrição com indicação do nome completo, do nome abreviado a utilizar no exercício da profissão, dos cargos e actividades exercidos e domicílio profissional;</li>
+                                    <li>Declaração de aceitação do Patrono;</li>
+                                    <li>Certificado de Licenciatura, em original ou fotocópia autenticada;</li>
+                                    <li>Certificado de Registo Criminal actualizado;</li>
+                                    <li>Fotocópia do documento de identificação;</li>
                                 </ul>
                                 <ul class="list-column section-one-list">
-                                    <li>Atestado de residência;</li>
-                                    <li>Declaração de serviço (se para além da advocacia exerce outra profissão; para
-                                        quem não exerça deverá emitir declaração atestando esta condição);</li>
-                                    <li>Fotocópia do NIF;</li>
+                                    <li>3 Fotografias tipo passe;</li>
+                                    <li>Atestado de Residência;</li>
+                                    <li>Declaração de Serviço;</li>
                                     <li>Curriculum Vitae;</li>
-                                    <li>Declaração do Patrono;</li>
-                                    <li>Comprovativo de pagamento de taxas;</li>
+                                    <li>Comprovativo de pagamento do respectivo emolumento</li>
                                 </ul>
                             </div>
                             <div class="member-actions">
                                 <a href="{{ route('download_doc', 'req_advogado_estagiario.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
                                 <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
-                                <a href="{{ url('/register-member') }}" class="member-btn">Inscrever-se pelo portal do CPL</a>
+                                <a href="{{ route('download_doc', 'declaracao_patrono.docx') }}" class="member-btn"><i class="bi bi-download"></i> Declaração do Patrono</a>
+                                <!-- <a href="{{ url('/register-member') }}" class="member-btn">Inscrever-se pelo portal do CPL</a> -->
                             </div>
                         </div>
                     </div>

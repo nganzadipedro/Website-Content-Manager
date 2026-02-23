@@ -13,9 +13,10 @@ class Listarestagiarios extends Component
 
     public function render()
     {
-        $this->lista_advogados = Advogado::where('categoria', 'Estagiario')->get();
+        $this->lista_advogados = Advogado::where('categoria', 'Estagiario')
+        ->where('estado', 'Registado')->get();
 
-        if (Auth::user()->permissao_id == 1 || Auth::user()->permissao_id == 6) {
+        if (Auth::user()->permissao_id == 1 || Auth::user()->permissao_id == 5) {
             return view('dashboard.admin.listar-advogados-estagiarios')->extends('layouts-new.app')->section('content');
         } else if (Auth::user()->permissao_id == 3) {
             return view('dashboard.areatecnica.listar-advogados-estagiarios')->extends('layouts-new.app')->section('content');

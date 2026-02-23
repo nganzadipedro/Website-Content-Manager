@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Secretaria;
 
 use App\Http\Controllers\ActividadesistemaController;
+use App\Models\Municipio;
 use App\Models\Registoentrada;
 use App\Models\Tipoprocesso;
 use Auth;
@@ -23,11 +24,15 @@ class Registarentrada extends Component
     public $titulo;
     public $outro_titulo;
     public $proveniencia;
+    public $municipio_requerente;
+    public $endereco_requerente;
+    public $municipios = array();
 
     public $tipos_processo = array();
 
     public function render()
     {
+        $this->municipios = Municipio::all();
         $this->tipos_processo = Tipoprocesso::all();
         return view('dashboard.secretaria.registar-entrada')->extends('layouts-new.app')->section('content');
     }
@@ -65,6 +70,8 @@ class Registarentrada extends Component
                 'telefone2' => $this->telefone2,
                 'titulo' => $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo,
                 'tipo_processo_id' => $this->tipo_processo_id,
+                'endereco_requerente' => $this->endereco_requerente,
+                'municipio_requerente' => $this->municipio_requerente,
                 'outro_tipo_processo' => $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo,
                 'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
                 'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,
@@ -79,6 +86,15 @@ class Registarentrada extends Component
 
             ActividadesistemaController::inserir(Auth::id(), "Registo de entrada do processo na secretária ($registo->assunto)", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou uma entrada de processo na secretária ($registo->assunto)", 'user', Auth::id());
+
+            if ($registo->tipo_processo_id == 2 || $registo->tipo_processo_id == 3) {
+                $registo->encaminhado = 'Área Técnica';
+                $registo->estado = 'pendente';
+                $registo->save();
+
+                // regista actividade no sistema
+                ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+            }
 
             $this->mensagemRefresh('Registo efectuado com sucesso', 'success');
 

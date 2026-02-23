@@ -52,15 +52,32 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active show" id="tabs-home-1">
                                         <h3>Dados Gerais</h3>
-                                        <div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-12">
+                                                Nº do Processo: {{ $registo->codigo }} <br><br>
+                                                Proveniência: {{ $registo->proveniencia }} <br><br>
 
-                                            Nº do Processo: {{ $registo->codigo }} <br><br>
-                                            Proveniência: {{ $registo->proveniencia }} <br><br>
-                                            
-                                            <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
-                                            Data de Entrada: {{ $registo->data_entrada }} <br><br>
-                                            Data de Registo no Sistema: {{ $registo->created_at }} <br><br>
-                                            Tipo de Processo: {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }} <br><br>
+                                                <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
+                                                Data de Entrada: {{ $registo->data_entrada }} <br><br>
+                                                Data de Registo no Sistema: {{ $registo->created_at }} <br><br>
+                                                Tipo de Processo:
+                                                {{ $registo->tipo_processo_id == 9 ? $registo->outro_tipo_processo : $registo->gettipoprocesso->descricao }}
+                                                <br><br>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6 col-xl-6 col-12">
+                                                @if ($registo->encaminhado != 'Não')
+                                                    Nota de Encaminhamento: {{ $registo->nota_encaminhamento }} <br><br>
+                                                @endif
+                                                Título/Função: {{ $registo->titulo }}<br><br>
+                                                Contactos: {{ $registo->telefone }}/{{ $registo->telefone2 }}<br><br>
+                                                Endereço do requerente: {{ $registo->endereco_requerente }}<br><br>
+                                                Município do requerente: {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}<br><br>
+                                                Observação: {{ $registo->observacao }}<br><br>
+                                                Registado Por: {{ $registo->getuser->getpessoa->nome }}
+                                            </div>
+
+
                                             <div class="btn-group w-100" role="group">
                                                 <input type="radio" class="btn-check" name="btn-radio-dropdown"
                                                     id="btn-radio-dropdown-1" autocomplete="off" checked>
@@ -79,14 +96,6 @@
                                                 <label for="btn-radio-dropdown-4" type="button" class="btn">Encaminhado:
                                                     {{ $registo->encaminhado }}</label>
                                             </div>
-                                            <br>
-                                            <br>
-                                            @if ($registo->encaminhado != 'Não')
-                                            Nota de Encaminhamento: {{ $registo->nota_encaminhamento }}  <br><br>
-                                            @endif
-
-                                            Registado Por: {{ $registo->getuser->getpessoa->nome }}
-
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabs-anexos-1">
@@ -220,19 +229,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                                            <a href="#"
-                                                                                                                                class="list-group-item-actions">
-                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                                    class="icon text-secondary" width="24" height="24"
-                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                                    stroke-linejoin="round">
-                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                                    <path
-                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                                                </svg>
-                                                                                                                            </a>
-                                                                                                                        </div> -->
+                                                                                                                                <a href="#"
+                                                                                                                                    class="list-group-item-actions">
+                                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                        class="icon text-secondary" width="24" height="24"
+                                                                                                                                        viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                        stroke-linejoin="round">
+                                                                                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                        <path
+                                                                                                                                            d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                    </svg>
+                                                                                                                                </a>
+                                                                                                                            </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -253,8 +262,10 @@
 
                                                             <div class="row">
 
-                                                            <input type="hidden" id="tipo_processo_id" value="{{ $registo->tipo_processo_id }}">
-                                                            <input type="hidden" id="permissao_user_id" value="{{ Auth::user()->permissao_id }}">
+                                                                <input type="hidden" id="tipo_processo_id"
+                                                                    value="{{ $registo->tipo_processo_id }}">
+                                                                <input type="hidden" id="permissao_user_id"
+                                                                    value="{{ Auth::user()->permissao_id }}">
 
                                                                 <div class="col-lg-6 col-12 col-md-6 col-xl-6">
                                                                     <div class="form-group">

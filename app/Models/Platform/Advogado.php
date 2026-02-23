@@ -2,6 +2,7 @@
 
 namespace App\Models\Platform;
 
+use App\Models\Municipio;
 use App\Models\Pessoa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,13 +28,22 @@ class Advogado extends Model
         'nome_patrono',
         'email_patrono',
         'telefone_patrono',
+        'data_inscricao_oaa',
+        'data_inscricao_estagiario',
         'municipio_id',
         'nome_escritorio',
         'endereco_escritorio',
-        'categoria'
+        'estado',
+        'categoria',
+        'data_cerimonia_estagiario',
+        'data_cerimonia_associado'
     ];
 
     public function getpessoa(){
         return $this->belongsTo(Pessoa::class, 'pessoa_id', 'id');
+    }
+
+    public function getmunicipio(){
+        return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
     }
 }

@@ -60,6 +60,11 @@
                 Ordem dos Advogados de Angola, juntar cópia do Bilhete de Identidade do Beneficiário e outros documentos
                 que se achar necessário.
             </p>
+
+            <div class="member-actions">
+                <a href="{{ route('download_doc', 'minuta_assistencia_judiciaria.pdf') }}" class="member-btn"><i
+                        class="bi bi-download"></i> Descarregue aqui a Minuta de Assistência Judiciária</a>
+            </div>
         </div>
     </section>
 

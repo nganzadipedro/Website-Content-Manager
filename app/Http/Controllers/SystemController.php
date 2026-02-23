@@ -490,16 +490,98 @@ class SystemController extends Controller
             'nome_profissional' => $request->nome_profissional,
             'num_associado' => $request->num_associado,
             'num_estagiario' => $request->num_estagiario,
+            'data_inscricao_oaa' => $request->data_inscricao_oaa,
+            'data_inscricao_estagiario' => $request->data_inscricao_estagiario,
             'pessoa_id' => $pessoa->id,
             'codigo' => 'CPL' . $conta,
             'nome_patrono' => $request->nome_patrono,
             'email_patrono' => $request->email_patrono,
             'telefone_patrono' => $request->tel_patrono,
             'nome_escritorio' => $request->nome_escritorio,
+            'estado' => 'Aguarda Cerimónia',
             'municipio_id' => $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est,
             'endereco_escritorio' => $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est,
             'hash' => Str::uuid()
         ]);
+
+        return 'sucesso';
+
+    }
+
+    public function registo_associado_update(Request $request)
+    {
+
+        $advogado = Advogado::find($request->advogado_id);
+        $pessoa = Pessoa::find($advogado->pessoa_id);
+
+        // verifica se já esxite na bd
+        if ($request->categoria == 'Advogado') {
+            $existe = Advogado::where('categoria', 'Advogado')
+                ->where('num_associado', $request->num_associado)
+                ->where('pessoa_id', '!=', $pessoa->id)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        } else {
+            $existe = Advogado::where('categoria', 'Estagiario')
+                ->where('num_estagiario', $request->num_estagiario)
+                ->where('pessoa_id', '!=', $pessoa->id)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        $existe = Pessoa::where('num_documento', $request->num_bi)
+            ->where('id', '!=', $pessoa->id)
+            ->first();
+
+        if ($existe) {
+            return 'bilhete';
+        }
+
+        // actualiza na tabela pessoa;
+
+        $pessoa->nome = mb_strtoupper($request->nome_completo, 'UTF-8');
+        $pessoa->num_documento = $request->num_bi;
+        $pessoa->email = $request->email;
+        $pessoa->telefone1 = $request->telefone1;
+        $pessoa->telefone2 = $request->telefone2;
+        $pessoa->documento = 'Bilhete de Identidade';
+        $pessoa->genero = $request->sexo;
+        $pessoa->save();
+
+        // actualiza na tabela de advogado
+        $advogado->categoria = $request->categoria;
+        $advogado->nome_profissional = $request->nome_profissional;
+        $advogado->num_associado = $request->num_associado;
+        $advogado->num_estagiario = $request->num_estagiario;
+        $advogado->data_inscricao_oaa = $request->data_inscricao_oaa;
+        $advogado->data_inscricao_estagiario = $request->data_inscricao_estagiario;
+        $advogado->nome_patrono = $request->nome_patrono;
+        $advogado->email_patrono = $request->email_patrono;
+        $advogado->telefone_patrono = $request->tel_patrono;
+        $advogado->nome_escritorio = $request->nome_escritorio;
+        $advogado->estado = 'Aguarda Cerimónia';
+        $advogado->municipio_id = $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est;
+        $advogado->endereco_escritorio = $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est;
+        $advogado->save();
+
+        return 'sucesso';
+
+    }
+
+    public function data_cerimonia_update(Request $request)
+    {
+
+        $advogado = Advogado::find($request->advogado_id);
+
+        if ($advogado->categoria == 'Advogado') {
+            $advogado->data_cerimonia_associado = $request->data_cerimonia;
+        } else {
+            $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+        }
+        $advogado->estado = 'Registado';
+        $advogado->save();
 
         return 'sucesso';
 
@@ -708,7 +790,7 @@ class SystemController extends Controller
 
     public function getAdvogadoById($id)
     {
-        $advogado = Advogado::find($id);
+        $advogado = Advogado::with(['getpessoa', 'getmunicipio'])->findOrFail($id);
         return response()->json($advogado);
     }
 

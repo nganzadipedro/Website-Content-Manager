@@ -572,6 +572,10 @@
                                             Advogados Estagiários
                                         </a>
                                         <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.list_cerimonia') }}">
+                                            Aguardando Cerimónia
+                                        </a>
+                                        <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.regist_lawyer') }}">
                                             Cadastrar
                                         </a>

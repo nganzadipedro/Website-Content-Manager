@@ -11,6 +11,17 @@
                         Dashboard
                     </h2>
                 </div>
+                <!-- Page title actions -->
+                @if (Auth::user()->id == 4054)
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+                            <a href="{{ route('manage_website') }}" class="btn btn-warning">
+                                Gerenciar Website
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
@@ -338,8 +349,8 @@
                     console.error('Erro ao buscar dias da semana:', error);
                 });
 
-            });
-            // @formatter:on
+        });
+        // @formatter:on
     </script>
 
     <script>
@@ -427,11 +438,11 @@
                     console.error('Erro ao buscar dias da semana:', error);
                 });
 
-            });
-            // @formatter:on
+        });
+        // @formatter:on
     </script>
 
-        <script>
+    <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -516,8 +527,8 @@
                     console.error('Erro ao buscar dias da semana:', error);
                 });
 
-            });
-            // @formatter:on
+        });
+        // @formatter:on
     </script>
 
     <script>
@@ -710,7 +721,7 @@
         // @formatter:on
     </script>
 
-        <script>
+    <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function () {
 

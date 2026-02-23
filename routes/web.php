@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/registo-associado/post', 'Controllers\SystemController@registo_associado_post');
+    Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
+    Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
     Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
@@ -235,8 +237,13 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/documento/despacho-indeferido/{hash}', 'Controllers\SystemController@documento_despacho')->name('documento_despacho');
 
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
+                Route::get('/list/cerimonia', 'Livewire\Admin\Listacerimonia')->name('list_cerimonia');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
                 Route::get('/register/lawyer', 'Livewire\Areatecnica\Registarassociado')->name('regist_lawyer');
+                Route::get('/edit-data/member/{hash}', 'Livewire\Areatecnica\Editarassociado')->name('edit_member');
+                
+
+                Route::get('/export-waiting/cerimony', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
 
             });
         });

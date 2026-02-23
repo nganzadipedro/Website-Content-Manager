@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Secretaria;
 
 use App\Http\Controllers\ActividadesistemaController;
+use App\Models\Municipio;
 use App\Models\Registoentrada;
 use App\Models\Tipoprocesso;
 use Auth;
@@ -23,11 +24,16 @@ class Editarregisto extends Component
     public $tipo_processo_id;
     public $proveniencia;
 
+    public $municipio_requerente;
+    public $endereco_requerente;
+
     public $outro_tipo_processo;
 
     public $registo;
     public $hash_registo;
     public $tipos_processo = array();
+
+     public $municipios = array();
 
     public function mount($hash)
     {
@@ -48,6 +54,8 @@ class Editarregisto extends Component
         $this->data_entrada = $this->registo->data_entrada;
         $this->tipo_processo_id = $this->registo->tipo_processo_id;
         $this->outro_tipo_processo = $this->registo->outro_tipo_processo;
+        $this->endereco_requerente = $this->registo->endereco_requerente;
+        $this->municipio_requerente = $this->registo->municipio_requerente;
         $this->observacao = $this->registo->observacao;
         $this->tipo_documento = $this->registo->tipo_documento;
         $this->proveniencia = $this->registo->proveniencia;
@@ -56,6 +64,7 @@ class Editarregisto extends Component
     public function render()
     {
         $this->tipos_processo = Tipoprocesso::all();
+        $this->municipios = Municipio::all();
         return view('dashboard.secretaria.editar-registo')->extends('layouts-new.app')->section('content');
     }
 
@@ -91,6 +100,8 @@ class Editarregisto extends Component
             $this->registo->telefone2 = $this->telefone2;
             $this->registo->titulo = $this->titulo == 'Outro' ? $this->outro_titulo : $this->titulo;
             $this->registo->tipo_processo_id = $this->tipo_processo_id;
+            $this->registo->endereco_requerente = $this->endereco_requerente;
+            $this->registo->municipio_requerente = $this->municipio_requerente;
             $this->registo->outro_tipo_processo = $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo;
             $this->registo->destinatario = $this->destinatario;
             $this->registo->tipo_documento = $this->tipo_documento;
