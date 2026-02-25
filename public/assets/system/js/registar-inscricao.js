@@ -13,7 +13,7 @@ function valida_formulario() {
     const email = document.getElementById('email').value;
     const observacao2 = document.getElementById('observacao2').value;
     const tipo_processo_id = document.getElementById('tipo_processo_id').value;
-    const acto_pretendido = '';
+    acto_pretendido = '';
     if (tipo_processo_id == 3) {
         acto_pretendido = document.getElementById('acto_pretendido').value;
     }
@@ -57,7 +57,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         const email = document.getElementById('email').value;
         const observacao2 = document.getElementById('observacao2').value;
         const tipo_processo_id = document.getElementById('tipo_processo_id').value;
-        const acto_pretendido = '';
+        acto_pretendido = '';
         if (tipo_processo_id == 3) {
             acto_pretendido = document.getElementById('acto_pretendido').value;
         }

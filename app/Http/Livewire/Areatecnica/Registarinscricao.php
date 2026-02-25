@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Areatecnica;
 use App\Http\Controllers\ActividadesistemaController;
 use App\Models\Advogadoatribuido;
 use App\Models\Inscricaoadvogado;
+use App\Models\Municipio;
+use App\Models\Patrono;
 use App\Models\Pedidoassistencia;
 use App\Models\Registoentrada;
 use Illuminate\Support\Str;
@@ -38,6 +40,10 @@ class Registarinscricao extends Component
     public $telefone_advogado;
     public $email_advogado;
 
+    public $municipios = array();
+
+    public $patronos = array();
+
     public function mount($hash)
     {
 
@@ -53,6 +59,12 @@ class Registarinscricao extends Component
     }
     public function render()
     {
+
+        $this->municipios = Municipio::all();
+        $this->patronos = Patrono::all();
+        if ($this->registo->tipo_processo_id == 3) {
+            return view('dashboard.areatecnica.registar-inscricao-estagiario')->extends('layouts-new.app')->section('content');
+        }
         return view('dashboard.areatecnica.registar-inscricao')->extends('layouts-new.app')->section('content');
     }
 
@@ -77,8 +89,7 @@ class Registarinscricao extends Component
             $numero = '';
             if ($this->registo->tipo_processo_id == 2) {
                 $numero = Inscricaoadvogado::where('tipo_processo_id', 2)->whereYear('created_at', now()->year)->count() + 1;
-            }
-            else {
+            } else {
                 $numero = Inscricaoadvogado::where('tipo_processo_id', 3)->whereYear('created_at', now()->year)->count() + 1;
             }
 

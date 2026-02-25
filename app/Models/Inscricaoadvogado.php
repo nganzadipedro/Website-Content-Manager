@@ -39,7 +39,14 @@ class Inscricaoadvogado extends Model
         'numero',
         'numero_cedula',
         'estado_distribuicao',
-        'codigo'
+        'codigo',
+        'nome_patrono',
+        'telefone_patrono',
+        'email_patrono',
+        'nome_escritorio',
+        'endereco_escritorio',
+        'num_bilhete',
+        'municipio_id'
     ];
 
     public function getUser(){

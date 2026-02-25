@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Advogadoatribuido;
 use App\Models\Anexosregisto;
 use App\Models\Denuncia;
+use App\Models\Estagiariospatrono;
 use App\Models\Galeria;
 use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
 use App\Models\Noticia;
+use App\Models\Patrono;
 use App\Models\Pedidointervencao;
 use App\Models\Pessoa;
 use App\Models\Platform\Advogado;
@@ -570,6 +572,71 @@ class SystemController extends Controller
 
     }
 
+    public function registo_patrono_update(Request $request)
+    {
+
+        $patrono = Patrono::find($request->patrono_id);
+        $advogado = null;
+        $pessoa = null;
+
+        if ($patrono->advogado_id != null) {
+            $advogado = Advogado::find($patrono->advogado_id);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+        }
+
+        // verifica se já esxite na bd
+        if ($advogado != null) {
+            $existe = Advogado::where('categoria', 'Advogado')
+                ->where('num_associado', $request->num_associado)
+                ->where('pessoa_id', '!=', $pessoa->id)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        if ($pessoa != null) {
+            $existe = Pessoa::where('num_documento', $request->num_bi)
+                ->where('id', '!=', $pessoa->id)
+                ->first();
+
+            if ($existe) {
+                return 'bilhete';
+            }
+        }
+
+        // actualiza na tabela pessoa;
+        if ($pessoa != null) {
+            $pessoa->nome = mb_strtoupper($request->nome_completo, 'UTF-8');
+            $pessoa->num_documento = $request->num_bi;
+            $pessoa->email = $request->email;
+            $pessoa->telefone1 = $request->telefone1;
+            $pessoa->telefone2 = $request->telefone2;
+            $pessoa->documento = 'Bilhete de Identidade';
+            $pessoa->genero = $request->genero;
+            $pessoa->save();
+        }
+
+        // actualiza na tabela de advogado
+        if ($advogado != null) {
+            $advogado->nome_profissional = mb_strtoupper($request->nome_profissional, 'UTF-8');
+            $advogado->num_associado = $request->num_associado;
+            $advogado->data_inscricao_oaa = $request->data_inscricao_oaa;
+            $advogado->endereco_escritorio = $request->endereco_escritorio;
+            $advogado->estado = 'Registado';
+            $advogado->municipio_id = $request->municipio_id;
+            $advogado->save();
+        }
+
+        // actualiza na tabela patrono
+        $patrono->nome_escritorio = $request->nome_escritorio;
+        $patrono->endereco_escritorio = $request->endereco_escritorio;
+        $patrono->municipio_id = $request->municipio_id;
+        $patrono->save();
+
+        return 'sucesso';
+
+    }
+
     public function data_cerimonia_update(Request $request)
     {
 
@@ -654,20 +721,72 @@ class SystemController extends Controller
             $numero = Inscricaoadvogado::where('tipo_processo_id', 3)->whereYear('created_at', now()->year)->count() + 1;
         }
 
-        $inscricao = Inscricaoadvogado::create([
-            'hash' => Str::uuid(),
-            'numero' => $numero,
-            'codigo' => "$numero/" . now()->year,
-            'observacao' => $request->observacao2,
-            'tipo_processo_id' => $registo->tipo_processo_id,
-            'sexo' => $request->sexo == null ? 'Não Definido' : $request->sexo,
-            'telefone1' => $request->telefone1,
-            'telefone2' => $request->telefone2,
-            'email' => $request->email,
-            'acto_pretendido' => $request->acto_pretendido,
-            'registo_entrada_id' => $registo->id,
-            'user_id' => Auth::user()->id
-        ]);
+        // registo de inscrição para advogados
+        if ($request->tipo_processo_id == 2) {
+
+            $inscricao = Inscricaoadvogado::create([
+                'hash' => Str::uuid(),
+                'numero' => $numero,
+                'codigo' => "$numero/" . now()->year,
+                'observacao' => $request->observacao2,
+                'tipo_processo_id' => $registo->tipo_processo_id,
+                'sexo' => $request->sexo == null ? 'Não Definido' : $request->sexo,
+                'telefone1' => $request->telefone1,
+                'telefone2' => $request->telefone2,
+                'email' => $request->email,
+                'acto_pretendido' => $request->acto_pretendido,
+                'registo_entrada_id' => $registo->id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+
+        // registo de inscrição para advogados estagiários
+        else {
+
+            // avaliação da situação de novos patronos
+
+            if ($request->patrono_id != null && $request->patrono_id != '') {
+
+
+
+            } else {
+
+                $patrono = Patrono::create([
+                    'hash' => Str::uuid(),
+                    'nome' => $request->nome_patrono,
+                    'telefone' => $request->tel_patrono,
+                    'email' => $request->email_patrono,
+                    'nome_escritorio' => $request->nome_escritorio,
+                    'endereco_escritorio' => $request->endereco_escritorio,
+                    'municipio_id' => $request->municipio_id,
+                    'user_id' => Auth::user()->id
+                ]);
+
+            }
+
+            $inscricao = Inscricaoadvogado::create([
+                'hash' => Str::uuid(),
+                'numero' => $numero,
+                'codigo' => "$numero/" . now()->year,
+                'observacao' => $request->observacao,
+                'tipo_processo_id' => $registo->tipo_processo_id,
+                'sexo' => $request->genero == null ? 'Não Definido' : $request->genero,
+                'telefone1' => $request->telefone1,
+                'telefone2' => $request->telefone2,
+                'email' => $request->email,
+                'acto_pretendido' => $request->acto_pretendido,
+                'registo_entrada_id' => $registo->id,
+                'nome_patrono' => $request->nome_patrono,
+                'telefone_patrono' => $request->tel_patrono,
+                'email_patrono' => $request->email_patrono,
+                'nome_escritorio' => $request->nome_escritorio,
+                'endereco_escritorio' => $request->endereco_escritorio,
+                'municipio_id' => $request->municipio_id,
+                'num_bilhete' => $request->num_bilhete,
+                'user_id' => Auth::user()->id
+            ]);
+
+        }
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
@@ -792,6 +911,12 @@ class SystemController extends Controller
     {
         $advogado = Advogado::with(['getpessoa', 'getmunicipio'])->findOrFail($id);
         return response()->json($advogado);
+    }
+
+    public function getPatronoById($id)
+    {
+        $patrono = Patrono::with(['getadvogado', 'getmunicipio'])->findOrFail($id);
+        return response()->json($patrono);
     }
 
     public function documento_despacho($hash_inscricao)
@@ -962,6 +1087,127 @@ class SystemController extends Controller
             $registo->codigo = "$numero/" . now()->year;
             $registo->created_at = $dado->data_bd != null ? $dado->data_bd : '2026-01-12 12:00:00';
             $registo->save();
+
+        }
+    }
+
+    public function trata_patronos()
+    {
+
+        dd('stop');
+        $dados = DB::select('select * from patronos_old where feito = 0');
+
+        foreach ($dados as $dado) {
+
+            set_time_limit(0);
+            date_default_timezone_set("Africa/Luanda");
+
+            if ($dado->nome_patrono != null && $dado->nome_patrono != '' && $dado->nome_patrono != '??') {
+
+                // pega todas linhas deste patrono
+                $linhas_patrono = DB::select("select * from patronos_old where nome_patrono = '$dado->nome_patrono'");
+                $contador = 0;
+
+                // dd($linhas_patrono);
+
+                foreach ($linhas_patrono as $linha) {
+
+                    if ($linha->feito == 0) {
+
+                        if ($contador == 0) {
+                            // cadastra patrono
+                            $advogado_id = null;
+                            $existe = Pessoa::where('nome', $linha->nome_patrono)->first();
+                            if ($existe != null) {
+                                $advogado = Advogado::where('pessoa_id', $existe->id)->first();
+                                if ($advogado) {
+                                    $advogado_id = $advogado->id;
+                                }
+                            }
+
+                            $patrono = Patrono::create([
+                                'nome' => $advogado_id == null ? $dado->nome_patrono : null,
+                                'hash' => Str::uuid(),
+                                'advogado_id' => $advogado_id,
+                                'user_id' => 1
+                            ]);
+
+                            echo "Patrono: $patrono->id - $patrono->nome <br><br>";
+                        }
+
+                        // verifica se o estagiario dele já existe
+
+                        if ($linha->nome_advogado_estagiario != null && $linha->nome_advogado_estagiario != '' && $linha->nome_advogado_estagiario != '??') {
+
+                            $estagiario_id = null;
+                            $existe = null;
+                            $estado = 'frequenta';
+
+                            $existe = Pessoa::where('nome', $linha->nome_advogado_estagiario)->first();
+                            if ($existe != null) {
+                                $advogado = Advogado::where('pessoa_id', $existe->id)->first();
+                                if ($advogado != null) {
+                                    $estagiario_id = $advogado->id;
+                                    if ($advogado->num_associado != null) {
+                                        $estado = 'terminado';
+                                    }
+                                }
+                            }
+
+                            $est_patrono = Estagiariospatrono::create([
+                                'estagiario_id' => $estagiario_id,
+                                'nome_estagiario' => $estagiario_id == null ? $linha->nome_advogado_estagiario : null,
+                                'patrono_id' => $patrono->id,
+                                'estado' => $estado,
+                                'user_id' => 1
+                            ]);
+                        }
+
+                        DB::update("update patronos_old set feito = 1 where id = $linha->id");
+                    }
+
+                    $contador++;
+                }
+
+            }
+
+        }
+    }
+
+    public function trata_patronos_2()
+    {
+
+        $dados = Patrono::whereNull('advogado_id')->get();
+
+        foreach ($dados as $dado) {
+
+            set_time_limit(0);
+            date_default_timezone_set("Africa/Luanda");
+
+            // cadastra pessoa
+            $pessoa = Pessoa::create([
+                'nome' => mb_strtoupper($dado->nome, 'UTF-8'),
+                'documento' => 'Bilhete de Identidade'
+            ]);
+
+            $conta = Advogado::count() + 1;
+
+            // cadastra advogado
+            $advogado = Advogado::create([
+                'pessoa_id' => $pessoa->id,
+                'categoria' => 'Advogado',
+                'nome_profissional' => mb_strtoupper($dado->nome, 'UTF-8'),
+                'codigo' => "CPL$conta",
+                'hash' => Str::uuid(),
+                'estado' => 'Registado'
+            ]);
+
+            // actualiza patrono
+            $dado->advogado_id = $advogado->id;
+            $dado->nome = null;
+            $dado->save();
+
+            echo "Patrono: $dado->id - $dado->nome <br><br>";
 
         }
     }
