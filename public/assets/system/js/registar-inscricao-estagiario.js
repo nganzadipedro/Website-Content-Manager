@@ -57,6 +57,31 @@ $(document).on('click', '.btn-adicionar', function () {
 
             $("#nome_patrono").prop("disabled", true);
 
+            fetch(`/system/getEstagiariosPatrono/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na requisição');
+                    }
+                    return response.json();
+                })
+                .then(dados => {
+
+                    console.log('Resposta do servidor:', dados);
+                    contador = 0;
+                    dados.forEach(item => {
+                        if (item.estado == 'frequenta') {
+                            contador += 1;
+                        }
+                    });
+
+                    $("#num_estagiarios").val(contador);
+                    $("#num_estagiarios").prop("disabled", true);
+
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+
 
         })
         .catch(error => {
@@ -79,6 +104,8 @@ $(document).on('click', '#btn-novo-patrono', function () {
     $("#nome_patrono").val("");
     $("#nome_patrono").prop("disabled", false);
     $("#patrono_id").val("");
+    $("#num_estagiarios").val("");
+    $("#num_estagiarios").prop("disabled", true);
 
 });
 
@@ -95,6 +122,7 @@ function valida_formulario() {
     const email = document.getElementById('email').value;
     const acto_pretendido = document.getElementById('acto_pretendido').value;
     const nome_patrono = document.getElementById('nome_patrono').value;
+    const num_cedula_patrono = document.getElementById('num_cedula_patrono').value;
     const tel_patrono = document.getElementById('tel_patrono').value;
     const email_patrono = document.getElementById('email_patrono').value;
     const nome_escritorio = document.getElementById('nome_escritorio').value;
@@ -147,6 +175,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         const email = document.getElementById('email').value;
         const acto_pretendido = document.getElementById('acto_pretendido').value;
         const nome_patrono = document.getElementById('nome_patrono').value;
+        const num_cedula_patrono = document.getElementById('num_cedula_patrono').value;
         const tel_patrono = document.getElementById('tel_patrono').value;
         const email_patrono = document.getElementById('email_patrono').value;
         const nome_escritorio = document.getElementById('nome_escritorio').value;
@@ -164,6 +193,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         formData.append('email', email);
         formData.append('acto_pretendido', acto_pretendido);
         formData.append('nome_patrono', nome_patrono);
+        formData.append('num_cedula_patrono', num_cedula_patrono);
         formData.append('tel_patrono', tel_patrono);
         formData.append('email_patrono', email_patrono);
         formData.append('nome_escritorio', nome_escritorio);

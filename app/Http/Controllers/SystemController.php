@@ -664,6 +664,20 @@ class SystemController extends Controller
         return 'sucesso';
     }
 
+    public function estagiario_patrono_delete(Request $request)
+    {
+
+        $registo = Estagiariospatrono::find($request->id);
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Exclusão de um advogado estagiário na lista de um patrono", 'geral', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Eliminou um advogado estagiário na lista de um patrono", 'user', auth()->user()->id);
+
+        $registo->delete();
+        return 'sucesso';
+
+    }
+
     public function atribuir_advogado_post(Request $request)
     {
 
@@ -743,24 +757,91 @@ class SystemController extends Controller
         // registo de inscrição para advogados estagiários
         else {
 
-            // avaliação da situação de novos patronos
+            $patrono_id = null;
 
+            // avaliação da situação de patronos existentes
             if ($request->patrono_id != null && $request->patrono_id != '') {
 
+                $patrono_id = $request->patrono_id;
+                $patrono = Patrono::find($patrono_id);
+                $advogado = Advogado::find($patrono->advogado_id);
+                $pessoa = Pessoa::find($advogado->pessoa_id);
 
+                // faz validações
+                if ($request->num_cedula_patrono != null && $request->num_cedula_patrono != '') {
+                    $existe = null;
+                    $existe = Advogado::where('categoria', 'Advogado')
+                        ->where('num_associado', $request->num_cedula_patrono)
+                        ->where('pessoa_id', '!=', $pessoa->id)->first();
 
-            } else {
+                    if ($existe) {
+                        return 'duplicado';
+                    }
 
-                $patrono = Patrono::create([
-                    'hash' => Str::uuid(),
-                    'nome' => $request->nome_patrono,
-                    'telefone' => $request->tel_patrono,
+                    $advogado->num_cedula = $request->num_cedula_patrono;
+                    $advogado->save();
+                }
+
+                if ($request->tel_patrono != null && $request->tel_patrono != '') {
+                    $pessoa->telefone1 = $request->tel_patrono;
+                    $pessoa->save();
+                }
+
+                if ($request->email_patrono != null && $request->email_patrono != '') {
+                    $pessoa->email = $request->email_patrono;
+                    $pessoa->save();
+                }
+
+                if ($request->nome_escritorio != null && $request->nome_escritorio != '') {
+                    $advogado->nome_escritorio = $request->nome_escritorio;
+                    $advogado->save();
+                }
+
+                if ($request->endereco_escritorio != null && $request->endereco_escritorio != '') {
+                    $advogado->endereco_escritorio = $request->endereco_escritorio;
+                    $advogado->save();
+                }
+
+                if ($request->municipio_id != null && $request->municipio_id != '') {
+                    $advogado->municipio_id = $request->municipio_id;
+                    $advogado->save();
+                }
+
+            }
+            // avaliação da situação de novos patronos
+            else {
+
+                // cadastra pessoa
+                $pessoa = Pessoa::create([
+                    'nome' => mb_strtoupper($request->nome_patrono, 'UTF-8'),
                     'email' => $request->email_patrono,
-                    'nome_escritorio' => $request->nome_escritorio,
+                    'telefone1' => $request->tel_patrono,
+                    'documento' => 'Bilhete de Identidade',
+                ]);
+
+                // cadastra advogado
+                $advogado = Advogado::create([
+                    'categoria' => 'Advogado',
+                    'nome_profissional' => $pessoa->nome,
+                    'num_associado' => $request->num_cedula_patrono,
+                    'pessoa_id' => $pessoa->id,
+                    'codigo' => 'CPL$numero',
+                    'hash' => Str::uuid(),
                     'endereco_escritorio' => $request->endereco_escritorio,
                     'municipio_id' => $request->municipio_id,
+                    'nome_escritorio' => $request->nome_escritorio,
+                    'estado' => 'Registado',
                     'user_id' => Auth::user()->id
                 ]);
+
+                // cadastra patrono
+                $patrono = Patrono::create([
+                    'hash' => Str::uuid(),
+                    'advogado_id' => $advogado->id,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $patrono_id = $patrono->id;
 
             }
 
@@ -776,15 +857,27 @@ class SystemController extends Controller
                 'email' => $request->email,
                 'acto_pretendido' => $request->acto_pretendido,
                 'registo_entrada_id' => $registo->id,
-                'nome_patrono' => $request->nome_patrono,
-                'telefone_patrono' => $request->tel_patrono,
-                'email_patrono' => $request->email_patrono,
-                'nome_escritorio' => $request->nome_escritorio,
-                'endereco_escritorio' => $request->endereco_escritorio,
-                'municipio_id' => $request->municipio_id,
+                'patrono_id' => $patrono_id,
                 'num_bilhete' => $request->num_bilhete,
                 'user_id' => Auth::user()->id
             ]);
+
+            // envia notificacao ao requerente
+            if ($request->observacao != null && $request->observacao != '') {
+
+                $ob = new MailController();
+                $obmsg = new OmbalaController();
+                $nome = $registo->proveniencia;
+
+                try {
+                    $obmsg->enviarMensagem($inscricao->telefone1, $request->observacao);
+                    if ($request->email != null && $request->email != '') {
+                        $ob->mailNotificacao($request->email, $nome, $request->observacao);
+                    }
+                } catch (\Throwable $th) {
+
+                }
+            }
 
         }
 
@@ -918,6 +1011,55 @@ class SystemController extends Controller
         $patrono = Patrono::with(['getadvogado', 'getmunicipio'])->findOrFail($id);
         return response()->json($patrono);
     }
+
+    public function getEstagiariosPatrono($id)
+    {
+        $estagiarios = Estagiariospatrono::with(['getpatrono', 'getestagiario', 'getinscricao'])
+            ->where('patrono_id', $id)->get();
+        return response()->json($estagiarios);
+    }
+
+    public function getLinhaEstagiariosPatrono($id)
+    {
+        $estagiarios = Estagiariospatrono::find($id);
+
+        $nome = '';
+        $cedula = '';
+        $categoria = '';
+        $estado = '';
+
+
+        if ($estagiarios->estagiario_id != null) {
+            $nome = $estagiarios->getestagiario->getpessoa->nome;
+            $categoria = $estagiarios->getestagiario->categoria;
+            $cedula = $estagiarios->getestagiario->num_estagiario;
+            if ($categoria == 'Advogado') {
+                $cedula = $estagiarios->getestagiario->num_associado;
+            }
+            $estado = $estagiarios->estado;
+        } else if ($estagiarios->inscricao_advogado_id != null) {
+            $nome = $estagiarios->getinscricao->getregistoentrada->proveniencia;
+            $categoria = 'Estagiario';
+            $cedula = '----';
+            $estado = $estagiarios->estado;
+        } else {
+            $nome = $estagiarios->nome_estagiario;
+            $categoria = 'Estagiario';
+            $cedula = '----';
+            $estado = $estagiarios->estado;
+        }
+
+        return [
+            'nome' => $nome,
+            'categoria' => $categoria,
+            'cedula' => $cedula,
+            'estado' => $estado
+        ];
+
+
+
+    }
+
 
     public function documento_despacho($hash_inscricao)
     {
@@ -1211,4 +1353,60 @@ class SystemController extends Controller
 
         }
     }
+
+    public function trata_patronos_3()
+    {
+
+        $dados = Estagiariospatrono::where('estado', 'terminado')->get();
+
+        $conta = 0;
+        foreach ($dados as $dado) {
+
+            $res = Advogado::find($dado->estagiario_id);
+            if ($res->categoria == 'Estagiario') {
+                if ($res->num_associado == '' || $res->num_associado == null || $res->num_associado == 'NULL') {
+                    $dado->estado = 'frequenta';
+                    $dado->save();
+                    echo $res->getpessoa->nome . '<br><br>';
+                }
+            } else if ($res->categoria == 'Advogado') {
+                if ($res->num_associado == '' || $res->num_associado == null || $res->num_associado == 'NULL') {
+                    $dado->estado = 'frequenta';
+                    $dado->save();
+                    echo $res->getpessoa->nome . '<br><br>';
+                }
+            }
+
+            $conta++;
+
+        }
+    }
+
+    public function trata_advogados_especificar()
+    {
+
+        $dados = Advogado::where('categoria', 'Por especificar')->get();
+        $conta = 0;
+
+        foreach ($dados as $dado) {
+
+            if ($dado->num_estagiario != '' && $dado->num_estagiario != null && $dado->num_estagiario != 'NULL') {
+                $dado->categoria = 'Estagiario';
+                $dado->save();
+                echo $conta . ' Estagiario <br><br>';
+            }
+
+            if ($dado->num_associado != '' && $dado->num_associado != null && $dado->num_associado != 'NULL') {
+                $dado->categoria = 'Advogado';
+                $dado->save();
+                echo $conta . ' Advogado <br><br>';
+            }
+
+
+
+            $conta++;
+
+        }
+    }
+
 }

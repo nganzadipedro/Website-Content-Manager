@@ -94,7 +94,22 @@
                 <div class="modal-body">
 
                     <div class="row"">
-                        <div class=" alert alert-primary" id="dv-detalhes">
+
+                    <div class="table-responsive">
+                            <table id="myTable2" class="table card-table table-vcenter text-nowrap datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Nº Cédula</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-dados">
+                                   
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>
@@ -102,11 +117,11 @@
         </div>
     </div>
 </div>
-</div>
+
 
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
-    <script src="{{ asset('assets/system/js/lista-patronos.js') }}"></script>
+    <script src="{{ asset('assets/system/js/listar-patronos.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();

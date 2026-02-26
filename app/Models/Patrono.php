@@ -18,6 +18,7 @@ class Patrono extends Model
         'hash',
         'advogado_id',
         'nome',
+        'num_cedula',
         'telefone',
         'email',
         'nome_escritorio',

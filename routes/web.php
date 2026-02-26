@@ -38,7 +38,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
-    Route::get('/trata-dados', 'Controllers\SystemController@trata_patronos_2');
+    Route::get('/trata-dados', 'Controllers\SystemController@trata_patronos_3');
     Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
     Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
+    Route::post('system/estagiario-patrono/delete', 'Controllers\SystemController@estagiario_patrono_delete');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
     Route::post('system/atribuir-advogado/post', 'Controllers\SystemController@atribuir_advogado_post');
     Route::post('system/atribuir-advogado/delete', 'Controllers\SystemController@atribuir_advogado_delete');
@@ -93,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');
     Route::get('system/getAdvogadoById/{id}', 'Controllers\SystemController@getAdvogadoById');
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');
+    Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
+    Route::get('system/getLinhaEstagiariosPatrono/{id}', 'Controllers\SystemController@getLinhaEstagiariosPatrono');
 
     Route::prefix('system')->name('system.')->group(function () {
 

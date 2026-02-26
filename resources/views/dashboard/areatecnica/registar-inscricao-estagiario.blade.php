@@ -155,11 +155,22 @@
                                             </div>
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
+                                                    <label for="num_cedula_patrono">Nº Cédula</label>
+                                                    <input type="text" class="form-control" maxlength="9"
+                                                        id="num_cedula_patrono" name="num_cedula_patrono">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
                                                     <label for="tel_patrono">Telefone do patrono</label>
                                                     <input type="text" class="form-control" maxlength="9"
                                                         id="tel_patrono" name="tel_patrono">
                                                 </div>
                                             </div>
+
+                                        </div>
+
+                                        <div class="row mt-3">
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="email_patrono">Email do patrono</label>
@@ -167,9 +178,6 @@
                                                         id="email_patrono" name="email_patrono">
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row mt-3">
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="nome_escritorio">Nome do Escritório</label>
@@ -184,6 +192,11 @@
                                                         id="endereco_escritorio_est" name="endereco_escritorio_est">
                                                 </div>
                                             </div>
+
+                                        </div>
+
+
+                                        <div class="row mt-4">
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="municipio_id_est">Município</label>
@@ -196,21 +209,21 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
-
-
-                                        <div class="row mt-4">
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" maxlength="255" name="observacao2"
+                                                    <input type="text" maxlength="200" name="observacao2"
                                                         class="form-control" id="observacao2" value="">
                                                 </div>
                                             </div>
+                                            <div class="col-lg-2 col-12 col-md-2 col-sm-12 col-xl-3">
+                                                <div class="form-group">
+                                                    <label for="num_estagiarios">Nº Estagiários</label>
+                                                    <input type="text" maxlength="10" disabled name="num_estagiarios"
+                                                        class="form-control" id="num_estagiarios" value="">
+                                                </div>
+                                            </div>
                                         </div>
-
-
-
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
                                                 <a id="btn-registar-inscricao" class="btn btn-success mt-4">Salvar</a>

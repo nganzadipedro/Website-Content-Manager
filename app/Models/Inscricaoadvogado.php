@@ -45,7 +45,9 @@ class Inscricaoadvogado extends Model
         'email_patrono',
         'nome_escritorio',
         'endereco_escritorio',
+        'cedula_patrono',
         'num_bilhete',
+        'patrono_id',
         'municipio_id'
     ];
 

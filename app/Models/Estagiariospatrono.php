@@ -17,6 +17,7 @@ class Estagiariospatrono extends Model
     protected $fillable = [
         'estagiario_id',
         'nome_estagiario',
+        'inscricao_advogado_id',
         'patrono_id',
         'estado',
         'user_id'
@@ -30,8 +31,12 @@ class Estagiariospatrono extends Model
         return $this->belongsTo(Patrono::class, 'patrono_id', 'id');
     }
 
-    public function getadvogado(){
-        return $this->belongsTo(Advogado::class, 'advogado_id', 'id');
+    public function getestagiario(){
+        return $this->belongsTo(Advogado::class, 'estagiario_id', 'id');
+    }
+
+    public function getinscricao(){
+        return $this->belongsTo(Inscricaoadvogado::class, 'inscricao_advogado_id', 'id');
     }
 
 }
