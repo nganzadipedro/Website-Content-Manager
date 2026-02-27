@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Pauta</title>
+    <title>Lista Remessa Conselho Nacional</title>
 </head>
 
 <body>
@@ -84,57 +84,31 @@
         <img id="img_1" src="https://enoaa.cef-oaa.org/images/logo_oaa_cor.png" alt="" width="100px" height="100px">
     </div>
     <div class="cabecalho">
-        <h5>Centro de Estudos e Formação da Ordem dos Advogados de Angola</h5>
-        <h4>MINI PAUTA<br> {{ $disciplina->descricao }} <br>
-            {{ $turma->getFormacao->nome }} | {{ $turma->descricao }}
+        <h5>Conselho Provincial de Luanda - OAA</h5>
+        <h4>Lista de Candidatos a Advogados Estagiários<br>
+            Data de Remessa ao CN: _____/_____/_______ | Nº de Candidatos: {{ $num_candidatos }}
         </h4>
-        <h5>Nº Formandos: {{ count($alunos) }} | Aprovados: {{ $aprovados }} | Reprovados: {{ count($alunos) - $aprovados }}</h5>
     </div>
 
     <div class="entradas">
-
-        @if ($avaliacoes != null)
 
             <table class="content-table">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Código</th>
-                        <th>Nome Completo</th>
-                        <th>Nota1</th>
-                        <th>Nota2</th>
-                        <th>Nota Final</th>
+                        <th>Data de Entrada</th>
+                        <th>Requerente</th>
+                        <th>Contactos</th>
+                        <th>Observação</th>
                     </tr>
                 </thead>
-                @foreach ($alunos as $item)
+                @foreach ($inscricoes as $item)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $item->getAluno->codigo }}</td>
-                        <td>{{ $item->getAluno->getPessoa->nome }}</td>
-
-                        @php
-                        
-                        $avaliacao = \App\Models\Fio\Avaliacaoaluno::where('aluno_id', $item->aluno_id)
-                        ->where('turma_id', $item->turma_id)
-                        ->where('disciplina_id', $disciplina->id)
-                        ->first();
-
-                        if($avaliacao != null){
-                        $nota1 = $avaliacao->nota1;
-                        $nota2 = $avaliacao->nota2;
-                        $notafinal = $avaliacao->notafinal;
-                        }
-                        else{
-                        $nota1 = 0;
-                        $nota2 = 0;
-                        $notafinal = 0;
-                        }
-
-                        @endphp
-
-                        <td><span class="{{ $nota1 >= 9.5 ? 'apto' : 'napto' }}">{{ $nota1 }}</span></td>
-                        <td><span class="{{ $nota2 >= 9.5 ? 'apto' : 'napto' }}">{{ $nota2 }}</span></td>
-                        <td><span class="{{ $notafinal >= 9.5 ? 'apto' : 'napto' }}">{{ $notafinal }}</span></td>
+                        <td>{{ $item->getregistoentrada->data_entrada }}</td>
+                        <td>{{ strtoupper($item->getregistoentrada->proveniencia) }}</td>
+                        <td>{{ $item->telefone1 }}/{{ $item->telefone2 }}</td>
+                        <td></td>
                     </tr>
                 @endforeach
             </table>
@@ -143,11 +117,9 @@
             <br>
             <div class="rodape">
                 Luanda, {{$data[0]}} de {{$data[1]}} de {{$data[2]}} <br><br><br>
-                O(A) Formador(a) <br>
-                {{ $professor->getPessoa->nome }}
+                Entregue por <br>
+                _____________________________________
             </div>
-
-        @endif
 
     </div>
 

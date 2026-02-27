@@ -10,8 +10,32 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Inscrições Para Advogados Estagiários Registados</h3>
-                            <a id="btn-remeter-cn" class="btn btn-primary">Remeter ao Conselho Nacional</a>
+                            <h3 class="h1">Inscrições Para Advogados Estagiários Remetidos ao Conselho Nacional</h3>
+                            <a href="{{ route('system.areatecnica.export_remessa_cn') }}" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                                    <path d="M8 11h8v7h-8l0 -7" />
+                                    <path d="M8 15h8" />
+                                    <path d="M11 11v7" />
+                                </svg>Exportar em Excel</a>
+                            <a target="_blank" href="{{ route('system.areatecnica.exportpdf_remessa_cn') }}" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+                                    <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+                                    <path d="M17 18h2" />
+                                    <path d="M20 15h-3v6" />
+                                    <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
+                                </svg>Exportar em PDF</a>
                         </div>
                     </div>
                 </div>
@@ -30,13 +54,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>
-                                            <input type="checkbox" id="checkAll">
-                                        </th>
                                         <th>Nº Processo</th>
+                                        <th>Data Entrada</th>
                                         <th>Requerente</th>
-                                        <th>Despacho</th>
-                                        <th>Tipo de Processo</th>
+                                        <th>Contactos</th>
+                                        <th>Data de Remessa ao CN</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -46,16 +68,11 @@
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>
-                                                @if ($item->despacho == 'Deferido')
-                                                    <input type="checkbox" class="checkItem" value="{{$item->id}}">
-                                                @endif
-
-                                            </td>
                                             <td>{{$item->codigo}}</td>
+                                            <td>{{$item->getregistoentrada->data_entrada}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
-                                            <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
-                                            <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
+                                            <td>{{$item->telefone1}}/{{$item->telefone2}}</td>
+                                            <td>{{$item->data_remessa_cn}}</td>
                                             <td>
                                                 <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
                                                     class="badge bg-green-lt">
@@ -70,6 +87,8 @@
                                                         <path d="M19 16v6" />
                                                     </svg>
                                                 </a>
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregistoentrada->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -84,24 +103,6 @@
                                                         <path d="M11 9h-4" />
                                                     </svg>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                @if ($item->despacho == 'Deferido')
-                                                    <a style="cursor:pointer;" class="badge bg-yellow-lt mudar-despacho"
-                                                        data-nome="{{ $item->getregistoentrada->proveniencia }}"
-                                                        title="Mudar Para Indeferido" data-id="{{ $item->id }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 9v4" />
-                                                            <path
-                                                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
-                                                            <path d="M12 16h.01" />
-                                                        </svg>
-                                                    </a>
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -126,76 +127,35 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <div class="row"">
-                        <div class=" col-md-12 col-lg-12 col-12 col-xs-12">
+                         <div class=" col-md-12 col-lg-12 col-12 col-xs-12">
                         <label for="data_remessa_cn" class="form-label">Data de Remessa ao CN</label>
                         <input type="date" class="form-control" name="data_remessa_cn" id="data_remessa_cn">
                     </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12 col-12">
+                            <a id="btn-registar-remessa-cn" class="btn btn-success mt-4">Salvar</a>
+                            <a id="btn-cancelar" class="btn btn-danger mt-4">Cancelar</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col-lg-12 col-12">
-                    <a id="btn-registar-remessa-cn" class="btn btn-success mt-4">Salvar</a>
-                    <a id="btn-cancelar" class="btn btn-danger mt-4">Cancelar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal modal-blur fade" id="modal-alterar-despacho" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Alterar o despacho para Indeferido</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
 
-                <input type="hidden" id="inscricao_id" value="">
-
-                <div class="row">
-                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                        <label for="nome_requerente" class="form-label">Nome do Candidato/Requerente</label>
-                        <input type="text" class="form-control" disabled name="nome_requerente" id="nome_requerente">
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                        <label for="data_despacho" class="form-label">Data do Despacho</label>
-                        <input type="date" class="form-control" name="data_despacho" id="data_despacho">
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                        <label for="texto_despacho" class="form-label">Mensagem do Despacho</label>
-                        <input type="text" class="form-control" name="texto_despacho" id="texto_despacho">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-lg-12 col-12">
-                        <a id="btn-alterar-despacho" class="btn btn-success mt-4">Salvar</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
 </div>
-
-
-
 @section('script-aux')
     <script src=" {{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}">
     </script>
-    <script src="{{ asset('assets/system/js/advest-registados.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
                 paging: false, // Desabilita a paginação
-                searching: true, // Habilita a barra de pesquisa
-                ordering: false
+                searching: true // Habilita a barra de pesquisa
             });
         });
     </script>

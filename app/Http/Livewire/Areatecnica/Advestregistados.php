@@ -9,7 +9,9 @@ class Advestregistados extends Component
 {
     public function render()
     {
-        $this->lista = Inscricaoadvogado::where('tipo_processo_id', 3)->orderBy('id', 'desc')->get();
+        $this->lista = Inscricaoadvogado::where('tipo_processo_id', 3)
+        ->whereNull('data_remessa_cn')
+        ->orderBy('id', 'desc')->get();
         return view('dashboard.areatecnica.advest-registados')->extends('layouts-new.app')->section('content');
     }
 }

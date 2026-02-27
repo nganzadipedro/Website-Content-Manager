@@ -43,7 +43,7 @@
                                             <td>{{$item->id}}</td>
                                             <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome }}</td>
                                             <td>{{$item->advogado_id == null ? '' : $item->getadvogado->num_associado }}</td>
-                                            <td>{{$item->nome_escritorio }}</td>
+                                            <td>{{$item->getadvogado->municipio_id != null ? $item->getadvogado->getmunicipio->descricao . ',' : '' }} {{$item->getadvogado->endereco_escritorio }}</td>
                                             <td>
                                                 <a title="Editar" class="badge bg-yellow-lt"
                                                     href="{{ route('system.areatecnica.edit_patrono', $item->hash) }}">

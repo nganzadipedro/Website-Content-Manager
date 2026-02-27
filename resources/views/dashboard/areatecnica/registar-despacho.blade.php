@@ -56,6 +56,7 @@
                                                         Data de Entrada: {{ $registo->data_entrada }}<br>
                                                         Data de Registo na Secretaria: {{ $registo->created_at }}<br>
                                                         Tipo de Processo: {{ $registo->gettipoprocesso->descricao }}<br>
+                                                        Observação: {{ $inscricao_advogado->texto_despacho }}<br>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xl-6 col-12">

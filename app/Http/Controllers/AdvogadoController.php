@@ -6,8 +6,10 @@ use App\Exports\Listaaguardacerimoniaexport;
 use App\Exports\Listaindefinidosexport;
 use App\Exports\Listaestagiariosexport;
 use App\Exports\Listaadvogadosexport;
+use App\Exports\Listaremessacnexport;
 use App\Models\Denuncia;
 use App\Models\Galeria;
+use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Pessoa;
@@ -16,6 +18,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use \PDF;
 
 class AdvogadoController extends Controller
 {
@@ -115,5 +118,55 @@ class AdvogadoController extends Controller
         $nome_file = 'lista_aguardando_cerimonia';
         return Excel::download(new Listaaguardacerimoniaexport(), $nome_file . '.xlsx');
     }
+
+    public function export_remessa_cn()
+    {
+        $nome_file = 'lista_inscricoes_estagiarios_remetidos_cn';
+        return Excel::download(new Listaremessacnexport(), $nome_file . '.xlsx');
+    }
+
+    public function lista_estagiarios_remessacn()
+    {
+
+        $result = Inscricaoadvogado::query()
+            ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
+            ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->whereNotNull('inscricao_advogado.data_remessa_cn')
+            ->orderBy('registo_entrada.proveniencia', 'asc')
+            ->select('inscricao_advogado.*')
+            ->get();
+
+        $num_candidatos = count($result);
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.lista-remessa-cn', [
+            'inscricoes' => $result,
+            'num_candidatos' => $num_candidatos,
+            'data' => $data_emissao
+        ]);
+
+        return $pdf->stream();
+
+    }
+
 
 }

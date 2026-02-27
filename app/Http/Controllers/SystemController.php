@@ -778,7 +778,7 @@ class SystemController extends Controller
                         return 'duplicado';
                     }
 
-                    $advogado->num_cedula = $request->num_cedula_patrono;
+                    $advogado->num_associado = $request->num_cedula_patrono;
                     $advogado->save();
                 }
 
@@ -845,16 +845,21 @@ class SystemController extends Controller
 
             }
 
+            $dataHoje = date('Y-m-d');
+
             $inscricao = Inscricaoadvogado::create([
                 'hash' => Str::uuid(),
                 'numero' => $numero,
                 'codigo' => "$numero/" . now()->year,
                 'observacao' => $request->observacao,
+                'texto_despacho' => $request->observacao,
                 'tipo_processo_id' => $registo->tipo_processo_id,
                 'sexo' => $request->genero == null ? 'Não Definido' : $request->genero,
                 'telefone1' => $request->telefone1,
                 'telefone2' => $request->telefone2,
                 'email' => $request->email,
+                'despacho' => 'Deferido',
+                'data_despacho' => $dataHoje,
                 'acto_pretendido' => $request->acto_pretendido,
                 'registo_entrada_id' => $registo->id,
                 'patrono_id' => $patrono_id,
@@ -862,8 +867,18 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
+            $est_patrono = Estagiariospatrono::create([
+                'patrono_id' => $patrono_id,
+                'inscricao_advogado_id' => $inscricao->id,
+                'estado' => 'frequenta',
+                'user_id' => Auth::user()->id
+            ]);
+
             // envia notificacao ao requerente
             if ($request->observacao != null && $request->observacao != '') {
+
+                $inscricao->despacho = 'Indeferido';
+                $inscricao->save();
 
                 $ob = new MailController();
                 $obmsg = new OmbalaController();
@@ -888,6 +903,76 @@ class SystemController extends Controller
 
     }
 
+    public function registo_remetercn_update(Request $request)
+    {
+
+        $selecionados = $request->selecionados;
+        // dd($request->all());
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'deferido';
+            $registo->save();
+            $inscricao_adv->despacho = 'Deferido';
+            $inscricao_adv->data_remessa_cn = $request->data_remessa_cn;
+            $inscricao_adv->save();
+
+            // notifica o advogado por SMS
+            $obmsg = new OmbalaController();
+            $telefone = $registo->telefone;
+            $mensagem = "Caríssimo(a), o seu processo de inscrição já foi remetido ao Conselho Nacional";
+
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+            } catch (\Throwable $th) {
+
+            }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional pela área técnica.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa ao conselho nacional do processo de inscrição ($inscricao_adv->codigo)", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+
+    }
+
+    public function registo_mudarindeferido_update(Request $request)
+    {
+
+        $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
+        $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+        $registo->estado = 'em tratamento';
+        $registo->save();
+
+        $inscricao_adv->despacho = 'Indeferido';
+        $inscricao_adv->data_despacho = $request->data_despacho;
+        $inscricao_adv->observacao = $request->mensagem_despacho;
+        $inscricao_adv->texto_despacho = $request->mensagem_despacho;
+        $inscricao_adv->save();
+
+        // notifica o advogado por SMS
+        $obmsg = new OmbalaController();
+        $telefone = $registo->telefone;
+        $mensagem = $inscricao_adv->texto_despacho;
+
+        try {
+            $obmsg->enviarMensagem($telefone, $mensagem);
+        } catch (\Throwable $th) {
+
+        }
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
+
+        return 'sucesso';
+
+    }
     public function registo_despacho_post(Request $request)
     {
 

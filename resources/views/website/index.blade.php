@@ -358,7 +358,7 @@
                         <div class="slider-container">
                             <div class="slider-track">
                                 <div class="brand-logo">
-                                    <img src="https://www.logoai.com/oss/icons/2021/10/27/MuCSnBxFpOQg2Kl.png"
+                                    <img src="{{ asset('images/verticallogo.png') }}"
                                         alt="Brand 1">
                                 </div>
                                 <div class="brand-logo">

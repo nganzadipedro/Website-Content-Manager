@@ -496,7 +496,7 @@
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_advogados_cn') }}">
-                                            Lista CN
+                                            Remetidos ao CN
                                         </a>
                                     </div>
                                 </div>
@@ -533,6 +533,10 @@
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_estagiarios_registados') }}">
                                             Registados
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.list_est_remetidos_cn') }}">
+                                            Remetidos ao CN
                                         </a>
                                     </div>
                                 </div>

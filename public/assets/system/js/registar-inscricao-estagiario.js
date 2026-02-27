@@ -35,8 +35,17 @@ $(document).on('click', '.btn-adicionar', function () {
                     .then(data2 => {
 
                         console.log('Resposta do servidor:', data2);
-                        nome2 = data2.getpessoa.nome;
-                        $("#nome_patrono").val(nome2);
+                        ;
+                        $("#nome_patrono").val(data2.getpessoa.nome);
+                        $("#num_cedula_patrono").val(data2.num_associado);
+                        $("#tel_patrono").val(data2.getpessoa.telefone1);
+                        $("#email_patrono").val(data2.getpessoa.email);
+                        $("#nome_escritorio").val(data2.nome_escritorio);
+                        $("#endereco_escritorio_est").val(data2.endereco_escritorio);
+                        $("#municipio_id_est").val(data2.municipio_id);
+                        $("#patrono_id").val(id);
+
+                        $("#nome_patrono").prop("disabled", true);
 
                     })
                     .catch(error => {
@@ -46,16 +55,8 @@ $(document).on('click', '.btn-adicionar', function () {
             }
             else {
                 $("#nome_patrono").val(nome);
+                $("#nome_patrono").prop("disabled", true);
             }
-
-            $("#tel_patrono").val(data.telefone);
-            $("#email_patrono").val(data.email);
-            $("#nome_escritorio").val(data.nome_escritorio);
-            $("#endereco_escritorio_est").val(data.endereco_escritorio);
-            $("#municipio_id_est").val(data.municipio_id);
-            $("#patrono_id").val(id);
-
-            $("#nome_patrono").prop("disabled", true);
 
             fetch(`/system/getEstagiariosPatrono/${id}`)
                 .then(response => {
@@ -106,6 +107,7 @@ $(document).on('click', '#btn-novo-patrono', function () {
     $("#patrono_id").val("");
     $("#num_estagiarios").val("");
     $("#num_estagiarios").prop("disabled", true);
+    $("#num_cedula_patrono").val("");
 
 });
 
@@ -237,6 +239,15 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                             });
 
                             window.location.href = "/system/areatecnica/list/subscription-trainee/registed";
+
+                        }
+                        else if (res == 'duplicado') {
+                            sweetAlert({
+                                type: "success",
+                                title: "Sucesso",
+                                text: 'O número de cédula do patrono está duplicado na base de dados!',
+                                timer: 3000
+                            });
 
                         }
                     },
