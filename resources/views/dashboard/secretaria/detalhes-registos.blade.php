@@ -54,7 +54,7 @@
                                         <h3>Dados Gerais</h3>
                                         <div class="row">
                                             <div class="col-md-6 col-lg-6 col-xl-6 col-12">
-                                                Nº do Processo: {{ $registo->codigo }} <br><br>
+                                                Nº do Processo Secretaria: {{ $registo->codigo }} <br><br>
                                                 Proveniência: {{ $registo->proveniencia }} <br><br>
 
                                                 <strong> Assunto: {{ $registo->assunto }}</strong> <br><br>
@@ -72,13 +72,14 @@
                                                 Título/Função: {{ $registo->titulo }}<br><br>
                                                 Contactos: {{ $registo->telefone }}/{{ $registo->telefone2 }}<br><br>
                                                 Endereço do requerente: {{ $registo->endereco_requerente }}<br><br>
-                                                Município do requerente: {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}<br><br>
+                                                Município do requerente:
+                                                {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}<br><br>
                                                 Observação: {{ $registo->observacao }}<br><br>
                                                 Registado Por: {{ $registo->getuser->getpessoa->nome }}
                                             </div>
 
 
-                                            <div class="btn-group w-100" role="group">
+                                            <div class="btn-group w-100 mt-4" role="group">
                                                 <input type="radio" class="btn-check" name="btn-radio-dropdown"
                                                     id="btn-radio-dropdown-1" autocomplete="off" checked>
                                                 <label for="btn-radio-dropdown-1" type="button" class="btn">Documento:
@@ -96,7 +97,34 @@
                                                 <label for="btn-radio-dropdown-4" type="button" class="btn">Encaminhado:
                                                     {{ $registo->encaminhado }}</label>
                                             </div>
+
+
                                         </div>
+
+                                        @if ($inscricao_advogado != null && $registo->tipo_processo_id == 3)
+
+                                            <div class="row mt-5">
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-12">
+                                                    Nº do Processo Área Técnica: {{ $inscricao_advogado->codigo }} <br><br>
+                                                    Género: {{ $inscricao_advogado->sexo }} <br><br>
+                                                    Despacho: {{ $inscricao_advogado->despacho }} <br><br>
+                                                    Data de Despacho: {{ $inscricao_advogado->data_despacho }} <br><br>
+                                                    Data de Remessa ao CN: {{ $inscricao_advogado->data_remessa_cn }} <br><br>
+                                                    Mensagem de Despacho: {{ $inscricao_advogado->texto_despacho }} <br><br>
+                                                </div>
+
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-12">
+                                                    Acto pretendido: {{ $inscricao_advogado->acto_pretendido }} <br><br>
+                                                    Cédula disponível: {{ $inscricao_advogado->cedula_disponivel }} <br><br>
+                                                    Data de emissão da cédula: {{ $inscricao_advogado->data_emissao_cedula }}<br><br>
+                                                    Nome do patrono: {{ $inscricao_advogado->patrono->getadvogado->getpessoa->nome}}<br><br>
+                                                    Escritório do patrono: {{ $inscricao_advogado->patrono->getadvogado->nome_escritorio}}<br><br>
+                                                    Endereço do escritório: {{ $inscricao_advogado->patrono->getadvogado->endereco_escritorio}}<br><br>
+                                                    Município: {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        
                                     </div>
                                     <div class="tab-pane" id="tabs-anexos-1">
 
@@ -229,19 +257,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                                                <a href="#"
-                                                                                                                                    class="list-group-item-actions">
-                                                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                                        class="icon text-secondary" width="24" height="24"
-                                                                                                                                        viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                                        stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                                        stroke-linejoin="round">
-                                                                                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                                        <path
-                                                                                                                                            d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                                                    </svg>
-                                                                                                                                </a>
-                                                                                                                            </div> -->
+                                                                                                                                        <a href="#"
+                                                                                                                                            class="list-group-item-actions">
+                                                                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                                class="icon text-secondary" width="24" height="24"
+                                                                                                                                                viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                                stroke-linejoin="round">
+                                                                                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                                <path
+                                                                                                                                                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                            </svg>
+                                                                                                                                        </a>
+                                                                                                                                    </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach

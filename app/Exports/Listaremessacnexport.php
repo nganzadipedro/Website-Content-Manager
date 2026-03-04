@@ -41,7 +41,7 @@ class Listaremessacnexport implements FromCollection, WithHeadings
             $registo = [];
             $registo[0] = $contador;
             $registo[1] = $linha->getregistoentrada->data_entrada;
-            $registo[2] = strtoupper($linha->getregistoentrada->proveniencia);
+            $registo[2] = mb_strtoupper($linha->getregistoentrada->proveniencia, 'UTF-8');
             $registo[3] = $linha->telefone1 . '/' . $linha->telefone2;
             $registo[4] = '';
 

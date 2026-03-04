@@ -68,7 +68,7 @@
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
                                                 @if (Auth::user()->permissao_id == 2)
-                                                    @if ($item->encaminhado == 'Não')
+                                                    @if ($item->estado != 'deferido')
                                                         <a title="Editar Registo" class="badge bg-yellow-lt"
                                                             href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

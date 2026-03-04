@@ -106,7 +106,7 @@
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $item->getregistoentrada->data_entrada }}</td>
-                        <td>{{ strtoupper($item->getregistoentrada->proveniencia) }}</td>
+                        <td>{{ mb_strtoupper($item->getregistoentrada->proveniencia, 'UTF-8') }}</td>
                         <td>{{ $item->telefone1 }}/{{ $item->telefone2 }}</td>
                         <td></td>
                     </tr>
@@ -114,10 +114,11 @@
             </table>
 
             <br>
-            <br>
             <div class="rodape">
                 Luanda, {{$data[0]}} de {{$data[1]}} de {{$data[2]}} <br><br><br>
-                Entregue por <br>
+                Entregue por (CPL-OAA) <br>
+                _____________________________________<br><br><br>
+                Recebido por (CN - OAA) <br>
                 _____________________________________
             </div>
 
