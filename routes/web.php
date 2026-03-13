@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
     Route::post('system/registo-mudarindeferido/update', 'Controllers\SystemController@registo_mudarindeferido_update');
+    Route::post('system/registoadicional-ceduladisponivel/update', 'Controllers\SystemController@registoadicional_ceduladisponivel');
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
     Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
@@ -93,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/actualizar-despacho/post', 'Controllers\SystemController@actualizar_despacho_post');
     Route::get('system/manage-website', 'Livewire\Geral\Gerenciarwebsite')->name('manage_website');
     Route::get('system/profile', 'Livewire\Geral\Perfil')->name('profile_user');
+    Route::get('system/log-activities', 'Livewire\Geral\Actividadessistema')->name('activities_user');
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');
     Route::get('system/getAdvogadoById/{id}', 'Controllers\SystemController@getAdvogadoById');
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');

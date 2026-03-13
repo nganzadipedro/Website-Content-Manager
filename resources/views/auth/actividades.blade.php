@@ -1,73 +1,71 @@
 <div>
-    <div class="row">
-        <div class="col-xl-12" id="card-none2">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <h6 class="card-title mb-0">LISTA DE ACTIVIDADES</h6>
+
+    <div class="page-wrapper">
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="card card-md">
+                    <div class="card-stamp card-stamp-lg">
+                        <div class="card-stamp-icon bg-primary">
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-10">
+                                <h3 class="h1">Actividades do usuário no sistema</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body collapse show" id="collapseExample2" style="">
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
 
-                    <div class="" id="tabela-dados">
+                            <div class="table-responsive" style="max-height: 550px; overflow: auto; padding: 5px;">
+                                <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Operação</th>
+                                            <th>Data e Hora</th>
+                                            <th>Usuário</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                        <table class="table table-nowrap" id="myTable">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Usuário</th>
-                                    <th scope="col">Operação</th>
-                                    <th scope="col">Origem</th>
-                                    <th scope="col">Destinatário</th>
-                                    <th scope="col">Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($lista_actividades as $actividade)
-                                                            <tr>
-                                                                <td>{{ $actividade->user_id == null ? 'Sistema' : $actividade->getUser->getPessoa->nome }}
-                                                                </td>
-                                                                <td>{{ $actividade->operacao }}</td>
-                                                                <td>{{ $actividade->origem }}</td>
-                                                                <td>
-                                                                    @if ($actividade->destino == 'candidatura')
-                                                                                                        @php
-                                                                                                            $candidatura = \App\Models\Fio\Candidaturaformacao::find(
-                                                                                                                $actividade->destino_id,
-                                                                                                            );
-                                                                                                        @endphp
+                                        @foreach ($lista as $item)
+                                            <tr>
+                                                <td>{{$loop->index + 1}}</td>
+                                                <td>{{$item->operacao}}</td>
+                                                <td>{{$item->created_at}}</td>
+                                                <td>{{Auth::user()->getpessoa->nome}}</td>
+                                            </tr>
+                                        @endforeach
 
-                                                                                                        @if ($candidatura)
-                                                                                                            <a
-                                                                                                                href="{{ route('vercandidatura', $candidatura->hash) }}">{{ $actividade->destino }}</a>
-                                                                                                        @else
-                                                                                                        -----
-                                                                                                        @endif
-
-                                                                    @else
-                                                                        {{ $actividade->destino }}
-                                                                    @endif
-                                                                </td>
-                                                                <td>{{ $actividade->created_at }}</td>
-                                                            </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-
 @section('script-aux')
+    <script src=" {{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                paging: false, // Desabilita a paginação
+                searching: true // Habilita a barra de pesquisa
+            });
         });
     </script>
 @endsection

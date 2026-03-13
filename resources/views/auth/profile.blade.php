@@ -26,7 +26,7 @@
                                         Conta</a>
                                     <!-- <a href="#"
                                         class="list-group-item list-group-item-action d-flex align-items-center">Notificações</a> -->
-                                    <a href="#"
+                                    <a href="{{ route('activities_user') }}"
                                         class="list-group-item list-group-item-action d-flex align-items-center">Actividades
                                         no Sistema</a>
                                 </div>

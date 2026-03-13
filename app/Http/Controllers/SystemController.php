@@ -394,6 +394,8 @@ class SystemController extends Controller
     public function pedido_intervencao_novo_post(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         // verifica se já esxite na bd
         if ($request->categoria == 'Advogado') {
             $existe = Advogado::where('categoria', 'Advogado')
@@ -452,6 +454,8 @@ class SystemController extends Controller
 
     public function registo_associado_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         // verifica se já esxite na bd
         if ($request->categoria == 'Advogado') {
@@ -514,6 +518,8 @@ class SystemController extends Controller
     public function registo_associado_update(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $advogado = Advogado::find($request->advogado_id);
         $pessoa = Pessoa::find($advogado->pessoa_id);
 
@@ -575,6 +581,8 @@ class SystemController extends Controller
 
     public function registo_patrono_update(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $patrono = Patrono::find($request->patrono_id);
         $advogado = null;
@@ -641,6 +649,8 @@ class SystemController extends Controller
     public function data_cerimonia_update(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $advogado = Advogado::find($request->advogado_id);
 
         if ($advogado->categoria == 'Advogado') {
@@ -657,6 +667,9 @@ class SystemController extends Controller
 
     public function pedido_intervencao_delete(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
+
         $pedido_id = $request->pedido_id;
 
         $pedido = Pedidointervencao::find($pedido_id);
@@ -667,6 +680,8 @@ class SystemController extends Controller
 
     public function estagiario_patrono_delete(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $registo = Estagiariospatrono::find($request->id);
 
@@ -681,6 +696,8 @@ class SystemController extends Controller
 
     public function atribuir_advogado_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $registo = Registoentrada::find($request->registo_id);
         $advogado = Advogado::find($request->advogado_id);
@@ -712,6 +729,8 @@ class SystemController extends Controller
     public function atribuir_advogado_delete(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $registo = Registoentrada::find($request->registo_id);
         $id = $request->id;
 
@@ -724,6 +743,8 @@ class SystemController extends Controller
 
     public function registo_inscricao_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $registo = Registoentrada::find($request->registo_entrada_id);
         $registo->estado = 'em tratamento';
@@ -907,6 +928,8 @@ class SystemController extends Controller
     public function registo_remetercn_update(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $selecionados = $request->selecionados;
         // dd($request->all());
         foreach ($selecionados as $item) {
@@ -944,6 +967,8 @@ class SystemController extends Controller
     public function registo_mudarindeferido_update(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
         $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
 
@@ -973,12 +998,6 @@ class SystemController extends Controller
 
         }
 
-        try {
-            $obmsg->enviarMensagem($telefone, $mensagem);
-        } catch (\Throwable $th) {
-
-        }
-
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
@@ -986,8 +1005,104 @@ class SystemController extends Controller
         return 'sucesso';
 
     }
+
+    public function registoadicional_ceduladisponivel(Request $request)
+    {
+
+        $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
+        $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+        // verifica se o número da cédula já existe
+        if ($inscricao_adv->tipo_processo_id == 3) {
+            $existe = Advogado::where('categoria', 'Estagiario')->where('num_estagiario', $request->numero_cedula)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        if ($inscricao_adv->tipo_processo_id == 2) {
+            $existe = Advogado::where('categoria', 'Advogado')->where('num_associado', $request->numero_cedula)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $registo->estado = 'em tratamento';
+        $registo->save();
+
+        $inscricao_adv->numero_cedula = $request->numero_cedula;
+        $inscricao_adv->cedula_disponivel = $request->cedula_disponivel;
+        $inscricao_adv->data_emissao_cedula = $request->data_emissao_cedula;
+        $inscricao_adv->estado = 'aguarda cerimonia';
+        $inscricao_adv->save();
+
+        // insere na tabela de pessoa
+        $pessoa = Pessoa::create([
+            'nome' => mb_strtoupper($registo->proveniencia, 'UTF-8'),
+            'num_documento' => $inscricao_adv->num_bilhete,
+            'email' => strtolower($inscricao_adv->email),
+            'telefone1' => $inscricao_adv->telefone1,
+            'telefone2' => $inscricao_adv->telefone2,
+            'documento' => 'Bilhete de Identidade',
+            'genero' => $inscricao_adv->sexo
+        ]);
+
+        // insere na tabela dos advogados
+        $advogado = Advogado::create([
+            'categoria' => $inscricao_adv->tipo_processo_id == 3 ? 'Estagiario' : 'Advogado',
+            'nome_profissional' => $pessoa->nome,
+            'num_associado' => $inscricao_adv->tipo_processo_id == 3 ? null : $inscricao_adv->numero_cedula,
+            'num_estagiario' => $inscricao_adv->tipo_processo_id == 2 ? null : $inscricao_adv->numero_cedula,
+            'pessoa_id' => $pessoa->id,
+            'hash' => Str::uuid(),
+            'estado' => 'Aguarda Cerimónia',
+            'data_inscricao_oaa' => $inscricao_adv->tipo_processo_id == 3 ? null : $inscricao_adv->data_emissao_cedula,
+            'data_inscricao_estagiario' => $inscricao_adv->tipo_processo_id == 2 ? null : $inscricao_adv->data_emissao_cedula
+        ]);
+
+        $advogado->codigo = 'CPL' . $advogado->id;
+        $advogado->municipio_id = $inscricao_adv->municipio_id;
+        $advogado->endereco_escritorio = $inscricao_adv->endereco_escritorio;
+        $advogado->save();
+
+        if ($inscricao_adv->tipo_processo_id == 3) {
+            $patrono = Patrono::find($inscricao_adv->patrono_id);
+            $advogado->nome_patrono = $patrono->getadvogado->getpessoa->nome;
+            $advogado->email_patrono = $patrono->getadvogado->getpessoa->email;
+            $advogado->telefone_patrono = $patrono->getadvogado->getpessoa->telefone1;
+            $advogado->nome_escritorio = $patrono->getadvogado->nome_escritorio;
+            $advogado->save();
+        }
+
+        // notifica o advogado por SMS
+        $obmsg = new OmbalaController();
+        $ob = new MailController();
+        $telefone = $inscricao_adv->telefone1;
+        $email = strtolower($inscricao_adv->email);
+        $nome = $pessoa->nome;
+
+        try {
+            // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível no CPL, mas deverá aguardar a cerimónia de entrega.");
+            if ($email != null && $email != '') {
+                // $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+            }
+        } catch (\Throwable $th) {
+
+        }
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "A cédula já está disponível, aguardando a data de cerimónia de entrega", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Fez o registo da disponibilidade da cédula e aguardando a cerimónia de entrega", 'user', $inscricao_adv->id);
+
+        return 'sucesso';
+
+    }
     public function registo_despacho_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
         $registo = Registoentrada::find($request->registo_entrada_id);
@@ -1047,6 +1162,8 @@ class SystemController extends Controller
 
     public function actualizar_despacho_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
         $registo_inscricao_old = Inscricaoadvogado::where('registo_entrada_id', $request->registo_entrada_id)->first();
