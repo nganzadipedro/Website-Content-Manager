@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
+use Mail;
 use \PDF;
 
 class SystemController extends Controller
@@ -921,7 +922,7 @@ class SystemController extends Controller
             // notifica o advogado por SMS
             $obmsg = new OmbalaController();
             $telefone = $registo->telefone;
-            $mensagem = "Caríssimo(a), o seu processo de inscrição já foi remetido ao Conselho Nacional";
+            $mensagem = "Caríssimo(a), o seu processo de inscrição foi remetido ao Conselho Nacional na data " . $request->data_remessa_cn;
 
             try {
                 $obmsg->enviarMensagem($telefone, $mensagem);
@@ -957,8 +958,20 @@ class SystemController extends Controller
 
         // notifica o advogado por SMS
         $obmsg = new OmbalaController();
+        $ob = new MailController();
         $telefone = $registo->telefone;
+        $email = $inscricao_adv->email;
+        $nome = $registo->proveniencia;
         $mensagem = $inscricao_adv->texto_despacho;
+
+        try {
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+            if ($email != null && $email != '') {
+                $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+            }
+        } catch (\Throwable $th) {
+
+        }
 
         try {
             $obmsg->enviarMensagem($telefone, $mensagem);
@@ -989,9 +1002,9 @@ class SystemController extends Controller
             $registo->estado = 'deferido';
             $registo->save();
 
-            $telefone = $inscricao_advogado->telefone1;
-            $obmsg = new OmbalaController();
-            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+            // $telefone = $inscricao_advogado->telefone1;
+            // $obmsg = new OmbalaController();
+            // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
 
             $msg = "Processo de inscrição despachado como $request->despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
@@ -1012,7 +1025,7 @@ class SystemController extends Controller
             $obmsg = new OmbalaController();
 
             try {
-                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
                 if ($email != null && $email != '') {
                     $ob->mailDespacho($email, $nome, $request->mensagem_despacho, $data_despacho);
                 }

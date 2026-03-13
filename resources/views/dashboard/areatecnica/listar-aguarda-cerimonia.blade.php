@@ -12,9 +12,35 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-10">
-                                <h3 class="h1">Lista de advogados e advogados estagiários aguardando cerimónia</h3>
-                                <a href="{{ route('system.areatecnica.export_waiting_cerimony') }}"
-                                    class="btn btn-success">Exportar Lista em Excel</a>
+                                <h3 class="h1">Lista de {{$categoria_nome}} aguardando cerimónia</h3>
+                                <a href="{{ route('system.areatecnica.export_waiting_cerimony', $categoria_p) }}" class="btn btn-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                        <path
+                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                                        <path d="M8 11h8v7h-8l0 -7" />
+                                        <path d="M8 15h8" />
+                                        <path d="M11 11v7" />
+                                    </svg>Exportar em Excel</a>
+                                <a target="_blank"
+                                    href="{{ route('system.areatecnica.exportpdf_waiting_cerimony', $categoria_p) }}"
+                                    class="btn btn-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+                                        <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+                                        <path d="M17 18h2" />
+                                        <path d="M20 15h-3v6" />
+                                        <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
+                                    </svg>Exportar em PDF</a>
                             </div>
                         </div>
                     </div>

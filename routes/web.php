@@ -244,18 +244,18 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/documento/despacho-indeferido/{hash}', 'Controllers\SystemController@documento_despacho')->name('documento_despacho');
 
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
-                Route::get('/list/cerimonia', 'Livewire\Admin\Listacerimonia')->name('list_cerimonia');
+                Route::get('/list/cerimonia/{categoria}', 'Livewire\Admin\Listacerimonia')->name('list_cerimonia');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
                 Route::get('/list/patronos', 'Livewire\Areatecnica\Listarpatronos')->name('list_patronos');
                 Route::get('/register/lawyer', 'Livewire\Areatecnica\Registarassociado')->name('regist_lawyer');
                 Route::get('/list/subscription-trainee/remetidoscn', 'Livewire\Areatecnica\Advestremetidoscn')->name('list_est_remetidos_cn');
                 Route::get('/edit-data/member/{hash}', 'Livewire\Areatecnica\Editarassociado')->name('edit_member');
                 Route::get('/edit-data/patrono/{hash}', 'Livewire\Areatecnica\Editarpatrono')->name('edit_patrono');
-                
 
-                Route::get('/export-waiting/cerimony', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
+                Route::get('/export-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
                 Route::get('/exportxls-trainee/remessacn', 'Controllers\AdvogadoController@export_remessa_cn')->name('export_remessa_cn');
                 Route::get('/exportpdf-trainee/remessacn', 'Controllers\AdvogadoController@lista_estagiarios_remessacn')->name('exportpdf_remessa_cn');
+                Route::get('/exportpdf-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@lista_aguardando_cerimonia')->name('exportpdf_waiting_cerimony');
 
             });
         });

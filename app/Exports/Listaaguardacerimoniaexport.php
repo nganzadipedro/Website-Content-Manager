@@ -10,11 +10,11 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class Listaaguardacerimoniaexport implements FromCollection, WithHeadings
 {
 
-    private $turma_id;
+    private $categoria_p;
 
-    function __construct()
+    function __construct($categoria)
     {
-        
+        $this->categoria_p = $categoria;
     }
 
     /**
@@ -27,6 +27,7 @@ class Listaaguardacerimoniaexport implements FromCollection, WithHeadings
 
         $result = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')
             ->where('app_advogado.estado', 'Aguarda Cerimónia')
+            ->where('app_advogado.categoria', $this->categoria_p)
             ->select('app_advogado.*')
             ->orderBy('pessoa.nome', 'asc')
             ->get();

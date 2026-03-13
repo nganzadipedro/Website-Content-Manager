@@ -112,11 +112,11 @@ class AdvogadoController extends Controller
 
     }
 
-    public function export_waiting_cerimony()
+    public function export_waiting_cerimony($categoria)
     {
 
-        $nome_file = 'lista_aguardando_cerimonia';
-        return Excel::download(new Listaaguardacerimoniaexport(), $nome_file . '.xlsx');
+        $nome_file = 'lista_aguardando_cerimonia_' . $categoria;
+        return Excel::download(new Listaaguardacerimoniaexport($categoria), $nome_file . '.xlsx');
     }
 
     public function export_remessa_cn()
@@ -160,6 +160,48 @@ class AdvogadoController extends Controller
 
         $pdf = Pdf::loadView('documents-pdf.lista-remessa-cn', [
             'inscricoes' => $result,
+            'num_candidatos' => $num_candidatos,
+            'data' => $data_emissao
+        ]);
+
+        return $pdf->stream();
+
+    }
+
+    public function lista_aguardando_cerimonia($categoria)
+    {
+
+        $result = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')
+            ->where('app_advogado.estado', 'Aguarda Cerimónia')
+            ->where('app_advogado.categoria', $categoria)
+            ->select('app_advogado.*')
+            ->orderBy('pessoa.nome', 'asc')
+            ->get();
+
+        $num_candidatos = count($result);
+
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.pdf-lista-cerimonia', [
+            'candidatos' => $result,
+            'categoria' => $categoria == 'Advogado' ? 'advogados' : 'advogados estagiários',
             'num_candidatos' => $num_candidatos,
             'data' => $data_emissao
         ]);

@@ -111,10 +111,6 @@ function valida_formulario() {
         msgErro = "Digite o nome do patrono";
         tem = false;
     }
-    else if (categoria == 'Estagiario' && (nome_escritorio == '' || nome_escritorio == null)) {
-        msgErro = "Digite o nome do escritório";
-        tem = false;
-    }
     else if (categoria == 'Estagiario' && (endereco_escritorio_est == '' || endereco_escritorio_est == null)) {
         msgErro = "Digite o endereço do escritório";
         tem = false;
