@@ -50,7 +50,6 @@
                                                 @if ($item->despacho == 'Deferido')
                                                     <input type="checkbox" class="checkItem" value="{{$item->id}}">
                                                 @endif
-
                                             </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>

@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Não foi selecionado nenhuma linha na tabela de dados",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
                 timer: 4000
             });
         }

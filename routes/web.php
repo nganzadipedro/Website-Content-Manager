@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/anexos/post', 'Controllers\SystemController@anexo_post');
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
+    Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
     Route::post('system/registo-associado/post', 'Controllers\SystemController@registo_associado_post');
     Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
@@ -97,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/log-activities', 'Livewire\Geral\Actividadessistema')->name('activities_user');
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');
     Route::get('system/getAdvogadoById/{id}', 'Controllers\SystemController@getAdvogadoById');
+    Route::get('system/getHistoricoProcesso/{id}', 'Controllers\SystemController@getHistoricoProcesso');
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');
     Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
     Route::get('system/getLinhaEstagiariosPatrono/{id}', 'Controllers\SystemController@getLinhaEstagiariosPatrono');

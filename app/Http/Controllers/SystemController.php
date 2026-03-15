@@ -7,6 +7,7 @@ use App\Models\Anexosregisto;
 use App\Models\Denuncia;
 use App\Models\Estagiariospatrono;
 use App\Models\Galeria;
+use App\Models\Historicosistema;
 use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
 use App\Models\Noticia;
@@ -309,6 +310,8 @@ class SystemController extends Controller
     public function distribuicao_post(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $registo = Inscricaoadvogado::find($request->inscricao_id);
         if ($registo->observacao_distribuicao != $request->observacao_distribuicao) {
 
@@ -338,6 +341,61 @@ class SystemController extends Controller
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+        return 'sucesso';
+
+    }
+
+    public function distribuicao_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+
+            $inscricao_adv->observacao_distribuicao = $request->observacao_distribuicao;
+            $inscricao_adv->data_levantamento_distribuicao = $request->data_levantamento_distribuicao;
+            $inscricao_adv->conselheiro_id = $request->conselheiro_id;
+            $inscricao_adv->estado_distribuicao = 'Distribuido';
+            $inscricao_adv->save();
+
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            // notifica o advogado por SMS e email
+            $obmsg = new OmbalaController();
+            $obmail = new MailController();
+            $telefone = $inscricao_adv->telefone1;
+            $nome = $registo->proveniencia;
+            $email = $inscricao_adv->email;
+            $data_entrada = $registo->data_entrada;
+            $conselheiro = User::find($request->conselheiro_id);
+            $nome_conselheiro = $conselheiro->getpessoa->nome;
+
+            $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue aos conselheiros para a devida análise.";
+            // try {
+            //     $obmsg->enviarMensagem($telefone, $mensagem);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            $mensagem = "O seu processo de inscrição para advogado foi entregue aos conselheiros para a devida análise.";
+            // try {
+            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido ao conselheiro $nome_conselheiro para a devida análise.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado do(a) senhor(a) $nome ao conselheiro $nome_conselheiro para a devida análise.", 'user', $inscricao_adv->id);
+
+        }
+
         return 'sucesso';
 
     }
@@ -1211,7 +1269,7 @@ class SystemController extends Controller
 
     public function getDataInscricaoAdvogadoById($id)
     {
-        $inscricao = Inscricaoadvogado::find($id);
+        $inscricao = Inscricaoadvogado::with(['getregistoentrada', 'getconselheiro', 'patrono'])->findOrFail($id);
         return response()->json($inscricao);
     }
 
@@ -1219,6 +1277,19 @@ class SystemController extends Controller
     {
         $advogado = Advogado::with(['getpessoa', 'getmunicipio'])->findOrFail($id);
         return response()->json($advogado);
+    }
+
+     public function getHistoricoProcesso($id)
+    {
+        $historico = Historicosistema::join('users', 'users.id', 'historico_sistema.user_id')
+        ->join('pessoa', 'pessoa.id', 'users.pessoa_id')
+        ->where('historico_sistema.destino', 'registo-entrada')
+        ->where('historico_sistema.destino_id', $id)
+        ->select('historico_sistema.*', 'pessoa.nome')
+        ->orderBy('historico_sistema.id', 'desc')
+        ->get();
+       
+        return response()->json($historico);
     }
 
     public function getPatronoById($id)

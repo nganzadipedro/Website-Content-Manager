@@ -241,7 +241,7 @@ class MailController extends Controller
 
     }
 
-    public function mailNotificacao($email, $nome, $mensagem)
+    public function mailNotificacao($email, $nome, $mensagem, $data_entrada)
     {
 
         // mensagem do email
@@ -250,8 +250,8 @@ class MailController extends Controller
         <hr>
         <p>
         Exmo/a Dr.(ª) $nome<br><br>
-        Em função do processo que deu entrada no CPL-OAA, informamos o seguinte:<br><br>
-        <strong>$mensagem</strong><br><br><br>
+        Em função do processo que deu entrada no CPL-OAA na data $data_entrada, informamos o seguinte:<br><br>
+        <strong>$mensagem</strong><br><br>
         <strong>Para mais informações, contacte a secretaria deste Conselho.<br>
         Largo João Seca, Casa n.º 6, R/C - Telef. 928 410 082<br><br></strong>
         Sem mais de momento, atenciosamente,<br>
