@@ -39,4 +39,8 @@ class Patrono extends Model
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
     }
 
+    public function estagiarios(){
+        return $this->hasMany(Estagiariospatrono::class, 'patrono_id', 'id');
+    }
+
 }

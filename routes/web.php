@@ -92,6 +92,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
     Route::post('system/estagiario-patrono/delete', 'Controllers\SystemController@estagiario_patrono_delete');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
+    Route::post('system/editar-inscricao-estagiario/post', 'Controllers\SystemController@editar_inscricao_estagiario_post');
     Route::post('system/atribuir-advogado/post', 'Controllers\SystemController@atribuir_advogado_post');
     Route::post('system/atribuir-advogado/delete', 'Controllers\SystemController@atribuir_advogado_delete');
     Route::post('system/registo-despacho/post', 'Controllers\SystemController@registo_despacho_post');
@@ -249,6 +250,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
                 Route::get('/regist/subscription/{hash}', 'Livewire\Areatecnica\Registarinscricao')->name('registar_inscricao');
+                Route::get('/edit/subscription/{hash}', 'Livewire\Areatecnica\Editarinscricao')->name('editar_inscricao');
                 Route::get('/regist/despacho/{hash}', 'Livewire\Areatecnica\Registardespacho')->name('registar_despacho');
                 Route::get('/documento/despacho-indeferido/{hash}', 'Controllers\SystemController@documento_despacho')->name('documento_despacho');
 
@@ -263,8 +265,10 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/export-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
                 Route::post('/exportxls-trainee/remessacn', 'Controllers\AdvogadoController@export_remessa_cn')->name('export_remessa_cn');
+                Route::post('/exportxls-indicacao-patrono', 'Controllers\AdvogadoController@export_xls_indicacao_patrono');
                 Route::get('/exportpdf-trainee/remessacn', 'Controllers\AdvogadoController@lista_estagiarios_remessacn')->name('exportpdf_remessa_cn');
                 Route::post('/exportpdf-trainee-post/remessacn', 'Controllers\AdvogadoController@export_pdf_lista_estagiarios_remessacn');
+                Route::post('/exportpdf-indicacao-patrono', 'Controllers\AdvogadoController@export_pdf_indicacao_patrono');
                 Route::get('/exportpdf-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@lista_aguardando_cerimonia')->name('exportpdf_waiting_cerimony');
 
             });

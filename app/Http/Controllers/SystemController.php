@@ -914,7 +914,7 @@ class SystemController extends Controller
 
             }
             // avaliação da situação de novos patronos
-            else {
+            else if ($request->acto_pretendido != 'Indicação de Patrono') {
 
                 // cadastra pessoa
                 $pessoa = Pessoa::create([
@@ -972,16 +972,18 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            $est_patrono = Estagiariospatrono::create([
-                'patrono_id' => $patrono_id,
-                'inscricao_advogado_id' => $inscricao->id,
-                'estado' => 'frequenta',
-                'user_id' => Auth::user()->id
-            ]);
+            if ($request->acto_pretendido != 'Indicação de Patrono') {
 
+                $est_patrono = Estagiariospatrono::create([
+                    'patrono_id' => $patrono_id,
+                    'inscricao_advogado_id' => $inscricao->id,
+                    'estado' => 'frequenta',
+                    'user_id' => Auth::user()->id
+                ]);
+
+            }
 
             // envia notificacao ao requerente
-
             $mensagem_not = "";
 
             if ($request->acto_pretendido == 'Indicação de Patrono') {
@@ -1010,7 +1012,7 @@ class SystemController extends Controller
                     $inscricao->despacho = 'Deferido';
                     $inscricao->save();
 
-                    $mensagem_not = "O seu processo já foi registado na área técnica, mas aguarda por indicação de patrono";
+                    $mensagem_not = "O seu processo já foi registado na área técnica. O processo aguarda pela assinatura do Presidente";
 
                     ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                     ActividadesistemaController::inserir(Auth::id(), "Processo despachado como deferido.", 'registo-entrada', $registo->id);
@@ -1033,9 +1035,200 @@ class SystemController extends Controller
 
             }
 
+            ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+
+        }
+
+        return 'sucesso';
+
+    }
+
+    public function editar_inscricao_estagiario_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $registo = Registoentrada::find($request->registo_entrada_id);
+        $inscricao = Inscricaoadvogado::where('registo_entrada_id', $request->registo_entrada_id)->first();
+
+        $patrono_id = null;
+
+        // avaliação da situação de patronos existentes
+        if ($request->patrono_id != null && $request->patrono_id != '') {
+
+            $patrono_id = $request->patrono_id;
+            $patrono = Patrono::find($patrono_id);
+            $advogado = Advogado::find($patrono->advogado_id);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+
+            // faz validações
+            if ($request->num_cedula_patrono != null && $request->num_cedula_patrono != '') {
+                $existe = null;
+                $existe = Advogado::where('categoria', 'Advogado')
+                    ->where('num_associado', $request->num_cedula_patrono)
+                    ->where('pessoa_id', '!=', $pessoa->id)->first();
+
+                if ($existe) {
+                    return 'duplicado';
+                }
+
+                $advogado->num_associado = $request->num_cedula_patrono;
+                $advogado->save();
+            }
+
+            if ($request->tel_patrono != null && $request->tel_patrono != '') {
+                $pessoa->telefone1 = $request->tel_patrono;
+                $pessoa->save();
+            }
+
+            if ($request->email_patrono != null && $request->email_patrono != '') {
+                $pessoa->email = $request->email_patrono;
+                $pessoa->save();
+            }
+
+            if ($request->nome_escritorio != null && $request->nome_escritorio != '') {
+                $advogado->nome_escritorio = $request->nome_escritorio;
+                $advogado->save();
+            }
+
+            if ($request->endereco_escritorio != null && $request->endereco_escritorio != '') {
+                $advogado->endereco_escritorio = $request->endereco_escritorio;
+                $advogado->save();
+            }
+
+            if ($request->municipio_id != null && $request->municipio_id != '') {
+                $advogado->municipio_id = $request->municipio_id;
+                $advogado->save();
+            }
+
+            // verifica se o registo anterior tinha patrono e se é diferente do novo, remove o antigo
+            if ($inscricao->patrono_id != null && $inscricao->patrono_id != $request->patrono_id) {
+
+                $est = Estagiariospatrono::where('patrono_id', $inscricao->patrono_id)
+                    ->where('inscricao_advogado_id', $inscricao->id)->first();
+                $est->delete();
+
+            }
+
+        }
+        // avaliação da situação de novos patronos
+        else if ($request->acto_pretendido != 'Indicação de Patrono') {
+
+            // cadastra pessoa
+            $pessoa = Pessoa::create([
+                'nome' => mb_strtoupper($request->nome_patrono, 'UTF-8'),
+                'email' => $request->email_patrono,
+                'telefone1' => $request->tel_patrono,
+                'documento' => 'Bilhete de Identidade',
+            ]);
+
+            // cadastra advogado
+            $advogado = Advogado::create([
+                'categoria' => 'Advogado',
+                'nome_profissional' => $pessoa->nome,
+                'num_associado' => $request->num_cedula_patrono,
+                'pessoa_id' => $pessoa->id,
+                'codigo' => 'CPL$numero',
+                'hash' => Str::uuid(),
+                'endereco_escritorio' => $request->endereco_escritorio,
+                'municipio_id' => $request->municipio_id,
+                'nome_escritorio' => $request->nome_escritorio,
+                'estado' => 'Registado',
+                'user_id' => Auth::user()->id
+            ]);
+
+            // cadastra patrono
+            $patrono = Patrono::create([
+                'hash' => Str::uuid(),
+                'advogado_id' => $advogado->id,
+                'user_id' => Auth::user()->id
+            ]);
+
+            $patrono_id = $patrono->id;
+
+        }
+
+        $dataHoje = date('Y-m-d');
+
+        $inscricao->observacao = $request->observacao;
+        $inscricao->texto_despacho = $request->observacao;
+        $inscricao->sexo = $request->genero == null ? 'Não Definido' : $request->genero;
+        $inscricao->telefone1 = $request->telefone1;
+        $inscricao->telefone2 = $request->telefone2;
+        $inscricao->email = $request->email;
+        $inscricao->despacho = 'Deferido';
+        $inscricao->data_despacho = $dataHoje;
+        $inscricao->acto_pretendido = $request->acto_pretendido;
+        $inscricao->patrono_id = $patrono_id;
+        $inscricao->num_bilhete = $request->num_bilhete;
+        $inscricao->save();
+
+        if ($request->acto_pretendido != 'Indicação de Patrono') {
+
+            $est_patrono = Estagiariospatrono::create([
+                'patrono_id' => $patrono_id,
+                'inscricao_advogado_id' => $inscricao->id,
+                'estado' => 'frequenta',
+                'user_id' => Auth::user()->id
+            ]);
+
+        }
+
+        // envia notificacao ao requerente
+        $mensagem_not = "";
+
+        if ($request->acto_pretendido == 'Indicação de Patrono') {
+
+            $inscricao->despacho = null;
+            $inscricao->save();
+
+            $mensagem_not = "O seu processo foi actualizado na área técnica, mas aguarda por indicação de patrono";
+            ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
+
+        } else {
+
+            if ($request->observacao != null && $request->observacao != '') {
+
+                $inscricao->despacho = 'Indeferido';
+                $inscricao->save();
+
+                $mensagem_not = $request->observacao;
+
+                ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Processo despachado como Indeferido: $mensagem_not", 'registo-entrada', $registo->id);
+
+            } else {
+
+                $inscricao->despacho = 'Deferido';
+                $inscricao->save();
+
+                $mensagem_not = "O seu processo foi actualizado na área técnica. O processo aguarda pela assinatura do Presidente";
+
+                ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Processo despachado como deferido.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Processo aguardando a assinatura do Presidente.", 'registo-entrada', $registo->id);
+
+            }
+
+        }
+
+        $ob = new MailController();
+        $obmsg = new OmbalaController();
+        $nome = $registo->proveniencia;
+
+        try {
+            $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
+            if ($request->email != null && $request->email != '') {
+                $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
+            }
+        } catch (\Throwable $th) {
+
         }
 
         ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+
+
 
         return 'sucesso';
 

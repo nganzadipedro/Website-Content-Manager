@@ -57,6 +57,7 @@ class Registarinscricao extends Component
         $this->proveniencia = $this->registo->proveniencia;
 
     }
+    
     public function render()
     {
 

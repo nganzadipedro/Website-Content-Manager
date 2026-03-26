@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\Listaaguardacerimoniaexport;
+use App\Exports\Listaestindicacaopatrono;
 use App\Exports\Listaindefinidosexport;
 use App\Exports\Listaestagiariosexport;
 use App\Exports\Listaadvogadosexport;
@@ -125,6 +126,12 @@ class AdvogadoController extends Controller
         return Excel::download(new Listaremessacnexport($request->data_remessa_cn), $nome_file . '.xlsx');
     }
 
+    public function export_xls_indicacao_patrono(Request $request)
+    {
+        $nome_file = 'lista_inscricoes_estagiarios_indicacao_patrono';
+        return Excel::download(new Listaestindicacaopatrono(), $nome_file . '.xlsx');
+    }
+
     public function lista_estagiarios_remessacn()
     {
 
@@ -203,6 +210,53 @@ class AdvogadoController extends Controller
         $data_emissao[2] = date("Y");
 
         $pdf = Pdf::loadView('documents-pdf.lista-remessa-cn', [
+            'inscricoes' => $result,
+            'num_candidatos' => $num_candidatos,
+            'data' => $data_emissao
+        ]);
+
+         return $pdf->stream();
+
+        // return response()->streamDownload(function () use ($pdf) {
+        //     echo $pdf->output();
+        // }, 'lista_remessa_cn.pdf');
+
+    }
+
+     public function export_pdf_indicacao_patrono(Request $request)
+    {
+
+        $result = Inscricaoadvogado::query()
+            ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
+            ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->where('inscricao_advogado.acto_pretendido', 'Indicação de Patrono')
+            ->orderBy('registo_entrada.proveniencia', 'asc')
+            ->select('inscricao_advogado.*')
+            ->get();
+
+        $num_candidatos = count($result);
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.lista-indicacao-patrono', [
             'inscricoes' => $result,
             'num_candidatos' => $num_candidatos,
             'data' => $data_emissao
