@@ -262,6 +262,8 @@ class SystemController extends Controller
     public function anexo_post(Request $request)
     {
 
+        date_default_timezone_set("Africa/Luanda");
+
         $anexo = Anexosregisto::create([
             'titulo' => $request->titulo,
             'tipo_anexo' => $request->tipo_anexo,
@@ -294,6 +296,8 @@ class SystemController extends Controller
 
     public function encaminhar_post(Request $request)
     {
+
+        date_default_timezone_set("Africa/Luanda");
 
         $registo = Registoentrada::find($request->registo_id);
         $registo->encaminhado = $request->encaminhar_para;
@@ -377,18 +381,18 @@ class SystemController extends Controller
             $nome_conselheiro = $conselheiro->getpessoa->nome;
 
             $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue aos conselheiros para a devida análise.";
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            // } catch (\Throwable $th) {
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
             $mensagem = "O seu processo de inscrição para advogado foi entregue aos conselheiros para a devida análise.";
-            // try {
-            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
-            // } catch (\Throwable $th) {
+            try {
+                $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido ao conselheiro $nome_conselheiro para a devida análise.", 'registo-entrada', $registo->id);
@@ -491,6 +495,7 @@ class SystemController extends Controller
             'codigo' => 'CPL' . $conta,
             'nome_patrono' => $request->nome_patrono,
             'email_patrono' => $request->email_patrono,
+            'cedula_patrono' => $request->cedula_patrono,
             'telefone_patrono' => $request->telefone_patrono,
             'nome_escritorio' => $request->nome_escritorio,
             'municipio_id' => $request->municipio_id,
@@ -832,6 +837,26 @@ class SystemController extends Controller
                 'registo_entrada_id' => $registo->id,
                 'user_id' => Auth::user()->id
             ]);
+
+            $ob = new MailController();
+            $obmsg = new OmbalaController();
+            $nome = $registo->proveniencia;
+
+            $mensagem_not = "O seu processo de inscrição para advogado foi registado pela área técnica, aguardando por avaliação.";
+
+            try {
+                $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
+                if ($request->email != null && $request->email != '') {
+                    $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
+                }
+            } catch (\Throwable $th) {
+
+            }
+
+            ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Processo está aguardando por avaliação de conselheiros e comissão de ética.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+
         }
 
         // registo de inscrição para advogados estagiários
@@ -954,31 +979,64 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            // envia notificacao ao requerente
-            if ($request->observacao != null && $request->observacao != '') {
 
-                $inscricao->despacho = 'Indeferido';
+            // envia notificacao ao requerente
+
+            $mensagem_not = "";
+
+            if ($request->acto_pretendido == 'Indicação de Patrono') {
+
+                $inscricao->despacho = null;
                 $inscricao->save();
 
-                $ob = new MailController();
-                $obmsg = new OmbalaController();
-                $nome = $registo->proveniencia;
+                $mensagem_not = "O seu processo já foi registado na área técnica, mas aguarda por indicação de patrono";
+                ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
 
-                try {
-                    $obmsg->enviarMensagem($inscricao->telefone1, $request->observacao);
-                    if ($request->email != null && $request->email != '') {
-                        $ob->mailNotificacao($request->email, $nome, $request->observacao);
-                    }
-                } catch (\Throwable $th) {
+            } else {
+
+                if ($request->observacao != null && $request->observacao != '') {
+
+                    $inscricao->despacho = 'Indeferido';
+                    $inscricao->save();
+
+                    $mensagem_not = $request->observacao;
+
+                    ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+                    ActividadesistemaController::inserir(Auth::id(), "Processo despachado como Indeferido: $mensagem_not", 'registo-entrada', $registo->id);
+
+                } else {
+
+                    $inscricao->despacho = 'Deferido';
+                    $inscricao->save();
+
+                    $mensagem_not = "O seu processo já foi registado na área técnica, mas aguarda por indicação de patrono";
+
+                    ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
+                    ActividadesistemaController::inserir(Auth::id(), "Processo despachado como deferido.", 'registo-entrada', $registo->id);
+                    ActividadesistemaController::inserir(Auth::id(), "Processo aguardando a assinatura do Presidente.", 'registo-entrada', $registo->id);
 
                 }
+
+            }
+
+            $ob = new MailController();
+            $obmsg = new OmbalaController();
+            $nome = $registo->proveniencia;
+
+            try {
+                $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
+                if ($request->email != null && $request->email != '') {
+                    $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
+                }
+            } catch (\Throwable $th) {
+
             }
 
         }
 
-        // regista actividade no sistema
-        ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+
         return 'sucesso';
 
     }
@@ -1142,7 +1200,7 @@ class SystemController extends Controller
         $nome = $pessoa->nome;
 
         try {
-            // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível no CPL, mas deverá aguardar a cerimónia de entrega.");
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível no CPL, mas deverá aguardar a cerimónia de entrega.");
             if ($email != null && $email != '') {
                 // $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
             }
@@ -1175,9 +1233,9 @@ class SystemController extends Controller
             $registo->estado = 'deferido';
             $registo->save();
 
-            // $telefone = $inscricao_advogado->telefone1;
-            // $obmsg = new OmbalaController();
-            // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+            $telefone = $inscricao_advogado->telefone1;
+            $obmsg = new OmbalaController();
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
 
             $msg = "Processo de inscrição despachado como $request->despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
@@ -1279,16 +1337,48 @@ class SystemController extends Controller
         return response()->json($advogado);
     }
 
-     public function getHistoricoProcesso($id)
+    public function getAdvogadoByData($tipo_p, $numero_p, $categoria_p)
+    {
+
+        $advogado = null;
+
+        if ($tipo_p == 'cedula') {
+
+            // pesquisar pela cédula e categoria
+            if ($categoria_p == 'Advogado') {
+                $advogado = Advogado::with(['getpessoa', 'getmunicipio'])
+                    ->where('num_associado', $numero_p)->first();
+                return response()->json($advogado);
+            } else {
+                $advogado = Advogado::with(['getpessoa', 'getmunicipio'])
+                    ->where('num_estagiario', $numero_p)->first();
+                return response()->json($advogado);
+            }
+
+        } else {
+
+            // pesquisar pelo número do bilhete
+            $bilhete = strtoupper($numero_p);
+            $pessoa = Pessoa::where('num_documento', $bilhete)->first();
+            if ($pessoa) {
+                $advogado = Advogado::with(['getpessoa', 'getmunicipio'])->where('pessoa_id', $pessoa->id)->first();
+                return response()->json($advogado);
+            }
+
+        }
+
+    }
+
+    public function getHistoricoProcesso($id)
     {
         $historico = Historicosistema::join('users', 'users.id', 'historico_sistema.user_id')
-        ->join('pessoa', 'pessoa.id', 'users.pessoa_id')
-        ->where('historico_sistema.destino', 'registo-entrada')
-        ->where('historico_sistema.destino_id', $id)
-        ->select('historico_sistema.*', 'pessoa.nome')
-        ->orderBy('historico_sistema.id', 'desc')
-        ->get();
-       
+            ->join('pessoa', 'pessoa.id', 'users.pessoa_id')
+            ->where('historico_sistema.destino', 'registo-entrada')
+            ->where('historico_sistema.destino_id', $id)
+            ->select('historico_sistema.*', 'pessoa.nome')
+            ->orderBy('historico_sistema.id', 'desc')
+            ->get();
+
         return response()->json($historico);
     }
 

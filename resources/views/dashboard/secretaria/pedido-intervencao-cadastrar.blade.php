@@ -22,7 +22,6 @@
             </div>
         </div>
 
-
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
@@ -157,7 +156,7 @@
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                                 <label for="tipo_processo" class="form-label">Tipo de Processo a Intervir</label>
                                 <input type="text" maxlength="200" class="form-control" name="tipo_processo"
-                                id="tipo_processo" value="">
+                                    id="tipo_processo" value="">
                             </div>
                         </div>
                     </div>
@@ -288,16 +287,25 @@
                             </div>
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                                 <label for="new_tipo_processo" class="form-label">Tipo de Processo a Intervir</label>
-                                <input type="text" maxlength="100" class="form-control" name="new_nome_patrono"
-                                id="new_nome_patrono" value="">
+                                <input type="text" maxlength="100" class="form-control" name="new_tipo_processo"
+                                    id="new_tipo_processo" value="">
                             </div>
                         </div>
                     </div>
                     <div id="dados-patrono-new">
                         <div class="mb-3">
-                            <label class="form-label">Nome do Patrono</label>
-                            <input type="text" maxlength="200" class="form-control" name="new_nome_patrono"
-                                id="new_nome_patrono" value="">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                    <label class="form-label">Nome do Patrono</label>
+                                    <input type="text" maxlength="200" class="form-control" name="new_nome_patrono"
+                                        id="new_nome_patrono" value="">
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                    <label class="form-label">Cédula do patrono</label>
+                                    <input type="text" maxlength="20" class="form-control" name="new_cedula_patrono"
+                                        id="new_cedula_patrono">
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <div class="row">

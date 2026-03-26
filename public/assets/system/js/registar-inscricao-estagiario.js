@@ -238,7 +238,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                                 timer: 3000
                             });
 
-                            window.location.href = "/system/areatecnica/list/subscription-trainee/registed";
+                            window.location.href = "/system/areatecnica/list/subscription-trainee";
 
                         }
                         else if (res == 'duplicado') {

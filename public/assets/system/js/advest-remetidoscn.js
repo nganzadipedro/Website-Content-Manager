@@ -145,4 +145,146 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    $(document).on('click', '#btn-gerar-pdf', function () {
+
+        const data_remessa_cn = document.getElementById('data_remessa_cn').value;
+
+        if (data_remessa_cn == '' || data_remessa_cn == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data de remessa ao Conselho Nacional",
+                timer: 4000
+            });
+        }
+        else {
+
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/system/areatecnica/exportpdf-trainee-post/remessacn";
+            form.target = "_blank";
+
+            // CSRF
+            const csrf = document.createElement("input");
+            csrf.type = "hidden";
+            csrf.name = "_token";
+            csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+            form.appendChild(csrf);
+
+            // Dados que quer enviar
+            const dados = document.createElement("input");
+            dados.type = "hidden";
+            dados.name = "data_remessa_cn";
+            dados.value = data_remessa_cn;
+            form.appendChild(dados);
+
+            document.body.appendChild(form);
+
+            form.submit();
+
+            document.body.removeChild(form);
+
+            // const formData = new FormData();
+            // formData.append('data_remessa_cn', data_remessa_cn);
+
+            // fetch('/system/areatecnica/exportpdf-trainee-post/remessacn', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            //     },
+            //     body: JSON.stringify({
+            //         data_remessa_cn: data_remessa_cn
+            //     })
+            // })
+            //     .then(response => response.blob())
+            //     .then(blob => {
+
+            //         const url = window.URL.createObjectURL(blob);
+
+            //         const a = document.createElement('a');
+            //         a.href = url;
+            //         a.download = "lista_remessa_cn.pdf";
+
+            //         document.body.appendChild(a);
+            //         a.click();
+            //         a.remove();
+
+            //     });
+        }
+
+    });
+
+     $(document).on('click', '#btn-gerar-excel', function () {
+
+        const data_remessa_cn = document.getElementById('data_remessa_cn').value;
+
+        if (data_remessa_cn == '' || data_remessa_cn == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data de remessa ao Conselho Nacional",
+                timer: 4000
+            });
+        }
+        else {
+
+             const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/system/areatecnica/exportxls-trainee/remessacn";
+            form.target = "_blank";
+
+            // CSRF
+            const csrf = document.createElement("input");
+            csrf.type = "hidden";
+            csrf.name = "_token";
+            csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+            form.appendChild(csrf);
+
+            // Dados que quer enviar
+            const dados = document.createElement("input");
+            dados.type = "hidden";
+            dados.name = "data_remessa_cn";
+            dados.value = data_remessa_cn;
+            form.appendChild(dados);
+
+            document.body.appendChild(form);
+
+            form.submit();
+
+            document.body.removeChild(form);
+
+
+
+            // const formData = new FormData();
+            // formData.append('data_remessa_cn', data_remessa_cn);
+
+            // fetch('/system/areatecnica/exportexcel-trainee-post/remessacn', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            //     },
+            //     body: JSON.stringify({
+            //         data_remessa_cn: data_remessa_cn
+            //     })
+            // })
+            //     .then(response => response.blob())
+            //     .then(blob => {
+
+            //         const url = window.URL.createObjectURL(blob);
+
+            //         const a = document.createElement('a');
+            //         a.href = url;
+            //         a.download = "lista_remessa_cn.xlsx";
+
+            //         document.body.appendChild(a);
+            //         a.click();
+            //         a.remove();
+
+            //     });
+        }
+
+    });
+
 });

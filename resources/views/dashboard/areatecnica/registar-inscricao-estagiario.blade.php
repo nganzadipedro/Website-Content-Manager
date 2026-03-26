@@ -212,7 +212,7 @@
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" maxlength="200" name="observacao2"
+                                                    <input type="text" name="observacao2"
                                                         class="form-control" id="observacao2" value="">
                                                 </div>
                                             </div>

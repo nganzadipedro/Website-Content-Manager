@@ -129,10 +129,6 @@ function valida_formulario_novo() {
         msgErro = "DEspecifique a categoria";
         tem = false;
     }
-    else if (new_email == '' || new_email == null) {
-        msgErro = "Digite o email";
-        tem = false;
-    }
     else if (new_telefone1 == '' || new_telefone1 == null) {
         msgErro = "Digite o número de telefone principal";
         tem = false;
@@ -145,35 +141,9 @@ function valida_formulario_novo() {
         msgErro = "Especifique o género";
         tem = false;
     }
-    else if (new_endereco_escritorio == '' || new_endereco_escritorio == null) {
-        msgErro = "Digite o endereço do escritório/profissional";
-        tem = false;
-    }
-    else if (new_municipio_id == '' || new_municipio_id == null) {
-        msgErro = "Escolha o município onde está localizado";
-        tem = false;
-    }
     else if (new_tipo_processo == '' || new_tipo_processo == null) {
         msgErro = "Escolha o tipo de processo onde pretende intervir";
         tem = false;
-    }
-    else if (new_tipo_processo == '' || new_tipo_processo == null) {
-        msgErro = "Escolha o tipo de processo onde pretende intervir";
-        tem = false;
-    }
-    else if (new_categoria == 'Estagiario') {
-        if (new_nome_patrono == '' || new_nome_patrono == null) {
-            msgErro = "Digite o nome do patrono";
-            tem = false;
-        }
-        else if (new_telefone_patrono == '' || new_telefone_patrono == null) {
-            msgErro = "Digite o telefone do patrono";
-            tem = false;
-        }
-        else if (new_email_patrono == '' || new_email_patrono == null) {
-            msgErro = "Digite o email do patrono";
-            tem = false;
-        }
     }
 
     if (tem == false) {
@@ -309,11 +279,13 @@ document.getElementById('btn-registar-novo-advogado').addEventListener('click', 
         new_nome_patrono = null;
         new_telefone_patrono = null;
         new_email_patrono = null;
+        new_cedula_patrono = null;
 
         if (new_categoria == 'Estagiario') {
             new_nome_patrono = document.getElementById('new_nome_patrono').value;
             new_telefone_patrono = document.getElementById('new_telefone_patrono').value;
             new_email_patrono = document.getElementById('new_email_patrono').value;
+            new_cedula_patrono = document.getElementById('new_cedula_patrono').value;
         }
 
         formData.append('nome_advogado', new_nome_advogado);
@@ -332,6 +304,7 @@ document.getElementById('btn-registar-novo-advogado').addEventListener('click', 
         formData.append('nome_patrono', new_nome_patrono);
         formData.append('telefone_patrono', new_telefone_patrono);
         formData.append('email_patrono', new_email_patrono);
+        formData.append('cedula_patrono', new_cedula_patrono);
 
         Swal.fire({
             title: "Confirmação",

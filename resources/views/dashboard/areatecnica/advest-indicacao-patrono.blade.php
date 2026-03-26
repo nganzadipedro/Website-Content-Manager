@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="h1">Inscrições Para Advogados Estagiários Remetidos ao Conselho Nacional</h3>
+                        <h3 class="h1">Inscrições Para Advogados Estagiários [Indicação de Patrono]</h3>
                         <div class="row mt-5">
                             <div class="col-4">
 
@@ -43,10 +43,6 @@
                                     </svg>Exportar em PDF</a>
 
                             </div>
-                            <div class="col-3">
-                                <label for="">Data de Remessa</label>
-                                <input type="date" name="data_remessa_cn" id="data_remessa_cn" class="form-control form-control-sm">
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,10 +61,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nº Processo</th>
-                                            <th>Data Entrada</th>
                                             <th>Requerente</th>
-                                            <th>Contactos</th>
-                                            <th>Data de Remessa ao CN</th>
+                                            <th>Data de Entrada</th>
+                                            <th>Acto Pretendido</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -79,12 +74,11 @@
                                             <tr>
                                                 <td>{{$loop->index + 1}}</td>
                                                 <td>{{$item->codigo}}</td>
-                                                <td>{{$item->getregistoentrada->data_entrada}}</td>
                                                 <td>{{$item->getregistoentrada->proveniencia}}</td>
-                                                <td>{{$item->telefone1}}/{{$item->telefone2}}</td>
-                                                <td>{{$item->data_remessa_cn}}</td>
+                                                <td>{{$item->getregistoentrada->data_entrada}}</td>
+                                                <td>{{$item->acto_pretendido}}</td>
                                                 <td>
-                                                    <a style="cursor: pointer;" data-bilhete="{{$item->num_bilhete}}"
+                                                    <a style="cursor: pointer;" title="Indicar Patrono" data-bilhete="{{$item->num_bilhete}}"
                                                         data-nome="{{$item->getregistoentrada->proveniencia}}"
                                                         class="badge bg-green-lt registar-informacoes"
                                                         data-id="{{ $item->id }}">
@@ -206,6 +200,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>

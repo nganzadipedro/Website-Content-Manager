@@ -11,11 +11,11 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class Listaremessacnexport implements FromCollection, WithHeadings
 {
 
-    private $turma_id;
+    private $data_remessa_p;
 
-    function __construct()
+    function __construct($data_remessa)
     {
-        
+        $this->data_remessa_p = $data_remessa;
     }
 
     /**
@@ -29,6 +29,7 @@ class Listaremessacnexport implements FromCollection, WithHeadings
         $result = Inscricaoadvogado::query()
             ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
             ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->where('inscricao_advogado.data_remessa_cn', $this->data_remessa_p)
             ->whereNotNull('inscricao_advogado.data_remessa_cn')
             ->orderBy('registo_entrada.proveniencia', 'asc')
             ->select('inscricao_advogado.*')

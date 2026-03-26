@@ -6,10 +6,13 @@
             <div class="container-xl">
                 <div class="row row-cards">
                     <div class="col-12">
+
                         <form class="card">
+
                             <div class="card-header">
                                 <h4 class="card-title">Registo de Entrada</h4>
                             </div>
+                            
                             <div class="card-body">
 
                                 @csrf

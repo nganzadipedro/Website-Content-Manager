@@ -25,20 +25,24 @@ function buscarItem(id) {
                 municipio = data.getmunicipio.descricao;
             }
 
+            contactos = '';
+            contactos = data.getpessoa.telefone1 == null ? '' : data.getpessoa.telefone1;
+            contactos += data.getpessoa.telefone2 == null ? '' : '/' + data.getpessoa.telefone1;
+
             html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
                             Nome completo: ${data.getpessoa.nome} <br><br>
-                            Nome profissional: ${data.nome_profissional} <br><br>
-                            Género: ${data.getpessoa.genero} <br><br>
+                            Nome profissional: ${data.nome_profissional == null ? '' : data.nome_profissional} <br><br>
+                            Género: ${data.getpessoa.genero == null ? '' : data.getpessoa.genero} <br><br>
                             Nº BI: ${data.getpessoa.num_documento} <br><br>
                             <strong> Categoria: ${data.categoria} </strong> <br><br>
-                            Nº Cédula Advogado: ${data.num_associado} <br><br>
-                            Nº Cédula Estagiário: ${data.num_estagiario} <br><br>
-                            Email: ${data.getpessoa.email}<br><br>
-                            Contactos: ${data.getpessoa.telefone1}/${data.getpessoa.telefone2}<br><br>
-                            Endereço: ${data.endereco_escritorio}<br><br>
+                            Nº Cédula Advogado: ${data.num_associado == null ? '' : data.num_associado} <br><br>
+                            Nº Cédula Estagiário: ${data.num_estagiario == null ? '' : data.num_estagiario} <br><br>
+                            Email: ${data.getpessoa.email == null ? '' : data.getpessoa.email}<br><br>
+                            Contactos: ${contactos}<br><br>
+                            Endereço: ${data.endereco_escritorio == null ? '' : data.endereco_escritorio}<br><br>
                             Município: ${municipio} <br><br>
-                            Data de Inscrição Advogado: ${data.data_inscricao_oaa} <br><br>
-                            Data de Inscrição Estagiário: ${data.data_inscricao_estagiario}
+                            Data de Inscrição Advogado: ${data.data_inscricao_oaa == null ? '' : data.data_inscricao_oaa} <br><br>
+                            Data de Inscrição Estagiário: ${data.data_inscricao_estagiario == null ? '' : data.data_inscricao_estagiario}
                         </div>`
             $("#dv-detalhes").html(html);
 

@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Inscrições Para Advogados Estagiários Registados</h3>
+                            <h3 class="h1">Inscrições Para Advogados Estagiários [{{ $categoria_p }}]</h3>
                             <a id="btn-remeter-cn" class="btn btn-primary">Remeter ao Conselho Nacional</a>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                         <th>Nº Processo</th>
                                         <th>Requerente</th>
                                         <th>Despacho</th>
-                                        <th>Tipo de Processo</th>
+                                        <th>Acto Pretendido</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -54,7 +54,7 @@
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
                                             <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
-                                            <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
+                                            <td>{{$item->acto_pretendido}}</td>
                                             <td>
                                                 <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
                                                     class="badge bg-green-lt">
@@ -104,13 +104,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -140,6 +136,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 <div class="modal modal-blur fade" id="modal-alterar-despacho" tabindex="-1" role="dialog" aria-hidden="true">

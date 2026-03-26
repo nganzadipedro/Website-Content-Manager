@@ -27,6 +27,7 @@ class Advogado extends Model
         'doc_cedula_associado',
         'nome_patrono',
         'email_patrono',
+        'cedula_patrono',
         'telefone_patrono',
         'data_inscricao_oaa',
         'data_inscricao_estagiario',

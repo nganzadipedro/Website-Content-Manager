@@ -42,6 +42,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
+    Route::get('/defesa-oficiosa', 'Controllers\WebsiteController@defesa_oficiosa');
+     Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
+
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -219,6 +222,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Secretaria\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
+                Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
+                Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
 
             });
         });
@@ -238,7 +243,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/subscription/registed', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
                 Route::get('/list/lawyers-cn', 'Livewire\Areatecnica\Listacn')->name('listar_advogados_cn');
                 Route::get('/list/map-distribution', 'Livewire\Areatecnica\Mapadistribuicao')->name('listar_mapa_distribuicao');
-                Route::get('/list/subscription-trainee/registed', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
+                Route::get('/list/subscription-trainee/registed/{categoria}', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
                 Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
                 Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
@@ -257,8 +262,9 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/edit-data/patrono/{hash}', 'Livewire\Areatecnica\Editarpatrono')->name('edit_patrono');
 
                 Route::get('/export-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
-                Route::get('/exportxls-trainee/remessacn', 'Controllers\AdvogadoController@export_remessa_cn')->name('export_remessa_cn');
+                Route::post('/exportxls-trainee/remessacn', 'Controllers\AdvogadoController@export_remessa_cn')->name('export_remessa_cn');
                 Route::get('/exportpdf-trainee/remessacn', 'Controllers\AdvogadoController@lista_estagiarios_remessacn')->name('exportpdf_remessa_cn');
+                Route::post('/exportpdf-trainee-post/remessacn', 'Controllers\AdvogadoController@export_pdf_lista_estagiarios_remessacn');
                 Route::get('/exportpdf-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@lista_aguardando_cerimonia')->name('exportpdf_waiting_cerimony');
 
             });

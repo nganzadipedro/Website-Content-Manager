@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Municipio;
 use App\Models\Platform\Advogado;
 use App\Models\Denuncia;
 use App\Models\Galeria;
@@ -209,6 +210,13 @@ class WebsiteController extends Controller
         }
 
         abort(404, 'Arquivo não encontrado');
+    }
+
+    public function defesa_oficiosa(){
+
+        $municipios = Municipio::all();
+        return view('defesa-oficiosa-solicitar', compact('municipios'));
+
     }
 
 }

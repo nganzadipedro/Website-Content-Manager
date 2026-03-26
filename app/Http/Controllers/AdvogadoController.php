@@ -119,10 +119,10 @@ class AdvogadoController extends Controller
         return Excel::download(new Listaaguardacerimoniaexport($categoria), $nome_file . '.xlsx');
     }
 
-    public function export_remessa_cn()
+    public function export_remessa_cn(Request $request)
     {
         $nome_file = 'lista_inscricoes_estagiarios_remetidos_cn';
-        return Excel::download(new Listaremessacnexport(), $nome_file . '.xlsx');
+        return Excel::download(new Listaremessacnexport($request->data_remessa_cn), $nome_file . '.xlsx');
     }
 
     public function lista_estagiarios_remessacn()
@@ -165,6 +165,54 @@ class AdvogadoController extends Controller
         ]);
 
         return $pdf->stream();
+
+    }
+
+    public function export_pdf_lista_estagiarios_remessacn(Request $request)
+    {
+
+        $result = Inscricaoadvogado::query()
+            ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
+            ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->where('inscricao_advogado.data_remessa_cn', $request->data_remessa_cn)
+            ->whereNotNull('inscricao_advogado.data_remessa_cn')
+            ->orderBy('registo_entrada.proveniencia', 'asc')
+            ->select('inscricao_advogado.*')
+            ->get();
+
+        $num_candidatos = count($result);
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.lista-remessa-cn', [
+            'inscricoes' => $result,
+            'num_candidatos' => $num_candidatos,
+            'data' => $data_emissao
+        ]);
+
+         return $pdf->stream();
+
+        // return response()->streamDownload(function () use ($pdf) {
+        //     echo $pdf->output();
+        // }, 'lista_remessa_cn.pdf');
 
     }
 
