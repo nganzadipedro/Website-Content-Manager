@@ -56,6 +56,20 @@
                                             <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
                                             <td>{{$item->acto_pretendido}}</td>
                                             <td>
+                                                 @if ($item->despacho == 'Indeferido')
+                                                <a style="cursor: pointer;" title="Indicar Patrono"
+                                                    href="{{ route('system.areatecnica.editar_inscricao', $item->getregistoentrada->hash) }}"
+                                                    class="badge bg-yellow-lt">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                    </svg>
+                                                </a>
+                                                @endif
                                                 <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
                                                     class="badge bg-green-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -136,7 +150,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 <div class="modal modal-blur fade" id="modal-alterar-despacho" tabindex="-1" role="dialog" aria-hidden="true">

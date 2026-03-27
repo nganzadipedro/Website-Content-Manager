@@ -1042,6 +1042,8 @@ class SystemController extends Controller
 
         date_default_timezone_set("Africa/Luanda");
 
+        $conta_estagiarios = 0;
+
         $registo = Registoentrada::find($request->registo_entrada_id);
         $registo->estado = 'em tratamento';
         $registo->save();
@@ -1145,6 +1147,8 @@ class SystemController extends Controller
                     $advogado->save();
                 }
 
+                $conta_estagiarios = count($patrono->estagiarios);
+
             }
             // avaliação da situação de novos patronos
             else if ($request->acto_pretendido != 'Indicação de Patrono') {
@@ -1181,6 +1185,8 @@ class SystemController extends Controller
 
                 $patrono_id = $patrono->id;
 
+                $conta_estagiarios = 0;
+
             }
 
             $dataHoje = date('Y-m-d');
@@ -1205,7 +1211,7 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            if ($request->acto_pretendido != 'Indicação de Patrono') {
+            if ($request->acto_pretendido != 'Indicação de Patrono' && $conta_estagiarios < 10) {
 
                 $est_patrono = Estagiariospatrono::create([
                     'patrono_id' => $patrono_id,
@@ -1224,7 +1230,7 @@ class SystemController extends Controller
                 $inscricao->despacho = null;
                 $inscricao->save();
 
-                $mensagem_not = "O seu processo já foi registado na área técnica, mas aguarda por indicação de patrono";
+                $mensagem_not = "O seu processo já foi registado na área técnica, estando em falta a indicação do patrono";
                 ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
 
@@ -1259,16 +1265,30 @@ class SystemController extends Controller
             $obmsg = new OmbalaController();
             $nome = $registo->proveniencia;
 
-            try {
-                $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
-                if ($request->email != null && $request->email != '') {
-                    $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
-                }
-            } catch (\Throwable $th) {
+            if ($inscricao->despacho = 'Indeferido') {
 
+                try {
+
+                    $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição. Verifique o seu email");
+                    if ($request->email != null && $request->email != '') {
+                        $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
+                    }
+                } catch (\Throwable $th) {
+
+                }
+            } else {
+                try {
+
+                    $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
+                    if ($request->email != null && $request->email != '') {
+                        $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
+                    }
+                } catch (\Throwable $th) {
+
+                }
             }
 
-            ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição para advogado estagiário do(a) Sr(a). $nome", 'user', $inscricao->id);
 
         }
 
@@ -1285,6 +1305,8 @@ class SystemController extends Controller
         $inscricao = Inscricaoadvogado::where('registo_entrada_id', $request->registo_entrada_id)->first();
 
         $patrono_id = null;
+
+        $conta_estagiarios = 0;
 
         // avaliação da situação de patronos existentes
         if ($request->patrono_id != null && $request->patrono_id != '') {
@@ -1339,9 +1361,13 @@ class SystemController extends Controller
 
                 $est = Estagiariospatrono::where('patrono_id', $inscricao->patrono_id)
                     ->where('inscricao_advogado_id', $inscricao->id)->first();
-                $est->delete();
+                if ($est) {
+                    $est->delete();
+                }
 
             }
+
+            $conta_estagiarios = count($patrono->estagiarios);
 
         }
         // avaliação da situação de novos patronos
@@ -1379,6 +1405,8 @@ class SystemController extends Controller
 
             $patrono_id = $patrono->id;
 
+            $conta_estagiarios = 0;
+
         }
 
         $dataHoje = date('Y-m-d');
@@ -1396,7 +1424,7 @@ class SystemController extends Controller
         $inscricao->num_bilhete = $request->num_bilhete;
         $inscricao->save();
 
-        if ($request->acto_pretendido != 'Indicação de Patrono') {
+        if ($request->acto_pretendido != 'Indicação de Patrono' && $conta_estagiarios < 10) {
 
             $est_patrono = Estagiariospatrono::create([
                 'patrono_id' => $patrono_id,
@@ -1415,7 +1443,7 @@ class SystemController extends Controller
             $inscricao->despacho = null;
             $inscricao->save();
 
-            $mensagem_not = "O seu processo foi actualizado na área técnica, mas aguarda por indicação de patrono";
+            $mensagem_not = "O seu processo foi actualizado na área técnica, estando em falta a indicação do patrono";
             ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
 
@@ -1450,18 +1478,30 @@ class SystemController extends Controller
         $obmsg = new OmbalaController();
         $nome = $registo->proveniencia;
 
-        try {
-            $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
-            if ($request->email != null && $request->email != '') {
-                $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
-            }
-        } catch (\Throwable $th) {
+        if ($inscricao->despacho = 'Indeferido') {
 
+            try {
+
+                $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição. Verifique o seu email");
+                if ($request->email != null && $request->email != '') {
+                    $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
+                }
+            } catch (\Throwable $th) {
+
+            }
+        } else {
+            try {
+
+                $obmsg->enviarMensagem($inscricao->telefone1, $mensagem_not);
+                if ($request->email != null && $request->email != '') {
+                    $ob->mailNotificacao($request->email, $nome, $mensagem_not, $registo->data_entrada);
+                }
+            } catch (\Throwable $th) {
+
+            }
         }
 
-        ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
-
-
+        ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição para advogado estagiário do(a) Sr(a). $nome", 'user', $inscricao->id);
 
         return 'sucesso';
 
@@ -1694,8 +1734,7 @@ class SystemController extends Controller
             $msg = "Processo de inscrição despachado como $request->despacho, com a seguinte mensagem: $request->mensagem_despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
 
-        }
-        else if ($request->despacho == 'Sobre a mesa do Presidente') {
+        } else if ($request->despacho == 'Sobre a mesa do Presidente') {
 
             $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
             $inscricao_advogado->texto_despacho = "";
