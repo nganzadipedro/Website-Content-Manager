@@ -364,6 +364,7 @@ class SystemController extends Controller
             $inscricao_adv->data_levantamento_distribuicao = $request->data_levantamento_distribuicao;
             $inscricao_adv->conselheiro_id = $request->conselheiro_id;
             $inscricao_adv->estado_distribuicao = 'Distribuido';
+            $inscricao_adv->estado = 'análise de conselheiro';
             $inscricao_adv->save();
 
             $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
@@ -399,6 +400,238 @@ class SystemController extends Controller
             ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado do(a) senhor(a) $nome ao conselheiro $nome_conselheiro para a devida análise.", 'user', $inscricao_adv->id);
 
         }
+
+        return 'sucesso';
+
+    }
+
+    public function entrega_conselheiro_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        // primeiro verifica se dos selecionados tem algum que já foi devolvido
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            if ($inscricao_adv->data_entrega_distribuicao != null) {
+                $nome = $inscricao_adv->getregistoentrada->proveniencia;
+                return "O processo de inscrição do senhor $nome já foi devolvido. Não pode ser devolvido duas vezes.";
+            }
+
+        }
+
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+
+            $inscricao_adv->data_entrega_distribuicao = $request->data_entrega_distribuicao;
+            $inscricao_adv->save();
+
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            // notifica o advogado por SMS e email
+            $nome = $registo->proveniencia;
+            $conselheiro = User::find($inscricao_adv->conselheiro_id);
+            $nome_conselheiro = $conselheiro->getpessoa->nome;
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "O(A) conselheiro(a) $nome_conselheiro fez a devolução do processo para a área técnica.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição para advogado do(a) senhor(a) $nome analisado pelo(a) conselheiro(a) $nome_conselheiro.", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+    }
+
+    public function remessa_comissaoetica_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        // primeiro verifica se dos selecionados tem algum que já foi remetido a comissao de ética
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $nome = $inscricao_adv->getregistoentrada->proveniencia;
+
+            if ($inscricao_adv->data_levantamento_comissao_etica != null || $inscricao_adv->estado == 'análise comissão de ética') {
+                return "O processo de inscrição do senhor $nome já foi remetido à comissão de ética. Não pode ser remetido duas vezes.";
+            }
+
+            if ($inscricao_adv->data_entrega_distribuicao == null) {
+                return "O processo de inscrição do senhor $nome ainda não foi devolvido pelo conselheiro. Não pode ser entregue à comissáo de ética";
+            }
+
+        }
+
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+
+            $inscricao_adv->data_levantamento_comissao_etica = $request->data_remessa_comissao;
+            $inscricao_adv->estado = 'análise comissão de ética';
+            $inscricao_adv->save();
+
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            $obmsg = new OmbalaController();
+            $obmail = new MailController();
+            $telefone = $inscricao_adv->telefone1;
+            $nome = $registo->proveniencia;
+            $email = $inscricao_adv->email;
+            $data_entrada = $registo->data_entrada;
+
+            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
+            // try {
+            //     $obmsg->enviarMensagem($telefone, $mensagem);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
+            // try {
+            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à comissão de ética para a devida análise.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a remessa do processo de inscrição para advogado do(a) senhor(a) $nome à comissão de ética para a devida análise.", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+    }
+
+    public function entrega_comissaoetica_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        // primeiro verifica se dos selecionados tem algum que já foi devolvico pela comissao de ética
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $nome = $inscricao_adv->getregistoentrada->proveniencia;
+
+            if ($inscricao_adv->data_entrega_comissao_etica != null) {
+                return "O processo de inscrição do senhor $nome já foi devolvido pela comissão de ética. Não pode ser devolvido duas vezes.";
+            }
+
+            if ($inscricao_adv->data_entrega_distribuicao == null) {
+                return "O processo de inscrição do senhor $nome ainda não foi devolvido pelo conselheiro. Não pode ser remetido à mesa do Presidente";
+            }
+
+            if ($inscricao_adv->data_levantamento_comissao_etica == null) {
+                return "O processo de inscrição do senhor $nome ainda não foi entregue à comissão de ética. Não pode ser remetido à mesa do Presidente";
+            }
+
+        }
+
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+
+            $inscricao_adv->data_entrega_comissao_etica = $request->data_entrega_comissao_etica;
+            $inscricao_adv->estado = 'Sobre a mesa do Presidente';
+            $inscricao_adv->save();
+
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            $obmsg = new OmbalaController();
+            $obmail = new MailController();
+            $telefone = $inscricao_adv->telefone1;
+            $nome = $registo->proveniencia;
+            $email = $inscricao_adv->email;
+            $data_entrada = $registo->data_entrada;
+
+            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
+            // try {
+            //     $obmsg->enviarMensagem($telefone, $mensagem);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
+            // try {
+            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            // } catch (\Throwable $th) {
+
+            // }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à mesa do Sr. Presidente.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição pela comissão de ética e remeteu à mesa do Sr. Presidente.", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+    }
+
+    public function entrega_comissaoetica_indeferido_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+        $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
+
+        $inscricao_adv->data_entrega_comissao_etica = $request->data_entrega_comissao_etica;
+        $inscricao_adv->texto_despacho = $request->texto_despacho;
+        $inscricao_adv->observacao = $request->texto_despacho;
+        $inscricao_adv->observacao_comissao_etica = $request->texto_despacho;
+        $inscricao_adv->observacao_distribuicao = $request->texto_despacho;
+        $inscricao_adv->data_despacho = $request->data_entrega_comissao_etica;
+        $inscricao_adv->despacho = 'Indeferido';
+        $inscricao_adv->save();
+
+        $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+        $registo->estado = 'indeferido';
+        $registo->save();
+
+        $obmsg = new OmbalaController();
+        $obmail = new MailController();
+        $telefone = $inscricao_adv->telefone1;
+        $nome = $registo->proveniencia;
+        $email = $inscricao_adv->email;
+        $data_entrada = $registo->data_entrada;
+
+        $mensagem = $inscricao_adv->texto_despacho;
+
+        // $mensagem = "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição para advogado. Verifique o seu email.";
+        // try {
+        //     $obmsg->enviarMensagem($telefone, $mensagem);
+        // } catch (\Throwable $th) {
+
+        // }
+
+        // $mensagem = $inscricao_adv->texto_despacho;
+        // try {
+        //     $obmail->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+        // } catch (\Throwable $th) {
+
+        // }
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "O processo foi despachado como indeferido com a seguinte observação: $mensagem", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição do(a) Sr(a). $nome pela comissão de ética, com o despacho indeferido", 'user', $inscricao_adv->id);
 
         return 'sucesso';
 
@@ -1428,7 +1661,7 @@ class SystemController extends Controller
 
             $telefone = $inscricao_advogado->telefone1;
             $obmsg = new OmbalaController();
-            $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Já foi emitido um despacho para o seu processo de inscrição.");
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), o seu processo de inscrição foi despachado como Deferido.");
 
             $msg = "Processo de inscrição despachado como $request->despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
@@ -1436,6 +1669,7 @@ class SystemController extends Controller
         } else if ($request->despacho == 'Indeferido') {
 
             $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
+            $inscricao_advogado->observacao = $request->mensagem_despacho;
             $inscricao_advogado->texto_despacho = $request->mensagem_despacho;
             $inscricao_advogado->despacho = $request->despacho;
             $inscricao_advogado->data_despacho = $request->data_despacho;
@@ -1449,7 +1683,7 @@ class SystemController extends Controller
             $obmsg = new OmbalaController();
 
             try {
-                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. Consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
                 if ($email != null && $email != '') {
                     $ob->mailDespacho($email, $nome, $request->mensagem_despacho, $data_despacho);
                 }
@@ -1461,8 +1695,40 @@ class SystemController extends Controller
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
 
         }
+        else if ($request->despacho == 'Sobre a mesa do Presidente') {
 
-        $msg = "Registou a emissão de despacho para o processo de inscrição.";
+            $inscricao_advogado = Inscricaoadvogado::find($request->inscricao_advogado_id);
+            $inscricao_advogado->texto_despacho = "";
+            $inscricao_advogado->observacao = "";
+            $inscricao_advogado->despacho = null;
+            $inscricao_advogado->estado = 'Sobre a mesa do Presidente';
+            $inscricao_advogado->data_despacho = $request->data_despacho;
+            $inscricao_advogado->save();
+
+            $nome = $registo->proveniencia;
+            $email = $inscricao_advogado->email;
+            $telefone = $inscricao_advogado->telefone1;
+            $data_despacho = $request->data_despacho;
+            $ob = new MailController();
+            $obmsg = new OmbalaController();
+
+            $mensagem = "Caríssimo(a), foi sanada a irregularidade do seu processo e a mesma foi remetida à mesa do Sr. Presidente do CPL.";
+
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+                if ($email != null && $email != '') {
+                    $ob->mailNotificacao($email, $nome, $mensagem, $registo->data_entrada);
+                }
+            } catch (\Throwable $th) {
+
+            }
+
+            $msg = "Processo de inscrição remetido à mesa do Sr. Presidente do CPL.";
+            ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+
+        }
+
+        $msg = "Registou a emissão de despacho para o processo de inscrição como $request->despacho.";
         ActividadesistemaController::inserir(Auth::id(), $msg, 'user', $registo->id);
 
         return 'sucesso';

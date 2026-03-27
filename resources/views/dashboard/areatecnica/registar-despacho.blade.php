@@ -55,7 +55,7 @@
                                                         <strong> Assunto: {{ $registo->assunto }}</strong><br>
                                                         Data de Entrada: {{ $registo->data_entrada }}<br>
                                                         Data de Registo na Secretaria: {{ $registo->created_at }}<br>
-                                                        Tipo de Processo: {{ $registo->gettipoprocesso->descricao }}<br>
+                                                        Tipo de Processo: {{ $registo->gettipoprocesso->descricao }}<br><br>
                                                         Observação: {{ $inscricao_advogado->texto_despacho }}<br>
                                                     </p>
                                                 </div>
@@ -156,6 +156,7 @@
                                                             <option value="" selected>Escolha a opção...</option>
                                                             <option value="Deferido">Deferido</option>
                                                             <option value="Indeferido">Indeferido</option>
+                                                            <option value="Sobre a mesa do Presidente">Sobre a mesa do Presidente</option>
                                                         </select>
                                                     </div>
                                                 </div>

@@ -80,6 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
+    Route::post('system/entrega-conselheiro-grupo/post', 'Controllers\SystemController@entrega_conselheiro_grupo_post');
+    Route::post('system/remessa-comissaoetica-grupo/post', 'Controllers\SystemController@remessa_comissaoetica_grupo_post');
+    Route::post('system/entrega-comissaoetica-grupo/post', 'Controllers\SystemController@entrega_comissaoetica_grupo_post');
+    Route::post('system/entrega-comissaoetica-indeferido/post', 'Controllers\SystemController@entrega_comissaoetica_indeferido_post');
     Route::post('system/registo-associado/post', 'Controllers\SystemController@registo_associado_post');
     Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
@@ -241,9 +245,9 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
                 Route::get('/list/subscription', 'Livewire\Areatecnica\Advpendentes')->name('listar_advogados_pendentes');
                 Route::get('/list/subscription-trainee', 'Livewire\Areatecnica\Advestpendentes')->name('listar_estagiarios_pendentes');
-                Route::get('/list/subscription/registed', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
+                Route::get('/list/subscription/registed/{categoria}', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
                 Route::get('/list/lawyers-cn', 'Livewire\Areatecnica\Listacn')->name('listar_advogados_cn');
-                Route::get('/list/map-distribution', 'Livewire\Areatecnica\Mapadistribuicao')->name('listar_mapa_distribuicao');
+                Route::get('/list/map-distribution/{categoria}', 'Livewire\Areatecnica\Mapadistribuicao')->name('listar_mapa_distribuicao');
                 Route::get('/list/subscription-trainee/registed/{categoria}', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
                 Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
                 Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');

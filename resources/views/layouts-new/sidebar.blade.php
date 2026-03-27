@@ -522,12 +522,24 @@
                                         </a>
 
                                         <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao') }}">
+                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao','stage-one') }}">
                                             Mapa de Distribuição
                                         </a>
                                         <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_advogados_registados') }}">
-                                            Registados
+                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-two') }}">
+                                            Remetidos aos Conselheiros
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-three') }}">
+                                            Remetidos à Comissão de Ética
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.listar_advogados_registados', 'Deferido') }}">
+                                            Deferidos
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.listar_advogados_registados', 'Indeferido') }}">
+                                            Indeferidos
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_advogados_cn') }}">

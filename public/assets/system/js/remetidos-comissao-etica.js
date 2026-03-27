@@ -2,9 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const checkAll = document.getElementById("checkAll");
     const checkItems = document.querySelectorAll(".checkItem");
-    const btnRemeterConelheiro = document.getElementById("btn-remeter-conselheiro");
-    const btnCancelar = document.getElementById("btn-cancelar-remeter-conselheiro");
-    const btnRegistarConselheiro = document.getElementById("btn-registar-remeter-conselheiro");
+
+    // botões de chamar modal
+    const btnRegistarDevolucaoModal = document.getElementById("btn-registar-devolucao-modal");
+
+    // botões de salvar e cancelar
+    const btnRegistarDevolucao = document.getElementById("btn-registar-devolucao");
+    const btnCancelarDevolucao = document.getElementById("btn-cancelar-devolucao");
+
 
     // ✅ Selecionar / desselecionar todos
     checkAll.addEventListener("change", () => {
@@ -23,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 🚀 Enviar via AJAX
-    btnRemeterConelheiro.addEventListener("click", () => {
+    // botão de abrir a modal de devolução
+    btnRegistarDevolucaoModal.addEventListener("click", () => {
 
         const selecionados = [];
 
@@ -43,13 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
         else {
 
             console.log("IDs selecionados:", selecionados);
-            const modal = new bootstrap.Modal(document.getElementById('modal-remeter-conselheiro'));
+            const modal = new bootstrap.Modal(document.getElementById('modal-registar-devolucao'));
             modal.show();
 
         }
     });
 
-    btnRegistarConselheiro.addEventListener("click", () => {
+
+    btnRegistarDevolucao.addEventListener("click", () => {
 
         const selecionados = [];
 
@@ -57,23 +63,22 @@ document.addEventListener("DOMContentLoaded", () => {
             selecionados.push(item.value);
         });
 
-        data_levantamento_distribuicao_grupo = document.getElementById('data_levantamento_distribuicao_grupo').value;
-        conselheiro_id_grupo = document.getElementById('conselheiro_id_grupo').value;
-        observacao_distribuicao_grupo = document.getElementById('observacao_distribuicao_grupo').value;
+        data_entrega_comissao_etica = document.getElementById('data_entrega_comissao_etica').value;
+        encaminhar_mesa = document.getElementById('encaminhar_mesa').value;
 
-        if (data_levantamento_distribuicao_grupo == '' || data_levantamento_distribuicao_grupo == null) {
+        if (data_entrega_comissao_etica == '' || data_entrega_comissao_etica == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Digite a data de levantamento",
+                text: "Informe a data de entrega dos processos",
                 timer: 4000
             });
         }
-        else if (conselheiro_id_grupo == null || conselheiro_id_grupo == '') {
+        else if (encaminhar_mesa == '' || encaminhar_mesa == null || encaminhar_mesa == 'Não') {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Selecione o conselheiro",
+                text: "Informe que vai remeter os processos à Mesa do Presidente",
                 timer: 4000
             });
         }
@@ -85,9 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 formData.append('selecionados[]', id);
             });
 
-            formData.append('data_levantamento_distribuicao', data_levantamento_distribuicao_grupo);
-            formData.append('conselheiro_id', conselheiro_id_grupo);
-            formData.append('observacao_distribuicao', observacao_distribuicao_grupo);
+            formData.append('data_entrega_comissao_etica', data_entrega_comissao_etica);
+            formData.append('encaminhar_mesa', encaminhar_mesa);
 
             Swal.fire({
                 title: "Confirmação",
@@ -101,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showLoaderOnConfirm: true,
                 preConfirm: function () {
                     return $.ajax({
-                        url: "/system/distribuicao-grupo/post",
+                        url: "/system/entrega-comissaoetica-grupo/post",
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="_token"]').val()
                         },
@@ -121,8 +125,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/map-distribution/stage-one";
-
+                                window.location.href = "/system/areatecnica/list/map-distribution/stage-three";
+                            }
+                            else if (res != 'sucesso') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso",
+                                    text: res,
+                                    timer: 5000
+                                });
                             }
                         },
                         error: function (error) {
@@ -141,30 +152,115 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    btnCancelar.addEventListener("click", () => {
 
-        const modalElement = document.getElementById('modal-remeter-conselheiro');
+    // botão de fechar a modal de devolução
+    btnCancelarDevolucao.addEventListener("click", () => {
+
+        $('#data_entrega_comissao_etica').val("");
+        const modalElement = document.getElementById('modal-registar-devolucao');
         const modal = bootstrap.Modal.getInstance(modalElement);
         modal.hide();
 
     });
 
-});
+    $(document).on('click', '.registar-indeferido', function () {
+
+        id = $(this).data("id");
+        nome = $(this).data("nome");
+
+        $("#nome_requerente").val(nome);
+        $("#inscricao_id").val(id);
+
+        const modal = new bootstrap.Modal(document.getElementById('modal-alterar-despacho'));
+        modal.show();
+
+    });
+
+     $(document).on('click', '#btn-registar-indeferimento', function () {
+
+        inscricao_id = $("#inscricao_id").val();
+        data_entrega_comissao_etica2 = $('#data_entrega_comissao_etica2').val();
+        texto_despacho = $('#texto_despacho').val();
+
+        if (data_entrega_comissao_etica2 == '' || data_entrega_comissao_etica2 == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite a data de entrega do processo",
+                timer: 4000
+            });
+        }
+        else if (texto_despacho == '' || texto_despacho == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite a mensagem do despacho",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+            formData.append('inscricao_id', inscricao_id);
+            formData.append('data_entrega_comissao_etica', data_entrega_comissao_etica2);
+            formData.append('texto_despacho', texto_despacho);
 
 
-$(document).on('click', '.btn-distribuir', function () {
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/entrega-comissaoetica-indeferido/post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
 
-    // Pega o data-id do <a> clicado
-    let id = $(this).data('id');
-    let requerente = $(this).data('requerente');
-    let data_entrada = $(this).data('entrada');
-    console.log('ID selecionado:', id);
-    $('#inscricao_id').val(id);
-    $('#requerente').val(requerente);
-    $('#data_entrada').val(data_entrada);
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
 
-    // rotina para carregar os dados do registo, se necessário
-    buscarItem(id);
+                                window.location.href = "/system/areatecnica/list/map-distribution/stage-three";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+
+
+        }
+
+
+    });
 
 });
 
@@ -181,116 +277,6 @@ $(document).on('click', '.btn-detalhes', function () {
     // Pega o data-id do <a> clicado
     let id = $(this).data('id');
     buscarItemDetalhes(id);
-
-});
-
-function selecionarCategoria(id) {
-    $('#conselheiro_id').val(id).trigger('change');
-}
-
-function valida_formulario() {
-
-    var msgErro = '';
-    var tem = true;
-
-    const data_levantamento_distribuicao = document.getElementById('data_levantamento_distribuicao').value;
-    const conselheiro_id = document.getElementById('conselheiro_id').value;
-    const data_entrega_distribuicao = document.getElementById('data_entrega_distribuicao').value;
-    const observacao_distribuicao = document.getElementById('observacao_distribuicao').value;
-
-    if (data_levantamento_distribuicao == '' || data_levantamento_distribuicao == null) {
-        msgErro = "Digite a data de levantamento";
-        tem = false;
-    }
-    else if (conselheiro_id == '' || conselheiro_id == null) {
-        msgErro = "Escolha o conselheiro";
-        tem = false;
-    }
-
-    if (tem == false) {
-        sweetAlert({
-            type: "warning",
-            title: "Aviso!",
-            text: msgErro,
-            timer: 4000
-        });
-
-    }
-
-    return tem;
-}
-
-document.getElementById('btn-registar-distribuicao').addEventListener('click', function () {
-
-
-    if (valida_formulario() === true) {
-
-        const formData = new FormData();
-
-        const data_levantamento_distribuicao = document.getElementById('data_levantamento_distribuicao').value;
-        const conselheiro_id = document.getElementById('conselheiro_id').value;
-        const data_entrega_distribuicao = document.getElementById('data_entrega_distribuicao').value;
-        const observacao_distribuicao = document.getElementById('observacao_distribuicao').value;
-        const inscricao_id = document.getElementById('inscricao_id').value;
-
-        formData.append('data_levantamento_distribuicao', data_levantamento_distribuicao);
-        formData.append('conselheiro_id', conselheiro_id);
-        formData.append('data_entrega_distribuicao', data_entrega_distribuicao);
-        formData.append('observacao_distribuicao', observacao_distribuicao);
-        formData.append('inscricao_id', inscricao_id);
-
-        Swal.fire({
-            title: "Confirmação",
-            text: "Tem certeza que deseja registar estes dados?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#34c38f",
-            cancelButtonColor: "#f46a6a",
-            confirmButtonText: "Salvar!",
-            cancelButtonText: "Cancelar",
-            showLoaderOnConfirm: true,
-            preConfirm: function () {
-                return $.ajax({
-                    url: "/system/distribuicao/post",
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                    },
-                    type: "POST",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (res) {
-
-                        console.log(res);
-                        if (res == 'sucesso') {
-                            sweetAlert({
-                                type: "success",
-                                title: "Sucesso",
-                                text: 'Dados registados com sucesso!',
-                                timer: 4000
-                            });
-
-                            window.location.reload();
-
-                        }
-
-                    },
-                    error: function (error) {
-
-                        sweetAlert({
-                            type: "warning",
-                            title: "Erro " + error.status,
-                            text: 'Erro: ' + error.responseJSON.message,
-                            timer: 9000
-                        });
-                        console.log("Error: " + error.responseJSON.message);
-                    }
-                });
-            }
-        });
-
-    }
 
 });
 
