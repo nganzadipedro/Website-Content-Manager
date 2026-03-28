@@ -41,7 +41,7 @@ class Atribuiradvogado extends Component
             ->orderBy('pessoa.nome', 'asc')
             ->select('app_advogado.*')->get();
 
-        $this->lista_advogados = Pedidointervencao::all();
+        $this->lista_advogados = Pedidointervencao::where('estado', 'autorizado')->get();
         $this->advogados_atribuidos = Advogadoatribuido::where('registo_entrada_id', $this->registo->id)->get();
         return view('dashboard.admin.atribuir-advogado')->extends('layouts-new.app')->section('content');
     }

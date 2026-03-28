@@ -74,7 +74,6 @@ function buscarDados(tipo, numero, categoria) {
 
                 limpaCampos();
                 $('#pg-aviso').show();
-                $('#campos-finais').show();
 
                 if (categoria == 'Estagiario') {
                     $('#dados-patrono').show();
@@ -155,6 +154,14 @@ $(document).on('change', '#categoria_verificar', function () {
     limpaCampos();
 
 });
+
+$(document).on('click', '#preencher-formulario', function () {
+
+    $('#campos-finais').show();
+    $('#pg-aviso').hide();
+
+});
+
 
 
 function limpaCampos() {
@@ -385,6 +392,17 @@ document.getElementById('btn-submeter').addEventListener('click', function () {
 
                             window.location.reload();
 
+                        }
+                        else if (res == 'duplicado') {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'Já existe na nossa base de dados a sua solicitação de defesa oficiosa.',
+                                timer: 5000
+                            });
+
+                            window.location.reload();
                         }
 
                     },

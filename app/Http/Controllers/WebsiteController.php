@@ -233,6 +233,13 @@ class WebsiteController extends Controller
 
         if ($request->advogado_id != null && $request->advogado_id != '') {
 
+            // verifica se o advogado já solicitou defesa oficiosa
+            $existe = Pedidointervencao::where('advogado_id', $request->advogado_id)->first();
+
+            if ($existe != null && ($existe->estado == 'pendente' || $existe->estado == 'autorizado')) {
+                return 'duplicado';
+            }
+
             $advogado = Advogado::find($request->advogado_id);
             $pessoa = Pessoa::find($advogado->pessoa_id);
 

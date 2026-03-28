@@ -35,6 +35,18 @@
     body {
       font-feature-settings: "cv03", "cv04", "cv11";
     }
+
+    #preencher-formulario {
+      text-decoration: underline;
+      cursor: pointer;
+      font-style: italic;
+    }
+
+     #preencher-formulario:hover {
+      color: #000;
+    }
+
+
   </style>
 
   @livewireStyles
@@ -109,15 +121,33 @@
                 </div>
               </div>
 
+              <p id="pg-sucesso" class="alert alert-success text-center mt-4">Encontramos o seu registo na base de
+                dados.
+                Em caso de haver alguma irregularidade, solicite actualização de dados junto a secretaria do CPL.<br>
+                Preencha os outros campos em falta no formulário para submeter a sua solicitação:</p>
+
+              <div id="pg-aviso" class="alert alert-info text-center mt-4">
+
+                Não encontramos nenhum registo associado aos dados fornecidos na nossa base de
+                dados. Apresentamos-lhe duas opções:<br><br>
+
+
+                <p>
+                  <strong>
+                    1) Contactar a secretaria do CPL e solicitar a actualização dos seus dados.<br>
+                    2) Preencher o formulário de solicitação de defesa oficiosa, onde incluirá também os seus dados
+                    profissionais.
+                  </strong>
+                </p>
+
+                <br>
+                <a id="preencher-formulario">Caso seja a segunda opção, clique aqui para preencher o formulário de
+                  solicitação de defesa oficiosa</a>
+
+              </div>
+
               <div class="mt-5" id="campos-finais" style="border: solid 1px #ccc; padding: 15px; border-radius: 5px;">
-
-                <p id="pg-sucesso" class="alert alert-success text-center">Encontramos o seu registo na base de dados.
-                  Em caso de haver alguma irregularidade, solicite actualização de dados junto a secretaria do CPL.<br>
-                  Preencha os outros campos em falta no formulário para submeter a sua solicitação:</p>
-                <p id="pg-aviso" class="alert alert-warning text-center">Não encontramos o seu registo na nossa base de
-                  dados. Preencha o formulário que se segue:</p>
-
-                <div class="row mt-5">
+                <div class="row">
                   <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                     <label class="form-label">Nome completo (sem abreviações)</label>
                     <input type="text" placeholder="Digite o seu nome completo" maxlength="150" class="form-control"
@@ -199,7 +229,8 @@
                     </select>
                   </div>
                   <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                    <label for="tipo_processo" class="form-label">Tipos de Processo a Intervir (Ex: Civil, Crime, Laboral, Família)</label>
+                    <label for="tipo_processo" class="form-label">Tipos de Processo a Intervir (Ex: Civil, Crime,
+                      Laboral, Família)</label>
                     <input type="text" maxlength="200" class="form-control" name="tipo_processo" id="tipo_processo"
                       value="" placeholder="Digite separando com vírgulas">
                   </div>

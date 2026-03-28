@@ -650,6 +650,9 @@ class SystemController extends Controller
         $telefone = $pedido->advogado_id == null ? $pedido->telefone1 : $pedido->getadvogado->getpessoa->telefone1;
         $telefone2 = $pedido->advogado_id == null ? $pedido->telefone2 : $pedido->getadvogado->getpessoa->telefone2;
         $nome = $pedido->advogado_id == null ? $pedido->nome : $pedido->getadvogado->getpessoa->nome;
+        $genero = $pedido->advogado_id == null ? $pedido->genero : $pedido->getadvogado->getpessoa->genero;
+        $email = $pedido->advogado_id == null ? $pedido->email : $pedido->getadvogado->getpessoa->email;
+        $num_documento = $pedido->advogado_id == null ? $pedido->num_documento : $pedido->getadvogado->getpessoa->num_documento;
         $categoria = $pedido->advogado_id == null ? $pedido->categoria : $pedido->getadvogado->categoria;
         $endereco = $pedido->advogado_id == null ? $pedido->endereco_escritorio : $pedido->getadvogado->endereco_escritorio;
         $municipio = $pedido->advogado_id == null ? $pedido->municipio_id : $pedido->getadvogado->municipio_id;
@@ -685,6 +688,59 @@ class SystemController extends Controller
             'user_id' => Auth::user()->id,
             'registo_id' => $registo->id
         ]);
+
+        // transformar em advogado
+        if ($pedido->advogado_id == null) {
+
+            // verifica se a cédula está duplicada
+            $existe = null;
+
+            if ($pedido->categoria == 'Estagiario') {
+                $existe = Advogado::where('categoria', $pedido->categoria)
+                    ->where('num_estagiario', $pedido->num_cedula)->first();
+            } else {
+                $existe = Advogado::where('categoria', $pedido->categoria)
+                    ->where('num_associado', $pedido->num_cedula)->first();
+            }
+
+            if ($existe != null) {
+                return 'duplicado';
+            }
+
+            $pessoa = Pessoa::create([
+                'nome' => mb_strtoupper($nome, 'UTF-8'),
+                'num_documento' => $num_documento,
+                'email' => strtolower($email),
+                'telefone1' => $telefone,
+                'telefone2' => $telefone2,
+                'documento' => 'Bilhete de Identidade',
+                'genero' => $genero
+            ]);
+
+            $advogado = Advogado::create([
+                'categoria' => $pedido->categoria,
+                'nome_profissional' => $pessoa->nome,
+                'num_associado' => $pedido->categoria == 'Estagiario' ? null : $pedido->num_cedula,
+                'num_estagiario' => $pedido->categoria == 'Advogado' ? null : $pedido->num_cedula,
+                'pessoa_id' => $pessoa->id,
+                'hash' => Str::uuid(),
+                'nome_patrono' => $pedido->nome_patrono,
+                'email_patrono' => $pedido->email_patrono,
+                'telefone_patrono' => $pedido->telefone_patrono,
+                'cedula_patrono' => $pedido->cedula_patrono,
+                'nome_escritorio' => $pedido->nome_escritorio,
+                'municipio_id' => $pedido->municipio_id,
+                'endereco_escritorio' => $pedido->endereco_escritorio,
+                'estado' => 'Registado'
+            ]);
+
+            $advogado->codigo= "CPL" . $advogado->id;
+            $advogado->save();
+
+            $pedido->advogado_id = $advogado->id;
+            $pedido->save();
+
+        }
 
         // notificar candidato
         $obmsg = new OmbalaController();

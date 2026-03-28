@@ -54,7 +54,8 @@
                                                 <strong>Requerente: {{ $registo->proveniencia }}</strong> <br>
                                                 Assunto: {{ $registo->assunto }} <br>
                                                 Endereço do Requerente: {{ $registo->endereco_requerente }} <br>
-                                                Município do Requerente: {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}
+                                                Município do Requerente:
+                                                {{ $registo->municipio_requerente == null ? '' : $registo->getmunicipio->descricao }}
                                             </p>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-xl-6 col-12">
@@ -101,16 +102,33 @@
                                                 <tbody>
                                                     @foreach ($lista_advogados as $item)
                                                         <tr>
+
+                                                            @php
+
+                                                                $cedula = '';
+                                                                if ($item->advogado_id == null) {
+                                                                    $cedula = $item->num_cedula;
+                                                                } else {
+                                                                    $cedula = $item->getadvogado->categoria == 'Estagiario' ? $item->getadvogado->num_estagiario : $item->getadvogado->num_associado;
+                                                                }
+
+                                                                $nome = $item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome;
+                                                                $municipio = $item->advogado_id == null ? $item->getmunicipio->descricao : $item->getadvogado->getmunicipio->descricao;
+                                                                $endereco = $item->advogado_id == null ? $item->endereco_escritorio : $item->getadvogado->endereco_escritorio;
+
+                                                            @endphp
+
                                                             <td>{{ $loop->index + 1 }}</td>
-                                                            <td>{{ $item->getadvogado->categoria == 'Estagiario' ? $item->getadvogado->num_estagiario : $item->getadvogado->num_associado }}
+                                                            <td>{{ $cedula }}
                                                             </td>
                                                             <td>
-                                                                {{$item->getadvogado->getpessoa->nome}}
+                                                                {{$nome}}
                                                             </td>
-                                                            <td>{{ $item->getadvogado->categoria }}</td>
+                                                            <td>{{ $item->advogado_id == null ? $item->categoria : $item->getadvogado->categoria }}
+                                                            </td>
                                                             <td>{{ $item->tipo_processo }}</td>
-                                                            <td>{{ $item->getadvogado->municipio_id == null ? '' : $item->getadvogado->getmunicipio->descricao }}</td>
-                                                            <td>{{ $item->getadvogado->endereco_escritorio }}</td>
+                                                            <td>{{ $municipio }}</td>
+                                                            <td>{{ $endereco }}</td>
 
                                                             <td>
                                                                 <a title="Adicionar" data-id="{{ $item->advogado_id }}"

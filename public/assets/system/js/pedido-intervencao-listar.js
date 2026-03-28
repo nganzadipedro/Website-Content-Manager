@@ -107,6 +107,7 @@ $(document).on('click', '#btn-autorizar', function () {
                 success: function (res) {
 
                     console.log(res);
+
                     if (res == 'sucesso') {
                         sweetAlert({
                             type: "success",
@@ -114,9 +115,17 @@ $(document).on('click', '#btn-autorizar', function () {
                             text: 'Operação realizada com sucesso!',
                             timer: 4000
                         });
-
                         window.location.reload();
                     }
+                    else if (res == 'duplicado') {
+                        sweetAlert({
+                            type: "warning",
+                            title: "Aviso",
+                            text: 'O número da cédula já existe na base de dados',
+                            timer: 4000
+                        });
+                    }
+                    
                 },
                 error: function (error) {
 
@@ -201,12 +210,12 @@ function buscarItemDetalhes(id) {
                             Estado da solicitação: ${data[0].estado}<br><br>
                         </div>`
 
-                        if(data[0].categoria == 'Estagiario'){
-                            html += `Nome do patrono: ${data[0].nome_patrono}<br>
+                if (data[0].categoria == 'Estagiario') {
+                    html += `Nome do patrono: ${data[0].nome_patrono}<br>
                             Cédula do patrono: ${data[0].cedula_patrono}<br>
                             Telefone do patrono: ${data[0].telefone_patrono} <br>
                             Email do patrono: ${data[0].email_patrono}<br><br>`;
-                        }
+                }
             }
             else if (data[0].advogado_id != null) {
 
@@ -227,12 +236,12 @@ function buscarItemDetalhes(id) {
                             Estado da solicitação: ${data[0].estado}<br><br>
                         </div>`
 
-                        if(data[0].getadvogado.categoria == 'Estagiario'){
-                            html += `Nome do patrono: ${data[0].getadvogado.nome_patrono}<br>
+                if (data[0].getadvogado.categoria == 'Estagiario') {
+                    html += `Nome do patrono: ${data[0].getadvogado.nome_patrono}<br>
                             Cédula do patrono: ${data[0].getadvogado.cedula_patrono}<br>
                             Telefone do patrono: ${data[0].getadvogado.telefone_patrono} <br>
                             Email do patrono: ${data[0].getadvogado.email_patrono}<br><br>`;
-                        }
+                }
             }
 
             $('#btn-autorizar').show();
