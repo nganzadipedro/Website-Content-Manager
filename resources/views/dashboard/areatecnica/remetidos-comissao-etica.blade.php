@@ -229,6 +229,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>

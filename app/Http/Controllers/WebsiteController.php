@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Municipio;
+use App\Models\Pedidointervencao;
 use App\Models\Platform\Advogado;
 use App\Models\Denuncia;
 use App\Models\Galeria;
@@ -16,6 +17,7 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Storage;
+use Str;
 
 class WebsiteController extends Controller
 {
@@ -212,10 +214,99 @@ class WebsiteController extends Controller
         abort(404, 'Arquivo não encontrado');
     }
 
-    public function defesa_oficiosa(){
+    public function defesa_oficiosa()
+    {
 
         $municipios = Municipio::all();
         return view('defesa-oficiosa-solicitar', compact('municipios'));
+
+    }
+
+    public function defesa_oficiosa_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        // verifica se o advogado já existe
+        $advogado_id = null;
+        $pedido = null;
+
+        if ($request->advogado_id != null && $request->advogado_id != '') {
+
+            $advogado = Advogado::find($request->advogado_id);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+
+            // actualiza os dados da pessoa
+            $pessoa->nome = mb_strtoupper($request->nome_completo, 'UTF-8');
+            $pessoa->num_documento = $request->num_bilhete;
+            $pessoa->email = strtolower($request->email);
+            $pessoa->telefone1 = $request->telefone1;
+            $pessoa->telefone2 = $request->telefone2;
+            $pessoa->genero = $request->genero;
+            $pessoa->save();
+
+            // actualiza os dados do advogado
+            $advogado->nome_profissional = $pessoa->nome;
+            $advogado->nome_patrono = mb_strtoupper($request->nome_patrono, 'UTF-8');
+            $advogado->email_patrono = $request->email_patrono;
+            $advogado->telefone_patrono = $request->telefone_patrono;
+            $advogado->cedula_patrono = $request->cedula_patrono;
+            $advogado->nome_escritorio = $request->nome_escritorio;
+            $advogado->municipio_id = $request->municipio_id;
+            $advogado->endereco_escritorio = $request->endereco_escritorio;
+            $advogado->save();
+
+            $advogado_id = $advogado->id;
+
+            $pedido = Pedidointervencao::create([
+                'hash' => Str::uuid(),
+                'advogado_id' => $advogado_id,
+                'tipo_processo' => $request->tipo_processo
+            ]);
+
+        } else {
+
+
+            $pedido = Pedidointervencao::create([
+                'hash' => Str::uuid(),
+                'advogado_id' => $advogado_id,
+                'tipo_processo' => $request->tipo_processo,
+                'nome' => $request->nome_completo,
+                'num_documento' => $request->num_bilhete,
+                'num_cedula' => $request->num_cedula,
+                'categoria' => $request->categoria,
+                'email' => $request->email,
+                'telefone1' => $request->telefone1,
+                'telefone2' => $request->telefone2,
+                'genero' => $request->genero,
+                'nome_patrono' => $request->nome_patrono,
+                'email_patrono' => $request->email_patrono,
+                'telefone_patrono' => $request->telefone_patrono,
+                'cedula_patrono' => $request->cedula_patrono,
+                'nome_escritorio' => $request->nome_escritorio,
+                'municipio_id' => $request->municipio_id,
+                'endereco_escritorio' => $request->endereco_escritorio
+            ]);
+
+
+        }
+
+        //faz upload da imagem
+        $ficheiro = '';
+
+        try {
+            if ($request->hasFile('documento') && $request->file('documento')->isValid()) {
+                $ficheiro = $request->documento->store('defesa-oficiosa/documentos');
+                $pedido->documento_anexo = $ficheiro;
+                $pedido->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        // envia notificação por email
+
+        return 'sucesso';
 
     }
 

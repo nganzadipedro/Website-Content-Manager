@@ -115,7 +115,7 @@ function buscarDados(tipo, numero, categoria) {
 
         })
         .catch(error => {
-            console.error('Erro:', error);
+            console.log('Erro:', error);
         });
 }
 
@@ -159,6 +159,7 @@ $(document).on('change', '#categoria_verificar', function () {
 
 function limpaCampos() {
 
+    $('#advogado_id').val("");
     $('#categoria').val("");
     $('#num_bilhete').val("");
     $('#num_cedula').val("");
@@ -186,6 +187,8 @@ function valida_formulario() {
 
     var msgErro = '';
     var tem = true;
+
+    let tiposPermitidos = ["application/pdf"];
 
     const nome_completo = document.getElementById('nome_completo').value;
     const num_bilhete = document.getElementById('num_bilhete').value;
@@ -259,18 +262,26 @@ function valida_formulario() {
             msgErro = "Digite o nome do patrono";
             tem = false;
         }
-        else if(cedula_patrono == '' || cedula_patrono == null){
+        else if (cedula_patrono == '' || cedula_patrono == null) {
             msgErro = "Digite a cédula do patrono";
             tem = false;
         }
-        else if(telefone_patrono == '' || telefone_patrono == null){
+        else if (telefone_patrono == '' || telefone_patrono == null) {
             msgErro = "Digite a cédula do patrono";
             tem = false;
         }
-        else if(email_patrono == '' || email_patrono == null){
+        else if (email_patrono == '' || email_patrono == null) {
             msgErro = "Digite o email do patrono";
             tem = false;
         }
+    }
+    else if (!documento) {
+        msgErro = "Carregue o documento da solicitação da defesa oficiosa";
+        tem = false;
+    }
+    else if (!tiposPermitidos.includes(documento.type)) {
+        msgErro = "Apenas documentos em pfd são permitidos";
+        tem = false;
     }
 
     if (tem == false) {
@@ -285,4 +296,114 @@ function valida_formulario() {
 
     return tem;
 }
+
+document.getElementById('btn-submeter').addEventListener('click', function () {
+
+
+    if (valida_formulario() === true) {
+
+        const formData = new FormData();
+
+        const advogado_id = document.getElementById('advogado_id').value;
+        const nome_completo = document.getElementById('nome_completo').value;
+        const num_bilhete = document.getElementById('num_bilhete').value;
+        const num_cedula = document.getElementById('num_cedula').value;
+        const categoria = document.getElementById('categoria').value;
+        const email = document.getElementById('email').value;
+        const telefone1 = document.getElementById('telefone1').value;
+        const genero = document.getElementById('genero').value;
+        const telefone2 = document.getElementById('telefone2').value;
+        const nome_escritorio = document.getElementById('nome_escritorio').value;
+        const endereco_escritorio = document.getElementById('endereco_escritorio').value;
+        const municipio_id = document.getElementById('municipio_id').value;
+        const tipo_processo = document.getElementById('tipo_processo').value;
+        const documento = document.getElementById('documento').files[0];
+
+        nome_patrono = null;
+        cedula_patrono = null;
+        telefone_patrono = null;
+        email_patrono = null;
+
+        if (categoria == 'Estagiario') {
+            nome_patrono = document.getElementById('nome_patrono').value;
+            cedula_patrono = document.getElementById('cedula_patrono').value;
+            telefone_patrono = document.getElementById('telefone_patrono').value;
+            email_patrono = document.getElementById('email_patrono').value;
+        }
+
+        formData.append('advogado_id', advogado_id);
+        formData.append('nome_completo', nome_completo);
+        formData.append('num_bilhete', num_bilhete);
+        formData.append('num_cedula', num_cedula);
+        formData.append('categoria', categoria);
+        formData.append('email', email);
+        formData.append('telefone1', telefone1);
+        formData.append('genero', genero);
+        formData.append('telefone2', telefone2);
+        formData.append('nome_escritorio', nome_escritorio);
+        formData.append('endereco_escritorio', endereco_escritorio);
+        formData.append('municipio_id', municipio_id);
+        formData.append('tipo_processo', tipo_processo);
+        formData.append('documento', documento);
+        formData.append('nome_patrono', nome_patrono);
+        formData.append('cedula_patrono', cedula_patrono);
+        formData.append('telefone_patrono', telefone_patrono);
+        formData.append('email_patrono', email_patrono);
+
+        Swal.fire({
+            title: "Confirmação",
+            text: "Tem certeza que deseja submeter a sua solicitação? Em caso afirmativo, clique em Submeter e aguarde a conclusão da operação.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#34c38f",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Submeter!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return $.ajax({
+                    url: "/defesa-oficiosa/post",
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (res) {
+
+                        console.log(res);
+
+                        if (res == 'sucesso') {
+                            sweetAlert({
+                                type: "success",
+                                title: "Sucesso",
+                                text: 'A sua solicitação de defesa oficiosa foi submetida com sucesso.',
+                                timer: 4000
+                            });
+
+                            window.location.reload();
+
+                        }
+
+                    },
+                    error: function (error) {
+
+                        sweetAlert({
+                            type: "warning",
+                            title: "Erro " + error.status,
+                            text: 'Erro: ' + error.responseJSON.message,
+                            timer: 9000
+                        });
+
+                        console.log("Error: " + error.responseJSON.message);
+                    }
+                });
+            }
+        });
+
+    }
+
+});
 

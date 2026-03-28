@@ -43,7 +43,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
     Route::get('/defesa-oficiosa', 'Controllers\WebsiteController@defesa_oficiosa');
-     Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
+    Route::post('/defesa-oficiosa/post', 'Controllers\WebsiteController@defesa_oficiosa_post');
+    Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
 
 });
 
@@ -92,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
     Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
-    Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
+    // Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
     Route::post('system/estagiario-patrono/delete', 'Controllers\SystemController@estagiario_patrono_delete');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
@@ -106,6 +107,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/log-activities', 'Livewire\Geral\Actividadessistema')->name('activities_user');
     Route::get('system/getDataInscricaoAdvogadoById/{id}', 'Controllers\SystemController@getDataInscricaoAdvogadoById');
     Route::get('system/getAdvogadoById/{id}', 'Controllers\SystemController@getAdvogadoById');
+    Route::get('system/getPedidoIntervencaoById/{id}', 'Controllers\SystemController@getPedidoIntervencaoById');
     Route::get('system/getHistoricoProcesso/{id}', 'Controllers\SystemController@getHistoricoProcesso');
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');
     Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
@@ -206,7 +208,7 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/new/process', 'Livewire\Secretaria\Registarentrada')->name('registar_entrada');
                 Route::get('/new/request-intervention', 'Livewire\Secretaria\Pedidointervencaocadastrar')->name('registar_pedido_intervencao');
-                Route::get('/list/request-intervention', 'Livewire\Secretaria\Pedidointervencaolistar')->name('pedido_intervencao_listar');
+                Route::get('/list/request-intervention/{categoria}', 'Livewire\Secretaria\Pedidointervencaolistar')->name('pedido_intervencao_listar');
                 Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');

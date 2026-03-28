@@ -268,12 +268,16 @@
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
                                         <a class="dropdown-item"
-                                            href="{{ route('system.secretaria.registar_pedido_intervencao') }}">
-                                            Adicionar pedido
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar','pendente') }}">
+                                            Pedidos pendentes
                                         </a>
                                         <a class="dropdown-item"
-                                            href="{{ route('system.secretaria.pedido_intervencao_listar') }}">
-                                            Pedidos registados
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar','autorizado') }}">
+                                            Pedidos autorizados
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar','cancelado') }}">
+                                            Pedidos rejeitados
                                         </a>
                                     </div>
                                 </div>

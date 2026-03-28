@@ -76,6 +76,8 @@
 
               <input type="hidden" name="advogado_id" id="advogado_id" value="">
 
+              @csrf
+
               <div class="row">
 
                 <div class="col-md-4 col-lg-4 col-12 col-xs-12">
@@ -178,7 +180,7 @@
                       name="nome_escritorio" id="nome_escritorio">
                   </div>
                   <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                    <label class="form-label">Endereço do Escritório/Profissional</label>
+                    <label class="form-label">Endereço do Escritório/Endereço Profissional</label>
                     <input type="text" maxlength="200"
                       placeholder="Informe o endereço do escritório/endereço profissional" class="form-control"
                       name="endereco_escritorio" id="endereco_escritorio">
@@ -197,9 +199,9 @@
                     </select>
                   </div>
                   <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                    <label for="tipo_processo" class="form-label">Tipos de Processo a Intervir</label>
+                    <label for="tipo_processo" class="form-label">Tipos de Processo a Intervir (Ex: Civil, Crime, Laboral, Família)</label>
                     <input type="text" maxlength="200" class="form-control" name="tipo_processo" id="tipo_processo"
-                      value="" placeholder="Civil, Penal, Laboral">
+                      value="" placeholder="Digite separando com vírgulas">
                   </div>
                 </div>
 
@@ -242,7 +244,7 @@
 
                 <div class="row mt-5">
                   <div class="col-md-12 col-lg-12 col-12 col-xs-12 text-center">
-                    <a href="btn-submeter" class="btn btn-success mt-2">Submeter Solicitação</a>
+                    <a id="btn-submeter" class="btn btn-success mt-2">Submeter Solicitação</a>
                   </div>
                 </div>
               </div>

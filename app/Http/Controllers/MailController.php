@@ -312,4 +312,75 @@ class MailController extends Controller
 
     }
 
+    public function mailNotificacaoDefesa($email, $nome, $mensagem)
+    {
+
+        // mensagem do email
+        $mensagem = "
+        <h2 style='color: #2F5496; font-weight: bold;'>CPL - OAA || Notificação</h2>
+        <hr>
+        <p>
+        Exmo/a Dr.(ª) $nome<br><br>
+        Em função da solicitação de desefa oficiosa submetida online, informamos o seguinte:<br><br>
+        <strong>$mensagem</strong><br><br>
+        <strong>Para mais informações, contacte a secretaria deste Conselho.<br>
+        Largo João Seca, Casa n.º 6, R/C - Telef. 928 410 082<br><br></strong>
+        Sem mais de momento, atenciosamente,<br>
+        Conselho Provincial de Luanda<br>
+        Ordem dos Advogados de Angola<br>
+        </p>       
+        ";
+
+        $dados_email = [
+            "from" => [
+                "email" => "suporte.tecnico@cpl-oaa.ao",
+                "name" => "CPL - OAA"
+            ],
+            "to" => [
+                [
+                    "email" => $email,
+                    "name" => $nome
+                ]
+            ],
+
+            "subject" => "CPL - OAA | Notificação",
+            "html" => $mensagem,
+            "category" => "CPL - Notificação"
+        ];
+
+        $data = json_encode($dados_email);
+        $curl = curl_init();
+
+        $httpHeader = [
+            "Authorization: " . "Bearer " . env('MAILTRAP_API_KEY'),
+            "Content-Type: application/json",
+        ];
+
+        $opts = [
+            CURLOPT_URL => "https://send.api.mailtrap.io/api/send",
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTPHEADER => $httpHeader,
+            CURLOPT_POSTFIELDS => $data
+        ];
+
+        curl_setopt_array($curl, $opts);
+
+        $response = curl_exec($curl);
+
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        $response = json_decode($response);
+
+        if ($response->success == true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

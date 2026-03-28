@@ -491,19 +491,19 @@ class SystemController extends Controller
             $email = $inscricao_adv->email;
             $data_entrada = $registo->data_entrada;
 
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            // } catch (\Throwable $th) {
+            $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
-            // try {
-            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
-            // } catch (\Throwable $th) {
+            $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
+            try {
+                $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à comissão de ética para a devida análise.", 'registo-entrada', $registo->id);
@@ -561,19 +561,19 @@ class SystemController extends Controller
             $email = $inscricao_adv->email;
             $data_entrada = $registo->data_entrada;
 
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            // } catch (\Throwable $th) {
+            $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
-            // try {
-            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
-            // } catch (\Throwable $th) {
+            $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi avaliado pela comissão de ética e aguarda avaliação do Sr. Presidente do CPL.";
+            try {
+                $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
@@ -614,19 +614,19 @@ class SystemController extends Controller
 
         $mensagem = $inscricao_adv->texto_despacho;
 
-        // $mensagem = "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição para advogado. Verifique o seu email.";
-        // try {
-        //     $obmsg->enviarMensagem($telefone, $mensagem);
-        // } catch (\Throwable $th) {
+        $mensagem = "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição para advogado. Verifique o seu email.";
+        try {
+            $obmsg->enviarMensagem($telefone, $mensagem);
+        } catch (\Throwable $th) {
 
-        // }
+        }
 
-        // $mensagem = $inscricao_adv->texto_despacho;
-        // try {
-        //     $obmail->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
-        // } catch (\Throwable $th) {
+        $mensagem = $inscricao_adv->texto_despacho;
+        try {
+            $obmail->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+        } catch (\Throwable $th) {
 
-        // }
+        }
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
@@ -640,49 +640,67 @@ class SystemController extends Controller
     public function pedido_intervencao_post(Request $request)
     {
 
-        // verifica se já esxite na bd
-        $existe = Pedidointervencao::where('advogado_id', $request->advogado_id)
-            ->where('tipo_processo', $request->tipo_processo)->first();
+        date_default_timezone_set("Africa/Luanda");
 
-        if ($existe != null) {
-            return 'duplicado';
-        } else {
-            // inserir na tabela de pedido de intervanção
-            $pedido_interv = Pedidointervencao::create([
-                'user_id' => Auth::user()->id,
-                'advogado_id' => $request->advogado_id,
-                'tipo_processo' => $request->tipo_processo,
-                'hash' => Str::uuid(),
-            ]);
+        $pedido = Pedidointervencao::find($request->pedido_id);
+        $pedido->estado = 'autorizado';
+        $pedido->save();
 
-            // actualizar dados da pessoa na base de dados
-            $advogado = Advogado::find($request->advogado_id);
-            $pessoa = Pessoa::find($advogado->pessoa_id);
+        // transformar em um registo de entrada na secretaria
+        $telefone = $pedido->advogado_id == null ? $pedido->telefone1 : $pedido->getadvogado->getpessoa->telefone1;
+        $telefone2 = $pedido->advogado_id == null ? $pedido->telefone2 : $pedido->getadvogado->getpessoa->telefone2;
+        $nome = $pedido->advogado_id == null ? $pedido->nome : $pedido->getadvogado->getpessoa->nome;
+        $categoria = $pedido->advogado_id == null ? $pedido->categoria : $pedido->getadvogado->categoria;
+        $endereco = $pedido->advogado_id == null ? $pedido->endereco_escritorio : $pedido->getadvogado->endereco_escritorio;
+        $municipio = $pedido->advogado_id == null ? $pedido->municipio_id : $pedido->getadvogado->municipio_id;
 
-            $pessoa->telefone1 = $request->telefone1;
-            $pessoa->telefone2 = $request->telefone2;
-            $pessoa->email = $request->email;
-            $pessoa->save();
+        $numero = Registoentrada::whereYear('created_at', now()->year)->count() + 1;
+        $registo = Registoentrada::create([
+            'assunto' => 'Solicitação de Defesa Oficiosa',
+            'proveniencia' => $nome,
+            'data_entrada' => date('Y-m-d'),
+            'telefone' => $telefone,
+            'telefone2' => $telefone2,
+            'titulo' => $categoria,
+            'tipo_processo_id' => 10,
+            'endereco_requerente' => $endereco,
+            'municipio_requerente' => $municipio,
+            'destinatario' => 'CPL-OAA',
+            'tipo_documento' => 'Requerimento',
+            'user_id' => Auth::user()->id
+        ]);
 
-            $advogado->categoria = $request->categoria;
-            $advogado->num_associado = $request->categoria == 'Advogado' ? $request->num_cedula : $request->num_associado;
-            $advogado->num_estagiario = $request->categoria == 'Estagiario' ? $request->num_cedula : $request->num_estagiario;
-            $advogado->nome_patrono = $request->nome_patrono;
-            $advogado->email_patrono = $request->email_patrono;
-            $advogado->telefone_patrono = $request->telefone_patrono;
-            $advogado->nome_escritorio = $request->nome_escritorio;
-            $advogado->municipio_id = $request->municipio_id;
-            $advogado->endereco_escritorio = $request->endereco_escritorio;
-            $advogado->save();
+        $registo->hash = Str::uuid();
+        $registo->numero = $numero;
+        $registo->save();
+        $registo->codigo = "$numero/" . now()->year;
+        $registo->save();
 
-            return 'sucesso';
+        // coloca o anexo do processo
+        $anexo = Anexosregisto::create([
+            'titulo' => 'Processo de Solicitação de Defesa Oficiosa',
+            'hash' => Str::uuid(),
+            'tipo_anexo' => 'Documento',
+            'anexo' => $pedido->documento_anexo,
+            'user_id' => Auth::user()->id,
+            'registo_id' => $registo->id
+        ]);
+
+        // notificar candidato
+        $obmsg = new OmbalaController();
+        $mensagem = "Caríssimo(a), a sua solicitação de defesa oficiosa foi aceite.";
+        try {
+            $obmsg->enviarMensagem($telefone, $mensagem);
+        } catch (\Throwable $th) {
 
         }
 
+        ActividadesistemaController::inserir(Auth::id(), "Processo de solicitação de defesa oficiosa registado na secretaria", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Processo de solicitação de defesa oficiosa autorizado", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Registou a entrada do processo de solicitação de defesa oficiosa do(a) Sr(a). $nome", 'user', $pedido->id);
+        ActividadesistemaController::inserir(Auth::id(), "Autorizou a solicitação de defesa oficiosa do(a) Sr(a). $nome", 'user', $pedido->id);
 
-
-
-
+        return 'sucesso';
 
     }
 
@@ -845,7 +863,6 @@ class SystemController extends Controller
         }
 
         // actualiza na tabela pessoa;
-
         $pessoa->nome = mb_strtoupper($request->nome_completo, 'UTF-8');
         $pessoa->num_documento = $request->num_bi;
         $pessoa->email = $request->email;
@@ -965,11 +982,35 @@ class SystemController extends Controller
     {
 
         date_default_timezone_set("Africa/Luanda");
-
         $pedido_id = $request->pedido_id;
-
         $pedido = Pedidointervencao::find($pedido_id);
-        $pedido->delete();
+        $pedido->estado = 'cancelado';
+        $pedido->motivo_rejeicao = $request->motivo_rejeicao;
+        $pedido->save();
+
+        // notificar candidato pela suspensão
+        $obmsg = new OmbalaController();
+        $obmail = new MailController();
+
+        $telefone = $pedido->advogado_id == null ? $pedido->telefone1 : $pedido->getadvogado->getpessoa->telefone1;
+        $nome = $pedido->advogado_id == null ? $pedido->nome : $pedido->getadvogado->getpessoa->nome;
+        $email = $pedido->advogado_id == null ? $pedido->email : $pedido->getadvogado->getpessoa->email;
+
+        $mensagem = "Caríssimo(a), a sua solicitação de defesa oficiosa foi rejeitada. Verifique o seu email.";
+        try {
+            $obmsg->enviarMensagem($telefone, $mensagem);
+        } catch (\Throwable $th) {
+
+        }
+
+        $mensagem = $pedido->motivo_rejeicao;
+        try {
+            $obmail->mailNotificacaoDefesa($email, $nome, $mensagem);
+        } catch (\Throwable $th) {
+
+        }
+
+        ActividadesistemaController::inserir(Auth::id(), "Rejeitou a solicitação de uma defesa oficiosa do(a) Sr(a). $nome", 'user', $pedido->id);
 
         return 'sucesso';
     }
@@ -1835,6 +1876,23 @@ class SystemController extends Controller
         return response()->json($advogado);
     }
 
+    public function getPedidoIntervencaoById($id)
+    {
+        $pedido = Pedidointervencao::with(['getadvogado', 'getmunicipio'])->findOrFail($id);
+        $pessoa = null;
+        $municipio = null;
+        if ($pedido->advogado_id != null) {
+            $pessoa = $pedido->getadvogado->getpessoa;
+            $municipio = $pedido->getadvogado->getmunicipio;
+        }
+
+        return response()->json([
+            $pedido,
+            $pessoa,
+            $municipio
+        ]);
+    }
+
     public function getAdvogadoByData($tipo_p, $numero_p, $categoria_p)
     {
 
@@ -1862,7 +1920,7 @@ class SystemController extends Controller
                 $advogado = Advogado::with(['getpessoa', 'getmunicipio'])->where('pessoa_id', $pessoa->id)->first();
                 return response()->json($advogado);
             }
-
+            return response()->json(null);
         }
 
     }

@@ -137,7 +137,7 @@ document.getElementById('btn-search').addEventListener('click', function () {
 
                         }
                         else {
-                            num_cedula = item.num_estagiario;
+                            num_cedula = item.num_associado;
 
                             elementos += `<li>
                         <div class="member-info">
