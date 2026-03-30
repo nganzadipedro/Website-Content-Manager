@@ -99,7 +99,10 @@ function buscarDados(tipo, numero, categoria) {
                 $('#telefone2').val(data.getpessoa.telefone2);
                 $('#nome_escritorio').val(data.nome_escritorio);
                 $('#endereco_escritorio').val(data.endereco_escritorio);
+                $('#genero').val(data.getpessoa.genero);
                 $('#municipio_id').val(data.municipio_id).trigger('change');
+
+                selecionarCategoria(data.getpessoa.genero);
 
                 $("#nome_completo").prop("disabled", true);
                 $("#num_bilhete").prop("disabled", true);
@@ -162,8 +165,6 @@ $(document).on('click', '#preencher-formulario', function () {
 
 });
 
-
-
 function limpaCampos() {
 
     $('#advogado_id').val("");
@@ -186,8 +187,8 @@ function limpaCampos() {
 }
 
 
-function selecionarCategoria(categoria, municipio) {
-    $('#categoria').val(categoria).trigger('change');
+function selecionarCategoria(genero) {
+    $('#genero').val(genero).trigger('change');
 }
 
 function valida_formulario() {
@@ -399,10 +400,30 @@ document.getElementById('btn-submeter').addEventListener('click', function () {
                                 type: "warning",
                                 title: "Aviso",
                                 text: 'Já existe na nossa base de dados a sua solicitação de defesa oficiosa.',
-                                timer: 5000
+                                timer: 6000
                             });
 
                             window.location.reload();
+                        }
+                        else if (res == 'cedula') {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'O número de cédula fornecido já existe na base de dados.',
+                                timer: 5000
+                            });
+
+                        }
+                        else if (res == 'bilhete') {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'O número do Bilhete fornecido já existe na base de dados.',
+                                timer: 5000
+                            });
+
                         }
 
                     },

@@ -70,8 +70,8 @@
                   <h3 class="mt-3 text-center">Conselho Provincial de Luanda da Ordem
                     dos Advogados de Angola
                   </h3>
-                  <h3 class="mt-3 text-center">Formulário de Solicitação de Defesa Oficiosa
-                  </h3>
+                  <h2 class="mt-3 text-center">Formulário de Solicitação de Defesa Oficiosa
+                  </h2>
                 </div>
               </div>
             </div>
@@ -93,8 +93,8 @@
               <div class="row">
 
                 <div class="col-md-4 col-lg-4 col-12 col-xs-12">
-                  <label for="tipo_pesquisa" class="form-label">Pesquisar por</label>
-                  <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-control">
+                  <label for="tipo_pesquisa" class="form-label">Tipo de Identificação</label>
+                  <select name="tipo_pesquisa" id="tipo_pesquisa" class="form-select">
                     <option value="bilhete" selected>Nº Bilhete</option>
                     <option value="cedula">Nº Cédula</option>
                   </select>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-md-4 col-lg-4 col-12 col-xs-12">
                   <label for="categoria" class="form-label">Categoria</label>
-                  <select name="categoria_verificar" id="categoria_verificar" class="form-control">
+                  <select name="categoria_verificar" id="categoria_verificar" class="form-select">
                     <option value="" selected>Selecione...</option>
                     <option value="Advogado">Advogado</option>
                     <option value="Estagiario">Estagiario</option>
@@ -164,7 +164,7 @@
 
                   <div class="col-md-3 col-lg-3 col-12 col-xs-12">
                     <label for="genero" class="form-label">Género</label>
-                    <select name="genero" id="genero" class="form-control">
+                    <select name="genero" id="genero" class="form-select">
                       <option value="" selected>Selecione...</option>
                       <option value="Masculino">Masculino</option>
                       <option value="Feminino">Feminino</option>
@@ -221,7 +221,7 @@
                   <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                     <label for="municipio_id" class="form-label">Município (referente ao Escritório/Endereço
                       Profissional)</label>
-                    <select name="municipio_id" id="municipio_id" class="form-control">
+                    <select name="municipio_id" id="municipio_id" class="form-select">
                       <option value="" selected>Selecione...</option>
                       @foreach ($municipios as $mun)
                         <option value="{{$mun->id}}">{{$mun->descricao}}</option>

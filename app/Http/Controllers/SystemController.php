@@ -734,7 +734,7 @@ class SystemController extends Controller
                 'estado' => 'Registado'
             ]);
 
-            $advogado->codigo= "CPL" . $advogado->id;
+            $advogado->codigo = "CPL" . $advogado->id;
             $advogado->save();
 
             $pedido->advogado_id = $advogado->id;
@@ -1119,6 +1119,7 @@ class SystemController extends Controller
 
     }
 
+    // verificar actividades e notificações relacionadas a esta função
     public function atribuir_advogado_delete(Request $request)
     {
 
@@ -1778,6 +1779,7 @@ class SystemController extends Controller
         return 'sucesso';
 
     }
+
     public function registo_despacho_post(Request $request)
     {
 
@@ -1871,6 +1873,7 @@ class SystemController extends Controller
 
     }
 
+    // verificar actividades e notificações relacionadas a esta função
     public function actualizar_despacho_post(Request $request)
     {
 
@@ -1992,6 +1995,43 @@ class SystemController extends Controller
             ->get();
 
         return response()->json($historico);
+    }
+
+    public function getDetalhesProcesso($id_registo)
+    {
+
+        $registo = Registoentrada::with(['gettipoprocesso', 'getmunicipio'])->find($id_registo);
+        $processo_inscricao = Inscricaoadvogado::with(['getconselheiro', 'patrono'])->where('registo_entrada_id', $id_registo)->first();
+
+        $conselheiro = null;
+        $patrono = null;
+        $patrono_advogado = null;
+
+        if ($processo_inscricao != null) {
+
+            if ($processo_inscricao->conselheiro_id != null) {
+                $conselheiro = $processo_inscricao->getconselheiro->getpessoa;
+            }
+
+            $patrono = null;
+            $patrono_advogado = null;
+            if ($processo_inscricao->patrono_id != null) {
+                $patrono = Patrono::with(['getadvogado', 'getmunicipio'])->find($processo_inscricao->patrono_id);
+                if ($patrono->advogado_id != null) {
+                    $patrono_advogado = Advogado::with(['getpessoa', 'getmunicipio'])->find($patrono->advogado_id);
+                }
+            }
+
+        }
+
+        return response()->json([
+            $registo,
+            $processo_inscricao,
+            $conselheiro,
+            $patrono,
+            $patrono_advogado
+        ]);
+
     }
 
     public function getPatronoById($id)

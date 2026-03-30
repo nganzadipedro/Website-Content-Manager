@@ -58,8 +58,9 @@
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
-                                                <a href="{{ route('system.recepcionista.detalhes_registo', $item->hash) }}"
-                                                    class="badge bg-blue-lt">
+                                                <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
+                                                    title="Detalhes do processo" style="cursor: pointer;"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -70,6 +71,18 @@
                                                         <path d="M9 15h-2" />
                                                         <path d="M13 12h-6" />
                                                         <path d="M11 9h-4" />
+                                                    </svg>
+                                                </a>
+                                                <a data-id="{{ $item->id }}" class="btn-historico badge bg-yellow-lt"
+                                                    title="Histórico do processo" style="cursor: pointer;"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-historico">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-history">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M12 8l0 4l2 2" />
+                                                        <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
                                                     </svg>
                                                 </a>
                                             </td>
@@ -84,10 +97,57 @@
             </div>
         </div>
     </div>
+
+    <div class="modal modal-blur fade" id="modal-historico" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Histórico do Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group list-group-flush list-group-hoverable" id="list-group-item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-blur fade" id="modal-detalhes" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <h3 class="text-center">Dados da Secretaria</h3>
+                            <div class=" alert alert-primary" id="dv-detalhes1">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <h3 class="text-center">Outras Informações</h3>
+                            <div class=" alert alert-info" id="dv-detalhes2">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
+    <script src="{{ asset('assets/system/js/recepcionista-listar-registos.js') }}"></script>
     <script>
+        window.avatarUrl = "{{ asset('images/user-icon.png') }}";
         $(document).ready(function () {
             $('#myTable').DataTable();
         });

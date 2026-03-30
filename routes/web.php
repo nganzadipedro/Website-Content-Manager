@@ -42,7 +42,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
-    Route::get('/defesa-oficiosa', 'Controllers\WebsiteController@defesa_oficiosa');
+    Route::get('/defesaoficiosa/solicitar', 'Controllers\WebsiteController@defesa_oficiosa');
     Route::post('/defesa-oficiosa/post', 'Controllers\WebsiteController@defesa_oficiosa_post');
     Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
 
@@ -112,6 +112,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');
     Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
     Route::get('system/getLinhaEstagiariosPatrono/{id}', 'Controllers\SystemController@getLinhaEstagiariosPatrono');
+    Route::get('system/getDetalhesProcesso/{id_registo}', 'Controllers\SystemController@getDetalhesProcesso');
 
     Route::prefix('system')->name('system.')->group(function () {
 

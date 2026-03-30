@@ -217,7 +217,7 @@ class WebsiteController extends Controller
     public function defesa_oficiosa()
     {
 
-        $municipios = Municipio::all();
+        $municipios = Municipio::orderBy('descricao', 'asc')->get();
         return view('defesa-oficiosa-solicitar', compact('municipios'));
 
     }
@@ -235,10 +235,12 @@ class WebsiteController extends Controller
 
             // verifica se o advogado já solicitou defesa oficiosa
             $existe = Pedidointervencao::where('advogado_id', $request->advogado_id)->first();
-
             if ($existe != null && ($existe->estado == 'pendente' || $existe->estado == 'autorizado')) {
                 return 'duplicado';
             }
+
+            $existe = null;
+
 
             $advogado = Advogado::find($request->advogado_id);
             $pessoa = Pessoa::find($advogado->pessoa_id);
@@ -272,6 +274,31 @@ class WebsiteController extends Controller
             ]);
 
         } else {
+
+            // verifica se a cédula está duplicada
+            $existe = null;
+
+            if ($request->categoria == 'Estagiario') {
+                $existe = Advogado::where('categoria', $request->categoria)
+                    ->where('num_estagiario', $request->num_cedula)->first();
+            } else {
+                $existe = Advogado::where('categoria', $request->categoria)
+                    ->where('num_associado', $request->num_cedula)->first();
+            }
+
+            if ($existe != null) {
+                return 'cedula';
+            }
+
+            // verifica se o número do bilhete está duplicado
+            $existe = null;
+            
+            $existe = Pessoa::where('num_documento', $request->num_bilhete)
+                ->first();
+
+            if ($existe != null) {
+                return 'bilhete';
+            }
 
 
             $pedido = Pedidointervencao::create([
