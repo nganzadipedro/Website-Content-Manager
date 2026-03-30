@@ -155,7 +155,6 @@ function buscarItemDetalhes(id) {
 
             $("#dv-detalhes2").html(html);
 
-
         })
         .catch(error => {
             console.error('Erro:', error);
