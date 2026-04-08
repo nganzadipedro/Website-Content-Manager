@@ -3,17 +3,13 @@
     <div class="page-wrapper">
         <div class="page-header d-print-none">
             <div class="container-xl">
-                <div class="card card-md">
-                    <div class="card-stamp card-stamp-lg">
-                        <div class="card-stamp-icon bg-primary">
-
-                        </div>
-                    </div>
+                <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-10">
                                 <h3 class="h1">Lista de {{$categoria_nome}} aguardando cerimónia</h3>
-                                <a href="{{ route('system.areatecnica.export_waiting_cerimony', $categoria_p) }}" class="btn btn-info">
+                                <a href="{{ route('system.areatecnica.export_waiting_cerimony', $categoria_p) }}"
+                                    class="btn btn-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -41,6 +37,20 @@
                                         <path d="M20 15h-3v6" />
                                         <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
                                     </svg>Exportar em PDF</a>
+                                <a id="btn-recepcao-cedula" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-certificate">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        <path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" />
+                                        <path
+                                            d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" />
+                                        <path d="M6 9l12 0" />
+                                        <path d="M6 12l3 0" />
+                                        <path d="M6 15l2 0" />
+                                    </svg>Recepção da Cédula</a>
                             </div>
                         </div>
                     </div>
@@ -59,6 +69,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>
+                                                <input type="checkbox" id="checkAll">
+                                            </th>
                                             <th>ID</th>
                                             <th>Nome</th>
                                             <th>Categoria</th>
@@ -71,6 +84,9 @@
                                         @foreach ($lista_advogados as $item)
                                             <tr>
                                                 <td>{{$loop->index + 1}}</td>
+                                                <td>
+                                                    <input type="checkbox" class="checkItem" value="{{$item->id}}">
+                                                </td>
                                                 <td>{{$item->id}}</td>
                                                 <td>{{$item->getpessoa->nome}}</td>
                                                 <td>{{$item->categoria}}</td>
@@ -180,6 +196,32 @@
                     <div class="col-lg-12 col-12">
                         <a id="btn-registar-cerimonia" class="btn btn-success mt-4">Salvar</a>
                         <a id="btn-cancelar" class="btn btn-danger mt-4">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="modal modal-blur fade" id="modal-cerimonia-grupo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recepção da Cédula</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">Data da Cerimónia</label>
+                        <input type="date" class="form-control" name="data_cerimonia_grupo" id="data_cerimonia_grupo">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-12">
+                        <a id="btn-registar-cerimonia-grupo" class="btn btn-success mt-4">Salvar</a>
+                        <a id="btn-cancelar-grupo" class="btn btn-danger mt-4">Cancelar</a>
                     </div>
                 </div>
             </div>

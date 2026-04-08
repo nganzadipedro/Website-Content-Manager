@@ -92,6 +92,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registoadicional-ceduladisponivel/update', 'Controllers\SystemController@registoadicional_ceduladisponivel');
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
     Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');
+    Route::post('system/data-cerimonia-grupo/update', 'Controllers\SystemController@data_cerimonia_grupo_update');
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
     // Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');

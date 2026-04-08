@@ -1034,6 +1034,32 @@ class SystemController extends Controller
 
     }
 
+    public function data_cerimonia_grupo_update(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        foreach ($selecionados as $item) {
+
+            $advogado = Advogado::find($item);
+
+            if ($advogado->categoria == 'Advogado') {
+                $advogado->data_cerimonia_associado = $request->data_cerimonia;
+            } else {
+                $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+            }
+
+            $advogado->estado = 'Registado';
+            $advogado->save();
+
+        }
+
+        return 'sucesso';
+
+    }
+
     public function pedido_intervencao_delete(Request $request)
     {
 
