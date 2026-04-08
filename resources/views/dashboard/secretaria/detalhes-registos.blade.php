@@ -120,7 +120,7 @@
                                                     Nome do patrono: {{ $inscricao_advogado->patrono->getadvogado->getpessoa->nome}}<br><br>
                                                     Escritório do patrono: {{ $inscricao_advogado->patrono->getadvogado->nome_escritorio}}<br><br>
                                                     Endereço do escritório: {{ $inscricao_advogado->patrono->getadvogado->endereco_escritorio}}<br><br>
-                                                    Município: {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br>
+                                                    <!-- Município: {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br> -->
                                                 </div>
                                             </div>
                                         @endif

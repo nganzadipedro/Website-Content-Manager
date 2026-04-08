@@ -65,6 +65,10 @@ function buscarHistorico(id) {
         });
 }
 
+function hasData(obj) {
+    return obj != null && Object.keys(obj).length > 0;
+}
+
 function buscarItemDetalhes(id) {
 
     fetch(`/system/getDetalhesProcesso/${id}`)
@@ -104,7 +108,7 @@ function buscarItemDetalhes(id) {
             html = `<h3 class="text-center">
                            Sem outras Informações para apresentar.
                         </h3>`
-            if (data[1] == null && (data[0].tipo_processo_id == 2 || data[0].tipo_processo_id == 3)) {
+            if (hasData(data[1]) == false && (data[0].tipo_processo_id == 2 || data[0].tipo_processo_id == 3)) {
 
                 html = `<h3 class="text-center">
                             O processo ainda não foi registado na área técnica.
@@ -113,15 +117,18 @@ function buscarItemDetalhes(id) {
             else if (data[0].tipo_processo_id != 2 && data[0].tipo_processo_id != 3) {
 
             }
-            else if (data[1] != null && (data[0].tipo_processo_id == 2 || data[0].tipo_processo_id == 3)) {
+            else if (hasData(data[1]) == true && (data[0].tipo_processo_id == 2 || data[0].tipo_processo_id == 3)) {
+
+                console.log(data[1], typeof (data[1]));
+                estado = data[1].despacho == 'Indeferido' ? 'Indeferido' : data[1].estado;
 
                 html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
                             Nº Processo Área Técnica: ${data[1].codigo} <br>
-                            Estado: ${data[1].estado} <br>
+                            Estado: ${estado} <br>
                             Email do Requerente: ${data[1].email} <br>
                             Nº Bilhete: ${data[1].num_bilhete} <br>
                             Género: ${data[1].sexo} <br><br>
-                            Despacho: ${data[1].despacho == null ? '' : data[1].despacho}<br>
+                            Despacho: ${data[1].despacho == null ? 'Sem Despacho' : data[1].despacho}<br>
                             Data de despacho: ${data[1].data_despacho == null ? '' : data[1].data_despacho} <br>
                             Mensagem do despacho: ${data[1].texto_despacho == null ? '' : data[1].texto_despacho}<br>
                             Data de remessa ao CN: ${data[1].data_remessa_cn == null ? '' : data[1].data_remessa_cn}<br><br>`

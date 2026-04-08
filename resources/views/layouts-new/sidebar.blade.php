@@ -583,7 +583,7 @@
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Deferido') }}">
-                                            Deferidos
+                                            Sobre a mesa do Presidente
                                         </a>
                                         <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Indeferido') }}">

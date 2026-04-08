@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Inscrições Para Advogados Estagiários [{{ $categoria_p }}]</h3>
+                            <h3 class="h1">Inscrições Para Advogados Estagiários [{{ $categoria_p == 'Deferido' ? 'Sobre a Mesa do Presidente' : $categoria_p }}]</h3>
                             <a id="btn-remeter-cn" class="btn btn-primary">Remeter ao Conselho Nacional</a>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
                                         </th>
                                         <th>Nº Processo</th>
                                         <th>Requerente</th>
+                                        <th>Estado</th>
                                         <th>Despacho</th>
                                         <th>Acto Pretendido</th>
                                         <th></th>
@@ -47,12 +48,13 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>
-                                                @if ($item->despacho == 'Deferido')
+                                                @if ($item->estado == 'Sobre a mesa do Presidente')
                                                     <input type="checkbox" class="checkItem" value="{{$item->id}}">
                                                 @endif
                                             </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
+                                            <td>{{$item->estado == 'em tratamento' ? $item->despacho : $item->estado}}</td>
                                             <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
                                             <td>{{$item->acto_pretendido}}</td>
                                             <td>
@@ -99,7 +101,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                @if ($item->despacho == 'Deferido')
+                                                @if ($item->estado == 'Sobre a mesa do Presidente')
                                                     <a style="cursor:pointer;" class="badge bg-yellow-lt mudar-despacho"
                                                         data-nome="{{ $item->getregistoentrada->proveniencia }}"
                                                         title="Mudar Para Indeferido" data-id="{{ $item->id }}">
