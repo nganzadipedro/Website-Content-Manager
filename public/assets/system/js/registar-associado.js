@@ -40,6 +40,7 @@ function valida_formulario() {
     const data_inscricao_oaa = document.getElementById('data_inscricao_oaa').value;
     const data_inscricao_estagiario = document.getElementById('data_inscricao_estagiario').value;
     const categoria = document.getElementById('categoria').value;
+    const estado = document.getElementById('estado').value;
 
     endereco_profissional_adv;
     municipio_id_adv;
@@ -85,6 +86,10 @@ function valida_formulario() {
     }
     else if (categoria == '' || categoria == null) {
         msgErro = "Escolha a categoria";
+        tem = false;
+    }
+    else if (estado == '' || estado == null) {
+        msgErro = "Informe se o associado já está registado ou se aguarda cerimónia";
         tem = false;
     }
     else if (categoria == 'Advogado' && (num_associado == '' || num_associado == null)) {
@@ -152,6 +157,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         const data_inscricao_oaa = document.getElementById('data_inscricao_oaa').value;
         const data_inscricao_estagiario = document.getElementById('data_inscricao_estagiario').value;
         const categoria = document.getElementById('categoria').value;
+        const estado = document.getElementById('estado').value;
 
         endereco_profissional_adv = '';
         municipio_id_adv = '';
@@ -187,6 +193,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         formData.append('data_inscricao_oaa', data_inscricao_oaa);
         formData.append('data_inscricao_estagiario', data_inscricao_estagiario);
         formData.append('categoria', categoria);
+        formData.append('estado', estado);
         formData.append('endereco_profissional_adv', endereco_profissional_adv);
         formData.append('municipio_id_adv', municipio_id_adv);
         formData.append('nome_patrono', nome_patrono);

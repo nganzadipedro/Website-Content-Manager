@@ -86,6 +86,7 @@ class Registarentrada extends Component
 
             ActividadesistemaController::inserir(Auth::id(), "Registo de entrada do processo na secretária ($registo->assunto)", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou uma entrada de processo na secretária ($registo->assunto)", 'user', Auth::id());
+            ActividadesistemaController::historico_processo("O processo foi registado na secretaria.", $registo->id);
 
             if ($registo->tipo_processo_id == 2 || $registo->tipo_processo_id == 3) {
                 $registo->encaminhado = 'Área Técnica';
@@ -94,6 +95,7 @@ class Registarentrada extends Component
 
                 // regista actividade no sistema
                 ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+                ActividadesistemaController::historico_processo("O processo foi encaminhado para a área técnica.", $registo->id);
             }
 
             $this->mensagemRefresh('Registo efectuado com sucesso', 'success');

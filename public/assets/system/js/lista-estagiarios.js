@@ -44,7 +44,8 @@ function buscarItem(id) {
                             Telefone do patrono: ${data.telefone_patrono == null ? '' : data.telefone_patrono} <br><br>
                             Email do patrono: ${data.email_patrono == null ? '' : data.email_patrono} <br><br>
                             Nome do escritório: ${data.nome_escritorio == null ? '' : data.nome_escritorio} <br><br>
-                            Endereço do escritório: ${data.endereco_escritorio == null ? '' : data.endereco_escritorio}
+                            Endereço do escritório: ${data.endereco_escritorio == null ? '' : data.endereco_escritorio}<br><br>
+                            Data da Cerimónia de Entrega de Cédula: ${data.data_cerimonia_estagiario == null ? '' : data.data_cerimonia_estagiario}
                         </div>`
             $("#dv-detalhes").html(html);
 

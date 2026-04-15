@@ -42,7 +42,8 @@ function buscarItem(id) {
                             Endereço: ${data.endereco_escritorio == null ? '' : data.endereco_escritorio}<br><br>
                             Município: ${municipio} <br><br>
                             Data de Inscrição Advogado: ${data.data_inscricao_oaa == null ? '' : data.data_inscricao_oaa} <br><br>
-                            Data de Inscrição Estagiário: ${data.data_inscricao_estagiario == null ? '' : data.data_inscricao_estagiario}
+                            Data de Inscrição Estagiário: ${data.data_inscricao_estagiario == null ? '' : data.data_inscricao_estagiario}<br><br>
+                            Data da Cerimónia de Entrega de Cédula: ${data.data_cerimonia_associado == null ? '' : data.data_cerimonia_associado}
                         </div>`
             $("#dv-detalhes").html(html);
 

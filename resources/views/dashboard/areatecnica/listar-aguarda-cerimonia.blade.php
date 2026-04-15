@@ -64,7 +64,7 @@
                     <div class="col-12">
                         <div class="card">
 
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="max-height: 550px; overflow: auto; padding: 5px;">
                                 <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
                                     <thead>
                                         <tr>
@@ -202,7 +202,7 @@
         </div>
     </div>
 
-     <div class="modal modal-blur fade" id="modal-cerimonia-grupo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-cerimonia-grupo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -238,26 +238,10 @@
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/system/js/lista-aguarda-cerimonia.js') }}"></script>
     <script>
-        // $(document).ready(function () {
-        //     $('#myTable').DataTable({
-        //         paging: false, // Desabilita a paginação
-        //         searching: true // Habilita a barra de pesquisa
-        //     });
-        // });
-
-        document.addEventListener("livewire:load", function () {
-            function initDataTable() {
-                $('#myTable').DataTable({
-                    destroy: true
-                });
-            }
-
-            initDataTable();
-
-            Livewire.hook('message.processed', (message, component) => {
-                initDataTable();
-            });
-
+        $('#myTable').DataTable({
+            paging: false, // Desabilita a paginação
+            searching: true, // Habilita a barra de pesquisa
+            ordering: false
         });
     </script>
 @endsection

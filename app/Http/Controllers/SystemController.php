@@ -7,6 +7,7 @@ use App\Models\Anexosregisto;
 use App\Models\Denuncia;
 use App\Models\Estagiariospatrono;
 use App\Models\Galeria;
+use App\Models\Historicoprocesso;
 use App\Models\Historicosistema;
 use App\Models\Inscricaoadvogado;
 use App\Models\Mensagem;
@@ -26,6 +27,7 @@ use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use Mail;
 use \PDF;
+use RegexIterator;
 
 class SystemController extends Controller
 {
@@ -290,6 +292,7 @@ class SystemController extends Controller
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Adicionou um anexo para o processo ($anexo->titulo)", 'registo-entrada', $anexo->registo_id);
+        ActividadesistemaController::historico_processo("Foi adicionado um anexo no seu processo.", $anexo->registo_id);
         return 'sucesso';
 
     }
@@ -307,6 +310,7 @@ class SystemController extends Controller
 
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+        ActividadesistemaController::historico_processo("O seu processo foi encaminhado para $registo->encaminhado", $registo->id);
         return 'sucesso';
 
     }
@@ -381,6 +385,7 @@ class SystemController extends Controller
             $conselheiro = User::find($request->conselheiro_id);
             $nome_conselheiro = $conselheiro->getpessoa->nome;
 
+            ActividadesistemaController::historico_processo("O processo foi entregue aos conselheiros para a devida análise", $registo->id);
             // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue aos conselheiros para a devida análise.";
             // try {
             //     $obmsg->enviarMensagem($telefone, $mensagem);
@@ -440,6 +445,7 @@ class SystemController extends Controller
             $nome_conselheiro = $conselheiro->getpessoa->nome;
 
             // regista actividade no sistema
+            ActividadesistemaController::historico_processo("Após análise dos conselheiros, o processo foi devolvido para a área técnica.", $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "O(A) conselheiro(a) $nome_conselheiro fez a devolução do processo para a área técnica.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição para advogado do(a) senhor(a) $nome analisado pelo(a) conselheiro(a) $nome_conselheiro.", 'user', $inscricao_adv->id);
 
@@ -490,6 +496,8 @@ class SystemController extends Controller
             $nome = $registo->proveniencia;
             $email = $inscricao_adv->email;
             $data_entrada = $registo->data_entrada;
+
+            ActividadesistemaController::historico_processo("O processo foi remetido à comissão de ética para a devida análise.", $registo->id);
 
             // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
             // try {
@@ -579,7 +587,7 @@ class SystemController extends Controller
             ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à mesa do Sr. Presidente.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição pela comissão de ética e remeteu à mesa do Sr. Presidente.", 'user', $inscricao_adv->id);
-
+            ActividadesistemaController::historico_processo("Após análise, o processo foi devolvido para a área técnica e será remetido à mesa do Sr. Presidente.", $registo->id);
         }
 
         return 'sucesso';
@@ -632,6 +640,7 @@ class SystemController extends Controller
         ActividadesistemaController::inserir(Auth::id(), "O processo foi devolvido pela comissão de ética.", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "O processo foi despachado como indeferido com a seguinte observação: $mensagem", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Registou a devolução do processo de inscrição do(a) Sr(a). $nome pela comissão de ética, com o despacho indeferido", 'user', $inscricao_adv->id);
+        ActividadesistemaController::historico_processo("O processo foi despachado como indeferido com a seguinte observação: $mensagem", $registo->id);
 
         return 'sucesso';
 
@@ -874,6 +883,7 @@ class SystemController extends Controller
             'nome_patrono' => $request->nome_patrono,
             'email_patrono' => $request->email_patrono,
             'telefone_patrono' => $request->tel_patrono,
+            'estado' => $request->estado,
             'nome_escritorio' => $request->nome_escritorio,
             'estado' => 'Aguarda Cerimónia',
             'municipio_id' => $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est,
@@ -1215,6 +1225,7 @@ class SystemController extends Controller
             ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Processo está aguardando por avaliação de conselheiros e comissão de ética.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+            ActividadesistemaController::historico_processo("O processo foi registado pela área técnica.", $registo->id);
 
         }
 
@@ -1355,6 +1366,7 @@ class SystemController extends Controller
                 $mensagem_not = "O seu processo já foi registado na área técnica, estando em falta a indicação do patrono";
                 ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
+                ActividadesistemaController::historico_processo("O processo foi registado na área técnica, estando em falta a indicação do patrono", $registo->id);
 
             } else {
 
@@ -1368,6 +1380,7 @@ class SystemController extends Controller
 
                     ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                     ActividadesistemaController::inserir(Auth::id(), "Processo despachado como Indeferido: $mensagem_not", 'registo-entrada', $registo->id);
+                    ActividadesistemaController::historico_processo("O processo foi despachado como Indeferido: $mensagem_not", $registo->id);
 
                 } else {
 
@@ -1378,6 +1391,7 @@ class SystemController extends Controller
 
                     ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                     ActividadesistemaController::inserir(Auth::id(), "Processo aguardando a assinatura do Presidente.", 'registo-entrada', $registo->id);
+                    ActividadesistemaController::historico_processo("O processo foi registado na área técnica e remetido à mesa do Sr. Presidente.", $registo->id);
 
                 }
 
@@ -1558,6 +1572,7 @@ class SystemController extends Controller
             $mensagem_not = "O seu processo foi actualizado na área técnica, estando em falta a indicação do patrono";
             ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Processo está pendente aguardando indicação de patrono", 'registo-entrada', $registo->id);
+            ActividadesistemaController::historico_processo("O processo foi actualizado na área técnica, estando em falta a indicação do patrono", $registo->id);
 
         } else {
 
@@ -1570,10 +1585,12 @@ class SystemController extends Controller
 
                 ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo despachado como Indeferido: $mensagem_not", 'registo-entrada', $registo->id);
+                ActividadesistemaController::historico_processo("O processo foi despachado como Indeferido: $mensagem_not", $registo->id);
 
             } else {
 
-                $inscricao->despacho = 'Deferido';
+                $inscricao->despacho = null;
+                $inscricao->estado = 'Sobre a mesa do Presidente';
                 $inscricao->save();
 
                 $mensagem_not = "O seu processo foi actualizado na área técnica. O processo aguarda pela assinatura do Presidente";
@@ -1581,6 +1598,7 @@ class SystemController extends Controller
                 ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo despachado como deferido.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo aguardando a assinatura do Presidente.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::historico_processo("O processo foi actualizado na área técnica e remetido à mesa do Sr. Presidente.", $registo->id);
 
             }
 
@@ -1640,6 +1658,7 @@ class SystemController extends Controller
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional pela área técnica.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa ao conselho nacional do processo de inscrição ($inscricao_adv->codigo)", 'user', $inscricao_adv->id);
+            ActividadesistemaController::historico_processo("O processo foi remetido ao Conselho Nacional.", $registo->id);
 
         }
 
@@ -1685,6 +1704,7 @@ class SystemController extends Controller
         // regista actividade no sistema
         ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
+        ActividadesistemaController::historico_processo("O processo foi alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", $registo->id);
 
         return 'sucesso';
 
@@ -1808,6 +1828,7 @@ class SystemController extends Controller
 
             $msg = "Processo de inscrição despachado como $request->despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+            ActividadesistemaController::historico_processo("O processo de inscrição foi despachado como $request->despacho", $registo->id);
 
         } else if ($request->despacho == 'Indeferido') {
 
@@ -1836,6 +1857,7 @@ class SystemController extends Controller
 
             $msg = "Processo de inscrição despachado como $request->despacho, com a seguinte mensagem: $request->mensagem_despacho.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+            ActividadesistemaController::historico_processo("O processo de inscrição foi despachado como $request->despacho, com a seguinte mensagem: $request->mensagem_despacho", $registo->id);
 
         } else if ($request->despacho == 'Sobre a mesa do Presidente') {
 
@@ -1867,6 +1889,7 @@ class SystemController extends Controller
 
             $msg = "Processo de inscrição remetido à mesa do Sr. Presidente do CPL.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);
+            ActividadesistemaController::historico_processo("Foi sanada a irregularidade do seu processo e a mesma foi remetida à mesa do Sr. Presidente do CPL", $registo->id);
 
         }
 
@@ -2035,6 +2058,18 @@ class SystemController extends Controller
             $patrono,
             $patrono_advogado
         ]);
+
+    }
+
+    public function getConsultaHistoricoProcesso($numero)
+    {
+
+        $registo = Registoentrada::where('codigo', $numero)->first();
+        if ($registo) {
+            $historico = Historicoprocesso::where('registoentrada_id', $registo->id)->get();
+            return response()->json($historico);
+        }
+        return response()->json(null);
 
     }
 

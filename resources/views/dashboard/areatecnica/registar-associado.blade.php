@@ -67,7 +67,7 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="sexo">Género</label>
-                                                    <select name="sexo" id="sexo" class="form-control">
+                                                    <select name="sexo" id="sexo" class="form-select">
                                                         <option value="" selected>Selecione...</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>
@@ -123,10 +123,20 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="categoria">Categoria</label>
-                                                    <select name="categoria" id="categoria" class="form-control">
+                                                    <select name="categoria" id="categoria" class="form-select">
                                                         <option value="" selected>Selecione...</option>
                                                         <option value="Advogado">Advogado</option>
                                                         <option value="Estagiario">Estagiario</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-12 col-md-3">
+                                                <div class="form-group">
+                                                    <label for="estado">Estado</label>
+                                                    <select name="estado" id="estado" class="form-select">
+                                                        <option value="" selected>Selecione...</option>
+                                                        <option value="Registado">Registado</option>
+                                                        <option value="Aguarda Cerimónia">Aguarda Cerimónia</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -145,7 +155,7 @@
                                                     <div class="form-group">
                                                         <label for="municipio_id_adv">Município</label>
                                                         <select name="municipio_id_adv" id="municipio_id_adv"
-                                                            class="form-control">
+                                                            class="form-select">
                                                             <option value="" selected>Selecione...</option>
                                                             @foreach ($municipios as $muni)
                                                                 <option value="{{$muni->id}}">{{$muni->descricao}}</option>
@@ -200,7 +210,7 @@
                                                     <div class="form-group">
                                                         <label for="municipio_id_est">Município</label>
                                                         <select name="municipio_id_est" id="municipio_id_est"
-                                                            class="form-control">
+                                                            class="form-select">
                                                             <option value="" selected>Selecione...</option>
                                                             @foreach ($municipios as $muni)
                                                                 <option value="{{$muni->id}}">{{$muni->descricao}}</option>

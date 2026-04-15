@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             Email: ${data.email == null ? '' : data.email} <br><br>
                             Assunto: ${data.getregistoentrada.assunto} <br><br>
                             Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
-                            Estado: ${data.getregistoentrada.estado} <br><br>
+                            Estado: ${data.estado} <br><br>
                             Acto Pretendido: ${data.acto_pretendido}<br><br>
                             Data de remessa ao CN: ${data.data_remessa_cn == null ? '' : data.data_remessa_cn}
                         </div>`

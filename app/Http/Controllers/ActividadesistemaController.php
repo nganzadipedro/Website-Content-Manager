@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Historicoprocesso;
 use App\Models\Historicosistema;
 use Auth;
 use Illuminate\Http\Request;
@@ -21,4 +22,16 @@ class ActividadesistemaController extends Controller
         return $actividade;
 
     }
+
+    public static function historico_processo($operacao, $registo_id)
+    {
+        $hist = Historicoprocesso::create([
+            'operacao' => $operacao,
+            'registoentrada_id' => $registo_id,
+            'user_id' =>  Auth::id() 
+        ]);
+
+        return $hist;
+    }
+
 }

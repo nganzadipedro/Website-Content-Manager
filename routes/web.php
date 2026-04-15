@@ -43,8 +43,10 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
     Route::get('/defesaoficiosa/solicitar', 'Controllers\WebsiteController@defesa_oficiosa');
+    Route::get('/consultar-processo', 'Controllers\WebsiteController@consultar_processo');
     Route::post('/defesa-oficiosa/post', 'Controllers\WebsiteController@defesa_oficiosa_post');
     Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
+    Route::get('system/getConsultaHistoricoProcesso/{numero}', 'Controllers\SystemController@getConsultaHistoricoProcesso');
 
 });
 

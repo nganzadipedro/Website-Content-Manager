@@ -222,6 +222,11 @@ class WebsiteController extends Controller
 
     }
 
+    public function consultar_processo()
+    {
+        return view('historico-processo');
+    }
+
     public function defesa_oficiosa_post(Request $request)
     {
 
@@ -292,7 +297,7 @@ class WebsiteController extends Controller
 
             // verifica se o número do bilhete está duplicado
             $existe = null;
-            
+
             $existe = Pessoa::where('num_documento', $request->num_bilhete)
                 ->first();
 
