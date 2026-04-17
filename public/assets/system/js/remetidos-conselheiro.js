@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // botões de chamar modal
     const btnRegistarDevolucao = document.getElementById("btn-registar-devolucao");
     const btnRemeterComissao = document.getElementById("btn-remeter-comissao");
+    const btnRegistarEntrega = document.getElementById("btn-registar-dataentrega");
 
 
     // botões de salvar e cancelar
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCancelarDevolucao = document.getElementById("btn-cancelar-devolucao-distribuicao");
     const btnRegistarRemessaComissao = document.getElementById("btn-registar-remessa-comissao");
     const btnCancelarRemessaComissao = document.getElementById("btn-cancelar-remessa-comissao");
+    const btnRegistarDataEntrega = document.getElementById("btn-salvar-dataentrega");
+    const btnCancelarDataEntrega = document.getElementById("btn-cancelar-dataentrega");
 
 
     // ✅ Selecionar / desselecionar todos
@@ -83,6 +86,123 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    btnRegistarEntrega.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            console.log("IDs selecionados:", selecionados);
+            const modal = new bootstrap.Modal(document.getElementById('modal-registar-dataentrega'));
+            modal.show();
+
+        }
+    });
+
+    btnRegistarDataEntrega.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        data_levantamento_distribuicao = document.getElementById('data_levantamento_distribuicao').value;
+
+        if (data_levantamento_distribuicao == '' || data_levantamento_distribuicao == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data de entrega dos processos ao Conselheiro",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+            formData.append('data_levantamento_distribuicao', data_levantamento_distribuicao);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/levantamento-conselheiro-grupo/post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (resultado) {
+
+                            console.log(resultado);
+
+                            if (resultado.type == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: resultado['data'],
+                                    timer: 6000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/map-distribution/stage-two";
+
+                            }
+                            else {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso",
+                                    text: resultado['data'],
+                                    timer: 6000
+                                });
+                            }
+
+
+
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
     btnRegistarDevolucaoDistribuicao.addEventListener("click", () => {
 
         const selecionados = [];
@@ -97,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe a data de entrega dos processos",
+                text: "Informe a data de devolução dos processos pelo Conselheiro",
                 timer: 4000
             });
         }

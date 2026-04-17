@@ -142,7 +142,7 @@
                                             <div class="col-lg-6 col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="nome_patrono">Nome do patrono</label>
-                                                    <input type="text" value="{{ $patrono->getadvogado->getpessoa->nome }}" class="form-control" maxlength="200"
+                                                    <input type="text" value="{{ $patrono == null ? '' : $patrono->getadvogado->getpessoa->nome }}" class="form-control" maxlength="200"
                                                         id="nome_patrono" name="nome_patrono">
                                                 </div>
                                             </div>
@@ -150,14 +150,14 @@
                                                 <div class="form-group">
                                                     <label for="num_cedula_patrono">Nº Cédula</label>
                                                     <input type="text" class="form-control" maxlength="9"
-                                                        id="num_cedula_patrono" value="{{ $patrono->getadvogado->num_associado }}" name="num_cedula_patrono">
+                                                        id="num_cedula_patrono" value="{{ $patrono == null ? '' : $patrono->getadvogado->num_associado }}" name="num_cedula_patrono">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="tel_patrono">Telefone do patrono</label>
                                                     <input type="text" class="form-control" maxlength="9"
-                                                        id="tel_patrono" value="{{ $patrono->getadvogado->getpessoa->telefone1 }}" name="tel_patrono">
+                                                        id="tel_patrono" value="{{ $patrono == null ? '' : $patrono->getadvogado->getpessoa->telefone1 }}" name="tel_patrono">
                                                 </div>
                                             </div>
 
@@ -168,25 +168,31 @@
                                                 <div class="form-group">
                                                     <label for="email_patrono">Email do patrono</label>
                                                     <input type="email" class="form-control" maxlength="200"
-                                                        id="email_patrono" value="{{ $patrono->getadvogado->getpessoa->email }}" name="email_patrono">
+                                                        id="email_patrono" value="{{ $patrono == null ? '' : $patrono->getadvogado->getpessoa->email }}" name="email_patrono">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="nome_escritorio">Nome do Escritório</label>
                                                     <input type="text" class="form-control" maxlength="200"
-                                                        id="nome_escritorio" value="{{ $patrono->getadvogado->nome_escritorio }}" name="nome_escritorio">
+                                                        id="nome_escritorio" value="{{ $patrono == null ? '' : $patrono->getadvogado->nome_escritorio }}" name="nome_escritorio">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-12 col-md-6">
                                                 <div class="form-group">
                                                     <label for="endereco_escritorio_est">Endereço do Escritório</label>
-                                                    <input type="text" value="{{ $patrono->getadvogado->endereco_escritorio }}" class="form-control" maxlength="200"
+                                                    <input type="text" value="{{ $patrono == null ? '' : $patrono->getadvogado->endereco_escritorio }}" class="form-control" maxlength="200"
                                                         id="endereco_escritorio_est" name="endereco_escritorio_est">
                                                 </div>
                                             </div>
 
                                         </div>
+
+                                        @php
+                                        
+                                        $municipio_patrono = $patrono == null ? '' :  $patrono->getadvogado->municipio_id;
+
+                                        @endphp
 
 
                                         <div class="row mt-4">
@@ -197,7 +203,7 @@
                                                         class="form-control">
                                                         <option value="" selected>Selecione...</option>
                                                         @foreach ($municipios as $muni)
-                                                            <option {{ $patrono->getadvogado->municipio_id == $muni->id ? 'selected' : '' }} value="{{$muni->id}}">{{$muni->descricao}}</option>
+                                                            <option {{ $municipio_patrono == $muni->id ? 'selected' : '' }} value="{{$muni->id}}">{{$muni->descricao}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -213,7 +219,7 @@
                                                 <div class="form-group">
                                                     <label for="num_estagiarios">Nº Estagiários</label>
                                                     <input type="text" maxlength="10" disabled name="num_estagiarios"
-                                                        class="form-control" id="num_estagiarios" value="{{ count($patrono->estagiarios) }}">
+                                                        class="form-control" id="num_estagiarios" value="{{ $patrono == null ? '' : count($patrono->estagiarios) }}">
                                                 </div>
                                             </div>
                                         </div>

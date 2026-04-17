@@ -57,19 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
             selecionados.push(item.value);
         });
 
-        data_levantamento_distribuicao_grupo = document.getElementById('data_levantamento_distribuicao_grupo').value;
         conselheiro_id_grupo = document.getElementById('conselheiro_id_grupo').value;
         observacao_distribuicao_grupo = document.getElementById('observacao_distribuicao_grupo').value;
 
-        if (data_levantamento_distribuicao_grupo == '' || data_levantamento_distribuicao_grupo == null) {
-            sweetAlert({
-                type: "warning",
-                title: "Aviso!",
-                text: "Digite a data de levantamento",
-                timer: 4000
-            });
-        }
-        else if (conselheiro_id_grupo == null || conselheiro_id_grupo == '') {
+        if (conselheiro_id_grupo == null || conselheiro_id_grupo == '') {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -85,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 formData.append('selecionados[]', id);
             });
 
-            formData.append('data_levantamento_distribuicao', data_levantamento_distribuicao_grupo);
             formData.append('conselheiro_id', conselheiro_id_grupo);
             formData.append('observacao_distribuicao', observacao_distribuicao_grupo);
 

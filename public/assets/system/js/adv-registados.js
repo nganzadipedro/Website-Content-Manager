@@ -371,7 +371,7 @@ function buscarItemDetalhes(id) {
                             Email: ${data.email} <br><br>
                             Assunto: ${data.getregistoentrada.assunto} <br><br>
                             Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
-                            Estado: ${data.getregistoentrada.estado} <br><br>
+                            Estado: ${data.estado} <br><br>
                             Conselheiro (Análise do Processo): <br><br>
                             Despacho: ${data.despacho == null ? '' : data.despacho}<br><br>
                             Mensagem do despacho: ${data.texto_despacho == null ? '' : data.texto_despacho}<br><br>

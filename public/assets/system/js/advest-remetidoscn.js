@@ -1,6 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const checkAll = document.getElementById("checkAll");
+    const checkItems = document.querySelectorAll(".checkItem");
+
     const btnCancelar = document.getElementById("btn-cancelar");
+    const btnRegistarDataRemessa = document.getElementById("btn-registar-dataremessa");
+    const btnSalvarDataRemessa = document.getElementById("btn-salvar-remessacn");
+
+    // ✅ Selecionar / desselecionar todos
+    checkAll.addEventListener("change", () => {
+        checkItems.forEach(item => {
+            item.checked = checkAll.checked;
+        });
+    });
+
+    // ✅ Se desmarcar um item, desmarca o "todos"
+    checkItems.forEach(item => {
+        item.addEventListener("change", () => {
+            const total = checkItems.length;
+            const marcados = document.querySelectorAll(".checkItem:checked").length;
+
+            checkAll.checked = total === marcados;
+        });
+    });
 
     $(document).on('click', '.registar-informacoes', function () {
 
@@ -147,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     $(document).on('click', '#btn-gerar-pdf', function () {
 
-        const data_remessa_cn = document.getElementById('data_remessa_cn').value;
+        const data_remessa_cn = document.getElementById('data_remessa_cn_filtro').value;
 
         if (data_remessa_cn == '' || data_remessa_cn == null) {
             sweetAlert({
@@ -215,9 +237,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-     $(document).on('click', '#btn-gerar-excel', function () {
+    $(document).on('click', '#btn-gerar-excel', function () {
 
-        const data_remessa_cn = document.getElementById('data_remessa_cn').value;
+        const data_remessa_cn = document.getElementById('data_remessa_cn_filtro').value;
 
         if (data_remessa_cn == '' || data_remessa_cn == null) {
             sweetAlert({
@@ -229,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else {
 
-             const form = document.createElement("form");
+            const form = document.createElement("form");
             form.method = "POST";
             form.action = "/system/areatecnica/exportxls-trainee/remessacn";
             form.target = "_blank";
@@ -285,6 +307,113 @@ document.addEventListener("DOMContentLoaded", () => {
             //     });
         }
 
+    });
+
+    btnRegistarDataRemessa.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            console.log("IDs selecionados:", selecionados);
+            const modal = new bootstrap.Modal(document.getElementById('modal-remeter-cn'));
+            modal.show();
+
+        }
+    });
+
+    btnSalvarDataRemessa.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        data_remessa_cn = document.getElementById('data_remessa_cn').value;
+
+        if (data_remessa_cn == '' || data_remessa_cn == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data de remessa ao Conselho Nacional",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+            formData.append('data_remessa_cn', data_remessa_cn);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/dataremessacn/update",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (resultado) {
+
+                            console.log(resultado);
+
+                            if (resultado == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso',
+                                    timer: 6000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+
+                            }
+
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
     });
 
 });

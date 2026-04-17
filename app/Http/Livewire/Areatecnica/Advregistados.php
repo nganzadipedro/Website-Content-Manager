@@ -24,6 +24,7 @@ class Advregistados extends Component
                 ->where('despacho', 'Indeferido')
                 ->orderBy('id', 'desc')->get();
         } else {
+            $this->categoria_p = 'Sobre a mesa do Presidente';
             $this->lista_conselheiros = User::where('permissao_id', 5)->get();
             $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
                 ->where('estado', 'Sobre a mesa do Presidente')

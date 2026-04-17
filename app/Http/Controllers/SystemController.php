@@ -362,12 +362,14 @@ class SystemController extends Controller
 
         foreach ($selecionados as $item) {
 
+            date_default_timezone_set("Africa/Luanda");
+
             $inscricao_adv = Inscricaoadvogado::find($item);
 
             $inscricao_adv->observacao_distribuicao = $request->observacao_distribuicao;
-            $inscricao_adv->data_levantamento_distribuicao = $request->data_levantamento_distribuicao;
             $inscricao_adv->conselheiro_id = $request->conselheiro_id;
             $inscricao_adv->estado_distribuicao = 'Distribuido';
+            $inscricao_adv->observacao_distribuicao = $request->observacao_distribuicao;
             $inscricao_adv->estado = 'análise de conselheiro';
             $inscricao_adv->save();
 
@@ -421,6 +423,11 @@ class SystemController extends Controller
         foreach ($selecionados as $item) {
 
             $inscricao_adv = Inscricaoadvogado::find($item);
+            if ($inscricao_adv->data_levantamento_distribuicao == null) {
+                $nome = $inscricao_adv->getregistoentrada->proveniencia;
+                return "O processo de inscrição do senhor $nome ainda não tem a data que o conselheiro fez o levantamento. Não pode ser registado a data de devolução.";
+            }
+
             if ($inscricao_adv->data_entrega_distribuicao != null) {
                 $nome = $inscricao_adv->getregistoentrada->proveniencia;
                 return "O processo de inscrição do senhor $nome já foi devolvido. Não pode ser devolvido duas vezes.";
@@ -452,6 +459,74 @@ class SystemController extends Controller
         }
 
         return 'sucesso';
+
+    }
+
+    public function levantamento_conselheiro_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+
+        $conselheiro_id = null;
+        $nome_conselheiro = '';
+
+        // primeiro verifica se dos selecionados tem algum que já tem data de entrega ao conselheiro
+        foreach ($selecionados as $item) {
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            if ($inscricao_adv->data_levantamento_distribuicao != null) {
+
+                $nome = $inscricao_adv->getregistoentrada->proveniencia;
+                return response()->json([
+                    'type' => 'error',
+                    'data' => "O processo de inscrição do senhor $nome já tem a data que o Conselheiro fez o levantamento. Não pode ser registado duas vezes."
+                ]);
+            }
+
+        }
+
+        foreach ($selecionados as $item) {
+
+            date_default_timezone_set("Africa/Luanda");
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+
+            $inscricao_adv->data_levantamento_distribuicao = $request->data_levantamento_distribuicao;
+            $inscricao_adv->save();
+
+            $conselheiro_id = $inscricao_adv->conselheiro_id;
+            $data = $inscricao_adv->data_levantamento_distribuicao;
+
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            // notifica o advogado por SMS e email
+            $nome = $registo->proveniencia;
+            $conselheiro = User::find($inscricao_adv->conselheiro_id);
+            $nome_conselheiro = $conselheiro->getpessoa->nome;
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "O(A) conselheiro(a) $nome_conselheiro fez o levantamento do processo na área técnica na data $data", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data $data que o(a) conselheiro(a) levantou o processo de inscrição do(a) senhor(a) $nome.", 'user', $inscricao_adv->id);
+
+        }
+
+        // processo para gerar um pdf
+        // $processos = Inscricaoadvogado::where('conselheiro_id', $conselheiro_id)
+        //     ->where('data_levantamento_distribuicao', $data)->get();
+
+        // $pdf = Pdf::loadView('documents-pdf.termo-entrega', [
+        //     'processos' => $processos,
+        //     'conselheiro' => $nome_conselheiro
+        // ]);
+
+        return response()->json([
+            'type' => 'sucesso',
+            'data' => "O registo foi efectuado efectuado com sucesso."
+        ]);
 
     }
 
@@ -949,7 +1024,7 @@ class SystemController extends Controller
         $advogado->email_patrono = $request->email_patrono;
         $advogado->telefone_patrono = $request->tel_patrono;
         $advogado->nome_escritorio = $request->nome_escritorio;
-        $advogado->estado = 'Aguarda Cerimónia';
+        $advogado->estado = $request->estado;
         $advogado->municipio_id = $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est;
         $advogado->endereco_escritorio = $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est;
         $advogado->save();
@@ -1636,29 +1711,62 @@ class SystemController extends Controller
         // dd($request->all());
         foreach ($selecionados as $item) {
 
+            date_default_timezone_set("Africa/Luanda");
+
             $inscricao_adv = Inscricaoadvogado::find($item);
             $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
             $registo->estado = 'deferido';
             $registo->save();
             $inscricao_adv->despacho = 'Deferido';
+            $inscricao_adv->estado = 'remetido ao CN';
+            $inscricao_adv->save();
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional pela área técnica.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Remeteu o processo de inscrição ao conselho nacional.", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+
+    }
+
+     public function dataremessacn_update(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+        // dd($request->all());
+        foreach ($selecionados as $item) {
+
+            date_default_timezone_set("Africa/Luanda");
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+          
             $inscricao_adv->data_remessa_cn = $request->data_remessa_cn;
             $inscricao_adv->save();
+
+            $data = $request->data_remessa_cn;
 
             // notifica o advogado por SMS
             $obmsg = new OmbalaController();
             $telefone = $registo->telefone;
+            $nome = $registo->proveniencia;
             $mensagem = "Caríssimo(a), o seu processo de inscrição foi remetido ao Conselho Nacional na data " . $request->data_remessa_cn;
 
-            try {
-                $obmsg->enviarMensagem($telefone, $mensagem);
-            } catch (\Throwable $th) {
+            // try {
+            //     $obmsg->enviarMensagem($telefone, $mensagem);
+            // } catch (\Throwable $th) {
 
-            }
+            // }
 
             // regista actividade no sistema
-            ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional pela área técnica.", 'registo-entrada', $registo->id);
-            ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa ao conselho nacional do processo de inscrição ($inscricao_adv->codigo)", 'user', $inscricao_adv->id);
-            ActividadesistemaController::historico_processo("O processo foi remetido ao Conselho Nacional.", $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional na data $data.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa ao Conselho Nacional ($data) do processo de inscrição do(a) Sr(a). $nome", 'user', $inscricao_adv->id);
+            ActividadesistemaController::historico_processo("O processo foi remetido ao Conselho Nacional na data $data", $registo->id);
 
         }
 

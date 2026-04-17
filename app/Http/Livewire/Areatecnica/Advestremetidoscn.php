@@ -13,7 +13,8 @@ class Advestremetidoscn extends Component
             ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
             ->where('inscricao_advogado.tipo_processo_id', 3)
             ->where('inscricao_advogado.cedula_disponivel', 'Não')
-            ->whereNotNull('inscricao_advogado.data_remessa_cn')
+            ->where('inscricao_advogado.despacho', 'Deferido')
+            ->where('inscricao_advogado.estado', 'remetido ao CN')
             ->orderBy('registo_entrada.proveniencia', 'asc')
             ->select('inscricao_advogado.*')
             ->get();

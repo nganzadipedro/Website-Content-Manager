@@ -84,12 +84,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
     Route::post('system/entrega-conselheiro-grupo/post', 'Controllers\SystemController@entrega_conselheiro_grupo_post');
+    Route::post('system/levantamento-conselheiro-grupo/post', 'Controllers\SystemController@levantamento_conselheiro_grupo_post');
     Route::post('system/remessa-comissaoetica-grupo/post', 'Controllers\SystemController@remessa_comissaoetica_grupo_post');
     Route::post('system/entrega-comissaoetica-grupo/post', 'Controllers\SystemController@entrega_comissaoetica_grupo_post');
     Route::post('system/entrega-comissaoetica-indeferido/post', 'Controllers\SystemController@entrega_comissaoetica_indeferido_post');
     Route::post('system/registo-associado/post', 'Controllers\SystemController@registo_associado_post');
     Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
+    Route::post('system/dataremessacn/update', 'Controllers\SystemController@dataremessacn_update');
     Route::post('system/registo-mudarindeferido/update', 'Controllers\SystemController@registo_mudarindeferido_update');
     Route::post('system/registoadicional-ceduladisponivel/update', 'Controllers\SystemController@registoadicional_ceduladisponivel');
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
@@ -248,15 +250,19 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
+                Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
+                Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');
+
                 Route::get('/list/subscription', 'Livewire\Areatecnica\Advpendentes')->name('listar_advogados_pendentes');
                 Route::get('/list/subscription-trainee', 'Livewire\Areatecnica\Advestpendentes')->name('listar_estagiarios_pendentes');
                 Route::get('/list/subscription/registed/{categoria}', 'Livewire\Areatecnica\Advregistados')->name('listar_advogados_registados');
                 Route::get('/list/lawyers-cn', 'Livewire\Areatecnica\Listacn')->name('listar_advogados_cn');
                 Route::get('/list/map-distribution/{categoria}', 'Livewire\Areatecnica\Mapadistribuicao')->name('listar_mapa_distribuicao');
                 Route::get('/list/subscription-trainee/registed/{categoria}', 'Livewire\Areatecnica\Advestregistados')->name('listar_estagiarios_registados');
-                Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
-                Route::get('/list/assistance/archived', 'Livewire\Areatecnica\Ajarquivados')->name('listar_pedidos_arquivados');
+
+
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/archive/assistance/{hash}', 'Livewire\Areatecnica\Arquivarpedido')->name('arquivar_pedido');
                 Route::get('/regist/subscription/{hash}', 'Livewire\Areatecnica\Registarinscricao')->name('registar_inscricao');

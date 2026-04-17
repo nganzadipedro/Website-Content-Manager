@@ -1,12 +1,8 @@
 <div class="page-wrapper">
     <div class="page-header d-print-none">
         <div class="container-xl">
-            <div class="card card-md">
-                <div class="card-stamp card-stamp-lg">
-                    <div class="card-stamp-icon bg-primary">
-
-                    </div>
-                </div>
+            <div class="card">
+               
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
@@ -193,7 +189,7 @@
                     @csrf
 
                     <div class="row mb-3">
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                             <label class="form-label">Conselheiro</label>
                             <select name="conselheiro_id_grupo" id="conselheiro_id_grupo" class="form-control">
                                 <option value="" selected>Selecione...</option>
@@ -202,13 +198,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label class="form-label">Data de Levantamento</label>
-                            <input type="date" class="form-control" name="data_levantamento_distribuicao_grupo"
-                                id="data_levantamento_distribuicao_grupo">
-                        </div>
                     </div>
-
 
                     <div class="mb-3">
                         <label class="form-label">Observação</label>

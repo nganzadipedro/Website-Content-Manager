@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkItems = document.querySelectorAll(".checkItem");
     const btnRemeterCn = document.getElementById("btn-remeter-cn");
     const btnCancelar = document.getElementById("btn-cancelar");
-    const btnRegistarCn = document.getElementById("btn-registar-remessa-cn");
 
     // ✅ Selecionar / desselecionar todos
     checkAll.addEventListener("change", () => {
@@ -42,10 +41,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else {
 
-            console.log("IDs selecionados:", selecionados);
+            csrf = document.querySelector('meta[name="csrf-token"]').content;
+            const formData = new FormData();
 
-            const modal = new bootstrap.Modal(document.getElementById('modal-remeter-cn'));
-            modal.show();
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja remeter os processos ao conselho nacional?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/registo-remetercn/update",
+                        headers: {
+                            'X-CSRF-TOKEN': csrf
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed/Deferido";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
 
         }
     });
@@ -149,89 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    btnRegistarCn.addEventListener("click", () => {
-
-        const selecionados = [];
-
-        document.querySelectorAll(".checkItem:checked").forEach(item => {
-            selecionados.push(item.value);
-        });
-
-        data_remessa_cn = document.getElementById('data_remessa_cn').value;
-
-        if (data_remessa_cn == '' || data_remessa_cn == null) {
-            sweetAlert({
-                type: "warning",
-                title: "Aviso!",
-                text: "Digite a data de remessa ao Conselho Nacional",
-                timer: 4000
-            });
-        }
-        else {
-
-            const formData = new FormData();
-
-            Array.from(selecionados).forEach(id => {
-                formData.append('selecionados[]', id);
-            });
-            formData.append('data_remessa_cn', data_remessa_cn);
-
-            Swal.fire({
-                title: "Confirmação",
-                text: "Tem certeza que deseja registar esta informação?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#34c38f",
-                cancelButtonColor: "#f46a6a",
-                confirmButtonText: "Salvar!",
-                cancelButtonText: "Cancelar",
-                showLoaderOnConfirm: true,
-                preConfirm: function () {
-                    return $.ajax({
-                        url: "/system/registo-remetercn/update",
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                        },
-                        type: "POST",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: formData,
-                        success: function (res) {
-
-                            console.log(res);
-                            if (res == 'sucesso') {
-                                sweetAlert({
-                                    type: "success",
-                                    title: "Sucesso",
-                                    text: 'Dados registados com sucesso!',
-                                    timer: 3000
-                                });
-
-                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed";
-
-                            }
-                        },
-                        error: function (error) {
-
-                            sweetAlert({
-                                type: "warning",
-                                title: "Erro " + error.status,
-                                text: 'Erro: ' + error.responseJSON.message,
-                                timer: 9000
-                            });
-                            console.log("Error: " + error.responseJSON.message);
-                        }
-                    });
-                }
-            });
-
-        }
-
-
-
-    });
-
     btnCancelar.addEventListener("click", () => {
 
         const modalElement = document.getElementById('modal-remeter-cn');
@@ -298,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    
+
     $(document).on('click', '.btn-detalhes', function () {
 
         // Pega o data-id do <a> clicado
@@ -331,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
                             Estado: ${data.estado} <br><br>
                             Despacho: ${data.despacho == null ? 'Sem Despacho' : data.despacho} <br><br>
-                            Mensagem do despacho: ${data.despacho == 'Indeferido' ? data.observacao : '' } <br><br>
+                            Mensagem do despacho: ${data.despacho == 'Indeferido' ? data.observacao : ''} <br><br>
                             Acto Pretendido: ${data.acto_pretendido}<br><br>
                             Data de remessa ao CN: ${data.data_remessa_cn == null ? '' : data.data_remessa_cn}
                         </div>`
@@ -343,5 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Erro:', error);
             });
     }
+
+   
 
 });

@@ -3,12 +3,8 @@
     <div class="page-wrapper">
         <div class="page-header d-print-none">
             <div class="container-xl">
-                <div class="card card-md">
-                    <div class="card-stamp card-stamp-lg">
-                        <div class="card-stamp-icon bg-primary">
-
-                        </div>
-                    </div>
+                <div class="card">
+                  
                     <div class="card-body">
                         <h3 class="h1">Inscrições Para Advogados Estagiários [Indicação de Patrono]</h3>
                         <div class="row mt-5">
