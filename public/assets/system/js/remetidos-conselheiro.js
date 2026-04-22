@@ -165,14 +165,49 @@ document.addEventListener("DOMContentLoaded", () => {
                             console.log(resultado);
 
                             if (resultado.type == 'sucesso') {
+
                                 sweetAlert({
                                     type: "success",
                                     title: "Sucesso",
                                     text: resultado['data'],
-                                    timer: 6000
+                                    timer: 5000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/map-distribution/stage-two";
+                                const modalElement = document.getElementById('modal-registar-dataentrega');
+                                const modal = bootstrap.Modal.getInstance(modalElement);
+                                $('#data_levantamento_distribuicao').val(null);
+                                modal.hide();
+
+                                // rotina para gerar o pdf
+                                const form = document.createElement("form");
+                                form.method = "POST";
+                                form.action = "/system/areatecnica/exportpdf-lawyers/entregaconselheiro";
+                                form.target = "_blank";
+
+                                // CSRF
+                                const csrf = document.createElement("input");
+                                csrf.type = "hidden";
+                                csrf.name = "_token";
+                                csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+                                form.appendChild(csrf);
+
+                                // Dados que quer enviar
+                                const campo_conselheiro_id = document.createElement("input");
+                                campo_conselheiro_id.type = "hidden";
+                                campo_conselheiro_id.name = "conselheiro_id";
+                                campo_conselheiro_id.value = resultado['conselheiro_id'];
+                                form.appendChild(campo_conselheiro_id);
+
+                                const campo_data_entrega = document.createElement("input");
+                                campo_data_entrega.type = "hidden";
+                                campo_data_entrega.name = "data_entrega";
+                                campo_data_entrega.value = data_levantamento_distribuicao;
+                                form.appendChild(campo_data_entrega);
+
+                                document.body.appendChild(form);
+
+                                form.submit();
+                                document.body.removeChild(form);
 
                             }
                             else {
@@ -183,8 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 6000
                                 });
                             }
-
-
 
                         },
                         error: function (error) {

@@ -246,10 +246,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                                 style="background-image: url(${avatar})"></span>
                                         </a>
                                     </div>
-                                    <div class="col text-truncate">
+                                    <div class="col">
                                         <a href="#" class="text-reset d-block">${item.nome}
                                             | ${dataFormatada} ${horaFormatada}</a>
-                                        <div class="d-block text-secondary text-truncate mt-n1">
+                                        <div class="text-secondary mt-n1">
                                             ${item.operacao}
                                         </div>
                                     </div>

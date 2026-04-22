@@ -2,11 +2,21 @@
     <div class="page-header d-print-none">
         <div class="container-xl">
             <div class="card">
-             
+
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Inscrições Para Advogados Pendentes</h3>
+                            <a id="btn-encaminhar-processo" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up-double">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11 14l4 -4l-4 -4" />
+                                    <path d="M16 14l4 -4l-4 -4" />
+                                    <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
+                                </svg> Encaminhar Processo</a>
                         </div>
                     </div>
                 </div>
@@ -20,11 +30,14 @@
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 550px; overflow: auto; padding: 5px;">
                             <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>
+                                            <input type="checkbox" id="checkAll">
+                                        </th>
                                         <th>Nº Proc. Secretaria</th>
                                         <th>Assunto</th>
                                         <th>Data de Entrada</th>
@@ -37,6 +50,11 @@
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
+                                            <td>
+
+                                                <input type="checkbox" class="checkItem" value="{{$item->id}}">
+
+                                            </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->assunto}}</td>
                                             <td>{{$item->data_entrada}}</td>
@@ -85,12 +103,89 @@
             </div>
         </div>
     </div>
+
+    <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Encaminhar Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                <label class="form-label">Encaminhar para</label>
+                                <select name="encaminhar_para" id="encaminhar_para" class="form-select">
+                                    <option value="conselheiro" selected>Conselheiro</option>
+                                    <option value="comissao">Comissão de Ética</option>
+                                    <option value="presidente">Sobre a Mesa do Presidente</option>
+                                    <option value="indeferido">Indeferidos</option>
+                                    <option value="cnacional">Conselho Nacional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label for="conselheiro_id" class="form-label">Conselheiro</label>
+                            <select name="conselheiro_id" id="conselheiro_id" class="form-select">
+                                <option value="" selected>---- Selecione -----</option>
+                                @foreach ($lista_conselheiros as $conselheiro)
+                                    <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Data de entrega ao conselheiro</label>
+                            <input type="date" class="form-control" name="data_entrega_conselheiro"
+                                id="data_entrega_conselheiro">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Data de entrega à comissão de ética</label>
+                            <input type="date" class="form-control" name="data_entrega_comissao"
+                                id="data_entrega_comissao">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Data de remessa ao CN</label>
+                            <input type="date" class="form-control" name="data_remessacn"
+                                id="data_remessacn">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                            <label class="form-label">Mensagem do despacho</label>
+                            <textarea name="mensagem_despacho" id="mensagem_despacho" rows="3"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-12">
+                        <a id="btn-salvar-encaminhar" class="btn btn-success mt-4">Salvar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
+    <script src="{{ asset('assets/system/js/adv-pendentes.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                paging: false, // Desabilita a paginação
+                searching: true, // Habilita a barra de pesquisa
+                ordering: false
+            });
         });
     </script>
 @endsection

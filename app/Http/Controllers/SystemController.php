@@ -412,6 +412,94 @@ class SystemController extends Controller
 
     }
 
+    public function encaminharprocesso_grupo_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+        $selecionados = $request->selecionados;
+
+        foreach ($selecionados as $item) {
+
+            date_default_timezone_set("Africa/Luanda");
+
+            $registo = Registoentrada::find($item);
+
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            // cria o processo de inscrição
+            $conta = Inscricaoadvogado::where('tipo_processo_id', 2)->count();
+            $conta = $conta + 1;
+
+            $inscricao_adv = Inscricaoadvogado::create([
+                'hash' => Str::uuid(),
+                'codigo' => $conta . "/2026",
+                'numero' => $conta,
+                'user_id' => Auth::user()->id,
+                'registo_entrada_id' => $registo->id,
+                'tipo_processo_id' => 2,
+                'estado' => 'em tratamento'
+            ]);
+
+            if ($request->encaminhar_para == 'conselheiro') {
+
+                $inscricao_adv->conselheiro_id = $request->conselheiro_id;
+                $inscricao_adv->estado_distribuicao = 'Distribuido';
+                $inscricao_adv->data_levantamento_distribuicao = $request->data_entrega_conselheiro;
+                $inscricao_adv->estado = 'análise de conselheiro';
+                $inscricao_adv->save();
+
+                ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido aos conselheiros para a devida análise.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado aos conselheiros para a devida análise.", 'user', $inscricao_adv->id);
+
+            } else if ($request->encaminhar_para == 'comissao') {
+
+                $inscricao_adv->data_levantamento_comissao_etica = $request->data_entrega_comissao;
+                $inscricao_adv->estado = 'análise comissão de ética';
+                $inscricao_adv->save();
+
+                ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à comissão de ética para a devida análise.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado à comissão de ética para a devida análise.", 'user', $inscricao_adv->id);
+
+            } else if ($request->encaminhar_para == 'presidente') {
+
+                $inscricao_adv->estado = 'Sobre a mesa do Presidente';
+                $inscricao_adv->save();
+
+                ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à mesa do presidente.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Registou a remessa do processo à mesa do presidente.", 'user', $inscricao_adv->id);
+
+            } else if ($request->encaminhar_para == 'indeferido') {
+
+                $inscricao_adv->estado = 'em tratamento';
+                $inscricao_adv->despacho = 'Indeferido';
+                $inscricao_adv->observacao = $request->mensagem_despacho;
+                $inscricao_adv->texto_despacho = $request->mensagem_despacho;
+                $inscricao_adv->save();
+
+                $mensagem = $request->mensagem_despacho;
+
+                ActividadesistemaController::inserir(Auth::id(), "O processo foi despachado como indeferido com a seguinte mensagem: $mensagem", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Registou o despacho do processo como indeferido com a seguinte mensagem: $mensagem", 'user', $inscricao_adv->id);
+
+            } else if ($request->encaminhar_para == 'cnacional') {
+
+                $inscricao_adv->estado = 'remetido ao CN';
+                $inscricao_adv->despacho = 'Deferido';
+                $inscricao_adv->data_remessa_cn = $request->data_remessacn;
+                $inscricao_adv->save();
+
+                ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido ao conselho nacional na data " . $request->data_remessacn, 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa do processo ao conselho nacional: " . $request->data_remessacn, 'user', $inscricao_adv->id);
+
+            }
+
+        }
+
+        return 'sucesso';
+
+    }
+
     public function entrega_conselheiro_grupo_post(Request $request)
     {
 
@@ -525,7 +613,8 @@ class SystemController extends Controller
 
         return response()->json([
             'type' => 'sucesso',
-            'data' => "O registo foi efectuado efectuado com sucesso."
+            'data' => "O registo foi efectuado efectuado com sucesso.",
+            'conselheiro_id' => $conselheiro_id
         ]);
 
     }
@@ -1414,7 +1503,7 @@ class SystemController extends Controller
                 'email' => $request->email,
                 'acto_pretendido' => $request->acto_pretendido,
                 'registo_entrada_id' => $registo->id,
-                'patrono_id' => $patrono_id,
+                'patrono_id' => $conta_estagiarios < 10 ? $patrono_id : null,
                 'num_bilhete' => $request->num_bilhete,
                 'user_id' => Auth::user()->id
             ]);
@@ -1449,6 +1538,7 @@ class SystemController extends Controller
 
                     $inscricao->despacho = 'Indeferido';
                     $inscricao->data_despacho = $dataHoje;
+                    $inscricao->estado = 'em tratamento';
                     $inscricao->save();
 
                     $mensagem_not = $request->observacao;
@@ -1459,6 +1549,8 @@ class SystemController extends Controller
 
                 } else {
 
+                    $inscricao->data_despacho = null;
+                    $inscricao->despacho = null;
                     $inscricao->estado = 'Sobre a mesa do Presidente';
                     $inscricao->save();
 
@@ -1479,14 +1571,17 @@ class SystemController extends Controller
             if ($inscricao->despacho == 'Indeferido') {
 
                 try {
-
-                    $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição. Verifique o seu email");
+                    $letra = $mensagem_not[0];
+                    $letra = mb_strtoupper($letra, 'UTF-8');
+                    $mensagem_not[0] = $letra;
+                    $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
                     if ($request->email != null && $request->email != '') {
                         $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
                     }
                 } catch (\Throwable $th) {
 
                 }
+
             }
 
             ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição para advogado estagiário do(a) Sr(a). $nome", 'user', $inscricao->id);
@@ -1621,11 +1716,11 @@ class SystemController extends Controller
         $inscricao->despacho = 'Deferido';
         $inscricao->data_despacho = $dataHoje;
         $inscricao->acto_pretendido = $request->acto_pretendido;
-        $inscricao->patrono_id = $patrono_id;
+        $inscricao->patrono_id = $conta_estagiarios <= 10 ? $patrono_id : null;
         $inscricao->num_bilhete = $request->num_bilhete;
         $inscricao->save();
 
-        if ($request->acto_pretendido != 'Indicação de Patrono' && $conta_estagiarios < 10) {
+        if ($request->acto_pretendido != 'Indicação de Patrono' && $conta_estagiarios <= 10) {
 
             $est_patrono = Estagiariospatrono::create([
                 'patrono_id' => $patrono_id,
@@ -1642,6 +1737,7 @@ class SystemController extends Controller
         if ($request->acto_pretendido == 'Indicação de Patrono') {
 
             $inscricao->despacho = null;
+            $inscricao->estado = 'em tratamento';
             $inscricao->save();
 
             $mensagem_not = "O seu processo foi actualizado na área técnica, estando em falta a indicação do patrono";
@@ -1654,6 +1750,8 @@ class SystemController extends Controller
             if ($request->observacao != null && $request->observacao != '') {
 
                 $inscricao->despacho = 'Indeferido';
+                $inscricao->data_despacho = $dataHoje;
+                $inscricao->estado = 'em tratamento';
                 $inscricao->save();
 
                 $mensagem_not = $request->observacao;
@@ -1665,13 +1763,13 @@ class SystemController extends Controller
             } else {
 
                 $inscricao->despacho = null;
+                $inscricao->data_despacho = null;
                 $inscricao->estado = 'Sobre a mesa do Presidente';
                 $inscricao->save();
 
                 $mensagem_not = "O seu processo foi actualizado na área técnica. O processo aguarda pela assinatura do Presidente";
 
-                ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição registado pela área técnica.", 'registo-entrada', $registo->id);
-                ActividadesistemaController::inserir(Auth::id(), "Processo despachado como deferido.", 'registo-entrada', $registo->id);
+                ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::inserir(Auth::id(), "Processo aguardando a assinatura do Presidente.", 'registo-entrada', $registo->id);
                 ActividadesistemaController::historico_processo("O processo foi actualizado na área técnica e remetido à mesa do Sr. Presidente.", $registo->id);
 
@@ -1687,7 +1785,11 @@ class SystemController extends Controller
 
             try {
 
-                $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido um despacho para o seu processo de inscrição. Verifique o seu email");
+                $letra = $mensagem_not[0];
+                $letra = mb_strtoupper($letra, 'UTF-8');
+                $mensagem_not[0] = $letra;
+
+                $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
                 if ($request->email != null && $request->email != '') {
                     $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
                 }
@@ -1696,7 +1798,7 @@ class SystemController extends Controller
             }
         }
 
-        ActividadesistemaController::inserir(Auth::id(), "Registou o processo de inscrição para advogado estagiário do(a) Sr(a). $nome", 'user', $inscricao->id);
+        ActividadesistemaController::inserir(Auth::id(), "Editou o registo do processo de inscrição para advogado estagiário do(a) Sr(a). $nome", 'user', $inscricao->id);
 
         return 'sucesso';
 
@@ -1732,7 +1834,7 @@ class SystemController extends Controller
 
     }
 
-     public function dataremessacn_update(Request $request)
+    public function dataremessacn_update(Request $request)
     {
 
         date_default_timezone_set("Africa/Luanda");
@@ -1745,7 +1847,7 @@ class SystemController extends Controller
 
             $inscricao_adv = Inscricaoadvogado::find($item);
             $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
-          
+
             $inscricao_adv->data_remessa_cn = $request->data_remessa_cn;
             $inscricao_adv->save();
 
@@ -1757,11 +1859,11 @@ class SystemController extends Controller
             $nome = $registo->proveniencia;
             $mensagem = "Caríssimo(a), o seu processo de inscrição foi remetido ao Conselho Nacional na data " . $request->data_remessa_cn;
 
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            // } catch (\Throwable $th) {
+            try {
+                $obmsg->enviarMensagem($telefone, $mensagem);
+            } catch (\Throwable $th) {
 
-            // }
+            }
 
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional na data $data.", 'registo-entrada', $registo->id);
@@ -1783,10 +1885,11 @@ class SystemController extends Controller
         $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
         $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
 
-        $registo->estado = 'em tratamento';
+        $registo->estado = 'indeferido';
         $registo->save();
 
         $inscricao_adv->despacho = 'Indeferido';
+        $inscricao_adv->estado = 'em tratamento';
         $inscricao_adv->data_despacho = $request->data_despacho;
         $inscricao_adv->observacao = $request->mensagem_despacho;
         $inscricao_adv->texto_despacho = $request->mensagem_despacho;
@@ -1798,12 +1901,16 @@ class SystemController extends Controller
         $telefone = $registo->telefone;
         $email = $inscricao_adv->email;
         $nome = $registo->proveniencia;
-        $mensagem = $inscricao_adv->texto_despacho;
+        $mensagem_not = $inscricao_adv->texto_despacho;
+
+        $letra = $mensagem_not[0];
+        $letra = mb_strtoupper($letra, 'UTF-8');
+        $mensagem_not[0] = $letra;
 
         try {
-            $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+            $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
             if ($email != null && $email != '') {
-                $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+                $ob->mailDespacho($email, $nome, $mensagem_not, $inscricao_adv->data_despacho);
             }
         } catch (\Throwable $th) {
 
@@ -1944,6 +2051,7 @@ class SystemController extends Controller
             $inscricao_advogado->observacao = $request->mensagem_despacho;
             $inscricao_advogado->texto_despacho = $request->mensagem_despacho;
             $inscricao_advogado->despacho = $request->despacho;
+            $inscricao_advogado->estado = 'em tratamento';
             $inscricao_advogado->data_despacho = $request->data_despacho;
             $inscricao_advogado->save();
 
@@ -1954,10 +2062,16 @@ class SystemController extends Controller
             $ob = new MailController();
             $obmsg = new OmbalaController();
 
+            $mensagem_not = $inscricao_advogado->texto_despacho;
+            $letra = $mensagem_not[0];
+            $letra = mb_strtoupper($letra, 'UTF-8');
+            $mensagem_not[0] = $letra;
+
             try {
-                $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+               // $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: " . $mensagem_not);
                 if ($email != null && $email != '') {
-                    $ob->mailDespacho($email, $nome, $request->mensagem_despacho, $data_despacho);
+                    $ob->mailDespacho($email, $nome, $mensagem_not, $data_despacho);
                 }
             } catch (\Throwable $th) {
 
@@ -1985,15 +2099,6 @@ class SystemController extends Controller
             $obmsg = new OmbalaController();
 
             $mensagem = "Caríssimo(a), foi sanada a irregularidade do seu processo e a mesma foi remetida à mesa do Sr. Presidente do CPL.";
-
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            //     if ($email != null && $email != '') {
-            //         $ob->mailNotificacao($email, $nome, $mensagem, $registo->data_entrada);
-            //     }
-            // } catch (\Throwable $th) {
-
-            // }
 
             $msg = "Processo de inscrição remetido à mesa do Sr. Presidente do CPL.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);

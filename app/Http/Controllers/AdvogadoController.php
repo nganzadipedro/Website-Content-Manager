@@ -15,6 +15,7 @@ use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Pessoa;
 use App\Models\Platform\Advogado;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -215,7 +216,7 @@ class AdvogadoController extends Controller
             'data' => $data_emissao
         ]);
 
-         return $pdf->stream();
+        return $pdf->stream();
 
         // return response()->streamDownload(function () use ($pdf) {
         //     echo $pdf->output();
@@ -223,7 +224,7 @@ class AdvogadoController extends Controller
 
     }
 
-     public function export_pdf_indicacao_patrono(Request $request)
+    public function export_pdf_indicacao_patrono(Request $request)
     {
 
         $result = Inscricaoadvogado::query()
@@ -262,11 +263,50 @@ class AdvogadoController extends Controller
             'data' => $data_emissao
         ]);
 
-         return $pdf->stream();
+        return $pdf->stream();
 
         // return response()->streamDownload(function () use ($pdf) {
         //     echo $pdf->output();
         // }, 'lista_remessa_cn.pdf');
+
+    }
+
+    public function export_pdf_entrega_conselheiro(Request $request)
+    {
+
+        $lista = Inscricaoadvogado::where('conselheiro_id', $request->conselheiro_id)
+            ->where('data_levantamento_distribuicao', $request->data_entrega)
+            ->get();
+
+        $conselheiro = User::find($request->conselheiro_id);
+        $nome_conselheiro = $conselheiro->getpessoa->nome;
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.termo-entrega', [
+            'lista' => $lista,
+            'nome_conselheiro' => $nome_conselheiro
+        ]);
+
+        return $pdf->stream();
 
     }
 

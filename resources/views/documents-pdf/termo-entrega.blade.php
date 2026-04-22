@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Remessa Conselho Nacional</title>
+    <title>Termo de Entrega</title>
 </head>
 
 <body>
@@ -13,16 +13,6 @@
     <style>
         * {
             font-family: 'Century Gothic';
-        }
-
-        .mes {
-            background-color: #073763;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            width: 100%;
-            display: block;
-            margin-bottom: 20px;
         }
 
         .imagens {
@@ -42,41 +32,35 @@
 
         .cabecalho h4 {
             font-weight: normal;
+            font-size: 30px;
         }
 
-        .content-table {
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 0.7em;
-            width: 100%;
-            border-radius: 5px;
+        .paragrafo {
+            text-align: justify;
         }
 
-        .content-table thead tr {
-            background-color: #073763;
-            color: white;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        .content-table th,
-        .content-table td {
-            padding: 5px;
-            text-align: center;
-            border-bottom: 1px solid black;
-        }
-
-        .apto {
-            color: blue;
-        }
-
-        .napto {
-            color: red;
-        }
-
-        .rodape {
+        .data-entrega {
             text-align: center;
             font-style: italic;
+            margin-top: 40px;
+            margin-bottom: 70px;
+        }
+
+        .assinaturas {
+            margin-top: 40px;
+            display: inline;
+        }
+        .esquerda {
+            width: 45%;
+            text-align: center;
+        }
+        .direita {
+            width: 45%;
+            text-align: center;
+            float: right;
+            position: relative;
+            top: -230px;
+            left: 350px;
         }
     </style>
 
@@ -88,22 +72,41 @@
         <h4>TERMO DE ENTREGA</h4>
     </div>
 
-    <p>
-        Procedeu-se à entrega de processos de inscrição de Advogados ao(a) Conselheiro(a) {{ $conselheiro }} para
+    <p class="paragrafo">
+        Procedeu-se à entrega de processos de inscrição de Advogados ao(a) Conselheiro(a)
+        <strong>{{ $nome_conselheiro }}</strong> para
         análise.
         <br><br>
         Nomeadamente:
     </p>
 
     <ol>
-        @foreach ($processos as $linha)
+        @foreach ($lista as $linha)
             <li>{{ strtoupper($linha->getregistoentrada->proveniencia) }}</li>
         @endforeach
     </ol>
 
     <div class="data-entrega">
         Luanda, ..... de ......... de ..........
-        <br><br><br>
+    </div>
+
+    <div class="assinaturas">
+        <div class="esquerda">
+            Recebi <br>
+            _____________________________<br>
+            O Conselheiro<br><br><br><br>
+            Entreguei <br>
+            _____________________________<br>
+            O Conselheiro<br><br><br><br>
+        </div>
+        <div class="direita">
+            Recebi <br>
+            _____________________________<br>
+            O Conselheiro<br><br><br><br>
+            Entreguei <br>
+            _____________________________<br>
+            O Conselheiro<br><br><br><br>
+        </div>
     </div>
 
 

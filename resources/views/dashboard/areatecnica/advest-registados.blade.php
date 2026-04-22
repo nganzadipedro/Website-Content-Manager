@@ -8,9 +8,7 @@
                             <h3 class="h1">Inscrições Para Advogados Estagiários
                                 [{{ $categoria_p == 'Deferido' ? 'Sobre a Mesa do Presidente' : $categoria_p }}]</h3>
 
-                            @if ($categoria_p == 'Deferido')
                             <a id="btn-remeter-cn" class="btn btn-primary">Remeter ao Conselho Nacional</a>
-                            @endif
                         </div>
                     </div>
                 </div>

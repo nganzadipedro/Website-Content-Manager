@@ -62,7 +62,7 @@
                                                 <div class="col-lg-6 col-md-6 col-xl-6 col-12">
                                                     <p class="detalhes">
                                                         Tipo de documento: {{ $registo->tipo_documento }}<br>
-                                                        Estado: {{ $registo->estado }}<br>
+                                                        Estado: {{ $inscricao_advogado->estado }}<br>
                                                         Despacho: {{ $inscricao_advogado->despacho }}<br>
                                                         Data de Despacho: {{ $inscricao_advogado->data_despacho }}<br>
                                                         Data de Remessa ao CN: {{ $inscricao_advogado->data_remessa_cn }}<br>
@@ -154,7 +154,6 @@
                                                         <label for="despacho">Despacho</label>
                                                         <select name="despacho" id="despacho" class="form-control">
                                                             <option value="" selected>Escolha a opção...</option>
-                                                            <option value="Deferido">Deferido</option>
                                                             <option value="Indeferido">Indeferido</option>
                                                             <option value="Sobre a mesa do Presidente">Sobre a mesa do Presidente</option>
                                                         </select>

@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
+    Route::post('system/encaminharprocesso-grupo/post', 'Controllers\SystemController@encaminharprocesso_grupo_post');
     Route::post('system/entrega-conselheiro-grupo/post', 'Controllers\SystemController@entrega_conselheiro_grupo_post');
     Route::post('system/levantamento-conselheiro-grupo/post', 'Controllers\SystemController@levantamento_conselheiro_grupo_post');
     Route::post('system/remessa-comissaoetica-grupo/post', 'Controllers\SystemController@remessa_comissaoetica_grupo_post');
@@ -285,6 +286,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/exportpdf-trainee/remessacn', 'Controllers\AdvogadoController@lista_estagiarios_remessacn')->name('exportpdf_remessa_cn');
                 Route::post('/exportpdf-trainee-post/remessacn', 'Controllers\AdvogadoController@export_pdf_lista_estagiarios_remessacn');
                 Route::post('/exportpdf-indicacao-patrono', 'Controllers\AdvogadoController@export_pdf_indicacao_patrono');
+                Route::post('/exportpdf-lawyers/entregaconselheiro', 'Controllers\AdvogadoController@export_pdf_entrega_conselheiro');
                 Route::get('/exportpdf-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@lista_aguardando_cerimonia')->name('exportpdf_waiting_cerimony');
 
             });

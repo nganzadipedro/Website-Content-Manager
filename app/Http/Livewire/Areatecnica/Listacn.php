@@ -11,9 +11,7 @@ class Listacn extends Component
     {
         $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
             ->whereNotNull('data_remessa_cn')
-            ->whereNotNull('data_emissao_cedula')
-            ->whereNotNull('numero_cedula')
-            ->where('cedula_disponivel', 'Sim')
+            ->where('estado', 'remetido ao CN')
             ->orderBy('id', 'desc')->get();
         return view('dashboard.areatecnica.lista-cn')->extends('layouts-new.app')->section('content');
     }
