@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkAll = document.getElementById("checkAll");
     const checkItems = document.querySelectorAll(".checkItem");
     const btnRemeterCn = document.getElementById("btn-remeter-cn");
+    const btnRegistarDataDespacho = document.getElementById("btn-registar-datadespacho");
     const btnCancelar = document.getElementById("btn-cancelar");
+    btnCancelarDataDespacho = document.getElementById("btn-cancelar-datadespacho");
 
     // ✅ Selecionar / desselecionar todos
     checkAll.addEventListener("change", () => {
@@ -72,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         success: function (res) {
 
                             console.log(res);
+
                             if (res == 'sucesso') {
                                 sweetAlert({
                                     type: "success",
@@ -83,6 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
                                 window.location.href = "/system/areatecnica/list/subscription-trainee/registed/Deferido";
 
                             }
+                            else if (res != 'sucesso') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso",
+                                    text: res,
+                                    timer: 6000
+                                });
+                            }
+
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 6000);
+
                         },
                         error: function (error) {
 
@@ -97,6 +113,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             });
+
+        }
+    });
+
+    btnRegistarDataDespacho.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            const modal = new bootstrap.Modal(document.getElementById('modal-registar-datadespacho'));
+            modal.show();
 
         }
     });
@@ -200,9 +240,101 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    $(document).on('click', '#btn-salvar-datadespacho', function () {
+
+        data_despacho = $('#data_despacho_presidente').val();
+
+        if (data_despacho == '' || data_despacho == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite a data do despacho",
+                timer: 4000
+            });
+        }
+        else {
+
+            const selecionados = [];
+
+            document.querySelectorAll(".checkItem:checked").forEach(item => {
+                selecionados.push(item.value);
+            });
+
+            csrf = document.querySelector('meta[name="csrf-token"]').content;
+            const formData = new FormData();
+
+            formData.append('data_despacho', data_despacho);
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/datadespacho-presidente/update",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed/Deferido";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+
+
+        }
+
+    });
+
     btnCancelar.addEventListener("click", () => {
 
         const modalElement = document.getElementById('modal-remeter-cn');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+
+    });
+
+    btnCancelarDataDespacho.addEventListener("click", () => {
+
+        const modalElement = document.getElementById('modal-registar-datadespacho');
         const modal = bootstrap.Modal.getInstance(modalElement);
         modal.hide();
 
@@ -233,9 +365,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 dados.forEach(item => {
 
                     let avatar = window.avatarUrl;
-                    let data = new Date(item.created_at);
-                    let dataFormatada = data.toLocaleDateString('pt-PT');
-                    let horaFormatada = data.toLocaleTimeString('pt-PT');
+
+                    const data = item.created_at;
+                    const [datePart, timePart] = data.split("T");
+                    const [ano, mes, dia] = datePart.split("-");
+                    const hora = timePart.substring(0, 8);
+
+                    const formatada = `${dia}/${mes}/${ano} ${hora}`;
+
 
                     linha = `<div class="list-group-item">
                                 <div class="row align-items-center">
@@ -248,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </div>
                                     <div class="col">
                                         <a href="#" class="text-reset d-block">${item.nome}
-                                            | ${dataFormatada} ${horaFormatada}</a>
+                                            | ${formatada}</a>
                                         <div class="text-secondary mt-n1">
                                             ${item.operacao}
                                         </div>
@@ -312,6 +449,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-   
+
 
 });

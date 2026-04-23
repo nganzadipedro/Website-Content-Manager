@@ -1810,7 +1810,24 @@ class SystemController extends Controller
         date_default_timezone_set("Africa/Luanda");
 
         $selecionados = $request->selecionados;
-        // dd($request->all());
+
+        // verificar se os que estão a ser remetidos têm todos a data de despacho como deferido
+
+        foreach ($selecionados as $item) {
+
+            date_default_timezone_set("Africa/Luanda");
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+            $nome = $registo->proveniencia;
+
+            if ($inscricao_adv->data_despacho == null && $inscricao_adv->despacho != 'Deferido') {
+                return "O processo do(a) Sr(a). $nome ainda não tem a data de despacho do Presidente";
+            }
+            
+        }
+
         foreach ($selecionados as $item) {
 
             date_default_timezone_set("Africa/Luanda");
@@ -1869,6 +1886,45 @@ class SystemController extends Controller
             ActividadesistemaController::inserir(Auth::id(), "Processo remetido ao Conselho Nacional na data $data.", 'registo-entrada', $registo->id);
             ActividadesistemaController::inserir(Auth::id(), "Registou a data de remessa ao Conselho Nacional ($data) do processo de inscrição do(a) Sr(a). $nome", 'user', $inscricao_adv->id);
             ActividadesistemaController::historico_processo("O processo foi remetido ao Conselho Nacional na data $data", $registo->id);
+
+        }
+
+        return 'sucesso';
+
+
+    }
+
+    public function datadespacho_presidente_update(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $selecionados = $request->selecionados;
+        // dd($request->all());
+        foreach ($selecionados as $item) {
+
+            date_default_timezone_set("Africa/Luanda");
+
+            $inscricao_adv = Inscricaoadvogado::find($item);
+            $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+            $registo->estado = 'deferido';
+            $registo->save();
+
+            $inscricao_adv->data_despacho = $request->data_despacho;
+            $inscricao_adv->despacho = 'Deferido';
+            $inscricao_adv->save();
+
+            $data = $request->data_despacho;
+
+            // notifica o advogado por SMS
+            $telefone = $registo->telefone;
+            $nome = $registo->proveniencia;
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "Processo despachado pelo Presidente como Deferido na data $data.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a data de despacho ($data) do Presidente como Deferido do processo de inscrição do(a) Sr(a). $nome", 'user', $inscricao_adv->id);
+            ActividadesistemaController::historico_processo("O processo foi despachado como Deferido na data $data", $registo->id);
 
         }
 
@@ -2068,7 +2124,7 @@ class SystemController extends Controller
             $mensagem_not[0] = $letra;
 
             try {
-               // $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
+                // $obmsg->enviarMensagem($telefone, "Caríssimo(a), consulte o seu email, verificou-se uma irregularidade no seu processo de inscrição.");
                 $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: " . $mensagem_not);
                 if ($email != null && $email != '') {
                     $ob->mailDespacho($email, $nome, $mensagem_not, $data_despacho);

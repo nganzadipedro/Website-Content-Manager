@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
     Route::post('system/dataremessacn/update', 'Controllers\SystemController@dataremessacn_update');
     Route::post('system/registo-mudarindeferido/update', 'Controllers\SystemController@registo_mudarindeferido_update');
+    Route::post('system/datadespacho-presidente/update', 'Controllers\SystemController@datadespacho_presidente_update');
     Route::post('system/registoadicional-ceduladisponivel/update', 'Controllers\SystemController@registoadicional_ceduladisponivel');
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
     Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');

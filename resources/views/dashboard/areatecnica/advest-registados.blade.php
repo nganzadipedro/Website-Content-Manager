@@ -8,7 +8,28 @@
                             <h3 class="h1">Inscrições Para Advogados Estagiários
                                 [{{ $categoria_p == 'Deferido' ? 'Sobre a Mesa do Presidente' : $categoria_p }}]</h3>
 
-                            <a id="btn-remeter-cn" class="btn btn-primary">Remeter ao Conselho Nacional</a>
+                            <a id="btn-remeter-cn" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up-double">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11 14l4 -4l-4 -4" />
+                                    <path d="M16 14l4 -4l-4 -4" />
+                                    <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
+                                </svg>Remeter ao Conselho Nacional</a>
+                            <a id="btn-registar-datadespacho" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg> Registar Data de Despacho</a>
                         </div>
                     </div>
                 </div>
@@ -34,6 +55,7 @@
                                         <th>Requerente</th>
                                         <th>Estado</th>
                                         <th>Despacho</th>
+                                        <th>Data Despacho</th>
                                         <th>Acto Pretendido</th>
                                         <th></th>
                                         <th></th>
@@ -43,6 +65,20 @@
 
                                     @foreach ($lista as $item)
                                         <tr>
+
+                                            @php
+
+                                                $data_despacho = 'Sem Despacho';
+                                                if ($item->despacho == 'Indeferido') {
+                                                    $data_despacho = $item->data_despacho;
+                                                } else if ($item->estado == 'Sobre a mesa do Presidente') {
+                                                    if ($item->despacho == 'Deferido') {
+                                                        $data_despacho = $item->data_despacho;
+                                                    }
+                                                }
+
+                                            @endphp
+
                                             <td>{{$loop->index + 1}}</td>
                                             <td>
                                                 @if ($item->estado == 'Sobre a mesa do Presidente')
@@ -53,6 +89,8 @@
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
                                             <td>{{$item->estado == 'em tratamento' ? $item->despacho : $item->estado}}</td>
                                             <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
+                                            <td>{{$data_despacho}}
+                                            </td>
                                             <td>{{$item->acto_pretendido}}</td>
                                             <td>
                                                 @if ($item->despacho == 'Indeferido' || $item->estado == 'Sobre a mesa do Presidente')
@@ -232,6 +270,36 @@
             </div>
             <div class="modal-body">
                 <div class=" alert alert-primary" id="dv-detalhes"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-registar-datadespacho" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registar Data de Despacho</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @csrf
+
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label class="form-label">Data de Despacho do Presidente</label>
+                        <input type="date" class="form-control" name="data_despacho_presidente"
+                            id="data_despacho_presidente">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 col-12">
+                    <a id="btn-salvar-datadespacho" class="btn btn-success mt-4">Salvar</a>
+                    <a id="btn-cancelar-datadespacho" class="btn btn-danger mt-4">Cancelar</a>
+                </div>
             </div>
         </div>
     </div>

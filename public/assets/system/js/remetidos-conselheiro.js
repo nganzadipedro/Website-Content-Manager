@@ -497,9 +497,13 @@ function buscarHistorico(id) {
             dados.forEach(item => {
 
                 let avatar = window.avatarUrl;
-                let data = new Date(item.created_at);
-                let dataFormatada = data.toLocaleDateString('pt-PT');
-                let horaFormatada = data.toLocaleTimeString('pt-PT');
+
+                const data = item.created_at;
+                const [datePart, timePart] = data.split("T");
+                const [ano, mes, dia] = datePart.split("-");
+                const hora = timePart.substring(0, 8);
+
+                const formatada = `${dia}/${mes}/${ano} ${hora}`;
 
                 linha = `<div class="list-group-item">
                                 <div class="row align-items-center">
@@ -512,7 +516,7 @@ function buscarHistorico(id) {
                                     </div>
                                     <div class="col">
                                         <a href="#" class="text-reset d-block">${item.nome}
-                                            | ${dataFormatada} ${horaFormatada}</a>
+                                            | ${formatada} </a>
                                         <div class="d-block text-secondary mt-n1">
                                             ${item.operacao}
                                         </div>
