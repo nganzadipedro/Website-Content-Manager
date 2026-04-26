@@ -79,7 +79,8 @@
                                             <th>Contactos</th>
                                             <th>Estado</th>
                                             <th>Data Entrada</th>
-                                            <th>Data de Remessa ao CN</th>
+                                            <th>Data Despacho</th>
+                                            <th>Data Remessa CN</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -99,6 +100,7 @@
                                                 <td>{{$item->telefone1}}/{{$item->telefone2}}</td>
                                                 <td>{{$item->estado}}</td>
                                                 <td>{{$item->getregistoentrada->data_entrada}}</td>
+                                                <td>{{$item->data_despacho == null ? $item->data_remessa_cn : $item->data_despacho}}</td>
                                                 <td>{{$item->data_remessa_cn}}</td>
                                                 <td>
                                                     <a style="cursor: pointer;" data-bilhete="{{$item->num_bilhete}}"

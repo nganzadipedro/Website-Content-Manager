@@ -42,7 +42,7 @@
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 550px; overflow: auto; padding: 5px;">
                             <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
                                     <tr>
@@ -297,8 +297,12 @@
     <script src="{{ asset('assets/system/js/adv-registados.js') }}"></script>
     <script>
         window.avatarUrl = "{{ asset('images/user-icon.png') }}";
-        $(document).ready(function () {
-            $('#myTable').DataTable();
+         $(document).ready(function () {
+            $('#myTable').DataTable({
+                paging: false, // Desabilita a paginação
+                searching: true, // Habilita a barra de pesquisa
+                ordering: false
+            });
         });
     </script>
 @endsection
