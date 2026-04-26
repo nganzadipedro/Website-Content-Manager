@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed";
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed/Deferido";
 
                             }
                         },

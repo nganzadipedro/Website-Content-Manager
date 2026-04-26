@@ -2,7 +2,7 @@
     <div class="page-header d-print-none">
         <div class="container-xl">
             <div class="card">
-                
+
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
@@ -61,19 +61,31 @@
                                             <td>{{$item->data_levantamento_comissao_etica}}
                                             </td>
                                             <td>
-                                                <a style="cursor:pointer;" class="badge bg-yellow-lt registar-indeferido"
-                                                    data-nome="{{ $item->getregistoentrada->proveniencia }}"
-                                                    title="Registar Como Indeferido" data-id="{{ $item->id }}">
+                                                <a style="cursor: pointer;" title="Editar Dados do Processo"
+                                                    href="{{ route('system.areatecnica.editar_inscricao', $item->getregistoentrada->hash) }}"
+                                                    class="badge bg-yellow-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                         <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                                                         <path d="M13.5 6.5l4 4" />
-                                                        <path d="M16 19h6" />
-                                                        <path d="M19 16v6" />
                                                     </svg>
+                                                </a>
+                                                <a style="cursor:pointer;" class="badge bg-red-lt registar-indeferido"
+                                                    data-nome="{{ $item->getregistoentrada->proveniencia }}"
+                                                    title="Registar Como Indeferido" data-id="{{ $item->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M12 9v4" />
+                                                            <path
+                                                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+                                                            <path d="M12 16h.01" />
+                                                        </svg>
                                                 </a>
                                                 <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
                                                     title="Detalhes do processo" style="cursor: pointer;"
@@ -129,13 +141,15 @@
                     <input type="hidden" name="inscricao_id" id="inscricao_id" value="">
                     <div class="mb-3">
                         <label class="form-label">Nome do Requerente</label>
-                        <input type="text" class="form-control" name="nome_requerente" id="nome_requerente" disabled value="">
+                        <input type="text" class="form-control" name="nome_requerente" id="nome_requerente" disabled
+                            value="">
                     </div>
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                                 <label class="form-label">Data de Entrega</label>
-                                <input type="date" class="form-control" name="data_entrega_comissao_etica2" id="data_entrega_comissao_etica2">
+                                <input type="date" class="form-control" name="data_entrega_comissao_etica2"
+                                    id="data_entrega_comissao_etica2">
                             </div>
                         </div>
                     </div>
@@ -154,8 +168,7 @@
         </div>
     </div>
 
-      <div class="modal modal-blur fade" id="modal-registar-devolucao" tabindex="-1" role="dialog"
-        aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-registar-devolucao" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -167,7 +180,8 @@
                     @csrf
 
                     <h4 class="alert alert-info text-center mb-4">
-                        Este formulário é destinado apenas para aqueles processos que foram analisados e serão remetidos à mesa do Sr. Presidente.
+                        Este formulário é destinado apenas para aqueles processos que foram analisados e serão remetidos
+                        à mesa do Sr. Presidente.
                     </h4>
 
                     <div class="row mt-5">
@@ -225,7 +239,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>

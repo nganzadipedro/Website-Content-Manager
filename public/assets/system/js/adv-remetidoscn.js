@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo_processo = document.createElement("input");
             tipo_processo.type = "hidden";
             tipo_processo.name = "tipo_processo";
-            tipo_processo.value = 3;
+            tipo_processo.value = 2;
             form.appendChild(tipo_processo);
 
             document.body.appendChild(form);
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tipo_processo = document.createElement("input");
             tipo_processo.type = "hidden";
             tipo_processo.name = "tipo_processo";
-            tipo_processo.value = 3;
+            tipo_processo.value = 2;
             form.appendChild(tipo_processo);
 
             document.body.appendChild(form);
@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 6000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+                                window.location.href = "/system/areatecnica/list/lawyers-cn";
 
                             }
 

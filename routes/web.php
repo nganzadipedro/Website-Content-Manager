@@ -104,6 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');
     Route::post('system/estagiario-patrono/delete', 'Controllers\SystemController@estagiario_patrono_delete');
     Route::post('system/registo-inscricao/post', 'Controllers\SystemController@registo_inscricao_post');
+    Route::post('system/registo-inscricao/update', 'Controllers\SystemController@registo_inscricao_update');
     Route::post('system/editar-inscricao-estagiario/post', 'Controllers\SystemController@editar_inscricao_estagiario_post');
     Route::post('system/atribuir-advogado/post', 'Controllers\SystemController@atribuir_advogado_post');
     Route::post('system/atribuir-advogado/delete', 'Controllers\SystemController@atribuir_advogado_delete');

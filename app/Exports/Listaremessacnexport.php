@@ -12,10 +12,12 @@ class Listaremessacnexport implements FromCollection, WithHeadings
 {
 
     private $data_remessa_p;
+    private $tipo_processo_p;
 
-    function __construct($data_remessa)
+    function __construct($data_remessa, $tipo_processo)
     {
         $this->data_remessa_p = $data_remessa;
+        $this->tipo_processo_p = $tipo_processo;
     }
 
     /**
@@ -28,7 +30,7 @@ class Listaremessacnexport implements FromCollection, WithHeadings
 
         $result = Inscricaoadvogado::query()
             ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
-            ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->where('inscricao_advogado.tipo_processo_id', $this->tipo_processo_p)
             ->where('inscricao_advogado.data_remessa_cn', $this->data_remessa_p)
             ->whereNotNull('inscricao_advogado.data_remessa_cn')
             ->orderBy('registo_entrada.proveniencia', 'asc')

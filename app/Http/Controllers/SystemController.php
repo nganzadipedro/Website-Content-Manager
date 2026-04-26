@@ -1592,6 +1592,30 @@ class SystemController extends Controller
 
     }
 
+    // função para actualizar apenas registos de inscrição de advogados
+    public function registo_inscricao_update(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $inscricao = Inscricaoadvogado::find($request->inscricao_id);
+        $registo = Registoentrada::find($inscricao->registo_entrada_id);
+
+        $inscricao->observacao = $request->observacao2;
+        $inscricao->sexo = $request->sexo == null ? 'Não Definido' : $request->sexo;
+        $inscricao->telefone1 = $request->telefone1;
+        $inscricao->telefone2 = $request->telefone2;
+        $inscricao->email = $request->email;
+        $inscricao->save();
+
+        ActividadesistemaController::inserir(Auth::id(), "Processo de inscrição actualizado pela área técnica.", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Actualizou o processo de inscrição ($inscricao->id)", 'user', $inscricao->id);
+        ActividadesistemaController::historico_processo("O processo foi actualizado pela área técnica.", $registo->id);
+
+        return 'sucesso';
+
+    }
+
     public function editar_inscricao_estagiario_post(Request $request)
     {
 
@@ -1825,7 +1849,7 @@ class SystemController extends Controller
             if ($inscricao_adv->data_despacho == null && $inscricao_adv->despacho != 'Deferido') {
                 return "O processo do(a) Sr(a). $nome ainda não tem a data de despacho do Presidente";
             }
-            
+
         }
 
         foreach ($selecionados as $item) {
@@ -2425,10 +2449,15 @@ class SystemController extends Controller
         $data_emissao[1] = $meses[date("m")];
         $data_emissao[2] = date("Y");
 
+        $texto = $inscricao_advogado->texto_despacho;
+        $letra = $texto[0];
+        $letra = mb_strtoupper($letra, 'UTF-8');
+        $texto[0] = $letra;
+
         $pdf = Pdf::loadView('documents-pdf.documento-despacho', [
             'nome_requerente' => $registo->proveniencia,
             'data_despacho' => $inscricao_advogado->data_despacho,
-            'mensagem_despacho' => $inscricao_advogado->texto_despacho,
+            'mensagem_despacho' => $texto,
             'data' => $data_emissao
         ]);
 

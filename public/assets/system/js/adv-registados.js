@@ -4,11 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkItems = document.querySelectorAll(".checkItem");
 
     // botões de chamar modal
-    const btnRegistarDevolucaoModal = document.getElementById("btn-registar-devolucao-modal");
-
-    // botões de salvar e cancelar
-    const btnRegistarDevolucao = document.getElementById("btn-registar-devolucao");
-    const btnCancelarDevolucao = document.getElementById("btn-cancelar-devolucao");
+    const btnRemeterCn = document.getElementById("btn-remeter-cn");
+    const btnRegistarDataDespacho = document.getElementById("btn-registar-datadespacho");
+    const btnCancelar = document.getElementById("btn-cancelar");
+    const btnCancelarDataDespacho = document.getElementById("btn-cancelar-datadespacho");
 
 
     // ✅ Selecionar / desselecionar todos
@@ -28,8 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // botão de abrir a modal de devolução
-    btnRegistarDevolucaoModal.addEventListener("click", () => {
+    btnRemeterCn.addEventListener("click", () => {
 
         const selecionados = [];
 
@@ -47,15 +45,81 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else {
 
-            console.log("IDs selecionados:", selecionados);
-            const modal = new bootstrap.Modal(document.getElementById('modal-registar-devolucao'));
-            modal.show();
+            csrf = document.querySelector('meta[name="csrf-token"]').content;
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja remeter os processos ao conselho nacional?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/registo-remetercn/update",
+                        headers: {
+                            'X-CSRF-TOKEN': csrf
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription/registed/Deferido";
+
+                            }
+                            else if (res != 'sucesso') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso",
+                                    text: res,
+                                    timer: 6000
+                                });
+                            }
+
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 6000);
+
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
 
         }
     });
 
-
-    btnRegistarDevolucao.addEventListener("click", () => {
+    btnRegistarDataDespacho.addEventListener("click", () => {
 
         const selecionados = [];
 
@@ -63,35 +127,50 @@ document.addEventListener("DOMContentLoaded", () => {
             selecionados.push(item.value);
         });
 
-        data_entrega_comissao_etica = document.getElementById('data_entrega_comissao_etica').value;
-        encaminhar_mesa = document.getElementById('encaminhar_mesa').value;
-
-        if (data_entrega_comissao_etica == '' || data_entrega_comissao_etica == null) {
+        if (selecionados.length === 0) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe a data de entrega dos processos",
-                timer: 4000
-            });
-        }
-        else if (encaminhar_mesa == '' || encaminhar_mesa == null || encaminhar_mesa == 'Não') {
-            sweetAlert({
-                type: "warning",
-                title: "Aviso!",
-                text: "Informe que vai remeter os processos à Mesa do Presidente",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
                 timer: 4000
             });
         }
         else {
 
+            const modal = new bootstrap.Modal(document.getElementById('modal-registar-datadespacho'));
+            modal.show();
+
+        }
+    });
+
+    $(document).on('click', '#btn-salvar-datadespacho', function () {
+
+        data_despacho = $('#data_despacho_presidente').val();
+
+        if (data_despacho == '' || data_despacho == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite a data do despacho",
+                timer: 4000
+            });
+        }
+        else {
+
+            const selecionados = [];
+
+            document.querySelectorAll(".checkItem:checked").forEach(item => {
+                selecionados.push(item.value);
+            });
+
+            csrf = document.querySelector('meta[name="csrf-token"]').content;
             const formData = new FormData();
 
+            formData.append('data_despacho', data_despacho);
             Array.from(selecionados).forEach(id => {
                 formData.append('selecionados[]', id);
             });
 
-            formData.append('data_entrega_comissao_etica', data_entrega_comissao_etica);
-            formData.append('encaminhar_mesa', encaminhar_mesa);
 
             Swal.fire({
                 title: "Confirmação",
@@ -105,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showLoaderOnConfirm: true,
                 preConfirm: function () {
                     return $.ajax({
-                        url: "/system/entrega-comissaoetica-grupo/post",
+                        url: "/system/datadespacho-presidente/update",
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="_token"]').val()
                         },
@@ -125,15 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/map-distribution/stage-three";
-                            }
-                            else if (res != 'sucesso') {
-                                sweetAlert({
-                                    type: "warning",
-                                    title: "Aviso",
-                                    text: res,
-                                    timer: 5000
-                                });
+                                window.location.href = "/system/areatecnica/list/subscription/registed/Deferido";
+
                             }
                         },
                         error: function (error) {
@@ -149,21 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             });
+
+
         }
-    });
-
-
-    // botão de fechar a modal de devolução
-    btnCancelarDevolucao.addEventListener("click", () => {
-
-        $('#data_entrega_comissao_etica').val("");
-        const modalElement = document.getElementById('modal-registar-devolucao');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal.hide();
 
     });
 
-    $(document).on('click', '.registar-indeferido', function () {
+    $(document).on('click', '.mudar-despacho', function () {
 
         id = $(this).data("id");
         nome = $(this).data("nome");
@@ -176,21 +240,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    $(document).on('click', '#btn-registar-indeferimento', function () {
+    $(document).on('click', '#btn-alterar-despacho', function () {
 
         inscricao_id = $("#inscricao_id").val();
-        data_entrega_comissao_etica2 = $('#data_entrega_comissao_etica2').val();
-        texto_despacho = $('#texto_despacho').val();
+        data_despacho = $('#data_despacho').val();
+        mensagem_despacho = $('#texto_despacho').val();
 
-        if (data_entrega_comissao_etica2 == '' || data_entrega_comissao_etica2 == null) {
+        if (data_despacho == '' || data_despacho == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Digite a data de entrega do processo",
+                text: "Digite a data do despacho",
                 timer: 4000
             });
         }
-        else if (texto_despacho == '' || texto_despacho == null) {
+        else if (mensagem_despacho == '' || mensagem_despacho == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -202,8 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const formData = new FormData();
             formData.append('inscricao_id', inscricao_id);
-            formData.append('data_entrega_comissao_etica', data_entrega_comissao_etica2);
-            formData.append('texto_despacho', texto_despacho);
+            formData.append('data_despacho', data_despacho);
+            formData.append('mensagem_despacho', mensagem_despacho);
 
 
             Swal.fire({
@@ -218,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showLoaderOnConfirm: true,
                 preConfirm: function () {
                     return $.ajax({
-                        url: "/system/entrega-comissaoetica-indeferido/post",
+                        url: "/system/registo-mudarindeferido/update",
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="_token"]').val()
                         },
@@ -238,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/map-distribution/stage-three";
+                                window.location.href = "/system/areatecnica/list/subscription/registed/Deferido";
 
                             }
                         },

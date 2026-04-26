@@ -40,7 +40,7 @@
             margin-top: -20px;
         }
 
-        .cabecalho h4{
+        .cabecalho h4 {
             font-weight: normal;
         }
 
@@ -85,42 +85,48 @@
     </div>
     <div class="cabecalho">
         <h5>Conselho Provincial de Luanda - OAA</h5>
-        <h4>Lista de Candidatos a Advogados Estagiários<br>
+        @if ($tipo_processo == 2)
+        <h4>Processos de Inscrição para Advogado</h4>
+        @endif
+        @if ($tipo_processo == 3)
+        <h4>Processos de Inscrição para Advogado Estagiário</h4>
+        @endif
+        <h4>
             Data de Remessa ao CN: _____/_____/_______ | Nº de Candidatos: {{ $num_candidatos }}
         </h4>
     </div>
 
     <div class="entradas">
 
-            <table class="content-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Data de Entrada</th>
-                        <th>Requerente</th>
-                        <th>Contactos</th>
-                        <th>Observação</th>
-                    </tr>
-                </thead>
-                @foreach ($inscricoes as $item)
-                    <tr>
-                        <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $item->getregistoentrada->data_entrada }}</td>
-                        <td>{{ mb_strtoupper($item->getregistoentrada->proveniencia, 'UTF-8') }}</td>
-                        <td>{{ $item->telefone1 }}/{{ $item->telefone2 }}</td>
-                        <td></td>
-                    </tr>
-                @endforeach
-            </table>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Data de Entrada</th>
+                    <th>Requerente</th>
+                    <th>Contactos</th>
+                    <th>Observação</th>
+                </tr>
+            </thead>
+            @foreach ($inscricoes as $item)
+                <tr>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $item->getregistoentrada->data_entrada }}</td>
+                    <td>{{ mb_strtoupper($item->getregistoentrada->proveniencia, 'UTF-8') }}</td>
+                    <td>{{ $item->telefone1 }}/{{ $item->telefone2 }}</td>
+                    <td></td>
+                </tr>
+            @endforeach
+        </table>
 
-            <br>
-            <div class="rodape">
-                Luanda, {{$data[0]}} de {{$data[1]}} de {{$data[2]}} <br><br><br>
-                Entregue por (CPL-OAA) <br>
-                _____________________________________<br><br><br>
-                Recebido por (CN - OAA) <br>
-                _____________________________________
-            </div>
+        <br>
+        <div class="rodape">
+            Luanda, {{$data[0]}} de {{$data[1]}} de {{$data[2]}} <br><br><br>
+            Entregue por (CPL-OAA) <br>
+            _____________________________________<br><br><br>
+            Recebido por (CN - OAA) <br>
+            _____________________________________
+        </div>
 
     </div>
 

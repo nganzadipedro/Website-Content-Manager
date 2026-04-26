@@ -6,6 +6,29 @@
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Inscrições Para Advogados Registados [{{ $categoria_p }}]</h3>
+
+                            <a id="btn-remeter-cn" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up-double">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11 14l4 -4l-4 -4" />
+                                    <path d="M16 14l4 -4l-4 -4" />
+                                    <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
+                                </svg>Remeter ao Conselho Nacional</a>
+                            <a id="btn-registar-datadespacho" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg> Registar Data de Despacho</a>
                         </div>
                     </div>
                 </div>
@@ -24,10 +47,16 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>
+                                            <input type="checkbox" id="checkAll">
+                                        </th>
                                         <th>Nº Processo</th>
                                         <th>Requerente</th>
+                                        <th>Estado</th>
                                         <th>Despacho</th>
+                                        <th>Data Despacho</th>
                                         <th>Tipo de Processo</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -36,29 +65,65 @@
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
+                                            <td>
+                                                @if ($item->estado == 'Sobre a mesa do Presidente')
+                                                    <input type="checkbox" class="checkItem" value="{{$item->id}}">
+                                                @endif
+                                            </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
-                                            <td>{{$item->despacho == null ? $item->estado : $item->despacho}}</td>
+                                            <td>{{$item->estado}}</td>
+                                            <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
+                                            <td>{{$item->data_despacho == null ? 'Sem Despacho' : $item->data_despacho}}
+                                            </td>
                                             <td>{{$item->getregistoentrada->gettipoprocesso->descricao}}</td>
                                             <td>
-
-                                                @if ($item->despacho == 'Indeferido')
-                                                    <a href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
-                                                        class="badge bg-green-lt">
+                                                @if ($item->despacho == 'Indeferido' || $item->estado == 'Sobre a mesa do Presidente')
+                                                    <a style="cursor: pointer;" title="Editar Dados do Processo"
+                                                        href="{{ route('system.areatecnica.editar_inscricao', $item->getregistoentrada->hash) }}"
+                                                        class="badge bg-yellow-lt">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                                                             <path d="M13.5 6.5l4 4" />
-                                                            <path d="M16 19h6" />
-                                                            <path d="M19 16v6" />
                                                         </svg>
                                                     </a>
                                                 @endif
-
-
+                                                <a title="Adicionar Informações"
+                                                    href="{{ route('system.areatecnica.registar_despacho', $item->getregistoentrada->hash) }}"
+                                                    class="badge bg-green-lt">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M16 19h6" />
+                                                        <path d="M19 16v6" />
+                                                    </svg>
+                                                </a>
+                                                @if ($item->estado == 'Sobre a mesa do Presidente')
+                                                    <a style="cursor:pointer;" class="badge bg-red-lt mudar-despacho"
+                                                        data-nome="{{ $item->getregistoentrada->proveniencia }}"
+                                                        title="Mudar Para Indeferido" data-id="{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M12 9v4" />
+                                                            <path
+                                                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+                                                            <path d="M12 16h.01" />
+                                                        </svg>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
                                                     title="Detalhes do processo" style="cursor: pointer;"
                                                     data-bs-toggle="modal" data-bs-target="#modal-detalhes">
@@ -130,6 +195,101 @@
             </div>
         </div>
     </div>
+
+    <div class="modal modal-blur fade" id="modal-remeter-cn" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remeter ao Conselho Nacional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row"">
+                        <div class=" col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="data_remessa_cn" class="form-label">Data de Remessa ao CN</label>
+                        <input type="date" class="form-control" name="data_remessa_cn" id="data_remessa_cn">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 col-12">
+                    <a id="btn-registar-remessa-cn" class="btn btn-success mt-4">Salvar</a>
+                    <a id="btn-cancelar" class="btn btn-danger mt-4">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal modal-blur fade" id="modal-registar-datadespacho" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registar Data de Despacho</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @csrf
+
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label class="form-label">Data de Despacho do Presidente</label>
+                        <input type="date" class="form-control" name="data_despacho_presidente"
+                            id="data_despacho_presidente">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-12 col-12">
+                    <a id="btn-salvar-datadespacho" class="btn btn-success mt-4">Salvar</a>
+                    <a id="btn-cancelar-datadespacho" class="btn btn-danger mt-4">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-blur fade" id="modal-alterar-despacho" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alterar o despacho para Indeferido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" id="inscricao_id" value="">
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="nome_requerente" class="form-label">Nome do Candidato/Requerente</label>
+                        <input type="text" class="form-control" disabled name="nome_requerente" id="nome_requerente">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="data_despacho" class="form-label">Data do Despacho</label>
+                        <input type="date" class="form-control" name="data_despacho" id="data_despacho">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="texto_despacho" class="form-label">Mensagem do Despacho</label>
+                        <input type="text" class="form-control" name="texto_despacho" id="texto_despacho">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-12">
+                        <a id="btn-alterar-despacho" class="btn btn-success mt-4">Salvar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 @section('script-aux')

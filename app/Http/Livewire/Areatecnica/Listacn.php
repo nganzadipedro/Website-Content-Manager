@@ -9,10 +9,15 @@ class Listacn extends Component
 {
     public function render()
     {
-        $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
-            ->whereNotNull('data_remessa_cn')
-            ->where('estado', 'remetido ao CN')
-            ->orderBy('id', 'desc')->get();
+
+        $this->lista = Inscricaoadvogado::query()
+            ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
+            ->where('inscricao_advogado.tipo_processo_id', 2)
+            ->where('inscricao_advogado.estado', 'remetido ao CN')
+            ->orderBy('registo_entrada.proveniencia', 'asc')
+            ->select('inscricao_advogado.*')
+            ->get();
+
         return view('dashboard.areatecnica.lista-cn')->extends('layouts-new.app')->section('content');
     }
 }

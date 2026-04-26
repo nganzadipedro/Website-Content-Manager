@@ -42,6 +42,6 @@ class Editarinscricao extends Component
         if ($this->registo->tipo_processo_id == 3) {
             return view('dashboard.areatecnica.editar-inscricao-estagiario')->extends('layouts-new.app')->section('content');
         }
-        return view('dashboard.areatecnica.registar-inscricao')->extends('layouts-new.app')->section('content');
+        return view('dashboard.areatecnica.editar-inscricao')->extends('layouts-new.app')->section('content');
     }
 }

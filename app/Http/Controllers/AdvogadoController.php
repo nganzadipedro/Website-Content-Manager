@@ -124,7 +124,7 @@ class AdvogadoController extends Controller
     public function export_remessa_cn(Request $request)
     {
         $nome_file = 'lista_inscricoes_estagiarios_remetidos_cn';
-        return Excel::download(new Listaremessacnexport($request->data_remessa_cn), $nome_file . '.xlsx');
+        return Excel::download(new Listaremessacnexport($request->data_remessa_cn, $request->tipo_processo), $nome_file . '.xlsx');
     }
 
     public function export_xls_indicacao_patrono(Request $request)
@@ -181,7 +181,7 @@ class AdvogadoController extends Controller
 
         $result = Inscricaoadvogado::query()
             ->join('registo_entrada', 'registo_entrada.id', 'inscricao_advogado.registo_entrada_id')
-            ->where('inscricao_advogado.tipo_processo_id', 3)
+            ->where('inscricao_advogado.tipo_processo_id', $request->tipo_processo)
             ->where('inscricao_advogado.data_remessa_cn', $request->data_remessa_cn)
             ->whereNotNull('inscricao_advogado.data_remessa_cn')
             ->orderBy('registo_entrada.proveniencia', 'asc')
@@ -213,6 +213,7 @@ class AdvogadoController extends Controller
         $pdf = Pdf::loadView('documents-pdf.lista-remessa-cn', [
             'inscricoes' => $result,
             'num_candidatos' => $num_candidatos,
+            'tipo_processo' => $request->tipo_processo,
             'data' => $data_emissao
         ]);
 
