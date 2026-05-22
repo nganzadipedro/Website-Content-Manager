@@ -113,6 +113,34 @@
                 </div>
                 <div class="modal-body">
                     @csrf
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Telefone principal</label>
+                            <input type="text" maxlength="9" class="form-control" name="telefone_principal"
+                                id="telefone_principal">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Telefone alternativo</label>
+                            <input type="text" maxlength="9" class="form-control" name="telefone_alternativo"
+                                id="telefone_alternativo">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Email</label>
+                            <input type="text" maxlength="200" class="form-control" name="email"
+                                id="email">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Nº Bilhete</label>
+                            <input type="text" maxlength="15" class="form-control" name="num_bilhete"
+                                id="num_bilhete">
+                        </div>
+                    </div>
+
+
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-md-12 col-lg-12 col-12 col-xs-12">

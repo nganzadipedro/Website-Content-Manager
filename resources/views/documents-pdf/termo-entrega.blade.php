@@ -92,20 +92,20 @@
 
     <div class="assinaturas">
         <div class="esquerda">
-            Recebi <br>
-            _____________________________<br>
-            O Conselheiro<br><br><br><br>
             Entreguei <br>
             _____________________________<br>
-            O Conselheiro<br><br><br><br>
+            O(A) Funcionário(a)<br><br><br><br>
+            Recebi <br>
+            _____________________________<br>
+            O(A) Funcionário(a)<br><br><br><br>
         </div>
         <div class="direita">
             Recebi <br>
             _____________________________<br>
-            O Conselheiro<br><br><br><br>
+            O(A) Conselheiro(a)<br><br><br><br>
             Entreguei <br>
             _____________________________<br>
-            O Conselheiro<br><br><br><br>
+            O(A) Conselheiro(a)<br><br><br><br>
         </div>
     </div>
 

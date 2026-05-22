@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
             selecionados.push(item.value);
         });
 
+        telefone_principal = document.getElementById('telefone_principal').value;
+        telefone_alternativo = document.getElementById('telefone_alternativo').value;
+        email = document.getElementById('email').value;
+        num_bilhete = document.getElementById('num_bilhete').value;
         encaminhar_para = document.getElementById('encaminhar_para').value;
         conselheiro_id = document.getElementById('conselheiro_id').value;
         data_entrega_conselheiro = document.getElementById('data_entrega_conselheiro').value;
@@ -63,7 +67,24 @@ document.addEventListener("DOMContentLoaded", () => {
         data_remessacn = document.getElementById('data_remessacn').value;
         mensagem_despacho = document.getElementById('mensagem_despacho').value;
 
-        if (encaminhar_para == 'conselheiro' && (conselheiro_id == '' || conselheiro_id == null)) {
+
+        if (telefone_principal == '' || telefone_principal == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite o telefone principal",
+                timer: 4000
+            });
+        }
+        else if (email == '' || email == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe o email",
+                timer: 4000
+            });
+        }
+        else if (encaminhar_para == 'conselheiro' && (conselheiro_id == '' || conselheiro_id == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -71,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if(encaminhar_para == 'conselheiro' && (data_entrega_conselheiro == '' || data_entrega_conselheiro == null)){
+        else if (encaminhar_para == 'conselheiro' && (data_entrega_conselheiro == '' || data_entrega_conselheiro == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -79,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if(encaminhar_para == 'comissao' && (data_entrega_comissao == '' || data_entrega_comissao == null)){
+        else if (encaminhar_para == 'comissao' && (data_entrega_comissao == '' || data_entrega_comissao == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -87,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if(encaminhar_para == 'indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)){
+        else if (encaminhar_para == 'indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -95,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if(encaminhar_para == 'cnacional' && (data_remessacn == '' || data_remessacn == null)){
+        else if (encaminhar_para == 'cnacional' && (data_remessacn == '' || data_remessacn == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -111,6 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 formData.append('selecionados[]', id);
             });
 
+            formData.append('telefone_principal', telefone_principal);
+            formData.append('telefone_alternativo', telefone_alternativo);
+            formData.append('email', email);
+            formData.append('num_bilhete', num_bilhete);
             formData.append('encaminhar_para', encaminhar_para);
             formData.append('conselheiro_id', conselheiro_id);
             formData.append('data_entrega_conselheiro', data_entrega_conselheiro);

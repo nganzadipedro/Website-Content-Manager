@@ -38,7 +38,7 @@
                                     <path d="M11 14l4 -4l-4 -4" />
                                     <path d="M16 14l4 -4l-4 -4" />
                                     <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
-                                </svg> Remeter à Comissão de Ética</a>
+                                </svg> Remeter à Comissão de Ética/Mesa Presidente</a>
                         </div>
                     </div>
                 </div>
@@ -218,8 +218,9 @@
                     <div class="row mb-3">
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <label class="form-label" for="remeter_comissao">Remeter à Comissão de Ética?</label>
-                            <select name="remeter_comissao" id="remeter_comissao" class="form-control">
-                                <option selected value="Sim">Sim, Remeter</option>
+                            <select name="remeter_comissao" id="remeter_comissao" class="form-select">
+                                <option selected value="Sim">Sim, Remeter à Comissão de Ética</option>
+                                <option value="Presidente">Não, Remeter à Mesa do Presidente</option>
                                 <option value="Não">Não Remeter</option>
                             </select>
                         </div>

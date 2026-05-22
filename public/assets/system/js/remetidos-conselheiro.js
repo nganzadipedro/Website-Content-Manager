@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe que vai remeter os processos à comissão de ética",
+                text: "Informe para onde deseja remeter os processos selecionados",
                 timer: 4000
             });
         }
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe a data que vai remter à comissão de ética",
+                text: "Informe a data que vai remter os processos selecionados",
                 timer: 4000
             });
         }

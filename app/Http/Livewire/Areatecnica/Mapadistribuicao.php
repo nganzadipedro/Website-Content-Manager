@@ -29,20 +29,22 @@ class Mapadistribuicao extends Component
 
             // remetidos aos conselheiros
             $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
-                ->where('estado_distribuicao', 'Distribuido')
-                ->whereNull('data_levantamento_comissao_etica')
-                ->orWhere('estado', 'análise de conselheiro')
+                // ->where('estado_distribuicao', 'Distribuido')
+                //  ->whereNull('data_levantamento_comissao_etica')
+                ->Where('estado', 'análise de conselheiro')
+                ->whereNull('despacho')
                 ->orderBy('id', 'desc')->get();
 
             return view('dashboard.areatecnica.remetidos-conselheiro')->extends('layouts-new.app')->section('content');
 
         } else if ($this->categoria_p == 'stage-three') {
 
-            // remetidos aos conselheiros
+            // remetidos a comissão de ética
             $this->lista = Inscricaoadvogado::where('tipo_processo_id', 2)
-                ->whereNotNull('data_levantamento_comissao_etica')
-                ->whereNull('data_entrega_comissao_etica')
+                // ->whereNotNull('data_levantamento_comissao_etica')
+                // ->whereNull('data_entrega_comissao_etica')
                 ->where('estado', 'análise comissão de ética')
+                ->whereNull('despacho')
                 ->orderBy('id', 'desc')->get();
 
             return view('dashboard.areatecnica.remetidos-comissao-etica')->extends('layouts-new.app')->section('content');

@@ -438,13 +438,17 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id,
                 'registo_entrada_id' => $registo->id,
                 'tipo_processo_id' => 2,
+                'estado_distribuicao' => 'Distribuido',
+                'telefone1' => $request->telefone_principal,
+                'num_bilhete' => $request->num_bilhete,
+                'telefone2' => $request->telefone_alternativo,
+                'email' => $request->email,
                 'estado' => 'em tratamento'
             ]);
 
             if ($request->encaminhar_para == 'conselheiro') {
 
                 $inscricao_adv->conselheiro_id = $request->conselheiro_id;
-                $inscricao_adv->estado_distribuicao = 'Distribuido';
                 $inscricao_adv->data_levantamento_distribuicao = $request->data_entrega_conselheiro;
                 $inscricao_adv->estado = 'análise de conselheiro';
                 $inscricao_adv->save();
@@ -487,6 +491,7 @@ class SystemController extends Controller
                 $inscricao_adv->estado = 'remetido ao CN';
                 $inscricao_adv->despacho = 'Deferido';
                 $inscricao_adv->data_remessa_cn = $request->data_remessacn;
+                $inscricao_adv->data_despacho = $request->data_remessacn;
                 $inscricao_adv->save();
 
                 ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido ao conselho nacional na data " . $request->data_remessacn, 'registo-entrada', $registo->id);
@@ -646,36 +651,30 @@ class SystemController extends Controller
 
             $inscricao_adv = Inscricaoadvogado::find($item);
 
-            $inscricao_adv->data_levantamento_comissao_etica = $request->data_remessa_comissao;
-            $inscricao_adv->estado = 'análise comissão de ética';
-            $inscricao_adv->save();
+            if ($request->remeter_comissao == 'Sim') {
+
+                $inscricao_adv->data_levantamento_comissao_etica = $request->data_remessa_comissao;
+                $inscricao_adv->estado = 'análise comissão de ética';
+                $inscricao_adv->save();
+
+            }
+            else if($request->remeter_comissao == 'Presidente'){
+
+                $inscricao_adv->estado = 'Sobre a mesa do Presidente';
+                $inscricao_adv->save();
+
+            }
 
             $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
             $registo->estado = 'em tratamento';
             $registo->save();
 
-            $obmsg = new OmbalaController();
-            $obmail = new MailController();
             $telefone = $inscricao_adv->telefone1;
             $nome = $registo->proveniencia;
             $email = $inscricao_adv->email;
             $data_entrada = $registo->data_entrada;
 
             ActividadesistemaController::historico_processo("O processo foi remetido à comissão de ética para a devida análise.", $registo->id);
-
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
-            // try {
-            //     $obmsg->enviarMensagem($telefone, $mensagem);
-            // } catch (\Throwable $th) {
-
-            // }
-
-            // $mensagem = "Caríssimo(a), o seu processo de inscrição para advogado foi entregue à Comissão de Ética para a devida análise.";
-            // try {
-            //     $obmail->mailNotificacao($email, $nome, $mensagem, $data_entrada);
-            // } catch (\Throwable $th) {
-
-            // }
 
             // regista actividade no sistema
             ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à comissão de ética para a devida análise.", 'registo-entrada', $registo->id);
@@ -1898,7 +1897,7 @@ class SystemController extends Controller
             $obmsg = new OmbalaController();
             $telefone = $registo->telefone;
             $nome = $registo->proveniencia;
-            $mensagem = "Caríssimo(a), o seu processo de inscrição foi remetido ao Conselho Nacional na data " . $request->data_remessa_cn;
+            $mensagem = "Caríssimo(a), o seu processo de inscrição foi despachado como Deferido na data " . $request->data_remessa_cn;
 
             try {
                 $obmsg->enviarMensagem($telefone, $mensagem);
@@ -2175,10 +2174,9 @@ class SystemController extends Controller
             $email = $inscricao_advogado->email;
             $telefone = $inscricao_advogado->telefone1;
             $data_despacho = $request->data_despacho;
-            $ob = new MailController();
-            $obmsg = new OmbalaController();
-
-            $mensagem = "Caríssimo(a), foi sanada a irregularidade do seu processo e a mesma foi remetida à mesa do Sr. Presidente do CPL.";
+            // $ob = new MailController();
+            // $obmsg = new OmbalaController();
+            // $mensagem = "Caríssimo(a), foi sanada a irregularidade do seu processo e a mesma foi remetida à mesa do Sr. Presidente do CPL.";
 
             $msg = "Processo de inscrição remetido à mesa do Sr. Presidente do CPL.";
             ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo->id);

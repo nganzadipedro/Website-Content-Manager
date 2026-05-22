@@ -68,6 +68,10 @@ class Inscricaoadvogado extends Model
         return $this->belongsTo(Registoentrada::class, 'registo_entrada_id', 'id');
     }
 
+     public function gettipoprocesso(){
+        return $this->belongsTo(Tipoprocesso::class, 'tipo_processo_id', 'id');
+    }
+
     public function patrono(){
         return $this->belongsTo(Patrono::class, 'patrono_id', 'id');
     }

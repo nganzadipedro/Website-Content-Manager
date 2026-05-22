@@ -253,6 +253,7 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/general/search', 'Livewire\Areatecnica\Pesquisageral')->name('pesquisa_geral');
 
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
                 Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');
