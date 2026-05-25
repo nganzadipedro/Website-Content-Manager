@@ -185,6 +185,14 @@
                     </div>
 
                     <div class="row mb-3">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                            <label class="form-label">Data de Despacho (Indeferido)</label>
+                            <input type="date" class="form-control" name="data_despacho"
+                                id="data_despacho">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                             <label class="form-label">Mensagem do despacho</label>
                             <textarea name="mensagem_despacho" id="mensagem_despacho" rows="3"

@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         telefone_principal = document.getElementById('telefone_principal').value;
         telefone_alternativo = document.getElementById('telefone_alternativo').value;
         email = document.getElementById('email').value;
+        data_despacho = document.getElementById('data_despacho').value;
         num_bilhete = document.getElementById('num_bilhete').value;
         encaminhar_para = document.getElementById('encaminhar_para').value;
         conselheiro_id = document.getElementById('conselheiro_id').value;
@@ -108,6 +109,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
+        else if (encaminhar_para == 'indeferido' && (data_despacho == '' || data_despacho == null)) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data do despacho",
+                timer: 4000
+            });
+        }
         else if (encaminhar_para == 'indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)) {
             sweetAlert({
                 type: "warning",
@@ -135,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('telefone_principal', telefone_principal);
             formData.append('telefone_alternativo', telefone_alternativo);
             formData.append('email', email);
+            formData.append('data_despacho', data_despacho);
             formData.append('num_bilhete', num_bilhete);
             formData.append('encaminhar_para', encaminhar_para);
             formData.append('conselheiro_id', conselheiro_id);

@@ -478,6 +478,7 @@ class SystemController extends Controller
                 $inscricao_adv->estado = 'em tratamento';
                 $inscricao_adv->despacho = 'Indeferido';
                 $inscricao_adv->observacao = $request->mensagem_despacho;
+                $inscricao_adv->data_despacho = $request->data_despacho;
                 $inscricao_adv->texto_despacho = $request->mensagem_despacho;
                 $inscricao_adv->save();
 
