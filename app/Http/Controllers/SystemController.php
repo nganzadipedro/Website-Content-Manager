@@ -658,8 +658,7 @@ class SystemController extends Controller
                 $inscricao_adv->estado = 'análise comissão de ética';
                 $inscricao_adv->save();
 
-            }
-            else if($request->remeter_comissao == 'Presidente'){
+            } else if ($request->remeter_comissao == 'Presidente') {
 
                 $inscricao_adv->estado = 'Sobre a mesa do Presidente';
                 $inscricao_adv->save();
@@ -1219,14 +1218,30 @@ class SystemController extends Controller
 
             $advogado = Advogado::find($item);
 
-            if ($advogado->categoria == 'Advogado') {
-                $advogado->data_cerimonia_associado = $request->data_cerimonia;
-            } else {
-                $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+            if ($request->presente_ausente_grupo == 'presente') {
+                if ($advogado->categoria == 'Advogado') {
+                    $advogado->data_cerimonia_associado = $request->data_cerimonia;
+                } else {
+                    $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+                }
+
+                $advogado->presenca_cerimonia = 'Presente';
+                $advogado->estado = 'Registado';
+                $advogado->save();
+            }
+            else{
+                if ($advogado->categoria == 'Advogado') {
+                    $advogado->data_cerimonia_associado = $request->data_cerimonia;
+                } else {
+                    $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+                }
+
+                $advogado->presenca_cerimonia = 'Ausente';
+                $advogado->save();
+                
             }
 
-            $advogado->estado = 'Registado';
-            $advogado->save();
+
 
         }
 

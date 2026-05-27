@@ -671,6 +671,14 @@
                                             href="{{ route('system.areatecnica.list_cerimonia', 'Estagiario') }}">
                                             Advogados Estagiários
                                         </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Advogado') }}">
+                                            Advogados Ausentes
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Estagiario') }}">
+                                            Advogados Estagiários Ausentes
+                                        </a>
                                     </div>
                                 </div>
                             </div>

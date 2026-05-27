@@ -312,6 +312,5 @@ document.getElementById('btn-registar-cerimonia').addEventListener('click', func
                 });
             }
         });
-
     }
 });

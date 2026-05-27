@@ -35,6 +35,7 @@ class Advogado extends Model
         'nome_escritorio',
         'endereco_escritorio',
         'estado',
+        'presenca_cerimonia',
         'categoria',
         'data_cerimonia_estagiario',
         'data_cerimonia_associado'

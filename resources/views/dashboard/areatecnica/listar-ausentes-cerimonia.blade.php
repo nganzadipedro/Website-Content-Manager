@@ -7,36 +7,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-10">
-                                <h3 class="h1">Lista de {{$categoria_nome}} aguardando cerimónia</h3>
-                                <a href="{{ route('system.areatecnica.export_waiting_cerimony', $categoria_p) }}"
-                                    class="btn btn-info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                        <path
-                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-                                        <path d="M8 11h8v7h-8l0 -7" />
-                                        <path d="M8 15h8" />
-                                        <path d="M11 11v7" />
-                                    </svg>Exportar em Excel</a>
-                                <a target="_blank"
-                                    href="{{ route('system.areatecnica.exportpdf_waiting_cerimony', $categoria_p) }}"
-                                    class="btn btn-info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
-                                        <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
-                                        <path d="M17 18h2" />
-                                        <path d="M20 15h-3v6" />
-                                        <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
-                                    </svg>Exportar em PDF</a>
+                                <h3 class="h1">Lista de {{$categoria_nome}} ausentes na cerimónia</h3>
                                 <a id="btn-recepcao-cedula" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -77,6 +48,7 @@
                                             <th>Categoria</th>
                                             <th>Nº Cédula</th>
                                             <th>Nº Bilhete</th>
+                                            <th>Data Cerimónia</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -93,20 +65,8 @@
                                                 <td>{{$item->categoria == 'Advogado' ? $item->num_associado : $item->num_estagiario}}
                                                 </td>
                                                 <td>{{$item->getpessoa->num_documento}}</td>
+                                                <td>{{$item->categoria == 'Advogado' ? $item->data_cerimonia_associado : $item->data_cerimonia_estagiario}}</td>
                                                 <td>
-                                                    <a title="Editar" class="badge bg-yellow-lt"
-                                                        href="{{ route('system.areatecnica.edit_member', $item->hash) }}">
-
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                                                            <path d="M13.5 6.5l4 4" />
-                                                        </svg>
-                                                    </a>
                                                     <a title="Detalhes do Registo" data-id="{{ $item->id }}"
                                                         style="cursor: pointer;" data-bs-toggle="modal"
                                                         data-bs-target="#modal-detalhes"
@@ -121,23 +81,6 @@
                                                             <path d="M9 15h-2" />
                                                             <path d="M13 12h-6" />
                                                             <path d="M11 9h-4" />
-                                                        </svg>
-                                                    </a>
-                                                    <a title="Recepção da Cédula" data-id="{{ $item->id }}"
-                                                        class="badge bg-green-lt btn-cerimonia" style="cursor: pointer;"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-cerimonia">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-certificate">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                                            <path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" />
-                                                            <path
-                                                                d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" />
-                                                            <path d="M6 9l12 0" />
-                                                            <path d="M6 12l3 0" />
-                                                            <path d="M6 15l2 0" />
                                                         </svg>
                                                     </a>
                                                 </td>
@@ -251,7 +194,7 @@
 
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
-    <script src="{{ asset('assets/system/js/lista-aguarda-cerimonia.js') }}"></script>
+    <script src="{{ asset('assets/system/js/lista-ausentes-cerimonia.js') }}"></script>
     <script>
         $('#myTable').DataTable({
             paging: false, // Desabilita a paginação

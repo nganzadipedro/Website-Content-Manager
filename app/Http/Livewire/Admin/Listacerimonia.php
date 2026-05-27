@@ -30,6 +30,7 @@ class Listacerimonia extends Component
         $this->lista_advogados = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')
             ->where('app_advogado.estado', 'Aguarda Cerimónia')
             ->where('app_advogado.categoria', $this->categoria_p)
+            ->where('app_advogado.presenca_cerimonia', 'Presente')
             ->orderBy('pessoa.nome')
             ->select('app_advogado.*', 'pessoa.id as id_pessoa')
             ->get();

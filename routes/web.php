@@ -276,6 +276,7 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
                 Route::get('/list/cerimonia/{categoria}', 'Livewire\Admin\Listacerimonia')->name('list_cerimonia');
+                Route::get('/list/ausentes-cerimonia/{categoria}', 'Livewire\Areatecnica\AusenteCerimonia')->name('list_ausente_cerimonia');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
                 Route::get('/list/patronos', 'Livewire\Areatecnica\Listarpatronos')->name('list_patronos');
                 Route::get('/register/lawyer', 'Livewire\Areatecnica\Registarassociado')->name('regist_lawyer');
