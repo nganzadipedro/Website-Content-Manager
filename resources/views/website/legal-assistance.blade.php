@@ -23,18 +23,13 @@
 
 <body class="main-page">
 
-    <section class="section-pub">
-        <img src="{{ asset('assets/website/img/banner-top.jpg') }}" alt="">
-    </section>
-
     @include('website.menu')
 
     <div class="container">
 
-
-        <section class="title-page">
+          <section class="title-page">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center" style="margin-top: 100px">
                     <h3>Assistência Judiciária CPL</h3>
                     <h4>Tenha acesso a lei</h4>
                 </div>

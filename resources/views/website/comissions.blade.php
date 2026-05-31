@@ -21,18 +21,14 @@
 
 <body class="main-page">
 
-    <section class="section-pub">
-        <img src="{{ asset('assets/website/img/banner-top.jpg') }}"" alt="">
-    </section>
-
     @include('website.menu')
 
     <div class="container">
 
-        <div class="commissions-header">
-            <h3 class="commissions-title">Comissões do Conselho Provincial de Luanda</h3>
+         <div class="commissions-header" >
+            <h3 class="commissions-title" style="margin-top: 150px;">Comissões do Conselho Provincial de Luanda</h3>
             <h4 class="commissions-subtitle">
-                Conheça as principais comissões e seus membros dentro do Conselho Provincial de Luanda.
+                Conheça as principais comissões, seus membros e funções dentro do Conselho Provincial de Luanda da Ordem dos Advogados de Angola.
             </h4>
         </div>
 

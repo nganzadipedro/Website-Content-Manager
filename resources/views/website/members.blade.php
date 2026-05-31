@@ -22,10 +22,6 @@
 
 <body class="members-page">
 
-    <section class="section-pub">
-        <img src="{{ asset('assets/website/img/banner-top.jpg') }}" alt="">
-    </section>
-
     @include('website.menu')
 
 
@@ -33,7 +29,7 @@
 
         <section class="title-page">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center" style="margin-top: 100px">
                     <h3>Associados CPL</h3>
                     <h4>Conheça os nossos associados</h4>
                 </div>

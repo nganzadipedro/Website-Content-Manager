@@ -40,7 +40,7 @@
                                 </ul>
                             </div>
                             <div>
-                                <h3>SIGA-NOS NAS REDES SOCIAIS</h3>
+                                <h3>REDES SOCIAIS</h3>
                                 <ul>
                                     <li><a target="_blank" href="https://www.facebook.com/cploaa">Facebook</a></li>
                                     <li><a href="#">Linkedin</a></li>

@@ -94,7 +94,7 @@ class WebsiteController extends Controller
         $noticia->save();
 
         $outras_noticias = Noticia::where('id', '!=', $noticia->id)
-            ->orderBy('id', 'desc')->take(2)->get();
+            ->orderBy('id', 'desc')->take(6)->get();
 
         return view('website.news-details', compact('noticia', 'outras_noticias'));
 

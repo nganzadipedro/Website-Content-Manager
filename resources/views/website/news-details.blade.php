@@ -20,27 +20,22 @@
 
 <body class="news-details-page">
 
-    <section class="section-pub">
-        <img src="{{ asset('assets/website/img/banner-top.jpg') }}" alt="">
-    </section>
-
     @include('website.menu')
 
     <div class="container">
         <section class="title-page">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center">
+                <div class="col-12 text-center" style="margin-top: 80px">
                     <h3>Detalhes da Notícia</h3>
-                    <h4>Confira as informações completas sobre a notícia selecionada</h4>
+                    <h4>Confira as informações completas</h4>
                 </div>
             </div>
         </section>
     </div>
 
+
     <section class="details-section">
-
         <div class="container">
-
 
             @php
 
@@ -62,55 +57,122 @@
                 $data_destaque = explode(' ', $noticia->created_at);
                 $data_destaque = explode('-', $data_destaque[0]);
 
+                $conta = 1;
+
             @endphp
 
+            <div class="row main-row">
 
+                <!-- 1. IMAGEM (mobile primeiro) -->
+                <div class="col-lg-5 col-md-12 left-column">
+                    <img src="{{ asset('application/storage/app/public/' . $noticia->imagem) }}"
+                        alt="{{ $noticia->titulo }}" class="news-details-main-img">
+                </div>
 
-            <div class="row news-details-row p-2">
-                <section class="news-details-section fade-in">
-                    <article class="card news-details-card">
-                        <img src="{{ asset('application/storage/app/public/' . $noticia->imagem) }}"
-                            alt="{{ $noticia->titulo }}" class="news-details-main-img">
-                        <hr>
-                        <h5 class="title">{{$noticia->titulo}}</h5>
-                        <label for="" class="date-news">{{$data_destaque[2]}}, {{$meses[$data_destaque[1]]}}.
-                                {{$data_destaque[0]}} <span class="category">|
-                                {{$noticia->categoria}}</span><span class="views"><i class="bi bi-eye"></i>
-                                {{$noticia->views}}</span></label>
-                        <p class="description">{!! $noticia->texto_completo !!}</p>
+                <!-- 2. TEXTO DA NOTÍCIA -->
+                <div class="col-lg-7 col-md-12 right-column">
+                    <article class="news-details-card">
+                        <h1 class="title">{{ $noticia->titulo }}</h1>
+                        <label class="date-news">{{$data_destaque[2]}}, {{$meses[$data_destaque[1]]}}.
+                            {{$data_destaque[0]}}<span class="category">| {{ $noticia->categoria }}</span></label>
+                        <div class="description mt-4">
+                            <p>{!! $noticia->texto_completo !!}</p>
+                        </div>
                     </article>
-                </section>
-                <aside class="news-details-aside fade-in">
-                    @foreach ($outras_noticias as $not)
+                </div>
 
+                <!-- 3. NOTÍCIAS RELACIONADAS -->
+                <div class="col-12 related-news">
+                    <h5 class="related-title">Notícias Relacionadas</h5>
+                    <div class="d-flex">
+
+                        <div class="row col-md-6">
+                            @foreach ($outras_noticias as $not)
+
+
+                                @if ($conta <= 3)
+
+                                    @php
+
+                                        $data = explode(' ', $not->created_at);
+                                        $data = explode('-', $data[0]);
+
+                                    @endphp
+
+
+
+
+
+                                    <div class="related-item">
+                                        <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
+                                            alt="{{ $not->titulo }}">
+                                        <div class="related-content">
+                                            <a href="{{ route('news_details', $not->hash) }}"
+                                                class="related-link">{{ $not->titulo }}</a>
+                                            <label class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
+                                                {{$data[0]}} <span class="category">|
+                                                    {{ $not->categoria }}</span></label>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @php
+                                    $conta++; 
+                                @endphp
+
+                            @endforeach
+
+                        </div>
 
                         @php
-
-                            $data = explode(' ', $not->created_at);
-                            $data = explode('-', $data[0]);
-
+                            $conta = 1; 
                         @endphp
 
-                        <article class="card news-details-card">
-                            <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}" alt="{{$not->titulo}}"
-                                class="news-details-aside-img">
-                            <a href="{{ route('news_details', $not->hash) }}" class="title">{{$not->titulo}}</a>
-                            <label for="" class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
-                                            {{$data[0]}} <span class="category">| {{$not->categoria}}</span><span
-                                    class="views"><i class="bi bi-eye"></i> {{$not->views}}</span></label>
-                        </article>
-                    @endforeach
-                </aside>
+                        <div class="row col-md-6">
+
+                            @foreach ($outras_noticias as $not)
+
+                                @if ($conta >= 4)
+
+                                    @php
+
+                                        $data = explode(' ', $not->created_at);
+                                        $data = explode('-', $data[0]);
+
+                                    @endphp
+
+
+                                    <div class="related-item">
+                                        <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
+                                            alt="{{ $not->titulo }}">
+                                        <div class="related-content">
+                                            <a href="{{ route('news_details', $not->hash) }}"
+                                                class="related-link">{{ $not->titulo }}</a>
+                                            <label class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
+                                                {{$data[0]}} <span class="category">|
+                                                    {{ $not->categoria }}</span></label>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @php
+                                    $conta++; 
+                                @endphp
+
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-
     @include('website.footer')
 
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/website/js/index.js') }}"></script>
-    <script src="{{ asset('assets/website/js/news-details.js') }}"></script>
+
 </body>
 
 </html>

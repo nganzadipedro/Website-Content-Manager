@@ -115,15 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Animação de Pulsar para "Saiba Mais"
-  if (saibaMais) {
-    setInterval(() => {
-      saibaMais.style.transform = 'scale(1.1)';
-      saibaMais.style.transition = 'transform 0.4s ease-in-out';
-      setTimeout(() => {
-        saibaMais.style.transform = 'scale(1)';
-      }, 400);
-    }, 2000);
-  }
+  // if (saibaMais) {
+  //   setInterval(() => {
+  //     saibaMais.style.transform = 'scale(1.1)';
+  //     saibaMais.style.transition = 'transform 0.4s ease-in-out';
+  //     setTimeout(() => {
+  //       saibaMais.style.transform = 'scale(1)';
+  //     }, 400);
+  //   }, 2000);
+  // }
 
   // Animação de Pulsar para a Seta de Rolagem
   if (scrollArrow) {

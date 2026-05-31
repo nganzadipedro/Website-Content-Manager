@@ -19,17 +19,13 @@
 
 <body class="services-page">
 
-    <section class="section-pub">
-        <img src="{{ asset('assets/website/img/banner-top.jpg') }}" alt="">
-    </section>
-
     @include('website.menu')
 
     <div class="container">
 
         <section class="title-page">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center" style="margin-top: 100px">
                     <h3>Conheça os nossos serviços</h3>
                     <h4>Temos à disposição vários serviços para os nossos associados</h4>
                 </div>
@@ -170,10 +166,9 @@
 
     @include('website.footer')
 
+    <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/website/js/services-animations.js') }}"></script>
 
 </body>
-
-<script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/website/js/services-animations.js') }}"></script>
 
 </html>
