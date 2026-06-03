@@ -53,16 +53,20 @@
                                         <th>Data de Entrada</th>
                                         <th>Proveniência</th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <!-- <th></th> -->
+                                        <!-- <th></th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$item->codigo}}</td>
-                                            <td>{{ mb_strimwidth($item->assunto, 0, 40, '...', 'UTF-8') }}</td>
+                                            <td>
+                                                <a title="Detalhes do Registo" class="badge bg-blue-lt" href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}">
+                                                    {{$item->codigo}}
+                                                </a>
+                                            </td>
+                                            <td>{{$item->assunto}}</td>
                                             <td>{{$item->tipo_processo_id == 9 ? $item->outro_tipo_processo : $item->gettipoprocesso->descricao}}</td>
                                             <td>{{$item->data_entrada}}</td>
                                             <td>{{$item->proveniencia}}</td>
@@ -83,7 +87,7 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <a title="Detalhes do Registo" href="{{ route('system.secretaria.detalhes_registo', $item->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -98,8 +102,8 @@
                                                         <path d="M11 9h-4" />
                                                     </svg>
                                                 </a>
-                                            </td>
-                                            <td>
+                                            </td> -->
+                                            <!-- <td>
                                                 @if ($item->tipo_processo_id == 1)
                                                     <a title="Emitir Documento" href="{{ route('system.secretaria.documento_assistencia', $item->hash) }}"
                                                         class="badge bg-green-lt">
@@ -114,7 +118,7 @@
                                                         </svg>
                                                     </a>
                                                 @endif
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     @endforeach
                                 </tbody>

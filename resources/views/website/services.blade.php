@@ -12,8 +12,8 @@
     <title>Serviços</title>
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/website/css/services.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/website/css/services.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/services-responsive.css') }}">
 </head>
 

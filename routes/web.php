@@ -237,6 +237,7 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/dashboard', 'Livewire\Secretaria\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/general/search', 'Livewire\Areatecnica\Pesquisageral')->name('pesquisa_geral');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');

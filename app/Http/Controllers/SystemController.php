@@ -1907,13 +1907,15 @@ class SystemController extends Controller
             $inscricao_adv->data_remessa_cn = $request->data_remessa_cn;
             $inscricao_adv->save();
 
-            $data = $request->data_remessa_cn;
+            $data = $inscricao_adv->data_despacho;
+            $data_sms = explode('-', $data);
+            $data = $data_sms[2] . "/" . $data_sms[1] . "/" . $data_sms[0];
 
             // notifica o advogado por SMS
             $obmsg = new OmbalaController();
             $telefone = $registo->telefone;
             $nome = $registo->proveniencia;
-            $mensagem = "Caríssimo(a), o seu processo de inscrição foi despachado como Deferido na data " . $request->data_remessa_cn;
+            $mensagem = "Caríssimo(a), o seu processo de inscrição foi despachado como Deferido aos " . $data . ".";
 
             try {
                 $obmsg->enviarMensagem($telefone, $mensagem);

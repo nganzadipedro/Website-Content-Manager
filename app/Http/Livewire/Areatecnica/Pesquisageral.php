@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Areatecnica;
 
 use App\Models\Inscricaoadvogado;
 use App\Models\Registoentrada;
+use Auth;
 use Livewire\Component;
 
 class Pesquisageral extends Component
@@ -27,6 +28,7 @@ class Pesquisageral extends Component
             $linha[3] = $item->data_entrada;
             $linha[4] = 'Pendente';
             $linha[5] = 'Sem Despacho';
+            $linha[6] = $item->id;
 
             array_push($this->lista, $linha);
 
@@ -46,6 +48,7 @@ class Pesquisageral extends Component
             $linha[3] = $item->data_entrada;
             $linha[4] = 'Pendente';
             $linha[5] = 'Sem Despacho';
+            $linha[6] = $item->id;
 
             array_push($this->lista, $linha);
 
@@ -72,11 +75,17 @@ class Pesquisageral extends Component
 
             $linha[4] = $estado;
             $linha[5] = $item->despacho == null ? 'Sem Despacho' : $item->despacho;
-
+            $linha[6] = $item->registo_entrada_id;
             array_push($this->lista, $linha);
 
         }
 
-        return view('dashboard.areatecnica.pesquisa-geral')->extends('layouts-new.app')->section('content');
+        if (Auth::user()->permissao_id == 3) {
+            return view('dashboard.areatecnica.pesquisa-geral')->extends('layouts-new.app')->section('content');
+        } else {
+            return view('dashboard.recepcionista.pesquisa-geral')->extends('layouts-new.app')->section('content');
+        }
+
+
     }
 }

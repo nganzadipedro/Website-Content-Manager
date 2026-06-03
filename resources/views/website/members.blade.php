@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/website/css/members.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/website/css/members.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/members-responsive.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/system/css/libs/sweetalert2/sweetalert2.min.css') }}">
 </head>
 
@@ -80,7 +79,9 @@
                             </p>
                             <div class="list-container">
                                 <ul class="list-column section-one-list">
-                                    <li>Requerimento de inscrição com indicação do nome completo, do nome abreviado a utilizar no exercício da profissão, dos cargos e actividades exercidos e domicílio profissional;</li>
+                                    <li>Requerimento de inscrição com indicação do nome completo, do nome abreviado a
+                                        utilizar no exercício da profissão, dos cargos e actividades exercidos e
+                                        domicílio profissional;</li>
                                     <li>Declaração de aceitação do Patrono;</li>
                                     <li>Certificado de Licenciatura, em original ou fotocópia autenticada;</li>
                                     <li>Certificado de Registo Criminal actualizado;</li>
@@ -95,9 +96,12 @@
                                 </ul>
                             </div>
                             <div class="member-actions">
-                                <a href="{{ route('download_doc', 'req_advogado_estagiario.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
-                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
-                                <a href="{{ route('download_doc', 'declaracao_patrono.docx') }}" class="member-btn"><i class="bi bi-download"></i> Declaração do Patrono</a>
+                                <a href="{{ route('download_doc', 'req_advogado_estagiario.pdf') }}"
+                                    class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
+                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i
+                                        class="bi bi-download"></i> Boletim de Inscrição</a>
+                                <a href="{{ route('download_doc', 'declaracao_patrono.docx') }}" class="member-btn"><i
+                                        class="bi bi-download"></i> Declaração do Patrono</a>
                                 <!-- <a href="{{ url('/register-member') }}" class="member-btn">Inscrever-se pelo portal do CPL</a> -->
                             </div>
                         </div>
@@ -153,9 +157,12 @@
                                 </ul>
                             </div>
                             <div class="member-actions">
-                                <a href="{{ route('download_doc', 'req_advogado.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Requerimento</a>
-                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i class="bi bi-download"></i> Boletim de Inscrição</a>
-                                <a href="https://oaa.ao" target="_blank" class="member-btn">Inscrever-se pelo portal da OAA</a>
+                                <a href="{{ route('download_doc', 'req_advogado.pdf') }}" class="member-btn"><i
+                                        class="bi bi-download"></i> Requerimento</a>
+                                <a href="{{ route('download_doc', 'boletim_inscricao.pdf') }}" class="member-btn"><i
+                                        class="bi bi-download"></i> Boletim de Inscrição</a>
+                                <a href="https://oaa.ao" target="_blank" class="member-btn">Inscrever-se pelo portal da
+                                    OAA</a>
                             </div>
                         </div>
                     </div>
@@ -181,7 +188,7 @@
                     <button type="submit" id="btn-search">Pesquisar</button>
                 </div>
             </form>
-            
+
             <p class="none-result" id="pg-none-result">
                 Não foi encontrado nenhum registo na nossa base de dados.
             </p>
@@ -300,8 +307,10 @@
             </div>
 
             <div class="search-links">
-                <a href="{{ route('list_lawyers') }}" target="_blank" class="updated-list">Ver lista actualizada dos Advogados</a>
-                <a href="{{ route('list_trainee') }}" target="_blank" class="updated-list">Ver lista actualizada dos Advogados estagiários</a>
+                <a href="{{ route('list_lawyers') }}" target="_blank" class="updated-list">Ver lista actualizada dos
+                    Advogados</a>
+                <a href="{{ route('list_trainee') }}" target="_blank" class="updated-list">Ver lista actualizada dos
+                    Advogados estagiários</a>
             </div>
         </div>
     </section>
