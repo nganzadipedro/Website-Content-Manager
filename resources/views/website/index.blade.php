@@ -11,6 +11,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>Início</title>
+    <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">
@@ -35,30 +36,35 @@
             </div>
 
             <div class="carousel-inner">
-                <!-- Slide 1 -->
-                <div class="carousel-item active">
-                    <img src="{{ asset('assets/website/img/hero/banner-1.jpg') }}" alt="Banner 1" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h1>Conselho Provincial de Luanda</h1>
-                    </div>
-                </div>
 
-                <!-- Slide 2 -->
+                @foreach ($carrossel as $item)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <img src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="Banner{{ $item->id }}" class="d-block w-100">
+                        <div class="carousel-caption">
+                            <h1>{{$item->titulo}}</h1>
+                        </div>
+                    </div>
+                @endforeach
+
+                <!-- Slide 1 -->
+
+
+                <!-- Slide 2 
                 <div class="carousel-item">
                     <img src="{{ asset('assets/website/img/hero/banner-1.jpg') }}" alt="Banner 2" class="d-block w-100">
                     <div class="carousel-caption">
                         <h1>Defendendo os Seus Direitos</h1>
 
                     </div>
-                </div>
+                </div> -->
 
-                <!-- Slide 3 -->
+                <!-- Slide 3 
                 <div class="carousel-item">
                     <img src="{{ asset('assets/website/img/hero/banner-1.jpg') }}" alt="Banner 3" class="d-block w-100">
                     <div class="carousel-caption">
                         <h1>Excelência na Advocacia</h1>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Setas de navegação -->
@@ -392,7 +398,7 @@
         </div>
     </section>
 
-    <section class="section-brands">
+    <!-- <section class="section-brands">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-12">
@@ -438,7 +444,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     @include('website.footer')
 

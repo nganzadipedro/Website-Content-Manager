@@ -109,22 +109,30 @@
                                                     Género: {{ $inscricao_advogado->sexo }} <br><br>
                                                     Despacho: {{ $inscricao_advogado->despacho }} <br><br>
                                                     Data de Despacho: {{ $inscricao_advogado->data_despacho }} <br><br>
-                                                    Data de Remessa ao CN: {{ $inscricao_advogado->data_remessa_cn }} <br><br>
+                                                    Data de Remessa ao CN: {{ $inscricao_advogado->data_remessa_cn }}
+                                                    <br><br>
                                                     Mensagem de Despacho: {{ $inscricao_advogado->texto_despacho }} <br><br>
                                                 </div>
 
                                                 <div class="col-md-6 col-lg-6 col-xl-6 col-12">
                                                     Acto pretendido: {{ $inscricao_advogado->acto_pretendido }} <br><br>
                                                     Cédula disponível: {{ $inscricao_advogado->cedula_disponivel }} <br><br>
-                                                    Data de emissão da cédula: {{ $inscricao_advogado->data_emissao_cedula }}<br><br>
-                                                    Nome do patrono: {{ $inscricao_advogado->patrono->getadvogado->getpessoa->nome}}<br><br>
-                                                    Escritório do patrono: {{ $inscricao_advogado->patrono->getadvogado->nome_escritorio}}<br><br>
-                                                    Endereço do escritório: {{ $inscricao_advogado->patrono->getadvogado->endereco_escritorio}}<br><br>
-                                                    <!-- Município: {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br> -->
+                                                    Data de emissão da cédula:
+                                                    {{ $inscricao_advogado->data_emissao_cedula }}<br><br>
+                                                    @if ($inscricao_advogado->patrono != null)
+                                                        Nome do patrono:
+                                                        {{ $inscricao_advogado->patrono->getadvogado->getpessoa->nome}}<br><br>
+                                                        Escritório do patrono:
+                                                        {{ $inscricao_advogado->patrono->getadvogado->nome_escritorio}}<br><br>
+                                                        Endereço do escritório:
+                                                        {{ $inscricao_advogado->patrono->getadvogado->endereco_escritorio}}<br><br>
+                                                        Município:
+                                                        {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endif
-                                        
+
                                     </div>
                                     <div class="tab-pane" id="tabs-anexos-1">
 
@@ -257,19 +265,19 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-auto">
-                                                                                                                                        <a href="#"
-                                                                                                                                            class="list-group-item-actions">
-                                                                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                                                class="icon text-secondary" width="24" height="24"
-                                                                                                                                                viewBox="0 0 24 24" stroke-width="2"
-                                                                                                                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                                                                                                stroke-linejoin="round">
-                                                                                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                                                                                <path
-                                                                                                                                                    d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                                                                                                            </svg>
-                                                                                                                                        </a>
-                                                                                                                                    </div> -->
+                                                                                                                                            <a href="#"
+                                                                                                                                                class="list-group-item-actions">
+                                                                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                                                    class="icon text-secondary" width="24" height="24"
+                                                                                                                                                    viewBox="0 0 24 24" stroke-width="2"
+                                                                                                                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                                                                                                    stroke-linejoin="round">
+                                                                                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                                                                                    <path
+                                                                                                                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                                                                                                                                </svg>
+                                                                                                                                            </a>
+                                                                                                                                        </div> -->
                                                     </div>
                                                 </div>
                                             @endforeach

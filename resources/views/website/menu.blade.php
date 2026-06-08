@@ -17,18 +17,17 @@
                 
                 <div class="collapse navbar-collapse justify-content-center" id="navbarMenu">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Início</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('services') }}">Serviços</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('news') }}">Notícias</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('members') }}">Associados</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('comissions') }}">Comissões</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('legal_assistance') }}">Assistência Judiciária</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('gallery') }}">Galeria</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contactos</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Início</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}" href="{{ route('news') }}">Notícias</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('members') ? 'active' : '' }}" href="{{ route('members') }}">Associados</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('comissions') ? 'active' : '' }}" href="{{ route('comissions') }}">Comissões</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('legal_assistance') ? 'active' : '' }}" href="{{ route('legal_assistance') }}">Assistência Judiciária</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeria</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contactos</a></li>
                         <li class="nav-item"><a class="nav-link btn-signin" href="{{ route('login') }}">Área Reservada</a></li>
                     </ul>
                 </div>
-
             </div>
         </nav>
     </div>

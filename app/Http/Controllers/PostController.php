@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrossel;
 use App\Models\Denuncia;
 use App\Models\Galeria;
 use App\Models\Mensagem;
@@ -62,6 +63,35 @@ class PostController extends Controller
         }
 
         ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova notícia ($noticia->titulo)", 'noticia', $noticia->id);
+        return 'sucesso';
+
+    }
+
+    public function carrossel_post(Request $request)
+    {
+
+        $carrossel = Carrossel::create([
+            'titulo' => $request->titulo,
+            'user_id' => Auth::id()
+        ]);
+
+        $carrossel->hash = md5($carrossel->titulo . $carrossel->created_at);
+        $carrossel->save();
+
+        //faz upload da imagem
+        $imagem = '';
+
+        try {
+            if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                $imagem = $request->imagem->store('carrossel');
+                $carrossel->imagem = $imagem;
+                $carrossel->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova imagem para o carrossel ($carrossel->id)", 'carrossel', $carrossel->id);
         return 'sucesso';
 
     }
@@ -146,6 +176,17 @@ class PostController extends Controller
         $galeria->delete();
 
         ActividadesistemaController::inserir(Auth::id(), "Eliminou uma imagem da galeria ($galeria->titulo)", 'noticia', $galeria->id);
+        return 'sucesso';
+
+    }
+
+    
+    public function delete_carrossel(Request $request)
+    {
+
+        $carrossel = Carrossel::find($request->id_carrossel);
+        $carrossel->delete();
+        ActividadesistemaController::inserir(Auth::id(), "Eliminou uma imagem do carrossel ($carrossel->id)", 'carrossel', $carrossel->id);
         return 'sucesso';
 
     }

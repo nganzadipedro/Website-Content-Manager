@@ -11,6 +11,7 @@
     <meta http-equiv="Expires" content="0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Contactos</title>
+    <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">

@@ -10,6 +10,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>Serviços</title>
+    <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style-responsive.css') }}">

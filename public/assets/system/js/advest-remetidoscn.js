@@ -368,4 +368,109 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    $(document).on('click', '.btn-detalhes', function () {
+
+        // Pega o data-id do <a> clicado
+        let id = $(this).data('id');
+        buscarItemDetalhes(id);
+
+    });
+
+    function buscarItemDetalhes(id) {
+
+        fetch(`/system/getDataInscricaoAdvogadoById/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                console.log('Resposta do servidor:', data);
+                $("#dv-detalhes").html("");
+
+                html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            Nº Processo Secretaria: ${data.getregistoentrada.codigo} <br><br>
+                            Nº Processo Área Técnica: ${data.codigo} <br><br>
+                            Requerente: ${data.getregistoentrada.proveniencia} <br><br>
+                            Contactos: ${data.telefone1}/${data.telefone2 == null ? '' : data.telefone2} <br><br>
+                            Email: ${data.email == null ? '' : data.email} <br><br>
+                            Assunto: ${data.getregistoentrada.assunto} <br><br>
+                            Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
+                            Estado: ${data.estado} <br><br>
+                            Despacho: ${data.despacho == null ? 'Sem Despacho' : data.despacho} <br><br>
+                            Mensagem do despacho: ${data.despacho == 'Indeferido' ? data.observacao : ''} <br><br>
+                            Acto Pretendido: ${data.acto_pretendido}<br><br>
+                            Data de remessa ao CN: ${data.data_remessa_cn == null ? '' : data.data_remessa_cn}
+                        </div>`
+                $("#dv-detalhes").html(html);
+
+
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    }
+
+    $(document).on('click', '.btn-retornar', function () {
+
+        let id = $(this).data('id');
+
+        const formData = new FormData();
+        formData.append('inscricao_id', id);
+        csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        Swal.fire({
+            title: "Confirmação",
+            text: "Tem certeza que deseja retornar o processo à mesa do Presidente?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#34c38f",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Sim, retornar!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return $.ajax({
+                    url: "/system/registo-retornarmesa/update",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (res) {
+
+                        console.log(res);
+                        if (res == 'sucesso') {
+                            sweetAlert({
+                                type: "success",
+                                title: "Sucesso",
+                                text: 'Dados registados com sucesso!',
+                                timer: 3000
+                            });
+
+                            window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+
+                        }
+                    },
+                    error: function (error) {
+
+                        sweetAlert({
+                            type: "warning",
+                            title: "Erro " + error.status,
+                            text: 'Erro: ' + error.responseJSON.message,
+                            timer: 9000
+                        });
+                        console.log("Error: " + error.responseJSON.message);
+                    }
+                });
+            }
+        });
+
+    });
+
 });

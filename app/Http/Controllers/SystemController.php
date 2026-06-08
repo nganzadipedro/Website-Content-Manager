@@ -1228,8 +1228,7 @@ class SystemController extends Controller
                 $advogado->presenca_cerimonia = 'Presente';
                 $advogado->estado = 'Registado';
                 $advogado->save();
-            }
-            else{
+            } else {
                 if ($advogado->categoria == 'Advogado') {
                     $advogado->data_cerimonia_associado = $request->data_cerimonia;
                 } else {
@@ -1238,7 +1237,7 @@ class SystemController extends Controller
 
                 $advogado->presenca_cerimonia = 'Ausente';
                 $advogado->save();
-                
+
             }
 
 
@@ -2017,6 +2016,30 @@ class SystemController extends Controller
         ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
         ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
         ActividadesistemaController::historico_processo("O processo foi alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", $registo->id);
+
+        return 'sucesso';
+
+    }
+
+    public function registo_retornarmesa_update(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
+        $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+        $registo->estado = 'deferido';
+        $registo->save();
+
+        $inscricao_adv->estado = 'Sobre a mesa do Presidente';
+        $inscricao_adv->data_remessa_cn = null;
+        $inscricao_adv->save();
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Processo retornado à mesa do Presidente", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Retornou o processo para a mesa do Presidente", 'user', $inscricao_adv->id);
+        ActividadesistemaController::historico_processo("O processo foi retornado para a mesa do Presidente", $registo->id);
 
         return 'sucesso';
 

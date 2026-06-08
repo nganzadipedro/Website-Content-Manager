@@ -13,7 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Galeria</title>
-
+    <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
     <!-- Links para arquivos CSS externos -->
     <link rel="stylesheet" href="{{ asset('assets/website/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">

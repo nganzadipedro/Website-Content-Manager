@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrossel;
 use App\Models\Municipio;
 use App\Models\Pedidointervencao;
 use App\Models\Platform\Advogado;
@@ -24,9 +25,11 @@ class WebsiteController extends Controller
     public function home(Request $request)
     {
 
+        $carrossel = Carrossel::orderBy('id', 'asc')->take(3)->get();
+        // dd($carrossel);
         $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $this->acesso_pagina('home');
-        return view('website.index', compact('noticia_destaque'));
+        return view('website.index', compact('noticia_destaque','carrossel'));
 
     }
 

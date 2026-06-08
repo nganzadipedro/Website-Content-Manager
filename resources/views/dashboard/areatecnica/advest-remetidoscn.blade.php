@@ -82,7 +82,7 @@
                                             <th>Data Despacho</th>
                                             <th>Data Remessa CN</th>
                                             <th></th>
-                                            <th></th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,7 +100,8 @@
                                                 <td>{{$item->telefone1}}/{{$item->telefone2}}</td>
                                                 <td>{{$item->estado}}</td>
                                                 <td>{{$item->getregistoentrada->data_entrada}}</td>
-                                                <td>{{$item->data_despacho == null ? $item->data_remessa_cn : $item->data_despacho}}</td>
+                                                <td>{{$item->data_despacho == null ? $item->data_remessa_cn : $item->data_despacho}}
+                                                </td>
                                                 <td>{{$item->data_remessa_cn}}</td>
                                                 <td>
                                                     <a style="cursor: pointer;" data-bilhete="{{$item->num_bilhete}}"
@@ -119,10 +120,10 @@
                                                             <path d="M19 16v6" />
                                                         </svg>
                                                     </a>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('system.areatecnica.detalhes_registo', $item->getregistoentrada->hash) }}"
-                                                        class="badge bg-blue-lt">
+
+                                                    <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
+                                                        title="Detalhes do processo" style="cursor: pointer;"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-detalhes">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -133,6 +134,18 @@
                                                             <path d="M9 15h-2" />
                                                             <path d="M13 12h-6" />
                                                             <path d="M11 9h-4" />
+                                                        </svg>
+                                                    </a>
+                                                    <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-retornar"
+                                                        title="Retornar à Mesa do Presidente" style="cursor: pointer;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up-double">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M13 14l-4 -4l4 -4" />
+                                                            <path d="M8 14l-4 -4l4 -4" />
+                                                            <path d="M9 10h7a4 4 0 1 1 0 8h-1" />
                                                         </svg>
                                                     </a>
                                                 </td>
@@ -250,6 +263,21 @@
             </div>
         </div>
 
+    </div>
+
+
+    <div class="modal modal-blur fade" id="modal-detalhes" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class=" alert alert-primary" id="dv-detalhes"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

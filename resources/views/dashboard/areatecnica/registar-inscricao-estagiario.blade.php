@@ -265,6 +265,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nome</th>
+                                    <th>Cédula</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -273,8 +274,8 @@
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>
 
-                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome}}
-                                        </td>
+                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome}}</td>
+                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->num_associado}}</td>
                                         <td>
                                             <a title="Adicionar" data-id="{{ $item->id }}"
                                                 class="btn-adicionar badge bg-blue-lt" style="cursor: pointer;">

@@ -55,17 +55,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('logout', 'Controllers\Auth\LoginController@logout')->name('logout');
 
     Route::get('newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
+    Route::get('carrossel/add', 'Livewire\Admin\Cadastrarimagemcarrossel')->name('cadimagemcarrossel');
     Route::get('gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
     Route::get('newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
+    Route::get('carrossel/list', 'Livewire\Admin\Listarcarrossel')->name('listcarrossel');
     Route::get('gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
     Route::get('newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
 
     Route::post('system/newslater/post', 'Controllers\PostController@newslater_post');
+    Route::post('system/carrossel/post', 'Controllers\PostController@carrossel_post');
     Route::post('system/gallery/post', 'Controllers\PostController@gallery_post');
     Route::post('system/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('system/message/post', 'Controllers\PostController@message_post');
     Route::post('system/newslater/delete', 'Controllers\PostController@delete_news');
     Route::post('system/gallery/delete', 'Controllers\PostController@delete_gallery');
+    Route::post('system/carrossel/delete', 'Controllers\PostController@delete_carrossel');
     Route::post('system/newslater/update', 'Controllers\PostController@newslater_update');
     Route::post('system/lawyier/update_data', 'Controllers\AdvogadoController@update_data');
 
@@ -94,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
     Route::post('system/dataremessacn/update', 'Controllers\SystemController@dataremessacn_update');
     Route::post('system/registo-mudarindeferido/update', 'Controllers\SystemController@registo_mudarindeferido_update');
+    Route::post('system/registo-retornarmesa/update', 'Controllers\SystemController@registo_retornarmesa_update');
     Route::post('system/datadespacho-presidente/update', 'Controllers\SystemController@datadespacho_presidente_update');
     Route::post('system/registoadicional-ceduladisponivel/update', 'Controllers\SystemController@registoadicional_ceduladisponivel');
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
@@ -133,6 +138,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Admin\Dashboard')->name('dashboard');
                 Route::get('/dashboard-system', 'Livewire\Admin\Dashboardsistema')->name('dashboard_system');
                 Route::get('/newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
+              
                 Route::get('/gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
                 Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
                 Route::get('/gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
