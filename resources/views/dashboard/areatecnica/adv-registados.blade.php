@@ -122,6 +122,21 @@
                                                         </svg>
                                                     </a>
                                                 @endif
+                                                @if ($item->despacho == 'Indeferido')
+                                                    <a style="cursor:pointer;" class="badge bg-green-lt encaminhar-processo"
+                                                        data-nome="{{ $item->getregistoentrada->proveniencia }}"
+                                                        title="Encaminhar Processo" data-id="{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up-double">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M11 14l4 -4l-4 -4" />
+                                                            <path d="M16 14l4 -4l-4 -4" />
+                                                            <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
+                                                        </svg>
+                                                    </a>
+                                                @endif
                                             </td>
                                             <td>
                                                 <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
@@ -291,13 +306,76 @@
     </div>
 </div>
 
+<div class="modal modal-blur fade" id="modal-encaminhar-processo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Encaminhar Processo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @csrf
+
+                <input type="hidden" id="inscricao_id_encaminhar" value="">
+
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="nome_requerente_encaminhar" class="form-label">Nome do Candidato/Requerente</label>
+                        <input type="text" class="form-control" disabled name="nome_requerente_encaminhar" id="nome_requerente_encaminhar">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                            <label class="form-label">Encaminhar para</label>
+                            <select name="encaminhar_para" id="encaminhar_para" class="form-select">
+                                <option value="conselheiro" selected>Conselheiro</option>
+                                <option value="comissao">Comissão de Ética</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="conselheiro_id" class="form-label">Conselheiro</label>
+                        <select name="conselheiro_id" id="conselheiro_id" class="form-select">
+                            <option value="" selected>---- Selecione -----</option>
+                            @foreach ($lista_conselheiros as $conselheiro)
+                                <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                        <label class="form-label">Data de entrega ao conselheiro</label>
+                        <input type="date" class="form-control" name="data_entrega_conselheiro"
+                            id="data_entrega_conselheiro">
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                        <label class="form-label">Data de entrega à comissão de ética</label>
+                        <input type="date" class="form-control" name="data_entrega_comissao" id="data_entrega_comissao">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="col-lg-12 col-12">
+                    <a id="btn-salvar-encaminhar" class="btn btn-success mt-4">Salvar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/system/js/adv-registados.js') }}"></script>
     <script>
         window.avatarUrl = "{{ asset('images/user-icon.png') }}";
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('#myTable').DataTable({
                 paging: false, // Desabilita a paginação
                 searching: true, // Habilita a barra de pesquisa

@@ -506,6 +506,53 @@ class SystemController extends Controller
 
     }
 
+    public function encaminharprocesso_individual_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
+        $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
+
+        $inscricao_adv->despacho = null;
+        $inscricao_adv->data_despacho = null;
+        $inscricao_adv->save();
+
+        $registo->estado = 'em tratamento';
+        $registo->save();
+
+        if ($request->encaminhar_para == 'conselheiro') {
+
+            $inscricao_adv->data_levantamento_distribuicao = null;
+            $inscricao_adv->data_entrega_distribuicao = null;
+            $inscricao_adv->save();
+
+            $inscricao_adv->conselheiro_id = $request->conselheiro_id;
+            $inscricao_adv->data_levantamento_distribuicao = $request->data_entrega_conselheiro;
+            $inscricao_adv->estado = 'análise de conselheiro';
+            $inscricao_adv->save();
+
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido aos conselheiros para a devida análise.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado aos conselheiros para a devida análise.", 'user', $inscricao_adv->id);
+
+        } else if ($request->encaminhar_para == 'comissao') {
+
+            $inscricao_adv->data_entrega_comissao_etica = null;
+            $inscricao_adv->save();
+
+            $inscricao_adv->data_levantamento_comissao_etica = $request->data_entrega_comissao;
+            $inscricao_adv->estado = 'análise comissão de ética';
+            $inscricao_adv->save();
+
+            ActividadesistemaController::inserir(Auth::id(), "O processo foi remetido à comissão de ética para a devida análise.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Registou a distribuição do processo de inscrição para advogado à comissão de ética para a devida análise.", 'user', $inscricao_adv->id);
+
+        }
+
+        return 'sucesso';
+
+    }
+
     public function entrega_conselheiro_grupo_post(Request $request)
     {
 

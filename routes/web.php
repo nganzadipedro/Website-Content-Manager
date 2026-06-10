@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
     Route::post('system/encaminharprocesso-grupo/post', 'Controllers\SystemController@encaminharprocesso_grupo_post');
+    Route::post('system/encaminharprocesso-individual/post', 'Controllers\SystemController@encaminharprocesso_individual_post');
     Route::post('system/entrega-conselheiro-grupo/post', 'Controllers\SystemController@entrega_conselheiro_grupo_post');
     Route::post('system/levantamento-conselheiro-grupo/post', 'Controllers\SystemController@levantamento_conselheiro_grupo_post');
     Route::post('system/remessa-comissaoetica-grupo/post', 'Controllers\SystemController@remessa_comissaoetica_grupo_post');

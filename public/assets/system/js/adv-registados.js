@@ -240,6 +240,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    $(document).on('click', '.encaminhar-processo', function () {
+
+        id = $(this).data("id");
+        nome = $(this).data("nome");
+
+        $("#nome_requerente_encaminhar").val(nome);
+        $("#inscricao_id_encaminhar").val(id);
+
+        const modal = new bootstrap.Modal(document.getElementById('modal-encaminhar-processo'));
+        modal.show();
+
+    });
+
+    $(document).on('click', '#btn-salvar-encaminhar', function () {
+
+        inscricao_id = $("#inscricao_id_encaminhar").val();
+        encaminhar_para = document.getElementById('encaminhar_para').value;
+        conselheiro_id = document.getElementById('conselheiro_id').value;
+        data_entrega_conselheiro = document.getElementById('data_entrega_conselheiro').value;
+        data_entrega_comissao = document.getElementById('data_entrega_comissao').value;
+
+
+        if (encaminhar_para == 'conselheiro' && (conselheiro_id == '' || conselheiro_id == null)) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Selecione o conselheiro",
+                timer: 4000
+            });
+        }
+        else if (encaminhar_para == 'comissao' && (data_entrega_comissao == '' || data_entrega_comissao == null)) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe a data que foi entregue à comissão de ética",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            formData.append('encaminhar_para', encaminhar_para);
+            formData.append('conselheiro_id', conselheiro_id);
+            formData.append('data_entrega_conselheiro', data_entrega_conselheiro);
+            formData.append('data_entrega_comissao', data_entrega_comissao);
+            formData.append('inscricao_id', inscricao_id);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/encaminharprocesso-individual/post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription/registed/Indeferido";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
+
+    });
+
     $(document).on('click', '#btn-alterar-despacho', function () {
 
         inscricao_id = $("#inscricao_id").val();
