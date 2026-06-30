@@ -105,25 +105,31 @@ p {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* ==================== HERO CAROUSEL ==================== */
+ /* ==================== HERO CAROUSEL ==================== */
 .hero-carousel {
     position: relative;
     width: 100%;
-    height: 100vh;
     overflow: hidden;
-    padding-top: 85px;
+    padding-top: 100px;
+    background-color: #000;
 }
 
-.hero-carousel .carousel-item img {
-    height: 100vh;
-    object-fit: cover;
-    filter: brightness(0.65);
+.hero-carousel .carousel-inner,
+.hero-carousel .carousel-item {
+    height: auto; /* acompanha a imagem */
+}
+
+.hero-carousel .hero-img {
+    width: 100%;
+    height: auto;
+    object-fit: unset;
+    object-position: center;
 }
 
 /* Caption */
 .hero-carousel .carousel-caption {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -141,69 +147,10 @@ p {
     line-height: 1.1;
 }
 
-.hero-carousel .carousel-caption .lead,
-.hero-carousel .carousel-caption p {
-    font-size: 1.35rem;
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
-    margin-bottom: 0;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Botões */
-.caption-buttons {
-    display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.caption-buttons .btn {
-    padding: 14px 32px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background-color: var(--cor-yellow-two);
-    color: var(--cor-black);
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #fff;
-    transform: translateY(-3px);
-}
-
-.btn-outline-light {
-    border: 2px solid #fff;
-    color: #fff;
-}
-
-.btn-outline-light:hover {
-    background-color: #fff;
-    color: var(--cor-black);
-}
-
-/* Setas de navegação */
-.carousel-control-prev,
-.carousel-control-next {
-    width: 60px;
-    opacity: 0.8;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    opacity: 1;
-}
-
-/* Indicadores (dots) inferiores */
+/* Indicadores e controles */
 .carousel-indicators-custom {
     position: absolute;
-    bottom: 45px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -226,27 +173,15 @@ p {
     transform: scale(1.3);
 }
 
-/* Responsividade */
-@media (max-width: 992px) {
-    .hero-carousel .carousel-caption h1 {
-        font-size: 2.7rem;
-    }
-    .hero-carousel .carousel-caption .lead {
-        font-size: 1.15rem;
-    }
+.carousel-control-prev,
+.carousel-control-next {
+    width: 60px;
+    opacity: 0.8;
 }
 
-@media (max-width: 576px) {
-    .hero-carousel .carousel-caption {
-        bottom: 22%;
-    }
-    .hero-carousel .carousel-caption h1 {
-        font-size: 2.2rem;
-    }
-    .caption-buttons .btn {
-        padding: 12px 24px;
-        font-size: 1rem;
-    }
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
 }
 
 /* SECTION PRESIDENT */

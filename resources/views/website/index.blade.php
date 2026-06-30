@@ -36,35 +36,14 @@
             </div>
 
             <div class="carousel-inner">
-
                 @foreach ($carrossel as $item)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="Banner{{ $item->id }}" class="d-block w-100">
+                        <img src="{{ asset('application/storage/app/public/' . $item->imagem) }}" alt="Banner{{ $item->id }}" class="hero-img">
                         <div class="carousel-caption">
                             <h1>{{$item->titulo}}</h1>
                         </div>
                     </div>
                 @endforeach
-
-                <!-- Slide 1 -->
-
-
-                <!-- Slide 2 
-                <div class="carousel-item">
-                    <img src="{{ asset('assets/website/img/hero/banner-1.jpg') }}" alt="Banner 2" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h1>Defendendo os Seus Direitos</h1>
-
-                    </div>
-                </div> -->
-
-                <!-- Slide 3 
-                <div class="carousel-item">
-                    <img src="{{ asset('assets/website/img/hero/banner-1.jpg') }}" alt="Banner 3" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h1>Excelência na Advocacia</h1>
-                    </div>
-                </div> -->
             </div>
 
             <!-- Setas de navegação -->
@@ -292,7 +271,7 @@
                                     <span class="role">Presidente</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                    <img src="{{ asset('assets/website/img/fotos/conselheiros/dra_lezly.jpg') }}"
                                         alt="Lezly Edith Orobio Da Silva Cardoso">
                                     <p>Lezly Edith Orobio Da Silva Cardoso</p>
                                     <span class="card-number">Cédula Nº 2914</span>
@@ -375,7 +354,7 @@
                                     <span class="card-number">Cédula Nº 2281</span>
                                     <span class="role">Conselheiro</span>
                                 </div>
-                                <div class="membro">
+                                <!-- <div class="membro">
                                     <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
                                         alt="Edvaldo Gonçalves Calitamba">
                                     <p>Edvaldo Gonçalves Calitamba</p>
@@ -388,7 +367,7 @@
                                     <p>Ascânio Giovani Albino Do Nascimento</p>
                                     <span class="card-number">Cédula Nº 2620</span>
                                     <span class="role">Conselheiro</span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="slider-dots"></div>
@@ -451,7 +430,7 @@
     <script src="{{ asset('assets/website/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/website/js/index.js') }}"></script>
     <script src="{{ asset('assets/website/js/team-slider.js') }}"></script>
-    <script src="{{ asset('assets/website/js/brands-slider.js') }}"></script>
+    <!-- <script src="{{ asset('assets/website/js/brands-slider.js') }}"></script> -->
 
 </body>
 
