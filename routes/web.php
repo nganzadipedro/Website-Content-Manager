@@ -43,8 +43,10 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
     Route::get('/defesaoficiosa/solicitar', 'Controllers\WebsiteController@defesa_oficiosa');
+    Route::get('/corrigirpatrono', 'Controllers\WebsiteController@corrigir_patrono');
     Route::get('/consultar-processo', 'Controllers\WebsiteController@consultar_processo');
     Route::post('/defesa-oficiosa/post', 'Controllers\WebsiteController@defesa_oficiosa_post');
+    Route::post('/corrigirpatrono/post', 'Controllers\WebsiteController@corrigir_patrono_post');
     Route::get('system/getAdvogadoByData/{tipo}/{numero}/{categoria}', 'Controllers\SystemController@getAdvogadoByData');
     Route::get('system/getConsultaHistoricoProcesso/{numero}', 'Controllers\SystemController@getConsultaHistoricoProcesso');
 
@@ -127,6 +129,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
     Route::get('system/getLinhaEstagiariosPatrono/{id}', 'Controllers\SystemController@getLinhaEstagiariosPatrono');
     Route::get('system/getDetalhesProcesso/{id_registo}', 'Controllers\SystemController@getDetalhesProcesso');
+
+    Route::post('system/relatorio', 'Controllers\AdvogadoController@export_pdf_relatorio_area_tecnica');
 
     Route::prefix('system')->name('system.')->group(function () {
 
@@ -262,6 +266,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Areatecnica\Dashboard')->name('dashboard');
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/general/search', 'Livewire\Areatecnica\Pesquisageral')->name('pesquisa_geral');
+
+                Route::get('/generate/report', 'Livewire\Secretaria\Gerarrelatorio')->name('generate_report');
 
                 Route::get('/list/assistance', 'Livewire\Areatecnica\Ajpendentes')->name('listar_pedidos_pendentes');
                 Route::get('/list/responsed', 'Livewire\Areatecnica\Ajdeferidos')->name('listar_pedidos_deferidos');

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Secretaria;
 
 use App\Models\Registoentrada;
+use Auth;
 use Livewire\Component;
 
 class Gerarrelatorio extends Component
@@ -14,7 +15,13 @@ class Gerarrelatorio extends Component
 
     public function render()
     {
-        return view('dashboard.secretaria.relatorios')->extends('layouts-new.app')->section('content');
+        if(Auth::user()->permissao_id == 3){
+            return view('dashboard.areatecnica.gerar-relatorio')->extends('layouts-new.app')->section('content');
+        }
+        else{
+             return view('dashboard.secretaria.relatorios')->extends('layouts-new.app')->section('content');
+        }   
+       
     }
 
     public function get_data_report()

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrossel;
+use App\Models\Estagiariospatrono;
+use App\Models\Inscricaoadvogado;
 use App\Models\Municipio;
+use App\Models\Patrono;
 use App\Models\Pedidointervencao;
 use App\Models\Platform\Advogado;
 use App\Models\Denuncia;
@@ -29,7 +32,7 @@ class WebsiteController extends Controller
         // dd($carrossel);
         $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $this->acesso_pagina('home');
-        return view('website.index', compact('noticia_destaque','carrossel'));
+        return view('website.index', compact('noticia_destaque', 'carrossel'));
 
     }
 
@@ -225,6 +228,11 @@ class WebsiteController extends Controller
 
     }
 
+    public function corrigir_patrono()
+    {
+        return view('corrigir-patronos');
+    }
+
     public function consultar_processo()
     {
         return view('historico-processo');
@@ -349,6 +357,77 @@ class WebsiteController extends Controller
         // envia notificação por email
 
         return 'sucesso';
+
+    }
+
+    public function corrigir_patrono_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        $patronos_eliminar_ids = $request->patrono_eliminar;
+        $patrono_ficar_id = $request->patrono_ficar;
+
+        if (str_contains($patronos_eliminar_ids, ',')) {
+
+            $patrono_ficar = Patrono::find($patrono_ficar_id);
+            $patronos_eliminar_vetor = explode(',', $patronos_eliminar_ids);
+
+            // dd($patronos_eliminar_vetor);
+            foreach ($patronos_eliminar_vetor as $item_p) {
+
+                $estagiarios = Estagiariospatrono::where('patrono_id', $item_p)->get();
+                foreach ($estagiarios as $item_e) {
+                    $item_e->patrono_id = $patrono_ficar->id;
+                    $item_e->save();
+                }
+
+                $inscricoes = Inscricaoadvogado::where('patrono_id', $item_p)->get();
+                foreach ($inscricoes as $item_i) {
+                    $item_i->patrono_id = $patrono_ficar->id;
+                    $item_i->save();
+                }
+
+                // apagar o patrono
+                $patrono = Patrono::find($item_p);
+                $advogado = Advogado::find($patrono->advogado_id);
+                $pessoa = Pessoa::find($advogado->pessoa_id);
+                $pessoa->delete();
+                $advogado->delete();
+                $patrono->delete();
+
+            }
+
+            return 'sucesso';
+
+
+        } else {
+
+            $patrono_eliminar = Patrono::find($patronos_eliminar_ids);
+            $patrono_ficar = Patrono::find($patrono_ficar_id);
+
+            $estagiarios = Estagiariospatrono::where('patrono_id', $patrono_eliminar->id)->get();
+            foreach ($estagiarios as $item_e) {
+                $item_e->patrono_id = $patrono_ficar->id;
+                $item_e->save();
+            }
+
+            $inscricoes = Inscricaoadvogado::where('patrono_id', $patrono_eliminar->id)->get();
+            foreach ($inscricoes as $item_i) {
+                $item_i->patrono_id = $patrono_ficar->id;
+                $item_i->save();
+            }
+
+            // apagar o patrono
+            $advogado = Advogado::find($patrono_eliminar->advogado_id);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+            $pessoa->delete();
+            $advogado->delete();
+            $patrono_eliminar->delete();
+
+            return 'sucesso';
+
+        }
 
     }
 

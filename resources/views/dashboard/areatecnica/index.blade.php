@@ -24,6 +24,13 @@
                 @if (Auth::user()->permissao_id == 3)
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
+                            <a href="{{ route('system.areatecnica.generate_report') }}" class="btn btn-primary">
+                                Relatórios
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
                             <a href="{{ route('system.areatecnica.pesquisa_geral') }}" class="btn btn-warning">
                                 Pesquisar Processo de Inscrição
                             </a>

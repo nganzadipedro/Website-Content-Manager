@@ -15,6 +15,7 @@ use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Pessoa;
 use App\Models\Platform\Advogado;
+use App\Models\Registoentrada;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -347,6 +348,172 @@ class AdvogadoController extends Controller
             'categoria' => $categoria == 'Advogado' ? 'advogados' : 'advogados estagiários',
             'num_candidatos' => $num_candidatos,
             'data' => $data_emissao
+        ]);
+
+        return $pdf->stream();
+
+    }
+
+    public function export_pdf_relatorio_area_tecnica(Request $request)
+    {
+
+        $data_inicial = $request->input('data_inicial') . " 00:00:00";
+        $data_final = $request->input('data_final') . " 23:59:59";
+
+        $pea = Registoentrada::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->count();
+
+        $peae = Registoentrada::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->count();
+
+        $processosAdvogados = [];
+        $processosAdvogadosEstagiarios = [];
+
+        $processosAdvogados['pendentes'] = Registoentrada::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'pendente')
+            ->count();
+
+        $processosAdvogados['pendentes'] += Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado_distribuicao', 'Por Distribuir')
+            ->count();
+
+        $processosAdvogados['execucao'] = Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado_distribuicao', 'Distribuido')
+            ->where('estado', 'análise de conselheiro')
+            ->count();
+
+        $processosAdvogados['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'análise comissão de ética')
+            ->count();
+
+        $processosAdvogados['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'Sobre a mesa do Presidente')
+            ->whereNull('despacho')
+            ->count();
+
+        $processosAdvogados['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('despacho', 'Indeferido')
+            ->count();
+
+        $processosAdvogados['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'remetido ao CN')
+            ->whereNull('data_remessa_cn')
+            ->count();
+
+        $processosAdvogados['remetidocn'] = Inscricaoadvogado::where('tipo_processo_id', 2)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'remetido ao CN')
+            ->count();
+
+        $processosAdvogados['cerimonia'] = Advogado::
+            where('estado', 'Aguarda Cerimónia')
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('categoria', 'Advogado')
+            ->whereNull('data_cerimonia_associado')
+            ->count();
+
+        $processosAdvogados['cedula'] = Advogado::
+            whereNotNull('data_cerimonia_associado')
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('categoria', 'Advogado')
+            ->count();
+
+        $processosAdvogados['total'] = $processosAdvogados['pendentes'] +
+            $processosAdvogados['execucao'] +
+            $processosAdvogados['remetidocn'] +
+            $processosAdvogados['cerimonia'] +
+            $processosAdvogados['cedula'];
+
+        $processosAdvogadosEstagiarios['pendentes'] = Registoentrada::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'pendente')
+            ->count();
+
+
+
+        $processosAdvogadosEstagiarios['execucao'] = Inscricaoadvogado::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('estado', 'Sobre a mesa do Presidente')
+            ->where('acto_pretendido', '!=', 'Indicação de Patrono')
+            ->whereNull('data_remessa_cn')
+            ->count();
+
+        $processosAdvogadosEstagiarios['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('despacho', 'Indeferido')
+            ->where('acto_pretendido', '!=', 'Indicação de Patrono')
+            ->whereNull('data_remessa_cn')
+            ->count();
+
+        $processosAdvogadosEstagiarios['execucao'] += Inscricaoadvogado::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('acto_pretendido', 'Indicação de Patrono')
+            ->whereNull('data_remessa_cn')
+            ->count();
+
+        $processosAdvogadosEstagiarios['remetidocn'] = Inscricaoadvogado::where('tipo_processo_id', 3)
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('cedula_disponivel', 'Não')
+            ->where('despacho', 'Deferido')
+            ->where('estado', 'remetido ao CN')
+            ->count();
+
+        $processosAdvogadosEstagiarios['cerimonia'] = Advogado::
+            where('estado', 'Aguarda Cerimónia')
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('categoria', 'Estagiario')
+            ->whereNull('data_cerimonia_estagiario')
+            ->count();
+
+        $processosAdvogadosEstagiarios['cedula'] = Advogado::
+            whereNotNull('data_cerimonia_estagiario')
+            ->whereBetween('created_at', [$data_inicial, $data_final])
+            ->where('categoria', 'Estagiario')
+            ->count();
+
+        $processosAdvogadosEstagiarios['total'] = $processosAdvogadosEstagiarios['pendentes'] + 
+                                                    $processosAdvogadosEstagiarios['execucao'] + 
+                                                    $processosAdvogadosEstagiarios['remetidocn'] +
+                                                    $processosAdvogadosEstagiarios['cerimonia'] +
+                                                    $processosAdvogadosEstagiarios['cedula'];
+
+        // processo de emissão de documento de despacho
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+
+        $data_emissao[0] = date("d");
+        $data_emissao[1] = $meses[date("m")];
+        $data_emissao[2] = date("Y");
+
+        $pdf = Pdf::loadView('documents-pdf.relatorio-areatecnica', [
+            'pea' => $pea,
+            'peae' => $peae,
+            'data' => $data_emissao,
+            'dataInicial' => $data_inicial,
+            'dataFinal' => $data_final,
+            'processosAdvogados' => $processosAdvogados,
+            'processosEstagiarios' => $processosAdvogadosEstagiarios
         ]);
 
         return $pdf->stream();

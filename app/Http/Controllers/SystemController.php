@@ -1268,8 +1268,10 @@ class SystemController extends Controller
             if ($request->presente_ausente_grupo == 'presente') {
                 if ($advogado->categoria == 'Advogado') {
                     $advogado->data_cerimonia_associado = $request->data_cerimonia;
+                    $advogado->save();
                 } else {
                     $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+                    $advogado->save();
                 }
 
                 $advogado->presenca_cerimonia = 'Presente';
@@ -1278,8 +1280,10 @@ class SystemController extends Controller
             } else {
                 if ($advogado->categoria == 'Advogado') {
                     $advogado->data_cerimonia_associado = $request->data_cerimonia;
+                    $advogado->save();
                 } else {
                     $advogado->data_cerimonia_estagiario = $request->data_cerimonia;
+                    $advogado->save();
                 }
 
                 $advogado->presenca_cerimonia = 'Ausente';
