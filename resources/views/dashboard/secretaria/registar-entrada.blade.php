@@ -60,7 +60,7 @@
 
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label for="proveniencia">Proveniência</label>
+                                                    <label for="proveniencia">Proveniência (Nome do Requerente)</label>
                                                     <input type="text" wire:model="proveniencia" name="proveniencia"
                                                         class="form-control" id="proveniencia" value="">
                                                 </div>

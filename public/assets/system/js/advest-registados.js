@@ -158,9 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         inscricao_id = $("#inscricao_id").val();
         data_despacho = $('#data_despacho').val();
+        encaminhar_para = $('#encaminhar_para').val();
         mensagem_despacho = $('#texto_despacho').val();
 
-        if (data_despacho == '' || data_despacho == null) {
+        if (encaminhar_para =='indeferido' && (data_despacho == '' || data_despacho == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -168,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if (mensagem_despacho == '' || mensagem_despacho == null) {
+        else if (encaminhar_para =='indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -181,8 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData();
             formData.append('inscricao_id', inscricao_id);
             formData.append('data_despacho', data_despacho);
+            formData.append('encaminhar_para', encaminhar_para);
             formData.append('mensagem_despacho', mensagem_despacho);
-
 
             Swal.fire({
                 title: "Confirmação",

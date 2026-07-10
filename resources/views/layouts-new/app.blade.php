@@ -12,6 +12,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sistema de Gestão de Informações - CPL OAA</title>
 
+   <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
   <!-- CSS files -->
   <link href="{{ asset('assets/new-template/dist/css/tabler.min.css?1692870487') }}" rel="stylesheet" />
   <link href="{{ asset('assets/new-template/dist/css/tabler-flags.min.css?1692870487') }}" rel="stylesheet" />

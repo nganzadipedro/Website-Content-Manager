@@ -233,6 +233,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
+                Route::get('/code/registed/{hash}', 'Livewire\Secretaria\Codigoregisto')->name('codigo_registo');
                 Route::get('/generate/report', 'Livewire\Secretaria\Gerarrelatorio')->name('generate_report');
                 Route::get('/document/assistance/{hash}', 'Livewire\Secretaria\Documentoassistencia')->name('documento_assistencia');
 

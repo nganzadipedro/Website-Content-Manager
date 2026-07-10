@@ -1476,9 +1476,9 @@ class SystemController extends Controller
                     $existe = null;
                     $existe = Advogado::where('categoria', 'Advogado')
                         ->where('num_associado', $request->num_cedula_patrono)
-                        ->where('pessoa_id', '!=', $pessoa->id)->first();
+                        ->first();
 
-                    if ($existe) {
+                    if ($existe != null && $existe->id != $patrono->advogado_id) {
                         return 'duplicado';
                     }
 
@@ -2032,41 +2032,86 @@ class SystemController extends Controller
         $inscricao_adv = Inscricaoadvogado::find($request->inscricao_id);
         $registo = Registoentrada::find($inscricao_adv->registo_entrada_id);
 
-        $registo->estado = 'indeferido';
-        $registo->save();
+        if ($request->encaminhar_para == 'indeferido') {
 
-        $inscricao_adv->despacho = 'Indeferido';
-        $inscricao_adv->estado = 'em tratamento';
-        $inscricao_adv->data_despacho = $request->data_despacho;
-        $inscricao_adv->observacao = $request->mensagem_despacho;
-        $inscricao_adv->texto_despacho = $request->mensagem_despacho;
-        $inscricao_adv->save();
+            $registo->estado = 'indeferido';
+            $registo->save();
 
-        // notifica o advogado por SMS
-        $obmsg = new OmbalaController();
-        $ob = new MailController();
-        $telefone = $registo->telefone;
-        $email = $inscricao_adv->email;
-        $nome = $registo->proveniencia;
-        $mensagem_not = $inscricao_adv->texto_despacho;
+            $inscricao_adv->despacho = 'Indeferido';
+            $inscricao_adv->estado = 'em tratamento';
+            $inscricao_adv->data_despacho = $request->data_despacho;
+            $inscricao_adv->observacao = $request->mensagem_despacho;
+            $inscricao_adv->texto_despacho = $request->mensagem_despacho;
+            $inscricao_adv->save();
 
-        $letra = $mensagem_not[0];
-        $letra = mb_strtoupper($letra, 'UTF-8');
-        $mensagem_not[0] = $letra;
+            // notifica o advogado por SMS
+            $obmsg = new OmbalaController();
+            $ob = new MailController();
+            $telefone = $registo->telefone;
+            $email = $inscricao_adv->email;
+            $nome = $registo->proveniencia;
+            $mensagem_not = $inscricao_adv->texto_despacho;
 
-        try {
-            $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
-            if ($email != null && $email != '') {
-                $ob->mailDespacho($email, $nome, $mensagem_not, $inscricao_adv->data_despacho);
+            $letra = $mensagem_not[0];
+            $letra = mb_strtoupper($letra, 'UTF-8');
+            $mensagem_not[0] = $letra;
+
+            try {
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
+                if ($email != null && $email != '') {
+                    $ob->mailDespacho($email, $nome, $mensagem_not, $inscricao_adv->data_despacho);
+                }
+            } catch (\Throwable $th) {
+
             }
-        } catch (\Throwable $th) {
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
+            ActividadesistemaController::historico_processo("O processo foi alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", $registo->id);
+
+
+        } else {
+
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
+            $inscricao_adv->despacho = null;
+            $inscricao_adv->estado = 'em tratamento';
+            $inscricao_adv->data_despacho = null;
+            $inscricao_adv->data_remessa_cn = null;
+            $inscricao_adv->acto_pretendido = 'Indicação de Patrono';
+            $inscricao_adv->save();
+
+            $est_patrono = Estagiariospatrono::where('inscricao_advogado_id', $inscricao_adv->id)
+                ->where('patrono_id', $inscricao_adv->patrono_id)
+                ->first();
+
+            if ($est_patrono) {
+                $est_patrono->delete();
+                $inscricao_adv->patrono_id = null;
+                $inscricao_adv->save();
+            }
+
+            // notifica o advogado por SMS
+            $obmsg = new OmbalaController();
+            $ob = new MailController();
+            $telefone = $registo->telefone;
+            $email = $inscricao_adv->email;
+            $nome = $registo->proveniencia;
+
+            try {
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), o seu processo de inscrição está pendente, aguardando indicação de patrono.");
+            } catch (\Throwable $th) {
+
+            }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "Processo alterado para a situação de indicação de patrono.", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indicação de patrono.", 'user', $inscricao_adv->id);
+            ActividadesistemaController::historico_processo("O processo foi alterado para a situação de indicação de patrono.", $registo->id);
 
         }
-
-        // regista actividade no sistema
-        ActividadesistemaController::inserir(Auth::id(), "Processo alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'registo-entrada', $registo->id);
-        ActividadesistemaController::inserir(Auth::id(), "Alterou o estado do processo ($inscricao_adv->codigo) para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", 'user', $inscricao_adv->id);
-        ActividadesistemaController::historico_processo("O processo foi alterado para indeferido com a seguinte mensagem: $inscricao_adv->texto_despacho", $registo->id);
 
         return 'sucesso';
 
@@ -2173,18 +2218,22 @@ class SystemController extends Controller
         $email = strtolower($inscricao_adv->email);
         $nome = $pessoa->nome;
 
-        // try {
-        //     $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível no CPL, mas deverá aguardar a cerimónia de entrega.");
-        //     if ($email != null && $email != '') {
-        //         // $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
-        //     }
-        // } catch (\Throwable $th) {
+        if ($inscricao_adv->cedula_disponivel == 'Sim') {
 
-        // }
+            try {
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível, mas deverá aguardar pela cerimónia de entrega.");
+                if ($email != null && $email != '') {
+                    // $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
+                }
+            } catch (\Throwable $th) {
 
-        // regista actividade no sistema
-        ActividadesistemaController::inserir(Auth::id(), "A cédula já está disponível, aguardando a data de cerimónia de entrega", 'registo-entrada', $registo->id);
-        ActividadesistemaController::inserir(Auth::id(), "Fez o registo da disponibilidade da cédula e aguardando a cerimónia de entrega", 'user', $inscricao_adv->id);
+            }
+
+            // regista actividade no sistema
+            ActividadesistemaController::inserir(Auth::id(), "A cédula já está disponível, aguardando a data de cerimónia de entrega", 'registo-entrada', $registo->id);
+            ActividadesistemaController::inserir(Auth::id(), "Fez o registo da disponibilidade da cédula e aguardando a cerimónia de entrega", 'user', $inscricao_adv->id);
+
+        }
 
         return 'sucesso';
 

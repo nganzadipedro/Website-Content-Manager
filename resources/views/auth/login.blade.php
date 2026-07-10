@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>CPL - OAA || Sistema de Gestão de Informações</title>
+    <link rel="icon" href="{{ asset('assets/website/favicon.png') }}" type="image/png">
     <!-- CSS files -->
     <link href="{{ asset('assets/new-template/dist/css/tabler.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('assets/new-template/dist/css/tabler-flags.min.css?1692870487') }}" rel="stylesheet" />

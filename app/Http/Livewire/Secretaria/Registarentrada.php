@@ -99,8 +99,7 @@ class Registarentrada extends Component
             }
 
             $this->mensagemRefresh('Registo efectuado com sucesso', 'success');
-
-            return redirect()->route('system.secretaria.listar_registos');
+            return redirect()->route('system.secretaria.codigo_registo', ['hash' => $registo->hash]);
 
         }
 

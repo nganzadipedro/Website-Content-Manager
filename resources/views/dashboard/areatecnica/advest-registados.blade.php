@@ -225,6 +225,15 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <label for="data_despacho" class="form-label">Encaminhar para</label>
+                        <select class="form-select" name="encaminhar_para" id="encaminhar_para">
+                            <option value="indeferido">Indeferidos</option>
+                            <option value="indicacao-patrono">Indicação de Patrono</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                         <label for="data_despacho" class="form-label">Data do Despacho</label>
                         <input type="date" class="form-control" name="data_despacho" id="data_despacho">
                     </div>
@@ -232,7 +241,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                         <label for="texto_despacho" class="form-label">Mensagem do Despacho</label>
-                        <input type="text" class="form-control" name="texto_despacho" id="texto_despacho">
+                        <textarea class="form-control" name="texto_despacho" id="texto_despacho" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
