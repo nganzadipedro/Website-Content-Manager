@@ -114,6 +114,18 @@
                 <div class="modal-body">
                     @csrf
 
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                <label class="form-label">Situação da Cédula</label>
+                                <select name="situacao_cedula" id="situacao_cedula" class="form-select">
+                                    <option value="Sim" selected>Cédula Disponível</option>
+                                    <option value="Não">Cédula Não Disponível</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <label class="form-label">Telefone principal</label>
@@ -130,76 +142,112 @@
                     <div class="row mb-3">
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <label class="form-label">Email</label>
-                            <input type="text" maxlength="200" class="form-control" name="email"
-                                id="email">
+                            <input type="text" maxlength="200" class="form-control" name="email" id="email">
                         </div>
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <label class="form-label">Nº Bilhete</label>
-                            <input type="text" maxlength="15" class="form-control" name="num_bilhete"
-                                id="num_bilhete">
+                            <input type="text" maxlength="15" class="form-control" name="num_bilhete" id="num_bilhete">
                         </div>
                     </div>
 
+                    <div id="campossemcedula">
 
-                    <div class="mb-3">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                                <label class="form-label">Encaminhar para</label>
-                                <select name="encaminhar_para" id="encaminhar_para" class="form-select">
-                                    <option value="conselheiro" selected>Conselheiro</option>
-                                    <option value="comissao">Comissão de Ética</option>
-                                    <option value="presidente">Sobre a Mesa do Presidente</option>
-                                    <option value="indeferido">Indeferidos</option>
-                                    <option value="cnacional">Conselho Nacional</option>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                    <label class="form-label">Encaminhar para</label>
+                                    <select name="encaminhar_para" id="encaminhar_para" class="form-select">
+                                        <option value="conselheiro" selected>Conselheiro</option>
+                                        <option value="comissao">Comissão de Ética</option>
+                                        <option value="presidente">Sobre a Mesa do Presidente</option>
+                                        <option value="indeferido">Indeferidos</option>
+                                        <option value="cnacional">Conselho Nacional</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label for="conselheiro_id" class="form-label">Conselheiro</label>
+                                <select name="conselheiro_id" id="conselheiro_id" class="form-select">
+                                    <option value="" selected>---- Selecione -----</option>
+                                    @foreach ($lista_conselheiros as $conselheiro)
+                                        <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
+                                    @endforeach
                                 </select>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Data de entrega ao conselheiro</label>
+                                <input type="date" class="form-control" name="data_entrega_conselheiro"
+                                    id="data_entrega_conselheiro">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Data de entrega à comissão de ética</label>
+                                <input type="date" class="form-control" name="data_entrega_comissao"
+                                    id="data_entrega_comissao">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Data de remessa ao CN</label>
+                                <input type="date" class="form-control" name="data_remessacn" id="data_remessacn">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Data de Despacho (Indeferido)</label>
+                                <input type="date" class="form-control" name="data_despacho" id="data_despacho">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                <label class="form-label">Mensagem do despacho</label>
+                                <textarea name="mensagem_despacho" id="mensagem_despacho" rows="3"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="camposcedula">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Nº Cédula</label>
+                                <input type="text" maxlength="7" class="form-control" name="num_cedula" id="num_cedula">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label">Data de Emissão da Cédula</label>
+                                <input type="date" class="form-control" name="data_emissao_cedula"
+                                    id="data_emissao_cedula">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="aguarda_cerimonia" class="form-label">Aguarda Cerimónia</label>
+                                    <select name="aguarda_cerimonia" id="aguarda_cerimonia" class="form-select">
+                                        <option value="Sim">Sim</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="sexo" class="form-label">Género</label>
+                                    <select name="sexo" id="sexo" class="form-select">
+                                        <option value="" selected>Não Definido</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label for="conselheiro_id" class="form-label">Conselheiro</label>
-                            <select name="conselheiro_id" id="conselheiro_id" class="form-select">
-                                <option value="" selected>---- Selecione -----</option>
-                                @foreach ($lista_conselheiros as $conselheiro)
-                                    <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label class="form-label">Data de entrega ao conselheiro</label>
-                            <input type="date" class="form-control" name="data_entrega_conselheiro"
-                                id="data_entrega_conselheiro">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label class="form-label">Data de entrega à comissão de ética</label>
-                            <input type="date" class="form-control" name="data_entrega_comissao"
-                                id="data_entrega_comissao">
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label class="form-label">Data de remessa ao CN</label>
-                            <input type="date" class="form-control" name="data_remessacn"
-                                id="data_remessacn">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label class="form-label">Data de Despacho (Indeferido)</label>
-                            <input type="date" class="form-control" name="data_despacho"
-                                id="data_despacho">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                            <label class="form-label">Mensagem do despacho</label>
-                            <textarea name="mensagem_despacho" id="mensagem_despacho" rows="3"
-                                class="form-control"></textarea>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">

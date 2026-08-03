@@ -362,7 +362,7 @@ function buscarHistorico(id) {
 
 function buscarItemDetalhes(id) {
 
-    fetch(`/system/getDataInscricaoAdvogadoById/${id}`)
+    fetch(`/system/getDetalhesProcesso/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro na requisição');
@@ -375,19 +375,19 @@ function buscarItemDetalhes(id) {
             $("#dv-detalhes").html("");
 
             html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
-                            Nº Processo Secretaria: ${data.getregistoentrada.codigo} <br><br>
-                            Nº Processo Área Técnica: ${data.codigo} <br><br>
-                            Requerente: ${data.getregistoentrada.proveniencia} <br><br>
-                            Contactos: ${data.telefone1}/${data.telefone2 == null ? '' : data.telefone2} <br><br>
-                            Email: ${data.email} <br><br>
-                            Assunto: ${data.getregistoentrada.assunto} <br><br>
-                            Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
-                            Estado: ${data.getregistoentrada.estado} <br><br>
-                            Conselheiro (Análise do Processo): <br><br>
-                            Despacho: ${data.despacho == null ? '' : data.despacho}<br><br>
-                            Mensagem do despacho: ${data.texto_despacho == null ? '' : data.texto_despacho}<br><br>
-                            Data de despacho: ${data.data_despacho == null ? '' : data.data_despacho} <br><br>
-                            Data de remessa ao CN: ${data.data_remessa_cn == null ? '' : data.data_remessa_cn}
+                            Nº Processo Secretaria: ${data[0].codigo} <br><br>
+                            Nº Processo Área Técnica: ${data[1].codigo} <br><br>
+                            Requerente: ${data[0].proveniencia} <br><br>
+                            Contactos: ${data[1].telefone1}/${data[1].telefone2 == null ? '' : data[1].telefone2} <br><br>
+                            Email: ${data[1].email} <br><br>
+                            Assunto: ${data[0].assunto} <br><br>
+                            Data de Entrada: ${data[0].data_entrada} <br><br>
+                            Estado: ${data[1].estado} <br><br>
+                            Conselheiro (Análise do Processo): ${data[2] == null ? '' : data[2].nome} <br><br>
+                            Despacho: ${data[1].despacho == null ? '' : data[1].despacho}<br><br>
+                            Mensagem do despacho: ${data[1].texto_despacho == null ? '' : data[1].texto_despacho}<br><br>
+                            Data de despacho: ${data[1].data_despacho == null ? '' : data[1].data_despacho} <br><br>
+                            Data de remessa ao CN: ${data[1].data_remessa_cn == null ? '' : data[1].data_remessa_cn}
                         </div>`
             $("#dv-detalhes").html(html);
 

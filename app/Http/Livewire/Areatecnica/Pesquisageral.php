@@ -67,6 +67,8 @@ class Pesquisageral extends Component
             $estado = $item->estado;
             if ($estado == 'em tratamento' && $item->acto_pretendido == 'Indicação de Patrono') {
                 $estado = 'Indicação de Patrono';
+            } else if ($estado == 'Sobre a mesa do Presidente' && $item->acto_pretendido == 'Indicação de Patrono') {
+                $estado = 'Indicação de Patrono';
             } else if ($estado == 'em tratamento' && $item->despacho == 'Indeferido') {
                 $estado = 'Indeferido';
             } else if ($estado == 'em tratamento' && $item->tipo_processo_id == 2 && $item->estado_distribuicao == 'Por Distribuir') {

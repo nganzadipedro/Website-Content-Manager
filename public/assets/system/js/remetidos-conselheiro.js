@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnRegistarDevolucao = document.getElementById("btn-registar-devolucao");
     const btnRemeterComissao = document.getElementById("btn-remeter-comissao");
     const btnRegistarEntrega = document.getElementById("btn-registar-dataentrega");
-
+    const btnReindicarConselheiro = document.getElementById("btn-reindicar-conselheiro");
 
     // botões de salvar e cancelar
     const btnRegistarDevolucaoDistribuicao = document.getElementById("btn-registar-devolucao-distribuicao");
@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCancelarRemessaComissao = document.getElementById("btn-cancelar-remessa-comissao");
     const btnRegistarDataEntrega = document.getElementById("btn-salvar-dataentrega");
     const btnCancelarDataEntrega = document.getElementById("btn-cancelar-dataentrega");
-
+    const btnCancelarTroca = document.getElementById("btn-cancelar-troca-conselheiro");
+    const btnRegistarTroca = document.getElementById("btn-registar-troca-conselheiro");
 
     // ✅ Selecionar / desselecionar todos
     checkAll.addEventListener("change", () => {
@@ -56,6 +57,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("IDs selecionados:", selecionados);
             const modal = new bootstrap.Modal(document.getElementById('modal-registar-devolucao-conselheiro'));
+            modal.show();
+
+        }
+    });
+
+    btnReindicarConselheiro.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            console.log("IDs selecionados:", selecionados);
+            const modal = new bootstrap.Modal(document.getElementById('modal-trocar-conselheiro'));
             modal.show();
 
         }
@@ -420,11 +446,116 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    btnRegistarTroca.addEventListener("click", () => {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        conselheiro_id = document.getElementById('conselheiro_id').value;
+
+        if (conselheiro_id == '' || conselheiro_id == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Informe o novo Conselheiro",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+
+            formData.append('conselheiro_id', conselheiro_id);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/trocar-conselheiro-grupo/post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/map-distribution/stage-two";
+                            }
+                            else if (res != 'sucesso') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso",
+                                    text: res,
+                                    timer: 5000
+                                });
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
     btnCancelarDevolucao.addEventListener("click", () => {
 
         const modalElement = document.getElementById('modal-registar-devolucao-conselheiro');
         const modal = bootstrap.Modal.getInstance(modalElement);
         $('#data_entrega_distribuicao').val(null);
+        modal.hide();
+
+    });
+
+    btnCancelarDataEntrega.addEventListener("click", () => {
+
+        const modalElement = document.getElementById('modal-registar-dataentrega');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        $('#data_levantamento_distribuicao').val(null);
+        modal.hide();
+
+    });
+
+    btnCancelarTroca.addEventListener("click", () => {
+
+        const modalElement = document.getElementById('modal-trocar-conselheiro');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        $('#conselheiro_id').val("");
         modal.hide();
 
     });
@@ -536,7 +667,7 @@ function buscarHistorico(id) {
 
 function buscarItemDetalhes(id) {
 
-    fetch(`/system/getDataInscricaoAdvogadoById/${id}`)
+    fetch(`/system/getDetalhesProcesso/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro na requisição');
@@ -549,19 +680,19 @@ function buscarItemDetalhes(id) {
             $("#dv-detalhes").html("");
 
             html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
-                            Nº Processo Secretaria: ${data.getregistoentrada.codigo} <br><br>
-                            Nº Processo Área Técnica: ${data.codigo} <br><br>
-                            Requerente: ${data.getregistoentrada.proveniencia} <br><br>
-                            Contactos: ${data.telefone1}/${data.telefone2 == null ? '' : data.telefone2} <br><br>
-                            Email: ${data.email} <br><br>
-                            Assunto: ${data.getregistoentrada.assunto} <br><br>
-                            Data de Entrada: ${data.getregistoentrada.data_entrada} <br><br>
-                            Estado: ${data.getregistoentrada.estado} <br><br>
-                            Conselheiro (Análise do Processo): <br><br>
-                            Despacho: ${data.despacho == null ? '' : data.despacho}<br><br>
-                            Mensagem do despacho: ${data.texto_despacho == null ? '' : data.texto_despacho}<br><br>
-                            Data de despacho: ${data.data_despacho == null ? '' : data.data_despacho} <br><br>
-                            Data de remessa ao CN: ${data.data_remessa_cn == null ? '' : data.data_remessa_cn}
+                            Nº Processo Secretaria: ${data[0].codigo} <br><br>
+                            Nº Processo Área Técnica: ${data[1].codigo} <br><br>
+                            Requerente: ${data[0].proveniencia} <br><br>
+                            Contactos: ${data[1].telefone1}/${data[1].telefone2 == null ? '' : data[1].telefone2} <br><br>
+                            Email: ${data[1].email} <br><br>
+                            Assunto: ${data[0].assunto} <br><br>
+                            Data de Entrada: ${data[0].data_entrada} <br><br>
+                            Estado: ${data[1].estado} <br><br>
+                            Conselheiro (Análise do Processo): ${data[2] == null ? '' : data[2].nome} <br><br>
+                            Despacho: ${data[1].despacho == null ? '' : data[1].despacho}<br><br>
+                            Mensagem do despacho: ${data[1].texto_despacho == null ? '' : data[1].texto_despacho}<br><br>
+                            Data de despacho: ${data[1].data_despacho == null ? '' : data[1].data_despacho} <br><br>
+                            Data de remessa ao CN: ${data[1].data_remessa_cn == null ? '' : data[1].data_remessa_cn}
                         </div>`
             $("#dv-detalhes").html(html);
 

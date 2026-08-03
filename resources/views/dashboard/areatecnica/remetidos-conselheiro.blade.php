@@ -39,6 +39,16 @@
                                     <path d="M16 14l4 -4l-4 -4" />
                                     <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
                                 </svg> Remeter à Comissão de Ética/Mesa Presidente</a>
+                            <a id="btn-reindicar-conselheiro" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-forward-up-double">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11 14l4 -4l-4 -4" />
+                                    <path d="M16 14l4 -4l-4 -4" />
+                                    <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
+                                </svg> Reindicar Conselheiro</a>
                         </div>
                     </div>
                 </div>
@@ -100,9 +110,10 @@
                                                         <path d="M13.5 6.5l4 4" />
                                                     </svg>
                                                 </a>
-                                                <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
-                                                    title="Detalhes do processo" style="cursor: pointer;"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-detalhes">
+                                                <a data-id="{{ $item->registo_entrada_id }}"
+                                                    class="badge bg-blue-lt btn-detalhes" title="Detalhes do processo"
+                                                    style="cursor: pointer;" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -142,8 +153,7 @@
         </div>
     </div>
 
-    <div class="modal modal-blur fade" id="modal-registar-dataentrega" tabindex="-1" role="dialog"
-        aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-registar-dataentrega" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -236,6 +246,41 @@
                     <div class="col-lg-12 col-12">
                         <a id="btn-registar-remessa-comissao" class="btn btn-success mt-4">Salvar</a>
                         <a id="btn-cancelar-remessa-comissao" class="btn btn-danger mt-4">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal modal-blur fade" id="modal-trocar-conselheiro" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reindicar Conselheiro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    @csrf
+
+                    <div class="row mb-3">
+                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                            <label for="conselheiro_id" class="form-label">Novo Conselheiro</label>
+                            <select name="conselheiro_id" id="conselheiro_id" class="form-select">
+                                <option value="" selected>--- Selecione ---</option>
+                                @foreach ($lista_conselheiros as $conselheiro)
+                                    <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12 col-12">
+                        <a id="btn-registar-troca-conselheiro" class="btn btn-success mt-4">Salvar</a>
+                        <a id="btn-cancelar-troca-conselheiro" class="btn btn-danger mt-4">Cancelar</a>
                     </div>
                 </div>
             </div>

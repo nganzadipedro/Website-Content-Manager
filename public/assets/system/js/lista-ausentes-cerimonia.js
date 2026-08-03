@@ -1,6 +1,7 @@
 const checkAll = document.getElementById("checkAll");
 const checkItems = document.querySelectorAll(".checkItem");
 const btnRecepcaoCedula = document.getElementById("btn-recepcao-cedula");
+const btnRetornarCerimonia = document.getElementById("btn-retornar-cerimonia");
 const btnCancelarGrupo = document.getElementById("btn-cancelar-grupo");
 const btnRegistarCerimoniaGrupo = document.getElementById("btn-registar-cerimonia-grupo");
 
@@ -47,6 +48,82 @@ btnRecepcaoCedula.addEventListener("click", () => {
     }
 });
 
+btnRetornarCerimonia.addEventListener("click", () => {
+
+    const selecionados = [];
+
+    document.querySelectorAll(".checkItem:checked").forEach(item => {
+        selecionados.push(item.value);
+    });
+
+    if (selecionados.length === 0) {
+        sweetAlert({
+            type: "warning",
+            title: "Aviso!",
+            text: "Não foi selecionado nenhum registo na tabela de dados",
+            timer: 4000
+        });
+    }
+    else {
+
+        const formData = new FormData();
+
+        Array.from(selecionados).forEach(id => {
+            formData.append('selecionados[]', id);
+        });
+
+        Swal.fire({
+            title: "Confirmação",
+            text: "Tem certeza que deseja retornar estes registos à lista de aguardar cerimónia?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#34c38f",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Confirmar!",
+            cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+                return $.ajax({
+                    url: "/system/retonar-lista-cerimonia/update",
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (res) {
+
+                        console.log(res);
+                        if (res == 'sucesso') {
+                            sweetAlert({
+                                type: "success",
+                                title: "Sucesso",
+                                text: 'Dados registados com sucesso!',
+                                timer: 3000
+                            });
+
+                            window.location.reload();
+
+                        }
+                    },
+                    error: function (error) {
+
+                        sweetAlert({
+                            type: "warning",
+                            title: "Erro " + error.status,
+                            text: 'Erro: ' + error.responseJSON.message,
+                            timer: 9000
+                        });
+                        console.log("Error: " + error.responseJSON.message);
+                    }
+                });
+            }
+        });
+
+    }
+});
 
 btnCancelarGrupo.addEventListener("click", () => {
 

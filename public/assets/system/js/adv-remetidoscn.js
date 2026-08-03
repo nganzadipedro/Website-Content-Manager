@@ -29,10 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
         id = $(this).data("id");
         nome = $(this).data("nome");
         bilhete = $(this).data("bilhete");
+        sexo = $(this).data("sexo");
 
         $("#inscricao_id").val(id);
         $("#nome").val(nome);
         $("#num_bilhete").val(bilhete);
+        $("#sexo").val(sexo);
 
         const modal = new bootstrap.Modal(document.getElementById('modal-registar-informacoes'));
         modal.show();
@@ -53,17 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const numero_cedula = document.getElementById('numero_cedula').value;
         const data_emissao_cedula = document.getElementById('data_emissao_cedula').value;
         const aguarda_cerimonia = document.getElementById('aguarda_cerimonia').value;
+        const sexo = document.getElementById('sexo').value;
+        const num_bilhete = document.getElementById('num_bilhete').value;
 
-
-        if (cedula_disponivel == '' || cedula_disponivel == null) {
+        if (num_bilhete == '' || num_bilhete == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe se a cédula já está disponível",
+                text: "Digite o número do bilhete",
                 timer: 4000
             });
         }
-        else if ((numero_cedula == '' || numero_cedula == null) && (cedula_disponivel == 'Sim')) {
+        else if ((numero_cedula == '' || numero_cedula == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -79,19 +82,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if ((numero_cedula != '' && numero_cedula != null) && (cedula_disponivel == 'Não')) {
-            sweetAlert({
-                type: "warning",
-                title: "Aviso!",
-                text: "Se já tem número da cédula, a cédula deve estar disponível",
-                timer: 4000
-            });
-        }
         else if (data_emissao_cedula == '' || data_emissao_cedula == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
                 text: "Digite a data de emissão da cédula",
+                timer: 4000
+            });
+        }
+          else if (sexo == '' || sexo == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Escolha o género",
                 timer: 4000
             });
         }
@@ -105,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('numero_cedula', numero_cedula);
             formData.append('data_emissao_cedula', data_emissao_cedula);
             formData.append('aguarda_cerimonia', aguarda_cerimonia);
+            formData.append('num_bilhete', num_bilhete);
+            formData.append('sexo', sexo);
 
             Swal.fire({
                 title: "Confirmação",
@@ -138,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+                                window.location.href = "/system/areatecnica/list/lawyers-cn";
 
                             }
                             else if (res == 'duplicado') {

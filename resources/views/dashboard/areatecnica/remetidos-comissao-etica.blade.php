@@ -87,7 +87,7 @@
                                                             <path d="M12 16h.01" />
                                                         </svg>
                                                 </a>
-                                                <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
+                                                <a data-id="{{ $item->registo_entrada_id }}" class="badge bg-blue-lt btn-detalhes"
                                                     title="Detalhes do processo" style="cursor: pointer;"
                                                     data-bs-toggle="modal" data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

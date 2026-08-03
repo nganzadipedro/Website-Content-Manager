@@ -25,6 +25,7 @@ class AusenteCerimonia extends Component
     }
     public function render()
     {
+
         $this->lista_advogados = Advogado::join('pessoa', 'pessoa.id', 'app_advogado.pessoa_id')
             ->where('app_advogado.estado', 'Aguarda Cerimónia')
             ->where('app_advogado.categoria', $this->categoria_p)
@@ -36,5 +37,6 @@ class AusenteCerimonia extends Component
         if (Auth::user()->permissao_id == 3) {
             return view('dashboard.areatecnica.listar-ausentes-cerimonia')->extends('layouts-new.app')->section('content');
         }
+        
     }
 }

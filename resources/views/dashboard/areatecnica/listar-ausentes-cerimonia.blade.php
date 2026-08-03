@@ -22,6 +22,16 @@
                                         <path d="M6 12l3 0" />
                                         <path d="M6 15l2 0" />
                                     </svg>Recepção da Cédula</a>
+                                <a id="btn-retornar-cerimonia" class="btn btn-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up-double">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 14l-4 -4l4 -4" />
+                                    <path d="M8 14l-4 -4l4 -4" />
+                                    <path d="M9 10h7a4 4 0 1 1 0 8h-1" />
+                                </svg>Retornar à lista de aguardar cerimónia</a>
                             </div>
                         </div>
                     </div>
@@ -65,7 +75,8 @@
                                                 <td>{{$item->categoria == 'Advogado' ? $item->num_associado : $item->num_estagiario}}
                                                 </td>
                                                 <td>{{$item->getpessoa->num_documento}}</td>
-                                                <td>{{$item->categoria == 'Advogado' ? $item->data_cerimonia_associado : $item->data_cerimonia_estagiario}}</td>
+                                                <td>{{$item->categoria == 'Advogado' ? $item->data_cerimonia_associado : $item->data_cerimonia_estagiario}}
+                                                </td>
                                                 <td>
                                                     <a title="Detalhes do Registo" data-id="{{ $item->id }}"
                                                         style="cursor: pointer;" data-bs-toggle="modal"

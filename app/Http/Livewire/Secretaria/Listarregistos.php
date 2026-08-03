@@ -10,9 +10,15 @@ class Listarregistos extends Component
 {
 
     public $lista = array();
+    public $lista_recepcao = array();
     public function render()
     {
         $this->lista = Registoentrada::orderBy('id', 'desc')->get();
+        $this->lista_recepcao = Registoentrada::where('tipo_processo_id', '!=', 2)
+            ->where('tipo_processo_id', '!=', 3)
+            ->orderBy('id', 'desc')
+            ->get();
+
         if (Auth::user()->permissao_id == 2) {
             return view('dashboard.secretaria.listar-registos')->extends('layouts-new.app')->section('content');
         } elseif (Auth::user()->permissao_id == 3) {

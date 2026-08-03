@@ -1,5 +1,16 @@
 <div>
 
+    <style>
+        .obs {
+            background-color: red;
+            color: white;
+            display: block;
+            padding: 3px;
+            border-radius: 5px;
+            margin-top: 3px;
+        }
+    </style>
+
     <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none">
@@ -58,6 +69,9 @@
                                                         Estado: {{ $registo->estado }}<br>
                                                         Destinatário: {{ $registo->destinatario }}<br>
                                                         Encaminhado: {{ $registo->encaminhado }}<br>
+                                                        @if($registo->observacao != null && $registo->observacao != '')
+                                                            <span class="obs">{{ $registo->observacao }}</span>
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>
@@ -67,14 +81,13 @@
 
                                             <input type="hidden" value="{{ $registo->tipo_processo_id }}"
                                                 id="tipo_processo_id" name="tipo_processo_id">
-                                            <input type="hidden" value="{{ $registo->id }}"
-                                                id="registo_entrada_id" name="registo_entrada_i">
+                                            <input type="hidden" value="{{ $registo->id }}" id="registo_entrada_id"
+                                                name="registo_entrada_i">
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="sexo">Sexo</label>
-                                                    <select name="sexo" id="sexo"
-                                                        class="form-control">
+                                                    <select name="sexo" id="sexo" class="form-control">
                                                         <option value="" selected>Não Definido</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>
@@ -85,35 +98,41 @@
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone1">Telefone 1</label>
-                                                    <input type="text" maxlength="9"
-                                                        name="telefone1" class="form-control" id="telefone1" value="">
+                                                    <input type="text" maxlength="9" name="telefone1"
+                                                        class="form-control" id="telefone1" value="">
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-4 col-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="telefone2">Telefone 2</label>
-                                                    <input type="text" maxlength="9"
-                                                        name="telefone2" class="form-control" id="telefone2" value="">
+                                                    <input type="text" maxlength="9" name="telefone2"
+                                                        class="form-control" id="telefone2" value="">
                                                 </div>
                                             </div>
                                         </div>
 
 
                                         <div class="row mt-4">
-                                            <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
+                                            <div class="col-lg-4 col-12 col-md-4 col-sm-12 col-xl-4">
                                                 <div class="form-group">
                                                     <label for="email">Email</label>
                                                     <input type="email" maxlength="255" name="email"
                                                         class="form-control" id="email" value="">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
+                                            <div class="col-lg-4 col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="num_bilhete">Nº Bilhete</label>
+                                                    <input type="text" maxlength="15" name="num_bilhete"
+                                                        class="form-control" id="num_bilhete" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-12 col-md-4 col-sm-12 col-xl-4">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" maxlength="255"
-                                                        name="observacao2" class="form-control" id="observacao2"
-                                                        value="">
+                                                    <input type="text" maxlength="255" name="observacao2"
+                                                        class="form-control" id="observacao2" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -123,8 +142,8 @@
                                                 <div class="col-lg-6 col-12 col-md-6">
                                                     <div class="form-group">
                                                         <label for="acto_pretendido">Acto Pretendido</label>
-                                                        <select name="acto_pretendido"
-                                                            id="acto_pretendido" class="form-control">
+                                                        <select name="acto_pretendido" id="acto_pretendido"
+                                                            class="form-control">
                                                             <option selected>Não Definido</option>
                                                             <option value="Inscrição" selected>Inscrição</option>
                                                             <option value="Reinscrição">Reinscrição</option>

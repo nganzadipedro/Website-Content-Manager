@@ -105,7 +105,7 @@
                                                 <a style="cursor: pointer;" data-bilhete="{{$item->num_bilhete}}"
                                                     data-nome="{{$item->getregistoentrada->proveniencia}}"
                                                     class="badge bg-green-lt registar-informacoes"
-                                                    data-id="{{ $item->id }}">
+                                                    data-id="{{ $item->id }}" data-sexo="{{ $item->sexo }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -147,14 +147,24 @@
                     <div class="row mb-3">
                         <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                             <label for="">Nome</label>
-                            <input type="text" disabled value="" class="form-control" id="nome">
+                            <input type="text" disabled maxlength="200" value="" class="form-control" id="nome">
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                        <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <label for="">Nº Bilhete</label>
-                            <input type="text" value="" class="form-control" id="num_bilhete">
+                            <input type="text" maxlength="15" value="" class="form-control" id="num_bilhete">
+                        </div>
+                        <div class="col-lg-6 col-12 col-md-6">
+                            
+                                <label for="sexo">Género</label>
+                                <select name="sexo" id="sexo" class="form-select">
+                                    <option value="" selected>Não Definido</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
+                            
                         </div>
                     </div>
 
@@ -162,10 +172,8 @@
                         <div class=" col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
                                 <label for="cedula_disponivel">Cédula Disponível</label>
-                                <select name="cedula_disponivel" id="cedula_disponivel" class="form-control">
-                                    <option value="" selected>Selecione...</option>
-                                    <option value="Sim">Sim</option>
-                                    <option value="Não">Não</option>
+                                <select name="cedula_disponivel" id="cedula_disponivel" class="form-select">
+                                    <option value="Sim" selected>Sim</option>
                                 </select>
                             </div>
                         </div>
@@ -188,7 +196,7 @@
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
                                 <label for="aguarda_cerimonia">Aguarda Cerimónia</label>
-                                <select name="aguarda_cerimonia" id="aguarda_cerimonia" class="form-control">
+                                <select name="aguarda_cerimonia" id="aguarda_cerimonia" class="form-select">
                                     <option value="Sim">Sim</option>
                                 </select>
                             </div>

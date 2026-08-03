@@ -38,7 +38,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/gallery-views/post', 'Controllers\PostController@gallery_views');
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
-    Route::get('/trata-dados', 'Controllers\SystemController@trata_patronos_3');
+    Route::get('/trata-dados', 'Controllers\AdvogadoController@trata_dados');
     Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/encaminhar/post', 'Controllers\SystemController@encaminhar_post');
     Route::post('system/distribuicao/post', 'Controllers\SystemController@distribuicao_post');
     Route::post('system/distribuicao-grupo/post', 'Controllers\SystemController@distribuicao_grupo_post');
+    Route::post('system/trocar-conselheiro-grupo/post', 'Controllers\SystemController@trocar_conselheiro_grupo_post');
     Route::post('system/encaminharprocesso-grupo/post', 'Controllers\SystemController@encaminharprocesso_grupo_post');
     Route::post('system/encaminharprocesso-individual/post', 'Controllers\SystemController@encaminharprocesso_individual_post');
     Route::post('system/entrega-conselheiro-grupo/post', 'Controllers\SystemController@entrega_conselheiro_grupo_post');
@@ -107,6 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-patrono/update', 'Controllers\SystemController@registo_patrono_update');
     Route::post('system/data-cerimonia/update', 'Controllers\SystemController@data_cerimonia_update');
     Route::post('system/data-cerimonia-grupo/update', 'Controllers\SystemController@data_cerimonia_grupo_update');
+    Route::post('system/retonar-lista-cerimonia/update', 'Controllers\SystemController@retornar_lista_cerimonia_update');
     Route::post('system/pedido-intervencao/post', 'Controllers\SystemController@pedido_intervencao_post');
     // Route::post('system/pedido-intervencao-novo/post', 'Controllers\SystemController@pedido_intervencao_novo_post');
     Route::post('system/pedido-intervencao/delete', 'Controllers\SystemController@pedido_intervencao_delete');

@@ -89,7 +89,7 @@
                                                         <path d="M15 10h-7a4 4 0 1 0 0 8h1" />
                                                     </svg>
                                                 </a>
-                                                <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
+                                                <a data-id="{{ $item->registo_entrada_id }}" class="badge bg-blue-lt btn-detalhes"
                                                     title="Detalhes do processo" style="cursor: pointer;"
                                                     data-bs-toggle="modal" data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -160,7 +160,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="conselheiro_id">Conselheiro</label>
-                        <select name="conselheiro_id" id="conselheiro_id" class="form-control">
+                        <select name="conselheiro_id" id="conselheiro_id" class="form-select">
                             <option selected>Não definido</option>
                             @foreach ($lista_conselheiros as $conselheiro)
                                 <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>
@@ -203,7 +203,7 @@
                     <div class="row mb-3">
                         <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                             <label class="form-label">Conselheiro</label>
-                            <select name="conselheiro_id_grupo" id="conselheiro_id_grupo" class="form-control">
+                            <select name="conselheiro_id_grupo" id="conselheiro_id_grupo" class="form-select">
                                 <option value="" selected>Selecione...</option>
                                 @foreach ($lista_conselheiros as $conselheiro)
                                     <option value="{{ $conselheiro->id }}">{{ $conselheiro->getpessoa->nome }}</option>

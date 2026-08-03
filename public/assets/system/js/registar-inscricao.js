@@ -10,6 +10,7 @@ function valida_formulario() {
     const sexo = document.getElementById('sexo').value;
     const telefone1 = document.getElementById('telefone1').value;
     const telefone2 = document.getElementById('telefone2').value;
+    const num_bilhete = document.getElementById('num_bilhete').value;
     const email = document.getElementById('email').value;
     const observacao2 = document.getElementById('observacao2').value;
     const tipo_processo_id = document.getElementById('tipo_processo_id').value;
@@ -54,6 +55,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         const sexo = document.getElementById('sexo').value;
         const telefone1 = document.getElementById('telefone1').value;
         const telefone2 = document.getElementById('telefone2').value;
+        const num_bilhete = document.getElementById('num_bilhete').value;
         const email = document.getElementById('email').value;
         const observacao2 = document.getElementById('observacao2').value;
         const tipo_processo_id = document.getElementById('tipo_processo_id').value;
@@ -66,6 +68,7 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         formData.append('sexo', sexo);
         formData.append('telefone1', telefone1);
         formData.append('telefone2', telefone2);
+        formData.append('num_bilhete', num_bilhete);
         formData.append('email', email);
         formData.append('observacao2', observacao2);
         formData.append('acto_pretendido', acto_pretendido);

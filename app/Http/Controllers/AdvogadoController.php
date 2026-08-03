@@ -8,6 +8,8 @@ use App\Exports\Listaindefinidosexport;
 use App\Exports\Listaestagiariosexport;
 use App\Exports\Listaadvogadosexport;
 use App\Exports\Listaremessacnexport;
+use App\Models\Advogadoassistencia;
+use App\Models\Assistenciajudiciaria;
 use App\Models\Denuncia;
 use App\Models\Galeria;
 use App\Models\Inscricaoadvogado;
@@ -480,11 +482,11 @@ class AdvogadoController extends Controller
             ->where('categoria', 'Estagiario')
             ->count();
 
-        $processosAdvogadosEstagiarios['total'] = $processosAdvogadosEstagiarios['pendentes'] + 
-                                                    $processosAdvogadosEstagiarios['execucao'] + 
-                                                    $processosAdvogadosEstagiarios['remetidocn'] +
-                                                    $processosAdvogadosEstagiarios['cerimonia'] +
-                                                    $processosAdvogadosEstagiarios['cedula'];
+        $processosAdvogadosEstagiarios['total'] = $processosAdvogadosEstagiarios['pendentes'] +
+            $processosAdvogadosEstagiarios['execucao'] +
+            $processosAdvogadosEstagiarios['remetidocn'] +
+            $processosAdvogadosEstagiarios['cerimonia'] +
+            $processosAdvogadosEstagiarios['cedula'];
 
         // processo de emissão de documento de despacho
         $meses = [
@@ -518,6 +520,28 @@ class AdvogadoController extends Controller
 
         return $pdf->stream();
 
+    }
+
+    public function trata_dados()
+    {
+
+        $advogados = Advogadoassistencia::all();
+        // dd($advogados);
+
+        set_time_limit(0);
+
+        foreach ($advogados as $adv) {
+
+            $assistencias = Assistenciajudiciaria::where('advogado_assist_id', $adv->advogado_assist_id)->get();
+            foreach ($assistencias as $item) {
+                $item->advogado_assist_id = $adv->id;
+                $item->created_at = $item->data_registo_bd;
+                $item->save();
+
+                echo $adv->nome_advogado . '<br>';
+            }
+
+        }
     }
 
 

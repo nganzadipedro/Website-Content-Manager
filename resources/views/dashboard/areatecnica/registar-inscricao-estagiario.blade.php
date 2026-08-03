@@ -1,5 +1,16 @@
 <div>
 
+    <style>
+        .obs{
+            background-color: red;
+            color: white;
+            display: block;
+            padding: 3px;
+            border-radius: 5px;
+            margin-top: 3px;
+        }
+    </style>
+
     <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none">
@@ -60,6 +71,9 @@
                                                         Estado: {{ $registo->estado }}<br>
                                                         Destinatário: {{ $registo->destinatario }}<br>
                                                         Encaminhado: {{ $registo->encaminhado }}<br>
+                                                        @if($registo->observacao != null && $registo->observacao != '')
+                                                        <span class="obs">{{ $registo->observacao }}</span>
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>
@@ -83,7 +97,7 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="sexo">Género</label>
-                                                    <select name="sexo" id="sexo" class="form-control">
+                                                    <select name="sexo" id="sexo" class="form-select">
                                                         <option value="" selected>Selecione...</option>
                                                         <option value="Masculino">Masculino</option>
                                                         <option value="Feminino">Feminino</option>
@@ -123,7 +137,7 @@
                                                 <div class="form-group">
                                                     <label for="acto_pretendido">Acto Pretendido</label>
                                                     <select name="acto_pretendido" id="acto_pretendido"
-                                                        class="form-control">
+                                                        class="form-select">
                                                         <option selected value="">Selecione...</option>
                                                         <option value="Inscrição">Inscrição</option>
                                                         <option value="Reinscrição">Reinscrição</option>
@@ -201,7 +215,7 @@
                                                 <div class="form-group">
                                                     <label for="municipio_id_est">Município</label>
                                                     <select name="municipio_id_est" id="municipio_id_est"
-                                                        class="form-control">
+                                                        class="form-select">
                                                         <option value="" selected>Selecione...</option>
                                                         @foreach ($municipios as $muni)
                                                             <option value="{{$muni->id}}">{{$muni->descricao}}</option>
@@ -212,8 +226,8 @@
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
                                                     <label for="observacao2">Observação</label>
-                                                    <input type="text" name="observacao2"
-                                                        class="form-control" id="observacao2" value="">
+                                                    <input type="text" name="observacao2" class="form-control"
+                                                        id="observacao2" value="">
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-12 col-md-2 col-sm-12 col-xl-3">
@@ -274,8 +288,10 @@
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>
 
-                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome}}</td>
-                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->num_associado}}</td>
+                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome}}
+                                        </td>
+                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->num_associado}}
+                                        </td>
                                         <td>
                                             <a title="Adicionar" data-id="{{ $item->id }}"
                                                 class="btn-adicionar badge bg-blue-lt" style="cursor: pointer;">
