@@ -121,6 +121,14 @@ btnRegistarCerimoniaGrupo.addEventListener("click", () => {
                             window.location.reload();
 
                         }
+                        else if (res == 'bilhete') {
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'Encontrou-se um processo sem o número do bilhete registado.',
+                                timer: 4000
+                            });
+                        }
                     },
                     error: function (error) {
 
@@ -296,6 +304,14 @@ document.getElementById('btn-registar-cerimonia').addEventListener('click', func
 
                             window.location.reload();
 
+                        }
+                        else if (res == 'bilhete') {
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'Por favor, registre o número do bilhete.',
+                                timer: 4000
+                            });
                         }
 
                     },

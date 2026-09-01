@@ -11,6 +11,7 @@ use App\Models\Platform\Advogado;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Str;
 
 class PostController extends Controller
 {
@@ -27,6 +28,7 @@ class PostController extends Controller
         ]);
 
         $noticia->hash = md5($noticia->tittulo . $noticia->created_at);
+        $noticia->slug = Str::slug($noticia->titulo);
         $noticia->save();
 
         $id_noticia = $noticia->id;
@@ -38,6 +40,19 @@ class PostController extends Controller
             if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                 $imagem = $request->imagem->store('noticias');
                 $noticia->imagem = $imagem;
+                $noticia->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        //faz upload do anexo (se tiver)
+        $anexo = '';
+
+        try {
+            if ($request->hasFile('anexo_pdf') && $request->file('anexo_pdf')->isValid()) {
+                $anexo = $request->anexo_pdf->store('anexos');
+                $noticia->anexo_pdf = $anexo;
                 $noticia->save();
             }
         } catch (Throwable $error) {
@@ -140,6 +155,9 @@ class PostController extends Controller
         $noticia->e_destaque = $request->e_destaque;
         $noticia->save();
 
+        $noticia->slug = Str::slug($noticia->titulo);
+        $noticia->save();
+
         //faz upload da imagem
         $imagem = '';
 
@@ -147,6 +165,19 @@ class PostController extends Controller
             if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                 $imagem = $request->imagem->store('noticias');
                 $noticia->imagem = $imagem;
+                $noticia->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        //faz upload do anexo (se tiver)
+        $anexo = '';
+
+        try {
+            if ($request->hasFile('anexo_pdf') && $request->file('anexo_pdf')->isValid()) {
+                $anexo = $request->anexo_pdf->store('anexos');
+                $noticia->anexo_pdf = $anexo;
                 $noticia->save();
             }
         } catch (Throwable $error) {
@@ -180,7 +211,7 @@ class PostController extends Controller
 
     }
 
-    
+
     public function delete_carrossel(Request $request)
     {
 

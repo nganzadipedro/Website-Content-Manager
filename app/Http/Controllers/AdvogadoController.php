@@ -8,6 +8,7 @@ use App\Exports\Listaindefinidosexport;
 use App\Exports\Listaestagiariosexport;
 use App\Exports\Listaadvogadosexport;
 use App\Exports\Listaremessacnexport;
+use App\Exports\Listaselecionadosexport;
 use App\Models\Advogadoassistencia;
 use App\Models\Assistenciajudiciaria;
 use App\Models\Denuncia;
@@ -128,6 +129,13 @@ class AdvogadoController extends Controller
     {
         $nome_file = 'lista_inscricoes_estagiarios_remetidos_cn';
         return Excel::download(new Listaremessacnexport($request->data_remessa_cn, $request->tipo_processo), $nome_file . '.xlsx');
+    }
+
+     public function export_xls_selecionados(Request $request)
+    {
+        // dd($request->all());
+        $nome_file = 'lista_inscricoes_selecionados';
+        return Excel::download(new Listaselecionadosexport($request->selecionados, $request->tipo_processo), $nome_file . '.xlsx');
     }
 
     public function export_xls_indicacao_patrono(Request $request)

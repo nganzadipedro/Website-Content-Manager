@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('inscricao_id', inscricao_id);
             formData.append('cedula_disponivel', cedula_disponivel);
             formData.append('numero_cedula', numero_cedula);
+            formData.append('numero_cedula', numero_cedula);
             formData.append('data_emissao_cedula', data_emissao_cedula);
             formData.append('aguarda_cerimonia', aguarda_cerimonia);
 
@@ -149,9 +150,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 4000
                                 });
                             }
+                            else if (res == 'sem patrono') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso!",
+                                    text: "O registo foi efectuado, mas o advogado estagiário não tem patrono registado.",
+                                    timer: 4000
+                                });
+                            }
                         },
                         error: function (error) {
-
                             sweetAlert({
                                 type: "warning",
                                 title: "Erro " + error.status,
@@ -166,6 +174,63 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     });
+
+    // document.getElementById('data_emissao_cedula').addEventListener('input', function () {
+
+    //     let valor = this.value.replace(/\D/g, '');
+
+    //     valor = valor.substring(0, 8);
+
+    //     let dia = '';
+    //     let mes = '';
+    //     let ano = '';
+
+    //     if (valor.length >= 1) {
+
+    //         dia = valor.substring(0, 2);
+
+    //         if (parseInt(dia) > 31) {
+    //             dia = '31';
+    //         }
+
+    //         if (dia === '00') {
+    //             dia = '01';
+    //         }
+    //     }
+
+    //     if (valor.length >= 3) {
+
+    //         mes = valor.substring(2, 4);
+
+    //         if (parseInt(mes) > 12) {
+    //             mes = '12';
+    //         }
+
+    //         if (mes === '00') {
+    //             mes = '01';
+    //         }
+    //     }
+
+    //     if (valor.length >= 5) {
+    //         ano = valor.substring(4, 8);
+    //     }
+
+    //     let resultado = '';
+
+    //     if (dia) {
+    //         resultado += dia;
+    //     }
+
+    //     if (mes) {
+    //         resultado += '/' + mes;
+    //     }
+
+    //     if (ano) {
+    //         resultado += '/' + ano;
+    //     }
+
+    //     this.value = resultado;
+    // });
 
     $(document).on('click', '#btn-gerar-pdf', function () {
 
@@ -245,6 +310,63 @@ document.addEventListener("DOMContentLoaded", () => {
             dados.type = "hidden";
             dados.name = "data_remessa_cn";
             dados.value = data_remessa_cn;
+            form.appendChild(dados);
+
+            const tipo_processo = document.createElement("input");
+            tipo_processo.type = "hidden";
+            tipo_processo.name = "tipo_processo";
+            tipo_processo.value = 3;
+            form.appendChild(tipo_processo);
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+
+        }
+
+    });
+
+    $(document).on('click', '#btn-excel-selecionados', function () {
+
+        const selecionados = [];
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            // const formData = new FormData();
+
+            // Array.from(selecionados).forEach(id => {
+            //     formData.append('selecionados[]', id);
+            // });
+
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/system/areatecnica/exportxls-selecionados";
+            form.target = "_blank";
+
+            // CSRF
+            const csrf = document.createElement("input");
+            csrf.type = "hidden";
+            csrf.name = "_token";
+            csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+            form.appendChild(csrf);
+
+            // Dados que quer enviar
+            const dados = document.createElement("input");
+            dados.type = "hidden";
+            dados.name = "selecionados";
+            dados.value = JSON.stringify(selecionados);
             form.appendChild(dados);
 
             const tipo_processo = document.createElement("input");

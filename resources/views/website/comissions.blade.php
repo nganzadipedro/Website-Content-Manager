@@ -64,7 +64,7 @@
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Basílio Kambya">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Basílio Kambya">
                             <p>Basílio Kambya</p>
                             <span class="card-number">Cédula Nº 2025</span>
                             <span class="role">Comissário</span>
@@ -154,13 +154,13 @@
                             <span class="role">Comissária</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Cláudio Fernandes Nascimento Gonçalves">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Cláudio Fernandes Nascimento Gonçalves">
                             <p>Cláudio Fernandes Nascimento Gonçalves</p>
                             <span class="card-number">Cédula Nº 5880</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Domingas Maria Quicuambi José Bravo">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Domingas Maria Quicuambi José Bravo">
                             <p>Domingas Maria Quicuambi José Bravo</p>
                             <span class="card-number">Cédula Nº 2857</span>
                             <span class="role">Comissária</span>
@@ -235,7 +235,7 @@
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Edmundo Miguel António">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Edmundo Miguel António">
                             <p>Edmundo Miguel António</p>
                             <span class="card-number">Cédula Nº 1130</span>
                             <span class="role">Comissário</span>
@@ -276,7 +276,7 @@
                 </div>
                 <div class="member-row">
                     <div class="ethics-member">
-                        <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Dorivaldo João Americano Da Costa">
+                        <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Dorivaldo João Americano Da Costa">
                         <p>Dorivaldo João Americano Da Costa</p>
                         <span class="card-number">Cédula Nº 2196</span>
                         <span class="role">Comissário</span>
@@ -289,7 +289,7 @@
                         <span class="role">Comissária</span>
                     </div>
                     <div class="ethics-member">
-                        <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Marcelino Patrício Victor Da Silva">
+                        <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Marcelino Patrício Victor Da Silva">
                         <p>Marcelino Patrício Victor Da Silva</p>
                         <span class="card-number">Cédula Nº 1657</span>
                         <span class="role">Comissário</span>
@@ -307,7 +307,7 @@
                 <div class="slider-container">
                     <div class="slider-track">
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Daniel Hossi Tchitumba Daniel">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Daniel Hossi Tchitumba Daniel">
                             <p>Daniel Hossi Tchitumba Daniel</p>
                             <span class="card-number">Cédula Nº 3149</span>
                             <span class="role">Coordenador</span>
@@ -327,25 +327,25 @@
                             <span class="role">Coordenador-Adjunto</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Adilson Ferreira Rangel">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Adilson Ferreira Rangel">
                             <p>Adilson Ferreira Rangel</p>
                             <span class="card-number">Cédula Nº 2998</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Alberto Namumo Avelino Tchitundo">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Alberto Namumo Avelino Tchitundo">
                             <p>Alberto Namumo Avelino Tchitundo</p>
                             <span class="card-number">Cédula Nº 3405</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="António Pedro Caxala">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="António Pedro Caxala">
                             <p>António Pedro Caxala</p>
                             <span class="card-number">Cédula Nº 1401</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Belmiro Tomás Engenheiro Pinto">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Belmiro Tomás Engenheiro Pinto">
                             <p>Belmiro Tomás Engenheiro Pinto</p>
                             <span class="card-number">Cédula Nº 3091</span>
                             <span class="role">Comissário</span>
@@ -358,73 +358,73 @@
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Figueiredo Francisco Dala">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Figueiredo Francisco Dala">
                             <p>Figueiredo Francisco Dala</p>
                             <span class="card-number">Cédula Nº 3353</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Jesus Pestana De Lemos">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Jesus Pestana De Lemos">
                             <p>Jesus Pestana De Lemos</p>
                             <span class="card-number">Cédula Nº 5825</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="João Moisés Tchitombe Capitango">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="João Moisés Tchitombe Capitango">
                             <p>João Moisés Tchitombe Capitango</p>
                             <span class="card-number">Cédula Nº 3692</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Khrys Damar Do Nascimento">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Khrys Damar Do Nascimento">
                             <p>Khrys Damar Do Nascimento</p>
                             <span class="card-number">Cédula Nº 4769</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Laurindo Fonseca Sahana">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Laurindo Fonseca Sahana">
                             <p>Laurindo Fonseca Sahana</p>
                             <span class="card-number">Cédula Nº 4068</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Lázaro Manuel Jaime">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Lázaro Manuel Jaime">
                             <p>Lázaro Manuel Jaime</p>
                             <span class="card-number">Cédula Nº 7504</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Lesley De Assunção Agostinho">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Lesley De Assunção Agostinho">
                             <p>Lesley De Assunção Agostinho</p>
                             <span class="card-number">Cédula Nº 9223</span>
                             <span class="role">Comissária</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Martinho Manuel Luiba">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Martinho Manuel Luiba">
                             <p>Martinho Manuel Luiba</p>
                             <span class="card-number">Cédula Nº 7424</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Mirella Vânia Leitão Dos Santos">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Mirella Vânia Leitão Dos Santos">
                             <p>Mirella Vânia Leitão Dos Santos</p>
                             <span class="card-number">Cédula Nº 4943</span>
                             <span class="role">Comissária</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Ozan Aulânio Reais Albuquerque">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Ozan Aulânio Reais Albuquerque">
                             <p>Ozan Aulânio Reais Albuquerque</p>
                             <span class="card-number">Cédula Nº 6051</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Paulo De Jesus Futi Quimbi">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Paulo De Jesus Futi Quimbi">
                             <p>Paulo De Jesus Futi Quimbi</p>
                             <span class="card-number">Cédula Nº 5260</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Roque António Gomes Umbar">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Roque António Gomes Umbar">
                             <p>Roque António Gomes Umbar</p>
                             <span class="card-number">Cédula Nº 3734</span>
                             <span class="role">Comissário</span>
@@ -451,73 +451,73 @@
                 <div class="slider-container">
                     <div class="slider-track">
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Lezly Edith Orobio Da Silva Cardoso">
+                            <img src="{{ asset('assets/website/img/fotos/conselheiros/dra_lezly.jpg') }}" alt="Lezly Edith Orobio Da Silva Cardoso">
                             <p>Lezly Edith Orobio Da Silva Cardoso</p>
                             <span class="card-number">Cédula Nº 2914</span>
                             <span class="role">Coordenadora</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Gomes Mateus Dos Santos">
+                            <img src="{{ asset('assets/website/img/fotos/conselheiros/gomes_dos_santos.jpg') }}" alt="Gomes Mateus Dos Santos">
                             <p>Gomes Mateus Dos Santos</p>
                             <span class="card-number">Cédula Nº 4157</span>
                             <span class="role">Coordenador-Adjunto</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="José Rodrigues Vicente">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="José Rodrigues Vicente">
                             <p>José Rodrigues Vicente</p>
                             <span class="card-number">Cédula Nº 3213</span>
                             <span class="role">Coordenador-Adjunto</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Bassão Joana José">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Bassão Joana José">
                             <p>Bassão Joana José</p>
                             <span class="card-number">Cédula Nº 5248</span>
                             <span class="role">Comissária</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="José Morais Soladi">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="José Morais Soladi">
                             <p>José Morais Soladi</p>
                             <span class="card-number">Cédula Nº 5478</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Mavacala Domingos João">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Mavacala Domingos João">
                             <p>Mavacala Domingos João</p>
                             <span class="card-number">Cédula Nº 3457</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Hermenegildo Fernando João Francisco">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Hermenegildo Fernando João Francisco">
                             <p>Hermenegildo Fernando João Francisco</p>
                             <span class="card-number">Cédula Nº 3477</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="César Teixeira Samuel">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="César Teixeira Samuel">
                             <p>César Teixeira Samuel</p>
                             <span class="card-number">Cédula Nº 6668</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Rafael Brás Ndumba">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Rafael Brás Ndumba">
                             <p>Rafael Brás Ndumba</p>
                             <span class="card-number">Cédula Nº 5895</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Adelino Laurindo Alberto">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Adelino Laurindo Alberto">
                             <p>Adelino Laurindo Alberto</p>
                             <span class="card-number">Cédula Nº 1691</span>
                             <span class="role">Comissário</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Lucélia Fernanda Franque Ribeiro Guimarães">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Lucélia Fernanda Franque Ribeiro Guimarães">
                             <p>Lucélia Fernanda Franque Ribeiro Guimarães</p>
                             <span class="card-number">Cédula Nº 4462</span>
                             <span class="role">Comissária</span>
                         </div>
                         <div class="commission-member">
-                            <img src="{{ asset('assets/website/img/nilton_praia.webp') }}" alt="Núria Edna Dos Santos Domingos">
+                            <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}" alt="Núria Edna Dos Santos Domingos">
                             <p>Núria Edna Dos Santos Domingos</p>
                             <span class="card-number">Cédula Nº 6779</span>
                             <span class="role">Comissária</span>

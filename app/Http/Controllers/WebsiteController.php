@@ -20,15 +20,16 @@ use Auth;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Storage;
 use Str;
 
 class WebsiteController extends Controller
 {
-    public function home(Request $request)
+    public function home(Request $request = null)
     {
 
-        $carrossel = Carrossel::orderBy('id', 'asc')->take(3)->get();
+        $carrossel = Carrossel::orderBy('id', 'desc')->take(3)->get();
         // dd($carrossel);
         $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $this->acesso_pagina('home');
@@ -85,6 +86,14 @@ class WebsiteController extends Controller
 
     public function news()
     {
+
+        // gera slug para todas as notícias
+        // $noticias = Noticia::all();
+        // foreach ($noticias as $not) {
+        //     $not->slug = Str::slug($not->titulo);
+        //     $not->save();
+        // }
+
         $noticia_destaque = Noticia::where('e_destaque', 'sim')->first();
         $noticias = Noticia::where('e_destaque', 'nao')->orderBy('id', 'desc')->take(5)->get();
         // dd($noticias);
@@ -92,10 +101,10 @@ class WebsiteController extends Controller
         return view('website.news', compact('noticias', 'noticia_destaque'));
     }
 
-    public function news_details($hash)
+    public function news_details($slug)
     {
 
-        $noticia = Noticia::where('hash', $hash)->first();
+        $noticia = Noticia::where('slug', $slug)->first();
         $noticia->views = $noticia->views + 1;
         $noticia->save();
 
@@ -202,6 +211,10 @@ class WebsiteController extends Controller
     {
         $path = storage_path('app/public/docspdf/' . $file);
 
+        if (!file_exists($path)) {
+            return redirect()->route('home');
+        }
+
         $tipo_ficheiro = explode('.', $file);
         $extensao = $tipo_ficheiro[1];
 
@@ -214,6 +227,31 @@ class WebsiteController extends Controller
                 $response = response()->download($path);
                 $response->headers->set('Content-Type', 'application/pdf');
                 return $response;
+            }
+        }
+
+        abort(404, 'Arquivo não encontrado');
+    }
+
+    public function open_document_attach($file)
+    {
+        $path = storage_path('app/public/anexos/' . $file);
+
+        if (!file_exists($path)) {
+            return redirect()->route('home');
+        }
+
+        $tipo_ficheiro = explode('.', $file);
+        $extensao = $tipo_ficheiro[1];
+
+        if (file_exists($path)) {
+            if ($extensao == 'docx' || $extensao == 'doc') {
+                $response = response()->download($path);
+                $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                return $response;
+            } else if ($extensao == 'pdf' || $extensao == 'PDF') {
+                $nome = 'anexo_pdf_cpl_website.pdf';
+                return response()->file($path, ['Content-Type' => 'application/pdf', 'Content-Disposition' => 'inline; filename="' . $nome . '"']);
             }
         }
 

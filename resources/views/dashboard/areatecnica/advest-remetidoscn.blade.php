@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <h3 class="h1">Inscrições Para Advogados Estagiários Remetidos ao Conselho Nacional</h3>
                         <div class="row mt-5">
-                            <div class="col-7">
+                            <div class="col-9">
 
                                 <a id="btn-registar-dataremessa" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -47,6 +47,19 @@
                                         <path d="M20 15h-3v6" />
                                         <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
                                     </svg>Exportar em PDF</a>
+                                <a id="btn-excel-selecionados" class="btn btn-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                        <path
+                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                                        <path d="M8 11h8v7h-8l0 -7" />
+                                        <path d="M8 15h8" />
+                                        <path d="M11 11v7" />
+                                    </svg>Exportar Selecionados</a>
 
                             </div>
                             <div class="col-3">
@@ -91,9 +104,9 @@
                                             <tr>
                                                 <td>{{$loop->index + 1}}</td>
                                                 <td>
-                                                    @if ($item->data_remessa_cn == null)
-                                                        <input type="checkbox" class="checkItem" value="{{$item->id}}">
-                                                    @endif
+
+                                                    <input type="checkbox" class="checkItem" value="{{$item->id}}">
+
                                                 </td>
                                                 <td>{{$item->codigo}}</td>
                                                 <td>{{$item->getregistoentrada->proveniencia}}</td>
@@ -215,8 +228,8 @@
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="data_emissao_cedula">Data de Emissão da Cédula</label>
-                                    <input type="date" name="data_emissao_cedula" class="form-control"
-                                        id="data_emissao_cedula" value="">
+                                    <input type="date" id="data_emissao_cedula" name="data_emissao_cedula"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 col-12 col-xs-12">

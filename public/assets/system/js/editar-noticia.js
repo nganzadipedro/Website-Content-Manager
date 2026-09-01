@@ -83,6 +83,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
         const texto_completo = tinymce.get('texto_completo').getContent();
         const categoria = document.getElementById('categoria').value;
         const imagem = document.getElementById('imagem').files[0];
+        const anexo_pdf = document.getElementById('anexo_pdf').files[0];
         const e_destaque = document.getElementById('e_destaque').value;
 
         formData.append('hash_noticia', hash_noticia);
@@ -92,6 +93,7 @@ document.getElementById('btn-salvar').addEventListener('click', function () {
         formData.append('categoria', categoria);
         formData.append('e_destaque', e_destaque);
         formData.append('imagem', imagem);
+        formData.append('anexo_pdf', anexo_pdf);
 
         Swal.fire({
             title: "Confirmação",

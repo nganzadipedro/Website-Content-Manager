@@ -535,7 +535,7 @@ class SystemController extends Controller
                 $nome = $pessoa->nome;
 
                 try {
-                    // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível, mas deverá aguardar pela cerimónia de entrega.");
+                    $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível, mas deverá aguardar pela cerimónia de entrega.");
                 } catch (\Throwable $th) {
 
                 }
@@ -811,8 +811,11 @@ class SystemController extends Controller
             $inscricao_adv = Inscricaoadvogado::find($item);
             $nome = $inscricao_adv->getregistoentrada->proveniencia;
 
-            if ($inscricao_adv->data_levantamento_comissao_etica != null || $inscricao_adv->estado == 'análise comissão de ética') {
-                return "O processo de inscrição do senhor $nome já foi remetido à comissão de ética. Não pode ser remetido duas vezes.";
+            if ($request->remeter_comissao == 'Sim') {
+
+                if ($inscricao_adv->data_levantamento_comissao_etica != null || $inscricao_adv->estado == 'análise comissão de ética') {
+                    return "O processo de inscrição do senhor $nome já foi remetido à comissão de ética. Não pode ser remetido duas vezes.";
+                }
             }
 
             if ($inscricao_adv->data_entrega_distribuicao == null) {
@@ -1220,12 +1223,118 @@ class SystemController extends Controller
             'email_patrono' => $request->email_patrono,
             'telefone_patrono' => $request->tel_patrono,
             'estado' => $request->estado,
+            'user_id' => auth()->user()->id,
             'nome_escritorio' => $request->nome_escritorio,
-            'estado' => 'Aguarda Cerimónia',
             'municipio_id' => $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est,
             'endereco_escritorio' => $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est,
             'hash' => Str::uuid()
         ]);
+
+        return 'sucesso';
+
+    }
+
+    public function registo_associado_atribuir_advogado_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+
+        // verifica se já esxite na bd
+        if ($request->categoria == 'Advogado') {
+            $existe = Advogado::where('categoria', 'Advogado')
+                ->where('num_associado', $request->num_associado)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        } else {
+            $existe = Advogado::where('categoria', 'Estagiario')
+                ->where('num_estagiario', $request->num_estagiario)->first();
+            if ($existe) {
+                return 'duplicado';
+            }
+        }
+
+        $existe = Pessoa::where('num_documento', $request->num_bi)
+            ->first();
+        if ($existe) {
+            return 'bilhete';
+        }
+
+        // insere na tabela pessoa;
+        $pessoa = Pessoa::create([
+            'nome' => mb_strtoupper($request->nome_completo, 'UTF-8'),
+            'num_documento' => $request->num_bi,
+            'email' => $request->email,
+            'telefone1' => $request->telefone1,
+            'telefone2' => $request->telefone2,
+            'documento' => 'Bilhete de Identidade',
+            'genero' => $request->sexo
+        ]);
+
+        $conta = Advogado::count() + 1;
+
+        // insere na tabela de advogado
+        $advogado = Advogado::create([
+            'categoria' => $request->categoria,
+            'nome_profissional' => $request->nome_profissional,
+            'num_associado' => $request->num_associado,
+            'num_estagiario' => $request->num_estagiario,
+            'data_inscricao_oaa' => $request->data_inscricao_oaa,
+            'data_inscricao_estagiario' => $request->data_inscricao_estagiario,
+            'pessoa_id' => $pessoa->id,
+            'codigo' => 'CPL' . $conta,
+            'nome_patrono' => $request->nome_patrono,
+            'email_patrono' => $request->email_patrono,
+            'cedula_patrono' => $request->num_cedula_patrono,
+            'telefone_patrono' => $request->tel_patrono,
+            'nome_escritorio' => $request->categoria == 'Advogado' ? $request->nome_escritorio_adv : $request->nome_escritorio_est,
+            'estado' => 'Registado',
+            'presenca_cerimonia' => 'Presente',
+            'user_id' => auth()->user()->id,
+            'municipio_id' => $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est,
+            'endereco_escritorio' => $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est,
+            'hash' => Str::uuid()
+        ]);
+
+        // atribui nos advogados que vão fazer a assistência jurídica
+        $registo = Registoentrada::find($request->registo_id);
+        $atribuicao = Advogadoatribuido::create([
+            'registo_entrada_id' => $registo->id,
+            'advogado_id' => $advogado->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $nome_advogado = $advogado->getpessoa->nome;
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Atribuição de advogado para a assistência judiciária", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Atribuiu o advogado $nome_advogado para a assistência judiciária", 'user', auth()->user()->id);
+
+        return 'sucesso';
+
+    }
+
+    public function confirmar_atribuicao_post(Request $request)
+    {
+
+        date_default_timezone_set("Africa/Luanda");
+        $registo = Registoentrada::find($request->registo_id);
+
+        $atribuicoes = Advogadoatribuido::where('registo_entrada_id', $registo->id)->get();
+
+        if (count($atribuicoes) == 0) {
+            return 'sem-advogado';
+        }
+
+        $registo->estado = 'deferido';
+        $registo->encaminhado = 'Área Técnica';
+        $registo->save();
+
+        // processo de notificação dos advogados que vão fazer a assistência judiciária
+
+        // regista actividade no sistema
+        ActividadesistemaController::inserir(Auth::id(), "Confirmação daAtribuição de advogados para a assistência judiciária", 'registo-entrada', $registo->id);
+        ActividadesistemaController::inserir(Auth::id(), "Confirmou a atribuição de advogados para a assistência judiciária", 'user', auth()->user()->id);
 
         return 'sucesso';
 
@@ -1367,6 +1476,12 @@ class SystemController extends Controller
         date_default_timezone_set("Africa/Luanda");
 
         $advogado = Advogado::find($request->advogado_id);
+        $pessoa = Pessoa::find($advogado->pessoa_id);
+
+        // garantir que tem o número do bilhete registado
+        if ($pessoa->num_documento == null || $pessoa->num_documento == '') {
+            return 'bilhete';
+        }
 
         if ($advogado->categoria == 'Advogado') {
             $advogado->data_cerimonia_associado = $request->data_cerimonia;
@@ -1375,6 +1490,34 @@ class SystemController extends Controller
         }
         $advogado->estado = 'Registado';
         $advogado->save();
+
+        // ------------------------------------
+        $existe = null;
+
+        $existe = Inscricaoadvogado::where('advogado_id', $advogado->id)->first();
+        if ($existe) {
+            $existe->data_cerimonia = $request->data_cerimonia;
+            $existe->save();
+        }
+
+        if ($existe == null) {
+            $existe = Inscricaoadvogado::where('num_bilhete', $pessoa->num_bilhete)->first();
+            if ($existe) {
+                $existe->data_cerimonia = $request->data_cerimonia;
+                $existe->save();
+            }
+        }
+
+        if ($existe == null) {
+            $existe = Registoentrada::where('proveniencia', 'LIKE', '%' . $pessoa->nome . '%')->first();
+            if ($existe) {
+                $inscricao = Inscricaoadvogado::where('registo_entrada_id', $existe->id)->first();
+                if ($inscricao) {
+                    $inscricao->data_cerimonia = $request->data_cerimonia;
+                    $inscricao->save();
+                }
+            }
+        }
 
         return 'sucesso';
 
@@ -1390,6 +1533,12 @@ class SystemController extends Controller
         foreach ($selecionados as $item) {
 
             $advogado = Advogado::find($item);
+            $pessoa = Pessoa::find($advogado->pessoa_id);
+
+            // garantir que tem o número do bilhete registado
+            if ($pessoa->num_documento == null || $pessoa->num_documento == '') {
+                return 'bilhete';
+            }
 
             if ($request->presente_ausente_grupo == 'presente') {
                 if ($advogado->categoria == 'Advogado') {
@@ -1417,7 +1566,33 @@ class SystemController extends Controller
 
             }
 
+            // ------------------------------------//
+            $existe = null;
 
+            $existe = Inscricaoadvogado::where('advogado_id', $advogado->id)->first();
+            if ($existe) {
+                $existe->data_cerimonia = $request->data_cerimonia;
+                $existe->save();
+            }
+
+            if ($existe == null) {
+                $existe = Inscricaoadvogado::where('num_bilhete', $pessoa->num_bilhete)->first();
+                if ($existe) {
+                    $existe->data_cerimonia = $request->data_cerimonia;
+                    $existe->save();
+                }
+            }
+
+            if ($existe == null) {
+                $existe = Registoentrada::where('proveniencia', 'LIKE', '%' . $pessoa->nome . '%')->first();
+                if ($existe) {
+                    $inscricao = Inscricaoadvogado::where('registo_entrada_id', $existe->id)->first();
+                    if ($inscricao) {
+                        $inscricao->data_cerimonia = $request->data_cerimonia;
+                        $inscricao->save();
+                    }
+                }
+            }
 
         }
 
@@ -1552,8 +1727,6 @@ class SystemController extends Controller
         $conta_estagiarios = 0;
 
         $registo = Registoentrada::find($request->registo_entrada_id);
-        $registo->estado = 'em tratamento';
-        $registo->save();
 
         $numero = '';
         if ($registo->tipo_processo_id == 2) {
@@ -1580,6 +1753,9 @@ class SystemController extends Controller
                 'registo_entrada_id' => $registo->id,
                 'user_id' => Auth::user()->id
             ]);
+
+            $registo->estado = 'em tratamento';
+            $registo->save();
 
             $ob = new MailController();
             $obmsg = new OmbalaController();
@@ -1718,6 +1894,9 @@ class SystemController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
+            $registo->estado = 'em tratamento';
+            $registo->save();
+
             if ($request->acto_pretendido != 'Indicação de Patrono' && $conta_estagiarios < 10) {
 
                 $est_patrono = Estagiariospatrono::create([
@@ -1784,7 +1963,7 @@ class SystemController extends Controller
                     $letra = $mensagem_not[0];
                     $letra = mb_strtoupper($letra, 'UTF-8');
                     $mensagem_not[0] = $letra;
-                    // $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
+                    $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
                     if ($request->email != null && $request->email != '') {
                         $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
                     }
@@ -2023,7 +2202,7 @@ class SystemController extends Controller
                 $letra = mb_strtoupper($letra, 'UTF-8');
                 $mensagem_not[0] = $letra;
 
-                // $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
+                $obmsg->enviarMensagem($inscricao->telefone1, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
                 if ($request->email != null && $request->email != '') {
                     $ob->mailDespacho($request->email, $nome, $mensagem_not, $inscricao->data_despacho);
                 }
@@ -2113,7 +2292,7 @@ class SystemController extends Controller
             $mensagem = "Caríssimo(a), o seu processo de inscrição foi despachado como Deferido aos " . $data . ".";
 
             try {
-                // $obmsg->enviarMensagem($telefone, $mensagem);
+                $obmsg->enviarMensagem($telefone, $mensagem);
             } catch (\Throwable $th) {
 
             }
@@ -2202,7 +2381,7 @@ class SystemController extends Controller
             $mensagem_not[0] = $letra;
 
             try {
-                // $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: $mensagem_not.");
                 if ($email != null && $email != '') {
                     $ob->mailDespacho($email, $nome, $mensagem_not, $inscricao_adv->data_despacho);
                 }
@@ -2246,7 +2425,7 @@ class SystemController extends Controller
             $nome = $registo->proveniencia;
 
             try {
-                // $obmsg->enviarMensagem($telefone, "Caríssimo(a), o seu processo de inscrição está pendente, aguardando indicação de patrono.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), o seu processo de inscrição está pendente, aguardando indicação de patrono.");
             } catch (\Throwable $th) {
 
             }
@@ -2312,10 +2491,13 @@ class SystemController extends Controller
         $registo->estado = 'deferido';
         $registo->save();
 
+        // $data = Carbon::createFromFormat('d/m/Y', $request->data_emissao_cedula);
+        // $data = $data->format('Y-m-d');
+
         $inscricao_adv->numero_cedula = $request->numero_cedula;
         $inscricao_adv->cedula_disponivel = $request->cedula_disponivel;
-        $inscricao_adv->data_emissao_cedula = $request->data_emissao_cedula;
         $inscricao_adv->sexo = $request->sexo;
+        $inscricao_adv->data_emissao_cedula = $request->data_emissao_cedula;
         $inscricao_adv->num_bilhete = $request->num_bilhete;
         $inscricao_adv->estado = 'aguarda cerimonia';
         $inscricao_adv->save();
@@ -2349,13 +2531,21 @@ class SystemController extends Controller
         $advogado->endereco_escritorio = $inscricao_adv->endereco_escritorio;
         $advogado->save();
 
+        $inscricao_adv->advogado_id = $advogado->id;
+        $inscricao_adv->save();
+
         if ($inscricao_adv->tipo_processo_id == 3) {
             $patrono = Patrono::find($inscricao_adv->patrono_id);
-            $advogado->nome_patrono = $patrono->getadvogado->getpessoa->nome;
-            $advogado->email_patrono = $patrono->getadvogado->getpessoa->email;
-            $advogado->telefone_patrono = $patrono->getadvogado->getpessoa->telefone1;
-            $advogado->nome_escritorio = $patrono->getadvogado->nome_escritorio;
-            $advogado->save();
+            if ($patrono) {
+                $advogado->nome_patrono = $patrono->getadvogado->getpessoa->nome;
+                $advogado->email_patrono = $patrono->getadvogado->getpessoa->email;
+                $advogado->telefone_patrono = $patrono->getadvogado->getpessoa->telefone1;
+                $advogado->nome_escritorio = $patrono->getadvogado->nome_escritorio;
+                $advogado->save();
+            } else {
+                return 'sem patrono';
+            }
+
         }
 
         // notifica o advogado por SMS
@@ -2368,7 +2558,7 @@ class SystemController extends Controller
         if ($inscricao_adv->cedula_disponivel == 'Sim') {
 
             try {
-                // $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível, mas deverá aguardar pela cerimónia de entrega.");
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), saudações. A sua cédula já está disponível, mas deverá aguardar pela cerimónia de entrega.");
                 if ($email != null && $email != '') {
                     // $ob->mailDespacho($email, $nome, $mensagem, $inscricao_adv->data_despacho);
                 }
@@ -2435,7 +2625,7 @@ class SystemController extends Controller
             $mensagem_not[0] = $letra;
 
             try {
-                // $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: " . $mensagem_not);
+                $obmsg->enviarMensagem($telefone, "Caríssimo(a), foi emitido o seguinte despacho para o seu processo de inscrição: " . $mensagem_not);
                 if ($email != null && $email != '') {
                     $ob->mailDespacho($email, $nome, $mensagem_not, $data_despacho);
                 }

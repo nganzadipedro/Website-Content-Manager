@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe a data que vai remter os processos selecionados",
+                text: "Informe a data que vai remeter os processos selecionados",
                 timer: 4000
             });
         }

@@ -28,10 +28,11 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('news', 'Controllers\WebsiteController@news')->name('news');
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
     Route::get('gallery', 'Controllers\WebsiteController@gallery')->name('gallery');
-    Route::get('news-details/{hash}', 'Controllers\WebsiteController@news_details')->name('news_details');
+    Route::get('news-details/{slug}', 'Controllers\WebsiteController@news_details')->name('news_details');
     Route::get('list-lawyers', 'Controllers\WebsiteController@list_lawyers')->name('list_lawyers');
     Route::get('list-trainee', 'Controllers\WebsiteController@list_trainee')->name('list_trainee');
     Route::get('download-document/{file}', 'Controllers\WebsiteController@download_document')->name('download_doc');
+    Route::get('open-document-attach/{file}', 'Controllers\WebsiteController@open_document_attach')->name('open_doc_attach');
 
     Route::post('/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('/message/post', 'Controllers\PostController@message_post');
@@ -98,6 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/entrega-comissaoetica-grupo/post', 'Controllers\SystemController@entrega_comissaoetica_grupo_post');
     Route::post('system/entrega-comissaoetica-indeferido/post', 'Controllers\SystemController@entrega_comissaoetica_indeferido_post');
     Route::post('system/registo-associado/post', 'Controllers\SystemController@registo_associado_post');
+    Route::post('system/registo-associado-atribuir-advogado/post', 'Controllers\SystemController@registo_associado_atribuir_advogado_post');
     Route::post('system/registo-associado/update', 'Controllers\SystemController@registo_associado_update');
     Route::post('system/registo-remetercn/update', 'Controllers\SystemController@registo_remetercn_update');
     Route::post('system/dataremessacn/update', 'Controllers\SystemController@dataremessacn_update');
@@ -117,6 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('system/registo-inscricao/update', 'Controllers\SystemController@registo_inscricao_update');
     Route::post('system/editar-inscricao-estagiario/post', 'Controllers\SystemController@editar_inscricao_estagiario_post');
     Route::post('system/atribuir-advogado/post', 'Controllers\SystemController@atribuir_advogado_post');
+    Route::post('system/confirmar-atribuicao/post', 'Controllers\SystemController@confirmar_atribuicao_post');
     Route::post('system/atribuir-advogado/delete', 'Controllers\SystemController@atribuir_advogado_delete');
     Route::post('system/registo-despacho/post', 'Controllers\SystemController@registo_despacho_post');
     Route::post('system/actualizar-despacho/post', 'Controllers\SystemController@actualizar_despacho_post');
@@ -303,6 +306,7 @@ Route::group(['middleware' => 'auth'], function () {
 
                 Route::get('/export-waiting/cerimony/{categoria}', 'Controllers\AdvogadoController@export_waiting_cerimony')->name('export_waiting_cerimony');
                 Route::post('/exportxls-trainee/remessacn', 'Controllers\AdvogadoController@export_remessa_cn')->name('export_remessa_cn');
+                Route::post('/exportxls-selecionados', 'Controllers\AdvogadoController@export_xls_selecionados')->name('export_xls_selecionados');
                 Route::post('/exportxls-indicacao-patrono', 'Controllers\AdvogadoController@export_xls_indicacao_patrono');
                 Route::get('/exportpdf-trainee/remessacn', 'Controllers\AdvogadoController@lista_estagiarios_remessacn')->name('exportpdf_remessa_cn');
                 Route::post('/exportpdf-trainee-post/remessacn', 'Controllers\AdvogadoController@export_pdf_lista_estagiarios_remessacn');

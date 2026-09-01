@@ -72,7 +72,7 @@
                                 <img src="{{ asset('application/storage/app/public/' . $noticia_destaque->imagem) }}"
                                     alt="{{ $noticia_destaque->titulo }}">
                             </div>
-                            <a href="{{ route('news_details', $noticia_destaque->hash) }}" class="card-title">
+                            <a href="{{ route('news_details', $noticia_destaque->slug) }}" class="card-title">
                                 <span class="highlight">DESTAQUE</span>
                                 <br>{{$noticia_destaque->titulo}}</a>
                             <p class="card-description"> {{ $noticia_destaque->texto_resumo }}</p>
@@ -96,7 +96,7 @@
                                         <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
                                             alt="{{ $not->titulo }}">
                                     </div>
-                                    <a href="{{ route('news_details', $not->hash) }}" class="card-title">{{ $not->titulo }}</a>
+                                    <a href="{{ route('news_details', $not->slug) }}" class="card-title">{{ $not->titulo }}</a>
                                     <p class="card-description">{{ $not->texto_resumo }}</p>
                                     <label class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
                                         {{$data[0]}} <span class="category">| {{ $not->categoria }}</span></label>

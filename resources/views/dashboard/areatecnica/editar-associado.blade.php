@@ -271,5 +271,5 @@
 </div>
 
 @section('script-aux')
-    <script src="{{ asset('assets/system/js/editar-associado.js') }}"></script>
+    <script src="{{ asset('assets/system/js/editar-associado.js') }}?124566655"></script>
 @endsection

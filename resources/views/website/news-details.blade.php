@@ -79,6 +79,18 @@
                         <div class="description mt-4">
                             <p>{!! $noticia->texto_completo !!}</p>
                         </div>
+                        @if($noticia->anexo_pdf)
+
+                            @php
+                        
+                            $ficheiro = explode('/', $noticia->anexo_pdf);
+
+                            @endphp
+
+                            <div class="mt-4">
+                                <a href="{{ route('open_doc_attach', $ficheiro[1]) }}" target="_blank" class="btn btn-warning">Visualizar Anexo PDF</a>
+                            </div>
+                        @endif
                     </article>
                 </div>
 
@@ -108,7 +120,7 @@
                                         <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
                                             alt="{{ $not->titulo }}">
                                         <div class="related-content">
-                                            <a href="{{ route('news_details', $not->hash) }}"
+                                            <a href="{{ route('news_details', $not->slug) }}"
                                                 class="related-link">{{ $not->titulo }}</a>
                                             <label class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
                                                 {{$data[0]}} <span class="category">|
@@ -147,7 +159,7 @@
                                         <img src="{{ asset('application/storage/app/public/' . $not->imagem) }}"
                                             alt="{{ $not->titulo }}">
                                         <div class="related-content">
-                                            <a href="{{ route('news_details', $not->hash) }}"
+                                            <a href="{{ route('news_details', $not->slug) }}"
                                                 class="related-link">{{ $not->titulo }}</a>
                                             <label class="date-news">{{$data[2]}}, {{$meses[$data[1]]}}.
                                                 {{$data[0]}} <span class="category">|

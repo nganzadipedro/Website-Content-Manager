@@ -122,22 +122,22 @@ function valida_formulario() {
         msgErro = "Escolha o município referente ao endereço profissional do advogado";
         tem = false;
     }
-    else if (categoria == 'Estagiario' && (nome_patrono == '' || nome_patrono == null)) {
-        msgErro = "Digite o nome do patrono";
-        tem = false;
-    }
-    else if (categoria == 'Estagiario' && (nome_escritorio == '' || nome_escritorio == null)) {
-        msgErro = "Digite o nome do escritório";
-        tem = false;
-    }
-    else if (categoria == 'Estagiario' && (endereco_escritorio_est == '' || endereco_escritorio_est == null)) {
-        msgErro = "Digite o endereço do escritório";
-        tem = false;
-    }
-    else if (categoria == 'Estagiario' && (municipio_id_est == '' || municipio_id_est == null)) {
-        msgErro = "Escolha o município referente ao endereço do escritório";
-        tem = false;
-    }
+    // else if (categoria == 'Estagiario' && (nome_patrono == '' || nome_patrono == null)) {
+    //     msgErro = "Digite o nome do patrono";
+    //     tem = false;
+    // }
+    // else if (categoria == 'Estagiario' && (nome_escritorio == '' || nome_escritorio == null)) {
+    //     msgErro = "Digite o nome do escritório";
+    //     tem = false;
+    // }
+    // else if (categoria == 'Estagiario' && (endereco_escritorio_est == '' || endereco_escritorio_est == null)) {
+    //     msgErro = "Digite o endereço do escritório";
+    //     tem = false;
+    // }
+    // else if (categoria == 'Estagiario' && (municipio_id_est == '' || municipio_id_est == null)) {
+    //     msgErro = "Escolha o município referente ao endereço do escritório";
+    //     tem = false;
+    // }
 
     if (tem == false) {
         sweetAlert({

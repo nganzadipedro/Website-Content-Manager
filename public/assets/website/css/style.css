@@ -543,8 +543,8 @@ p {
 
 /* FOOTER */
 footer {
-    background-color: #fff;
-    height: 500px;
+    background-color: #000;
+    height: 550px;
     padding: 60px 40px;
     margin-top: 0px;
     border-top: solid 7px var(--cor-black);
@@ -564,7 +564,7 @@ footer .content .logo img {
 footer .content .logo h3 {
     font-weight: bold;
     font-size: 1rem;
-    color: #000;
+    color: #fff;
 }
 
 footer .content .hiperlikns {
@@ -580,8 +580,8 @@ footer .content .hiperlikns div h3 {
     font-weight: bold;
     letter-spacing: 7px;
     font-size: 0.7rem;
-    background-color: var(--cor-gray);
-    color: #fff;
+    background-color: var(--cor-yellow-one);
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -598,7 +598,7 @@ footer .content .hiperlikns div ul li {
 
 footer .content .hiperlikns div ul li a {
     text-decoration: none;
-    color: var(--cor-black);
+    color: var(--cor-gray);
 }
 
 footer .content .hiperlikns div ul li .btn-signin {

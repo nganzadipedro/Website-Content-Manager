@@ -98,6 +98,16 @@ class Registarentrada extends Component
                 ActividadesistemaController::historico_processo("O processo foi encaminhado para a área técnica.", $registo->id);
             }
 
+            if ($registo->tipo_processo_id == 1) {
+                $registo->encaminhado = 'Conselheiro';
+                $registo->estado = 'pendente';
+                $registo->save();
+
+                // regista actividade no sistema
+                ActividadesistemaController::inserir(Auth::id(), "Encaminhou o processo para $registo->encaminhado", 'registo-entrada', $registo->id);
+                ActividadesistemaController::historico_processo("O processo foi encaminhado para os Conselheiros.", $registo->id);
+            }
+
             $this->mensagemRefresh('Registo efectuado com sucesso', 'success');
             return redirect()->route('system.secretaria.codigo_registo', ['hash' => $registo->hash]);
 

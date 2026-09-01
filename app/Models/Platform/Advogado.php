@@ -37,6 +37,7 @@ class Advogado extends Model
         'estado',
         'presenca_cerimonia',
         'categoria',
+        'user_id',
         'data_cerimonia_estagiario',
         'data_cerimonia_associado'
     ];

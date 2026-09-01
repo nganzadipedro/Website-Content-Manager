@@ -96,8 +96,8 @@
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label for="nome_completo">Destaque</label>
-                                                <select clang="form-control" name="e_destaque" id="e_destaque"
-                                                    class="form-control">
+                                                <select name="e_destaque" id="e_destaque"
+                                                    class="form-select">
                                                     <option value="nao" selected>Não</option>
                                                     <option value="sim">Sim</option>
                                                 </select>
@@ -107,10 +107,16 @@
                                     </div>
 
                                     <div class="row mt-3">
-                                        <div class="col-lg-12 col-12">
+                                        <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label for="imagem">Imagem</label>
                                                 <input type="file" name="imagem" id="imagem" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="anexo_pdf">Anexo PDF (Opcional)</label>
+                                                <input type="file" name="anexo_pdf" id="anexo_pdf" class="form-control">
                                             </div>
                                         </div>
                                     </div>

@@ -243,8 +243,8 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                         }
                         else if (res == 'duplicado') {
                             sweetAlert({
-                                type: "success",
-                                title: "Sucesso",
+                                type: "warning",
+                                title: "Aviso",
                                 text: 'O número de cédula do patrono está duplicado na base de dados!',
                                 timer: 3000
                             });

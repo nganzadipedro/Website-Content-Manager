@@ -115,7 +115,7 @@
                                 <p class="description">
                                     {{ $noticia_destaque->texto_resumo }}
                                 </p>
-                                <a href="{{ route('news_details', $noticia_destaque->hash) }}">Saiba mais...</a>
+                                <a href="{{ route('news_details', $noticia_destaque->slug) }}">Saiba mais...</a>
                             </div>
                             <img src="{{ asset('application/storage/app/public/' . $noticia_destaque->imagem) }}"
                                 alt="{{ $noticia_destaque->titulo }}">
@@ -320,7 +320,7 @@
                                     <span class="role">Conselheiro</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/nilton_praia.webp') }}"
+                                    <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}"
                                         alt="José Rodrigues Vicente">
                                     <p>José Rodrigues Vicente</p>
                                     <span class="card-number">Cédula Nº 3213</span>

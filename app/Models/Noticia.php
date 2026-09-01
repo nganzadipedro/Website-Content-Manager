@@ -18,10 +18,12 @@ class Noticia extends Model
         'hash',
         'titulo',
         'categoria',
+        'slug',
         'texto_resumo',
         'texto_completo',
         'e_destaque',
         'imagem',
+        'anexo_pdf',
         'views'
     ];
 
