@@ -158,6 +158,8 @@ class PostController extends Controller
         $noticia->slug = Str::slug($noticia->titulo);
         $noticia->save();
 
+        $id_noticia = $noticia->id;
+
         //faz upload da imagem
         $imagem = '';
 
@@ -182,6 +184,24 @@ class PostController extends Controller
             }
         } catch (Throwable $error) {
             // throw new Exception($error);
+        }
+
+        // os destques antigos deixam de ser destaques
+        if ($noticia->e_destaque == 'sim') {
+
+            $antigos = Noticia::where('e_destaque', 'sim')->get();
+            if (count($antigos) > 0) {
+
+                foreach ($antigos as $ant) {
+                    $ant->e_destaque = 'nao';
+                    $ant->save();
+                }
+            }
+
+            $noticia_last = Noticia::find($id_noticia);
+            $noticia_last->e_destaque = 'sim';
+            $noticia_last->save();
+
         }
 
         // regista actividade no sistema
