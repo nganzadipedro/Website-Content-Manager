@@ -1687,6 +1687,14 @@ class SystemController extends Controller
             return 'duplicado';
         }
 
+        if($advogado->categoria == 'Advogado' && $advogado->num_associado == null){
+            return 'sem cédula';
+        }
+
+        if($advogado->categoria == 'Estagiario' && $advogado->num_estagiario == null){
+            return 'sem cédula';
+        }
+
         $atribuicao = Advogadoatribuido::create([
             'registo_entrada_id' => $registo->id,
             'advogado_id' => $advogado->id,

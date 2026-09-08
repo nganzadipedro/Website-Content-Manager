@@ -14,6 +14,7 @@ use App\Models\Galeria;
 use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Pessoa;
+use App\Models\Relatoriofinanceiro;
 use App\Models\User;
 use App\Models\Website;
 use Auth;
@@ -204,6 +205,14 @@ class WebsiteController extends Controller
             ->get();
 
         return view('website.list-trainee', compact('lista'));
+
+    }
+
+    public function financial_report()
+    {
+
+        $lista = Relatoriofinanceiro::all();
+        return view('website.financial-report', compact('lista'));
 
     }
 

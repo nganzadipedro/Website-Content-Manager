@@ -23,6 +23,7 @@
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('members') ? 'active' : '' }}" href="{{ route('members') }}">Associados</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('comissions') ? 'active' : '' }}" href="{{ route('comissions') }}">Comissões</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('legal_assistance') ? 'active' : '' }}" href="{{ route('legal_assistance') }}">Assistência Judiciária</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('financial_report') ? 'active' : '' }}" href="{{ route('financial_report') }}">Informação Financeira</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeria</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contactos</a></li>
                         <li class="nav-item"><a class="nav-link btn-signin" href="{{ route('login') }}">Área Reservada</a></li>

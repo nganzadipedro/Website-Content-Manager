@@ -53,6 +53,14 @@ $(document).on('click', '.btn-adicionar', function () {
                             timer: 4000
                         });
                     }
+                    else if (res == 'sem cédula') {
+                        sweetAlert({
+                            type: "warning",
+                            title: "Aviso",
+                            text: 'Não é possível atribuir advogados sem número de cédula!',
+                            timer: 4000
+                        });
+                    }
                 },
                 error: function (error) {
 

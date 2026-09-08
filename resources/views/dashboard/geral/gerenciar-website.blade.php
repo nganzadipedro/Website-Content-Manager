@@ -25,7 +25,7 @@
             <div class="row row-cards">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                     <div class="card bg-primary text-primary-fg">
-                        
+
                         <div class="card-body">
                             <h3 class="card-title">Gerenciar Notícias</h3>
                             <p>Adiconar, Editar, Listar, Remover e Ver detalhes de notícias do website</p>
@@ -37,7 +37,7 @@
 
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                     <div class="card bg-success text-primary-fg">
-                       
+
                         <div class="card-body">
                             <h3 class="card-title">Gerenciar Galeria</h3>
                             <p>Adiconar, Editar, Listar, Remover e Ver detalhes de eventos do website</p>
@@ -56,6 +56,18 @@
                             <a href="{{route('cadimagemcarrossel')}}" class="btn btn-secondary">+ Adicionar Imagem
                                 +</a>
                             <a href="{{route('listcarrossel')}}" class="btn btn-secondary">Listar Imagens</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
+                    <div class="card bg-info text-primary-fg">
+                        <div class="card-body">
+                            <h3 class="card-title">Gerenciar Relatórios Financeiros</h3>
+                            <p>Adiconar e remover relatórios financeiros</p>
+                            <a href="{{route('cadrelatorio')}}" class="btn btn-secondary">+ Adicionar Relatório
+                                +</a>
+                            <a href="{{route('listrelatorios')}}" class="btn btn-secondary">Listar Relatórios</a>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ use App\Models\Galeria;
 use App\Models\Mensagem;
 use App\Models\Noticia;
 use App\Models\Platform\Advogado;
+use App\Models\Relatoriofinanceiro;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -78,6 +79,42 @@ class PostController extends Controller
         }
 
         ActividadesistemaController::inserir(Auth::id(), "Cadastrou uma nova notícia ($noticia->titulo)", 'noticia', $noticia->id);
+        return 'sucesso';
+
+    }
+
+    public function financial_report_post(Request $request)
+    {
+
+        $relatorio = Relatoriofinanceiro::create([
+            'descricao' => $request->descricao,
+            'ano' => $request->ano,
+            'trimestre' => $request->trimestre,
+            'categoria' => $request->categoria,
+            'user_id' => Auth::id()
+        ]);
+
+        $relatorio->hash = md5($relatorio->descricao . $relatorio->created_at);
+        $relatorio->save();
+        $relatorio->slug = Str::slug($relatorio->descricao);
+        $relatorio->save();
+
+        $id_relatorio = $relatorio->id;
+
+        //faz upload do anexo (se tiver)
+        $anexo = '';
+
+        try {
+            if ($request->hasFile('documento_anexo') && $request->file('documento_anexo')->isValid()) {
+                $anexo = $request->documento_anexo->store('anexos');
+                $relatorio->documento_anexo = $anexo;
+                $relatorio->save();
+            }
+        } catch (Throwable $error) {
+            // throw new Exception($error);
+        }
+
+        ActividadesistemaController::inserir(Auth::id(), "Cadastrou um novo relatório financeiro ($relatorio->descricao)", 'geral', $relatorio->id);
         return 'sucesso';
 
     }
@@ -216,6 +253,17 @@ class PostController extends Controller
         $noticia->delete();
 
         ActividadesistemaController::inserir(Auth::id(), "Eliminou uma notícia ($noticia->titulo)", 'noticia', $noticia->id);
+        return 'sucesso';
+
+    }
+
+     public function delete_financial_report(Request $request)
+    {
+
+        $relatorio = RelatorioFinanceiro::find($request->id_financial_report);
+        $relatorio->delete();
+
+        ActividadesistemaController::inserir(Auth::id(), "Eliminou um relatório financeiro ($relatorio->titulo)", 'geral', $relatorio->id);
         return 'sucesso';
 
     }

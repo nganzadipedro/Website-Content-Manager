@@ -31,6 +31,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('news-details/{slug}', 'Controllers\WebsiteController@news_details')->name('news_details');
     Route::get('list-lawyers', 'Controllers\WebsiteController@list_lawyers')->name('list_lawyers');
     Route::get('list-trainee', 'Controllers\WebsiteController@list_trainee')->name('list_trainee');
+    Route::get('financial-report', 'Controllers\WebsiteController@financial_report')->name('financial_report');
     Route::get('download-document/{file}', 'Controllers\WebsiteController@download_document')->name('download_doc');
     Route::get('open-document-attach/{file}', 'Controllers\WebsiteController@open_document_attach')->name('open_doc_attach');
 
@@ -59,18 +60,22 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
     Route::get('carrossel/add', 'Livewire\Admin\Cadastrarimagemcarrossel')->name('cadimagemcarrossel');
+    Route::get('financial-report/add', 'Livewire\Admin\Adicionarrelatorio')->name('cadrelatorio');
     Route::get('gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
     Route::get('newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
     Route::get('carrossel/list', 'Livewire\Admin\Listarcarrossel')->name('listcarrossel');
     Route::get('gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
+    Route::get('financial-report/list', 'Livewire\Admin\Listarrelatorios')->name('listrelatorios');
     Route::get('newslater/edit/{hash}', 'Livewire\Admin\Editarnoticia')->name('editnoticia');
 
     Route::post('system/newslater/post', 'Controllers\PostController@newslater_post');
+    Route::post('system/financial-report/post', 'Controllers\PostController@financial_report_post');
     Route::post('system/carrossel/post', 'Controllers\PostController@carrossel_post');
     Route::post('system/gallery/post', 'Controllers\PostController@gallery_post');
     Route::post('system/complaint/post', 'Controllers\PostController@complaint_post');
     Route::post('system/message/post', 'Controllers\PostController@message_post');
     Route::post('system/newslater/delete', 'Controllers\PostController@delete_news');
+    Route::post('system/financial-report/delete', 'Controllers\PostController@delete_financial_report');
     Route::post('system/gallery/delete', 'Controllers\PostController@delete_gallery');
     Route::post('system/carrossel/delete', 'Controllers\PostController@delete_carrossel');
     Route::post('system/newslater/update', 'Controllers\PostController@newslater_update');
@@ -148,7 +153,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/dashboard', 'Livewire\Admin\Dashboard')->name('dashboard');
                 Route::get('/dashboard-system', 'Livewire\Admin\Dashboardsistema')->name('dashboard_system');
                 Route::get('/newslater/add', 'Livewire\Admin\Cadastrarnoticia')->name('cadnoticia');
-              
+
                 Route::get('/gallery/add', 'Livewire\Admin\Cadastrargaleria')->name('cadgaleria');
                 Route::get('/newslater/list', 'Livewire\Admin\Listarnoticia')->name('listnoticia');
                 Route::get('/gallery/list', 'Livewire\Admin\Listargaleria')->name('listgaleria');
@@ -162,7 +167,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/list/trainees', 'Livewire\Admin\Listarestagiarios')->name('list_trainees');
                 Route::get('/list/lawyers', 'Livewire\Admin\Listaradvogados')->name('list_lawyers');
                 Route::get('/list/undefined', 'Livewire\Admin\Listarindefinidos')->name('list_undefined');
-                Route::get('/edit-data/member/{hash}', 'Livewire\Admin\Editarassociado')->name('edit_member');
+                Route::get('/edit-data/member/{hash}', 'Livewire\Areatecnica\Editarassociado')->name('edit_member');
 
                 Route::get('/assistance/list/{tipo}', 'Livewire\Admin\Listarassistencia')->name('list_assistencia');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
