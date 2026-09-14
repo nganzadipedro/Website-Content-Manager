@@ -25,12 +25,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nº Processo</th>
+                                        <th></th>
                                         <th>Assunto</th>
-                                        <th>Tipo de Processo</th>
                                         <th>Data de Entrada</th>
                                         <th>Requerente</th>
-                                        <th></th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,20 +36,25 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
-                                            <td>{{$item->assunto}}</td>
-                                            <td>{{$item->gettipoprocesso->descricao}}</td>
-                                            <td>{{$item->data_entrada}}</td>
-                                            <td>{{$item->proveniencia}}</td>
                                             <td>
-                                                <a href="{{ route('system.admin.atribuir_advogado', $item->hash) }}"
-                                                    class="btn btn-success">
-                                                    Atribuir Advogado
-                                                </a>
-                                            </td>
-                                            <td>
+                                                @if ($item->tipo_indicacao != 'Auto-Indicação')
+                                                    <a href="{{ route('system.admin.atribuir_advogado', $item->hash) }}"
+                                                        class="badge bg-green-lt" title="Atribuir Advogados">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                            <path d="M16 19h6" />
+                                                            <path d="M19 16v6" />
+                                                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                                        </svg>
+                                                    </a>
+                                                @endif
                                                 <a title="Detalhes do Registo"
                                                     href="{{ route('system.admin.detalhes_registo', $item->hash) }}"
-                                                    class="badge bg-blue-lt">
+                                                    class="badge bg-blue-lt" title="Ver Detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -65,7 +68,9 @@
                                                     </svg>
                                                 </a>
                                             </td>
-
+                                            <td>{{$item->assunto}}</td>
+                                            <td>{{$item->data_entrada}}</td>
+                                            <td>{{$item->proveniencia}}</td>
                                         </tr>
                                     @endforeach
 

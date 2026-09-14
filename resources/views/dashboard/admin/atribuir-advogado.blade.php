@@ -1,6 +1,5 @@
 <div>
 
-
     <style>
         .detalhes {
             font-size: 14px;
@@ -12,22 +11,11 @@
             overflow: auto;
         }
 
-        .btn-outro {
-            cursor: pointer;
-            color: black;
-            text-decoration: underline;
+        .obrigatorio {
+            color: red;
+            font-weight: bold;
         }
 
-        .link-advogado {
-            cursor: pointer;
-            color: black;
-            text-decoration: underline;
-        }
-
-        .link-advogado:hover {
-            color: blue;
-            text-decoration: none;
-        }
     </style>
 
 
@@ -282,7 +270,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-12 col-md-12">
                             <div class="form-group">
-                                <label for="nome_completo">Nome completo</label>
+                                <label class="form-label" for="nome_completo">Nome completo <span class="obrigatorio">*</span></label>
                                 <input type="text" maxlength="200" name="nome_completo" class="form-control"
                                     id="nome_completo" value="">
                             </div>
@@ -291,7 +279,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-12 col-12 col-md-12">
                             <div class="form-group">
-                                <label for="nome_profissional">Nome profissional</label>
+                                <label class="form-label" for="nome_profissional">Nome profissional <span class="obrigatorio">*</span></label>
                                 <input type="text" maxlength="200" name="nome_profissional" class="form-control"
                                     id="nome_profissional" value="">
                             </div>
@@ -302,7 +290,7 @@
 
                         <div class="col-lg-6 col-12 col-md-6">
                             <div class="form-group">
-                                <label for="num_bi">Nº Bilhete</label>
+                                <label class="form-label" for="num_bi">Nº Bilhete <span class="obrigatorio">*</span></label>
                                 <input type="text" maxlength="15" name="num_bi" class="form-control" id="num_bi"
                                     value="">
                             </div>
@@ -310,7 +298,7 @@
 
                         <div class="col-lg-6 col-12 col-md-6">
                             <div class="form-group">
-                                <label for="telefone1">Telefone principal</label>
+                                <label class="form-label" for="telefone1">Telefone principal <span class="obrigatorio">*</span></label>
                                 <input type="text" maxlength="9" name="telefone1" class="form-control" id="telefone1"
                                     value="">
                             </div>
@@ -320,7 +308,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-6 col-12 col-md-6">
                             <div class="form-group">
-                                <label for="telefone2">Telefone alternativo</label>
+                                <label class="form-label" for="telefone2">Telefone alternativo</label>
                                 <input type="text" maxlength="9" name="telefone2" class="form-control" id="telefone2"
                                     value="">
                             </div>
@@ -328,7 +316,7 @@
 
                         <div class="col-lg-6 col-12 col-md-6">
                             <div class="form-group">
-                                <label for="sexo">Género</label>
+                                <label class="form-label" for="sexo">Género <span class="obrigatorio">*</span></label>
                                 <select name="sexo" id="sexo" class="form-select">
                                     <option value="" selected>Selecione...</option>
                                     <option value="Masculino">Masculino</option>
@@ -341,7 +329,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-12 col-12 col-md-12">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label class="form-label" for="email">Email</label>
                                 <input type="email" maxlength="200" name="email" class="form-control" id="email"
                                     value="">
                             </div>
@@ -351,7 +339,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-6 col-12 col-md-6">
                             <div class="form-group">
-                                <label for="categoria">Categoria</label>
+                                <label class="form-label" for="categoria">Categoria <span class="obrigatorio">*</span></label>
                                 <select name="categoria" id="categoria" class="form-select">
                                     <option value="" selected>Selecione...</option>
                                     <option value="Advogado">Advogado</option>
@@ -366,7 +354,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="num_associado">Nº Associado (Nº Cédula)</label>
+                                    <label class="form-label" for="num_associado">Nº Associado (Nº Cédula) <span class="obrigatorio">*</span></label>
                                     <input type="text" maxlength="9" name="num_associado" class="form-control"
                                         id="num_associado" value="">
                                 </div>
@@ -374,7 +362,7 @@
 
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="num_estagiario_adv">Nº Estagiário (Nº Cédula)</label>
+                                    <label class="form-label" for="num_estagiario_adv">Nº Estagiário (Nº Cédula)</label>
                                     <input type="text" maxlength="9" name="num_estagiario_adv" class="form-control"
                                         id="num_estagiario_adv" value="">
                                 </div>
@@ -385,7 +373,7 @@
 
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="data_inscricao_oaa">Data de Inscrição Advogado</label>
+                                    <label class="form-label" for="data_inscricao_oaa">Data de Inscrição Advogado</label>
                                     <input type="date" name="data_inscricao_oaa" class="form-control"
                                         id="data_inscricao_oaa" value="">
                                 </div>
@@ -393,7 +381,7 @@
 
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="data_inscricao_estagiario_adv">Data de Inscrição
+                                    <label class="form-label" for="data_inscricao_estagiario_adv">Data de Inscrição
                                         Estagiário</label>
                                     <input type="date" name="data_inscricao_estagiario_adv" class="form-control"
                                         id="data_inscricao_estagiario_adv" value="">
@@ -404,14 +392,14 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="endereco_profissional_adv">Endereço Profissional</label>
+                                    <label class="form-label" for="endereco_profissional_adv">Endereço Profissional <span class="obrigatorio">*</span></label>
                                     <input type="text" class="form-control" maxlength="200"
                                         id="endereco_profissional_adv" name="endereco_profissional_adv">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="municipio_id_adv">Município</label>
+                                    <label class="form-label" for="municipio_id_adv">Município <span class="obrigatorio">*</span></label>
                                     <select name="municipio_id_adv" id="municipio_id_adv" class="form-select">
                                         <option value="" selected>Selecione...</option>
                                         @foreach ($municipios as $muni)
@@ -424,7 +412,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="nome_escritorio_adv">Nome do Escritório</label>
+                                    <label class="form-label" for="nome_escritorio_adv">Nome do Escritório</label>
                                     <input type="text" class="form-control" maxlength="200" id="nome_escritorio_adv"
                                         name="nome_escritorio_adv">
                                 </div>
@@ -436,14 +424,14 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="num_estagiario_est">Nº Estagiário (Nº Cédula)</label>
+                                    <label class="form-label" for="num_estagiario_est">Nº Estagiário (Nº Cédula) <span class="obrigatorio">*</span></label>
                                     <input type="text" maxlength="9" name="num_estagiario_est" class="form-control"
                                         id="num_estagiario_est" value="">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="data_inscricao_estagiario_est">Data de Inscrição
+                                    <label class="form-label" for="data_inscricao_estagiario_est">Data de Inscrição
                                         Estagiário</label>
                                     <input type="date" name="data_inscricao_estagiario_est" class="form-control"
                                         id="data_inscricao_estagiario_est" value="">
@@ -453,14 +441,14 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="nome_patrono">Nome do patrono</label>
+                                    <label class="form-label" for="nome_patrono">Nome do patrono <span class="obrigatorio">*</span></label>
                                     <input type="text" class="form-control" maxlength="200" id="nome_patrono"
                                         name="nome_patrono">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="num_cedula_patrono">Nº Cédula Patrono</label>
+                                    <label class="form-label" for="num_cedula_patrono">Nº Cédula Patrono <span class="obrigatorio">*</span></label>
                                     <input type="text" maxlength="9" name="num_cedula_patrono" class="form-control"
                                         id="num_cedula_patrono" value="">
                                 </div>
@@ -470,14 +458,14 @@
                         <div class="row mt-3">
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="tel_patrono">Telefone do patrono</label>
+                                    <label class="form-label" for="tel_patrono">Telefone do patrono</label>
                                     <input type="text" maxlength="9" class="form-control" maxlength="200"
                                         id="tel_patrono" name="tel_patrono">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="email_patrono">Email do patrono</label>
+                                    <label class="form-label" for="email_patrono">Email do patrono</label>
                                     <input type="email" class="form-control" maxlength="200" id="email_patrono"
                                         name="email_patrono">
                                 </div>
@@ -489,14 +477,14 @@
 
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="nome_escritorio_est">Nome do Escritório</label>
+                                    <label class="form-label" for="nome_escritorio_est">Nome do Escritório <span class="obrigatorio">*</span></label>
                                     <input type="text" class="form-control" maxlength="200" id="nome_escritorio_est"
                                         name="nome_escritorio_est">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="municipio_id_est">Município (Escritório)</label>
+                                    <label class="form-label" for="municipio_id_est">Município (Escritório) <span class="obrigatorio">*</span></label>
                                     <select name="municipio_id_est" id="municipio_id_est" class="form-select">
                                         <option value="" selected>Selecione...</option>
                                         @foreach ($municipios as $muni)
@@ -510,7 +498,7 @@
                         <div class="row mt-3">
                             <div class="col-lg-12 col-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="endereco_escritorio_est">Endereço do Escritório</label>
+                                    <label class="form-label" for="endereco_escritorio_est">Endereço do Escritório <span class="obrigatorio">*</span></label>
                                     <input type="text" class="form-control" maxlength="200" id="endereco_escritorio_est"
                                         name="endereco_escritorio_est">
                                 </div>

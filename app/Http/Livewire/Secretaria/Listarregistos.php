@@ -12,6 +12,7 @@ class Listarregistos extends Component
     public $lista = array();
     public $lista_recepcao = array();
     public $tipo_processo;
+    public $tipo_processo_desc;
 
     public function mount($tipo)
     {
@@ -30,14 +31,17 @@ class Listarregistos extends Component
             $this->lista = Registoentrada::where('tipo_processo_id', 2)
                 ->orWhere('tipo_processo_id', 3)
                 ->orderBy('id', 'desc')->get();
+            $this->tipo_processo_desc = 'Processos de Inscrição';
         } else if ($this->tipo_processo == 'assistencia') {
             $this->lista = Registoentrada::where('tipo_processo_id', 1)
                 ->orderBy('id', 'desc')->get();
+            $this->tipo_processo_desc = 'Processos de Assistência Judiciária';
         } else {
             $this->lista = Registoentrada::where('tipo_processo_id', '!=', 2)
                 ->Where('tipo_processo_id', '!=', 3)
                 ->Where('tipo_processo_id', '!=', 1)
                 ->orderBy('id', 'desc')->get();
+            $this->tipo_processo_desc = 'Outros Processos';
         }
 
         if (Auth::user()->permissao_id == 2) {

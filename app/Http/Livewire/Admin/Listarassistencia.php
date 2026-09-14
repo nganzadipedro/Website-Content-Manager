@@ -21,7 +21,7 @@ class Listarassistencia extends Component
     public function render()
     {
         if ($this->tipo == 'not-solved') {
-            $this->lista = Registoentrada::where('tipo_processo_id', 1)->where('estado', 'pendente')->get();
+            $this->lista = Registoentrada::where('tipo_processo_id', 1)->where('estado', 'pendente')->orderBy('id','desc')->get();
             if (Auth::user()->permissao_id == 2) {
                 return view('dashboard.secretaria.aj-pendentes')->extends('layouts-new.app')->section('content');
             }
@@ -29,7 +29,7 @@ class Listarassistencia extends Component
         } elseif ($this->tipo == 'solved') {
             $this->lista = Registoentrada::where('encaminhado', 'Secretaria')
                 ->where('estado', 'em tratamento')
-                ->where('tipo_processo_id', 1)->get();
+                ->where('tipo_processo_id', 1)->orderBy('id','desc')->get();
             if (Auth::user()->permissao_id == 2) {
                 return view('dashboard.secretaria.aj-deferidos')->extends('layouts-new.app')->section('content');
             }
@@ -37,7 +37,7 @@ class Listarassistencia extends Component
         } elseif ($this->tipo == 'documents') {
             $this->lista = Registoentrada::where('encaminhado', 'Secretaria')
                 ->where('estado', 'deferido')
-                ->where('tipo_processo_id', 1)->get();
+                ->where('tipo_processo_id', 1)->orderBy('id','desc')->get();
             if (Auth::user()->permissao_id == 2) {
                 return view('dashboard.secretaria.aj-documentos')->extends('layouts-new.app')->section('content');
             }

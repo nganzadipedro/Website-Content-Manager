@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Listagem dos registos de entrada</h3>
+                            <h3 class="h1">Listagem dos registos de entrada ({{ $tipo_processo_desc }})</h3>
                             @if (Auth::user()->permissao_id == 2)
                                 <div class="mt-3">
                                     <a href="{{ route('system.secretaria.registar_entrada') }}" class="btn btn-info"
@@ -57,7 +57,7 @@
                                             <td>{{$item->proveniencia}}</td>
                                             <td>
                                                 @if (Auth::user()->permissao_id == 2)
-                                                    @if ($item->estado != 'deferido')
+                                                    @if ($item->estado == 'pendente')
                                                         <a title="Editar Registo" class="badge bg-yellow-lt"
                                                             href="{{ route('system.secretaria.editar_registo', $item->hash) }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -118,12 +118,6 @@
 
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();

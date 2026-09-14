@@ -357,7 +357,7 @@
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
                                         <a class="dropdown-item" href="{{ route('system.secretaria.registar_entrada') }}">
-                                            Cadastrar
+                                           + Novo Registo +
                                         </a>
                                         <a class="dropdown-item" href="{{ route('system.secretaria.listar_registos', 'inscricao') }}">
                                             Processos de Inscrição

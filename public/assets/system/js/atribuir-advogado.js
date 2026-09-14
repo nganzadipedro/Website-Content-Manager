@@ -280,14 +280,14 @@ function valida_formulario() {
             msgErro = "Digite o número da cédula do patrono";
             tem = false;
         }
-        else if (tel_patrono == '' || tel_patrono == null) {
-            msgErro = "Digite o número de telefone do patrono";
-            tem = false;
-        }
-        else if (email_patrono == '' || email_patrono == null) {
-            msgErro = "Digite o email do patrono";
-            tem = false;
-        }
+        // else if (tel_patrono == '' || tel_patrono == null) {
+        //     msgErro = "Digite o número de telefone do patrono";
+        //     tem = false;
+        // }
+        // else if (email_patrono == '' || email_patrono == null) {
+        //     msgErro = "Digite o email do patrono";
+        //     tem = false;
+        // }
         else if (nome_escritorio == '' || nome_escritorio == null) {
             msgErro = "Digite o nome do escritório";
             tem = false;
