@@ -24,26 +24,7 @@ class Documentoassistencia extends Component
     {
         $this->registo_hash = $hash;
         $this->registo = Registoentrada::where('hash', $this->registo_hash)->first();
-        $this->advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $this->registo->id)->first();
-
-        if ($this->advogado_atribuido) {
-            if ($this->advogado_atribuido->advogado_id != null) {
-                $this->nome_advogado = $this->advogado_atribuido->getadvogado->getpessoa->nome;
-                $this->telefone_advogado = $this->advogado_atribuido->getadvogado->getpessoa->telefone;
-                $this->email_advogado = $this->advogado_atribuido->getadvogado->getpessoa->email;
-                $this->categoria_advogado = $this->advogado_atribuido->getadvogado->categoria;
-            } else {
-                $this->nome_advogado = $this->advogado_atribuido->nome_completo;
-                $this->telefone_advogado = $this->advogado_atribuido->telefone;
-                $this->email_advogado = $this->advogado_atribuido->email;
-                $this->categoria_advogado = $this->advogado_atribuido->categoria;
-            }
-        } else {
-            $this->nome_advogado = 'Não atribuído';
-            $this->telefone_advogado = 'Não atribuído';
-            $this->email_advogado = 'Não atribuído';
-            $this->categoria_advogado = 'Não atribuído';
-        }
+        $this->advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $this->registo->id)->get();
     }
     public function render()
     {

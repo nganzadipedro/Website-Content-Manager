@@ -67,6 +67,7 @@
                                                     <option value="Relatório de Gestão" selected>Relatório de Gestão</option>
                                                     <option value="Balancete">Balancete</option>
                                                     <option value="Demonstração Financeira">Demonstração Financeira</option>
+                                                    <option value="Relatório de Actividades">Relatório de Actividades</option>
                                                 </select>
                                             </div>
                                         </div>

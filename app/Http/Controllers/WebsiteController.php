@@ -216,6 +216,70 @@ class WebsiteController extends Controller
 
     }
 
+    public function sitemap()
+    {
+
+        $urls = [
+            [
+                'loc' => url('/'),
+                'freq' => 'daily',
+                'priority' => '1.0',
+            ],
+            [
+                'loc' => url('/home'),
+                'freq' => 'daily',
+                'priority' => '0.8',
+            ],
+            [
+                'loc' => url('/services'),
+                'freq' => 'weekly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/news'),
+                'freq' => 'weekly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/members'),
+                'freq' => 'weekly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/comissions'),
+                'freq' => 'monthly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/legal-assistance'),
+                'freq' => 'daily',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/financial-report'),
+                'freq' => 'monthly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/gallery'),
+                'freq' => 'weekly',
+                'priority' => '0.7',
+            ],
+            [
+                'loc' => url('/contact'),
+                'freq' => 'daily',
+                'priority' => '0.7',
+            ]
+        ];
+
+        $noticias = Noticia::take(6)->orderBy('id', 'desc')->get();
+
+        return response()
+            ->view('sitemap', compact('urls', 'noticias'))
+            ->header('Content-Type', 'application/xml');
+
+    }
+
     public function download_document($file)
     {
         $path = storage_path('app/public/docspdf/' . $file);

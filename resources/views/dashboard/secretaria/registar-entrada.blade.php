@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <h4 class="card-title">Registo de Entrada</h4>
                             </div>
-                            
+
                             <div class="card-body">
 
                                 @csrf
@@ -32,9 +32,8 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="tipo_processo_id">Tipo de Processo</label>
-                                                    <select wire:model="tipo_processo_id" clang="form-control"
-                                                        name="tipo_processo_id" id="tipo_processo_id"
-                                                        class="form-control">
+                                                    <select wire:model="tipo_processo_id" class="form-select"
+                                                        name="tipo_processo_id" id="tipo_processo_id">
                                                         <option selected>Selecione...</option>
                                                         @foreach ($tipos_processo as $tipo)
                                                             <option value="{{$tipo->id}}">{{$tipo->descricao}}</option>
@@ -69,8 +68,8 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="titulo">Título/Função</label>
-                                                    <select wire:model="titulo" clang="form-control" name="titulo"
-                                                        id="titulo" class="form-control">
+                                                    <select wire:model="titulo" class="form-select" name="titulo"
+                                                        id="titulo">
                                                         <option selected>Selecione...</option>
                                                         <option value="Cidadão">Cidadão Comum</option>
                                                         <option value="Advogado">Advogado</option>
@@ -108,9 +107,8 @@
                                                 <div class="col-lg-3 col-12 col-md-3 col-xl-3">
                                                     <div class="form-group">
                                                         <label for="municipio_requerente">Município</label>
-                                                        <select wire:model="municipio_requerente" clang="form-control"
-                                                            name="municipio_requerente" id="municipio_requerente"
-                                                            class="form-control">
+                                                        <select wire:model="municipio_requerente" class="form-select"
+                                                            name="municipio_requerente" id="municipio_requerente">
                                                             <option selected>Selecione...</option>
                                                             @foreach ($municipios as $muni)
                                                                 <option value="{{$muni->id}}">{{$muni->descricao}}</option>
@@ -127,8 +125,8 @@
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
                                                     <label for="tipo_documento">Tipo de Documento</label>
-                                                    <select wire:model="tipo_documento" clang="form-control"
-                                                        name="tipo_documento" id="tipo_documento" class="form-control">
+                                                    <select wire:model="tipo_documento" class="form-select"
+                                                        name="tipo_documento" id="tipo_documento">
                                                         <option value="Requerimento" selected>Requerimento</option>
                                                         <option value="Ofício">Ofício</option>
                                                     </select>
@@ -170,6 +168,19 @@
                                                         type="text" name="telefone2" id="telefone2" value="">
                                                 </div>
                                             </div>
+                                            @if($tipo_processo_id == 1)
+                                                <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="tipo_indicacao">Tipo de Indicação</label>
+                                                        <select wire:model="tipo_indicacao" class="form-select"
+                                                            name="tipo_indicacao" id="tipo_indicacao">
+                                                             <option selected>Selecione...</option>
+                                                            <option value="Auto-Indicação">Auto-Indicação</option>
+                                                            <option value="Indicação-Conselheiro">Indicação-Conselheiro</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="observacao">Observação</label>
@@ -177,6 +188,26 @@
                                                         class="form-control" id="observacao" value="">
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            
+                                            @if($tipo_processo_id == 1)
+                                                <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="tipo_situacao_assistencia">Tipo de Situação</label>
+                                                        <select wire:model="tipo_situacao_assistencia" class="form-select"
+                                                            name="tipo_situacao_assistencia" id="tipo_situacao_assistencia">
+                                                             <option selected>Selecione...</option>
+                                                            <option value="Solicitação do Cidadão">Solicitação do Cidadão</option>
+                                                            <option value="Solicitação de Instituição">Solicitação de Instituição</option>
+                                                            <option value="Substituição de Advogado">Substituição de Advogado</option>
+                                                            <option value="Advogado Solicita Permissão de Intervenção">Advogado Solicita Permissão de Intervenção</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                           
                                         </div>
 
                                         <div class="row mt-3">

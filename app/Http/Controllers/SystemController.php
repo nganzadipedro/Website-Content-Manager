@@ -1326,8 +1326,8 @@ class SystemController extends Controller
             return 'sem-advogado';
         }
 
-        $registo->estado = 'deferido';
-        $registo->encaminhado = 'Área Técnica';
+        $registo->estado = 'em tratamento';
+        $registo->encaminhado = 'Secretaria';
         $registo->save();
 
         // processo de notificação dos advogados que vão fazer a assistência judiciária
@@ -1687,12 +1687,25 @@ class SystemController extends Controller
             return 'duplicado';
         }
 
-        if($advogado->categoria == 'Advogado' && $advogado->num_associado == null){
-            return 'sem cédula';
+        if ($advogado->categoria == 'Advogado') {
+
+            if ($advogado->num_associado == null) {
+                return 'sem cédula';
+            } else if ($advogado->municipio_id == null) {
+                return 'municipio';
+            } else if ($advogado->endereco_escritorio == null) {
+                return 'endereco';
+            }
         }
 
-        if($advogado->categoria == 'Estagiario' && $advogado->num_estagiario == null){
-            return 'sem cédula';
+        if ($advogado->categoria == 'Estagiario') {
+            if ($advogado->num_estagiario == null) {
+                return 'sem cédula';
+            } else if ($advogado->municipio_id == null) {
+                return 'municipio';
+            } else if ($advogado->endereco_escritorio == null) {
+                return 'endereco';
+            }
         }
 
         $atribuicao = Advogadoatribuido::create([
@@ -2942,79 +2955,6 @@ class SystemController extends Controller
             'data_despacho' => $inscricao_advogado->data_despacho,
             'mensagem_despacho' => $texto,
             'data' => $data_emissao
-        ]);
-
-        return $pdf->stream();
-
-    }
-
-    public function documento_assistencia($hash_registo)
-    {
-
-        $registo_entrada = Registoentrada::where('hash', $hash_registo)->first();
-        $advogado_atribuido = null;
-        $inscricao_advogado = null;
-
-        $nome_advogado = '';
-        $telefone_advogado = '';
-        $email_advogado = '';
-        $categoria_advogado = '';
-        $endereco_advogado = '';
-
-        if ($registo_entrada) {
-            $inscricao_advogado = Inscricaoadvogado::where('registo_entrada_id', $registo_entrada->id)->first();
-            $advogado_atribuido = Advogadoatribuido::where('registo_entrada_id', $registo_entrada->id)->first();
-        }
-
-        if ($advogado_atribuido) {
-            if ($advogado_atribuido->advogado_id != null) {
-                $nome_advogado = $advogado_atribuido->getadvogado->getpessoa->nome;
-                $telefone_advogado = $advogado_atribuido->getadvogado->getpessoa->telefone;
-                $email_advogado = $advogado_atribuido->getadvogado->getpessoa->email;
-                $categoria_advogado = $advogado_atribuido->getadvogado->categoria;
-                $endereco_advogado = $advogado_atribuido->getadvogado->endereco;
-            } else {
-                $nome_advogado = $advogado_atribuido->nome_completo;
-                $telefone_advogado = $advogado_atribuido->telefone;
-                $email_advogado = $advogado_atribuido->email;
-                $categoria_advogado = $advogado_atribuido->categoria;
-                $endereco_advogado = $advogado_atribuido->endereco;
-            }
-        } else {
-            $nome_advogado = 'Não atribuído';
-            $telefone_advogado = 'Não atribuído';
-            $email_advogado = 'Não atribuído';
-            $categoria_advogado = 'Não atribuído';
-            $endereco_advogado = 'Não atribuído';
-        }
-
-        // processo de emissão de documento de despacho
-        $meses = [
-            '01' => 'Janeiro',
-            '02' => 'Fevereiro',
-            '03' => 'Março',
-            '04' => 'Abril',
-            '05' => 'Maio',
-            '06' => 'Junho',
-            '07' => 'Julho',
-            '08' => 'Agosto',
-            '09' => 'Setembro',
-            '10' => 'Outubro',
-            '11' => 'Novembro',
-            '12' => 'Dezembro'
-        ];
-
-
-        $data_emissao[0] = date("d");
-        $data_emissao[1] = $meses[date("m")];
-        $data_emissao[2] = date("Y");
-
-        $pdf = Pdf::loadView('documents-pdf.documento-assistencia1', [
-            'nome_advogado' => $nome_advogado,
-            'telefone_advogado' => $telefone_advogado,
-            'email_advogado' => $email_advogado,
-            'categoria_advogado' => $categoria_advogado,
-            'endereco_advogado' => $endereco_advogado
         ]);
 
         return $pdf->stream();

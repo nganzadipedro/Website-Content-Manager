@@ -22,6 +22,8 @@ class Registarentrada extends Component
     public $telefone;
     public $telefone2;
     public $titulo;
+    public $tipo_indicacao;
+    public $tipo_situacao_assistencia;
     public $outro_titulo;
     public $proveniencia;
     public $municipio_requerente;
@@ -32,7 +34,7 @@ class Registarentrada extends Component
 
     public function render()
     {
-        $this->municipios = Municipio::all();
+        $this->municipios = Municipio::orderBy('descricao', 'asc')->get();
         $this->tipos_processo = Tipoprocesso::all();
         return view('dashboard.secretaria.registar-entrada')->extends('layouts-new.app')->section('content');
     }
@@ -55,7 +57,15 @@ class Registarentrada extends Component
             $this->mensagem('Informe a data de entrada', 'warning');
         } else if ($this->tipo_processo_id == 9 && ($this->outro_tipo_processo == null || $this->outro_tipo_processo == '')) {
             $this->mensagem('Informe o outro tipo de processo', 'warning');
-        } else {
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == null || $this->tipo_indicacao == '')) {
+            $this->mensagem('Informe o tipo de indicação da assistência', 'warning');
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_situacao_assistencia == null || $this->tipo_situacao_assistencia == '')) {
+            $this->mensagem('Informe o tipo de situação da assistência', 'warning');
+        }
+        else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == 'Auto-Indicação' && $this->tipo_situacao_assistencia != 'Advogado Solicita Permissão de Intervenção')) {
+            $this->mensagem('O tipo de indicação e o tipo de situação da assistência não são compatíveis', 'warning');
+        }
+        else {
 
             date_default_timezone_set("Africa/Luanda");
 
@@ -75,6 +85,8 @@ class Registarentrada extends Component
                 'outro_tipo_processo' => $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo,
                 'destinatario' => $this->destinatario == null ? 'CPL-OAA' : $this->destinatario,
                 'tipo_documento' => $this->tipo_documento == null ? 'Requerimento' : $this->tipo_documento,
+                'tipo_indicacao' => $this->tipo_processo_id == 1 ? $this->tipo_indicacao : null,
+                'tipo_situacao_assistencia' => $this->tipo_processo_id == 1 ? $this->tipo_situacao_assistencia : null,
                 'user_id' => Auth::user()->id
             ]);
 
@@ -98,7 +110,7 @@ class Registarentrada extends Component
                 ActividadesistemaController::historico_processo("O processo foi encaminhado para a área técnica.", $registo->id);
             }
 
-            if ($registo->tipo_processo_id == 1) {
+            if ($registo->tipo_processo_id == 1 && $registo->tipo_indicacao == 'Indicação-Conselheiro') {
                 $registo->encaminhado = 'Conselheiro';
                 $registo->estado = 'pendente';
                 $registo->save();

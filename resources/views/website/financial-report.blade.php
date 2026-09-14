@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-12 text-center" style="margin-top: 100px;">
                     <h3>Informação Financeira</h3>
-                    <h4>Relatórios Financeiros e Balancetes</h4>
+                    <h4>Relatórios financeiros, Balancetes e Demonstrações financeiras</h4>
                 </div>
             </div>
         </section>
@@ -47,7 +47,7 @@
                                     <th>Ano</th>
                                     <th>Categoria</th>
                                     <th>Trimestre</th>
-                                    <th>Ações</th>
+                                    <th></th>
                                 </tr>
                             </thead>
 

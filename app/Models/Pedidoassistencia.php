@@ -15,17 +15,18 @@ class Pedidoassistencia extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'hash',
-        'observacao',
         'numero',
         'codigo',
+        'observacao',
         'sexo',
         'natureza',
         'localizacao',
+        'insitituicao_copia',
         'user_id',
         'registo_entrada_id',
         'estado',
-        'nota_encaminhamento',
-        'encaminhado'
+        'tipo_situacao_assistencia',
+        'tipo_indicacao'
     ];
 
     public function getUser(){

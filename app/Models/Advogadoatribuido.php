@@ -18,10 +18,6 @@ class Advogadoatribuido extends Model
         'advogado_id',
         'registo_entrada_id',
         'observacao',
-        'telefone',
-        'email',
-        'cedula',
-        'nome_completo',
         'user_id'
     ];
 

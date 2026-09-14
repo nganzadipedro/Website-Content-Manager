@@ -16,7 +16,7 @@
         background-color: white;
         color: black;
         text-align: center;
-        font-size: 24px;
+        font-size: 22px;
         margin-top: -10px;
     }
 
@@ -30,7 +30,7 @@
         position: relative;
         top: -20px;
         left: 320px;
-        font-size: 13px;
+        font-size: 12px;
         width: 370px;
         overflow-wrap: break-word;
     }
@@ -46,12 +46,12 @@
     }
 
     .referencia-data p {
-        font-size: 13px;
+        font-size: 12px;
         display: inline-block;
         width: 48%;
     }
 
-     .referencia-data .p2 {
+    .referencia-data .p2 {
         position: relative;
         left: 170px;
     }
@@ -61,8 +61,8 @@
         margin: 0 auto;
         /* margin-top: -50px; */
         text-align: justify;
-        line-height: 1.8;
-        font-size: 13px;
+        line-height: 1.5;
+        font-size: 12px;
         font-family: minhafonte;
     }
 
@@ -72,9 +72,11 @@
     }
 
     .assinatura {
-        margin-top: 50px;
+        top: 850px;
+        left: 220px;
         text-align: center;
-        font-size: 13px;
+        position: fixed;
+        font-size: 12px;
     }
 
     .assinatura .linha {
@@ -83,8 +85,16 @@
         width: 250px;
     }
 
+    .assinatura img {
+        width: 180px;
+        height: 180px;
+        position: fixed;
+        top: 820px;
+        left: 260px;
+    }
+
     .rodape {
-        top: 970px;
+        top: 1000px;
         left: 20px;
         position: fixed;
         font-size: 12px;
@@ -103,6 +113,15 @@
         position: relative;
         top: -30px;
     }
+
+    .identificador-candidato {
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        top: 860px;
+        left: 40px;
+    }
 </style>
 
 <div class="cabecalho">
@@ -112,18 +131,30 @@
 </div>
 
 <p class="destinatarios">
-    Exmo/a Dr.(ª) <br>
-    {{ $nome_advogado }}<br>
-    {{ $endereco_advogado }}<br>
-    TEL: (+244) {{ $telefone_advogado }}<br><br>
+    @if ($varios == false)
+        Exmo./a Dr.(a) <br>
+    @endif
+    @if ($varios == true)
+        Exmos. Drs.(a) <br>
+    @endif
+    @foreach ($advogados as $adv)
+        {{ $adv->getadvogado->getpessoa->nome }}<br>
+    @endforeach
+    {{ $endereco }}<br>
+    TEL: (+244) {{ $contactos }}<br><br>
     <span class="provincia">LUANDA</span>
     <br><br>
-    <span class="patrono">C/C: Patrono Dr.(ª) HÉLDER BAPTISTA ANTUNES COM MAIS OUTROS NOMES CINCO</span>
+    @if ($copia_patrono == true)
+        <span class="patrono">C/C: Patrono Dr.(ª) HÉLDER BAPTISTA ANTUNES COM MAIS OUTROS NOMES CINCO</span>
+    @endif
+    @if ($copia_instituicao == true)
+        <span class="instituicao">C/C: Provedor de Justiça Dr. João Manuel Francisco</span>
+    @endif
 </p>
 
 <div class="referencia-data">
-    <p class="p1">N/Ref.ª N.º 0249/OAA-CPL/2026</p>
-    <p class="p2">Luanda, 21 de Janeiro de 2026</p>
+    <p class="p1">N/Ref.ª N.º {{ $doc->num_referencia }}/OAA-CPL/2026</p>
+    <p class="p2">Luanda, {{ $data_emissao[0] }} de {{ $data_emissao[1] }} de {{ $data_emissao[2] }}</p>
 </div>
 
 <div class="corpo">
@@ -133,26 +164,47 @@
         do Dec. Lei n.º 15/95, de 10 de Novembro, foi indicado(a) para intervir no processo de patrocínio judiciário
         requerido pelo(a) cidadão(ã):
         <br><br>
-        <span class="requerente">1.Vieira Luciano Manuel</span>
+        <span class="requerente">1.{{ $nome_requerente }}</span>
     </p>
-    <p class="pg2">
+    @if ($auto_indicacao == true)
+        <p class="pg2">
+            Tratando-se de um pedido atendível, nos termos do artigo 39º do Dec. Lei nº 15/95, de 10 de Novembro a Ordem não
+            vê qualquer inconveniente, devendo apenas cumprimentar o(a) cidadão(ã):
+        </p>
+    @endif
+    @if ($substituicao == true)
+        <p class="pg3">
+            Em substituição do(a) Dra. Edna de Lima, juntando-se para o efeito cópia do expediente apresentado pelo(a)
+            requerente.
+        </p>
+    @endif
+    <p class="pg4">
         Solicitamos que tão logo o(a) Colega tenha o 1.º encontro com o(a) Assistido(a), informe ao Conselho Provincial
-        de Luanda sobre a viabilidade da pretensão.<br>
+        de Luanda sobre a viabilidade da pretensão.<br><br>
         Informamos igualmente o(a) Colega que deverá comunicar ao Conselho Nacional da OAA sobre a conclusão do processo
         ora remetido, assim como, nos termos dos art.º 37.º do Dec. Lei n.º 15/95, remeter a factura para Pagamento de
         honorários e reembolsos das despesas.<br><br>
         Com os melhores cumprimentos, subscrevo-me.
     </p>
-    <p class="assinatura">
-        Atenciosamente<br><br>
-        O PRESIDENTE<br><br>
-        <span class="linha"></span><br>
-        Nilton Praia
-    </p>
+</div>
+
+<div class="assinatura">
+    <img src="https://cpl-oaa.ao/assets/system/logos/assinatura_dr_nilton_praia.png" alt="">
+    Atenciosamente<br><br>
+    O PRESIDENTE<br><br>
+    <span class="linha"></span><br>
+    Nilton Praia
+</div>
+
+<div class="identificador-candidato">
+    @php
+        $link = $qrcode;
+    @endphp
+    <span> @php echo DNS2D::getBarcodeHTML($link, 'QRCODE', 2, 2);  @endphp </span>
 </div>
 
 <div class="rodape">
     <span class="barra-baixo"></span>
     Largo João Seca, Casa n.º 6, R/C, Distrito Urbano da Maianga - Telef. 928 410 082<br>
-    NIF: 5000389510 - Luanda - Angola<br>
+    NIF: 5000389510 - Luanda - Angola | Código de Validação: {{ $doc->hash_control }}<br>
 </div>

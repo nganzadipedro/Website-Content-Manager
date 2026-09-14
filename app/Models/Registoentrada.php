@@ -32,6 +32,8 @@ class Registoentrada extends Model
         'numero',
         'nota_encaminhamento',
         'municipio_requerente',
+        'tipo_indicacao',
+        'tipo_situacao_assistencia',
         'endereco_requerente',
         'outro_tipo_processo',
         'encaminhado'

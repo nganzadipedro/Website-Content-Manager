@@ -25,6 +25,8 @@ class Editarregisto extends Component
     public $proveniencia;
 
     public $municipio_requerente;
+    public $tipo_indicacao;
+    public $tipo_situacao_assistencia;
     public $endereco_requerente;
 
     public $outro_tipo_processo;
@@ -33,7 +35,7 @@ class Editarregisto extends Component
     public $hash_registo;
     public $tipos_processo = array();
 
-     public $municipios = array();
+    public $municipios = array();
 
     public function mount($hash)
     {
@@ -59,6 +61,8 @@ class Editarregisto extends Component
         $this->observacao = $this->registo->observacao;
         $this->tipo_documento = $this->registo->tipo_documento;
         $this->proveniencia = $this->registo->proveniencia;
+        $this->tipo_indicacao = $this->registo->tipo_indicacao;
+        $this->tipo_situacao_assistencia = $this->registo->tipo_situacao_assistencia;
 
     }
     public function render()
@@ -83,10 +87,15 @@ class Editarregisto extends Component
             $this->mensagem('Informe o título/função', 'warning');
         } else if ($this->data_entrada == '' || $this->data_entrada == null) {
             $this->mensagem('Informe a data de entrada', 'warning');
-        } else if($this->tipo_processo_id == 9 && ($this->outro_tipo_processo == null || $this->outro_tipo_processo == '')){
+        } else if ($this->tipo_processo_id == 9 && ($this->outro_tipo_processo == null || $this->outro_tipo_processo == '')) {
             $this->mensagem('Informe o outro tipo de processo', 'warning');
-        }
-        else {
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == null || $this->tipo_indicacao == '')) {
+            $this->mensagem('Informe o tipo de indicação da assistência', 'warning');
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_situacao_assistencia == null || $this->tipo_situacao_assistencia == '')) {
+            $this->mensagem('Informe o tipo de situação da assistência', 'warning');
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == 'Auto-Indicação' && $this->tipo_situacao_assistencia != 'Advogado Solicita Permissão de Intervenção')) {
+            $this->mensagem('O tipo de indicação e o tipo de situação da assistência não são compatíveis', 'warning');
+        } else {
 
             $registo_antigo = Registoentrada::where('hash', $this->hash_registo)->first();
 
@@ -105,6 +114,8 @@ class Editarregisto extends Component
             $this->registo->outro_tipo_processo = $this->tipo_processo_id != 9 ? '' : $this->outro_tipo_processo;
             $this->registo->destinatario = $this->destinatario;
             $this->registo->tipo_documento = $this->tipo_documento;
+            $this->registo->tipo_indicacao = $this->tipo_processo_id == 1 ? $this->tipo_indicacao : null;
+            $this->registo->tipo_situacao_assistencia = $this->tipo_processo_id == 1 ? $this->tipo_situacao_assistencia : null;
             $this->registo->save();
 
             if ($registo_antigo->assunto != $this->registo->assunto) {
@@ -130,7 +141,7 @@ class Editarregisto extends Component
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
             }
 
-             if ($registo_antigo->titulo != $this->registo->titulo) {
+            if ($registo_antigo->titulo != $this->registo->titulo) {
                 $msg = "Actualizou o título/função do registo de ($registo_antigo->titulo) para (" . $this->registo->titulo . ")";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
@@ -174,6 +185,17 @@ class Editarregisto extends Component
                 $msg = "Actualizou o tipo de documento do registo de ($registo_antigo->tipo_documento) para (" . $this->registo->tipo_documento . ")";
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'registo-entrada', $registo_antigo->id);
                 ActividadesistemaController::inserir(Auth::id(), $msg, 'user', Auth::id());
+            }
+
+            if ($this->registo->tipo_processo_id == 1 && $this->registo->tipo_indicacao == 'Indicação-Conselheiro') {
+                $this->registo->encaminhado = 'Conselheiro';
+                $this->registo->estado = 'pendente';
+                $this->registo->save();
+            }
+            else if ($this->registo->tipo_processo_id == 1 && $this->registo->tipo_indicacao != 'Indicação-Conselheiro'){
+                $this->registo->encaminhado = 'Secretaria';
+                $this->registo->estado = 'pendente';
+                $this->registo->save();
             }
 
             $this->mensagemRefresh('Actualizações efectuadas com sucesso', 'success');

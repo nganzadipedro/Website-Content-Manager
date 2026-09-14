@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Noticia;
 use Illuminate\Support\Facades\{
     Auth,
     Route
@@ -24,6 +25,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('contact', 'Controllers\WebsiteController@contact')->name('contact');
     Route::get('services', 'Controllers\WebsiteController@services')->name('services');
     Route::get('members', 'Controllers\WebsiteController@members')->name('members');
+    Route::get('sitemap.xml', 'Controllers\WebsiteController@sitemap')->name('sitemap');
     Route::get('legal-assistance', 'Controllers\WebsiteController@legal_assistance')->name('legal_assistance');
     Route::get('news', 'Controllers\WebsiteController@news')->name('news');
     Route::get('comissions', 'Controllers\WebsiteController@comissions')->name('comissions');
@@ -41,7 +43,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/search-lawyer/post', 'Controllers\PostController@search_lawyer');
 
     Route::get('/trata-dados', 'Controllers\AdvogadoController@trata_dados');
-    Route::get('/testa-doc/{hash}', 'Controllers\SystemController@documento_assistencia');
+    Route::get('/testa-doc/{hash}', 'Controllers\DocumentoassistenciaController@documento_assistencia');
     Route::get('/register-member', 'Controllers\UserController@register_member');
 
     Route::get('/defesaoficiosa/solicitar', 'Controllers\WebsiteController@defesa_oficiosa');
@@ -137,10 +139,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('system/getHistoricoProcesso/{id}', 'Controllers\SystemController@getHistoricoProcesso');
     Route::get('system/getPatronoById/{id}', 'Controllers\SystemController@getPatronoById');
     Route::get('system/getEstagiariosPatrono/{id}', 'Controllers\SystemController@getEstagiariosPatrono');
+    Route::get('system/getAdvogadosAtribuidos/{id}', 'Controllers\AssistenciaController@getadvogados_atribuidos');
+    Route::get('system/getAdvogadoAtribuido/{id}', 'Controllers\AssistenciaController@getadvogado_atribuido');
     Route::get('system/getLinhaEstagiariosPatrono/{id}', 'Controllers\SystemController@getLinhaEstagiariosPatrono');
     Route::get('system/getDetalhesProcesso/{id_registo}', 'Controllers\SystemController@getDetalhesProcesso');
 
     Route::post('system/relatorio', 'Controllers\AdvogadoController@export_pdf_relatorio_area_tecnica');
+    Route::post('system/emitir-documento/post', 'Controllers\AssistenciaController@emitir_documento_post');
 
     Route::prefix('system')->name('system.')->group(function () {
 
@@ -240,12 +245,16 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/new/request-intervention', 'Livewire\Secretaria\Pedidointervencaocadastrar')->name('registar_pedido_intervencao');
                 Route::get('/list/request-intervention/{categoria}', 'Livewire\Secretaria\Pedidointervencaolistar')->name('pedido_intervencao_listar');
                 Route::get('/edit/process/{hash}', 'Livewire\Secretaria\Editarregisto')->name('editar_registo');
-                Route::get('/list/process', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
+                Route::get('/list/process/{tipo}', 'Livewire\Secretaria\Listarregistos')->name('listar_registos');
                 Route::get('/details/process/{hash}', 'Livewire\Secretaria\Detalhesregisto')->name('detalhes_registo');
                 Route::get('/complaints/list/{tipo}', 'Livewire\Admin\Listardenuncias')->name('listdenuncias');
                 Route::get('/code/registed/{hash}', 'Livewire\Secretaria\Codigoregisto')->name('codigo_registo');
                 Route::get('/generate/report', 'Livewire\Secretaria\Gerarrelatorio')->name('generate_report');
                 Route::get('/document/assistance/{hash}', 'Livewire\Secretaria\Documentoassistencia')->name('documento_assistencia');
+
+                Route::get('/assistance/list/{tipo}', 'Livewire\Admin\Listarassistencia')->name('list_assistencia');
+                Route::get('/set/lawyer/{hash}', 'Livewire\Admin\Atribuiradvogado')->name('atribuir_advogado');
+                Route::post('/imprimirpdf-assistencia', 'Controllers\DocumentoassistenciaController@documento_assistencia');
 
             });
         });

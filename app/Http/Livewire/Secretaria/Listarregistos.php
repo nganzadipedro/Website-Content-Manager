@@ -11,6 +11,13 @@ class Listarregistos extends Component
 
     public $lista = array();
     public $lista_recepcao = array();
+    public $tipo_processo;
+
+    public function mount($tipo)
+    {
+        $this->tipo_processo = $tipo;
+    }
+
     public function render()
     {
         $this->lista = Registoentrada::orderBy('id', 'desc')->get();
@@ -18,6 +25,20 @@ class Listarregistos extends Component
             ->where('tipo_processo_id', '!=', 3)
             ->orderBy('id', 'desc')
             ->get();
+
+        if ($this->tipo_processo == 'inscricao') {
+            $this->lista = Registoentrada::where('tipo_processo_id', 2)
+                ->orWhere('tipo_processo_id', 3)
+                ->orderBy('id', 'desc')->get();
+        } else if ($this->tipo_processo == 'assistencia') {
+            $this->lista = Registoentrada::where('tipo_processo_id', 1)
+                ->orderBy('id', 'desc')->get();
+        } else {
+            $this->lista = Registoentrada::where('tipo_processo_id', '!=', 2)
+                ->Where('tipo_processo_id', '!=', 3)
+                ->Where('tipo_processo_id', '!=', 1)
+                ->orderBy('id', 'desc')->get();
+        }
 
         if (Auth::user()->permissao_id == 2) {
             return view('dashboard.secretaria.listar-registos')->extends('layouts-new.app')->section('content');

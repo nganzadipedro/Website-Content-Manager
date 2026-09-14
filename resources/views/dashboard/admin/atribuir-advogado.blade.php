@@ -66,10 +66,10 @@
                                                 Nota de encaminhamento: {{ $registo->nota_encaminhamento }} <br>
                                                 Contactos: {{ $registo->telefone }}/{{ $registo->telefone2 }} <br>
 
-                                                <a href="#" class="btn btn-info mt-3" style="cursor: pointer;"
+                                                <a id="btn-ver-advogados" class="btn btn-info mt-3" style="cursor: pointer;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modal-advogados-atribuidos">Ver
-                                                    advogados atribuídos ({{ count($advogados_atribuidos) }})</a>
+                                                    advogados atribuídos</a>
                                                 <a id="btn-confirmar" class="btn btn-success mt-3"
                                                     style="cursor: pointer;">
                                                     Confirmar</a>
@@ -90,7 +90,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Código</th>
                                                         <th>Cédula</th>
                                                         <th></th>
                                                         <th>Nome Completo</th>
@@ -119,7 +118,6 @@
                                                                 @endphp
 
                                                                 <td>{{ $loop->index + 1 }}</td>
-                                                                <td>{{ $item->id }}
                                                                 <td>{{ $cedula }}
                                                                 </td>
                                                                 <td>
@@ -224,17 +222,16 @@
                 </div>
                 <div class="modal-body">
                     <div wire:ignore class="table-responsive">
-                        <table id="myTable" class="table card-table table-vcenter text-nowrap datatable" wire:ignore>
+                        <table class="table card-table table-vcenter text-nowrap datatable" wire:ignore>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Cédula</th>
                                     <th>Nome Completo</th>
+                                    <th>Cédula</th>
                                     <th>Categoria</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabela-advogados-atribuidos">
                                 @foreach ($advogados_atribuidos as $item)
                                     <tr>
                                         <td>{{$loop->index + 1}}</td>

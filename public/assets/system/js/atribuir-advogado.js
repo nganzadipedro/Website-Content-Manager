@@ -34,7 +34,6 @@ $(document).on('click', '.btn-adicionar', function () {
                 data: formData,
                 success: function (res) {
 
-                    console.log(res);
                     if (res == 'sucesso') {
                         sweetAlert({
                             type: "success",
@@ -42,8 +41,6 @@ $(document).on('click', '.btn-adicionar', function () {
                             text: 'Advogado adicionado com sucesso!',
                             timer: 3000
                         });
-
-                        window.location.reload();
                     }
                     else if (res == 'duplicado') {
                         sweetAlert({
@@ -58,6 +55,22 @@ $(document).on('click', '.btn-adicionar', function () {
                             type: "warning",
                             title: "Aviso",
                             text: 'Não é possível atribuir advogados sem número de cédula!',
+                            timer: 4000
+                        });
+                    }
+                    else if (res == 'municipio') {
+                        sweetAlert({
+                            type: "warning",
+                            title: "Aviso",
+                            text: 'Não é possível atribuir advogados sem informação do município!',
+                            timer: 4000
+                        });
+                    }
+                    else if (res == 'endereco') {
+                        sweetAlert({
+                            type: "warning",
+                            title: "Aviso",
+                            text: 'Não é possível atribuir advogados sem informação do endereço!',
                             timer: 4000
                         });
                     }
@@ -123,8 +136,6 @@ $(document).on('click', '.btn-remover', function () {
                             text: 'Advogado eliminado com sucesso!',
                             timer: 3000
                         });
-
-                        window.location.reload();
                     }
                 },
                 error: function (error) {
@@ -510,4 +521,72 @@ document.getElementById('btn-confirmar').addEventListener('click', function () {
             });
         }
     });
+});
+
+$(document).on('click', '#btn-ver-advogados', function (e) {
+
+    e.preventDefault(); // se for link, evita redirecionamento
+    const id_registo = $("#registo_id").val();
+
+    fetch(`/system/getAdvogadosAtribuidos/${id_registo}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return response.json();
+        })
+        .then(dados => {
+
+            console.log('Resposta do servidor:', dados);
+            const tbody = document.getElementById('tabela-advogados-atribuidos');
+            tbody.innerHTML = '';
+
+            dados.forEach(item => {
+
+                linha = '';
+
+                fetch(`/system/getAdvogadoAtribuido/${item.advogado_id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro na requisição');
+                        }
+                        return response.json();
+                    })
+                    .then(data2 => {
+
+                        console.log('Resposta do servidor:', data2);
+
+                        linha = `
+                            <tr>
+                                <td>${data2.nome}</td>
+                                <td>${data2.cedula}</td>
+                                <td>${data2.categoria}</td>
+                                <td><a title="remover" data-id="${item.id}" style="cursor: pointer;"
+                                                class="btn-remover badge bg-red-lt">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg>
+                                            </a></td>
+                            </tr>`;
+                        tbody.innerHTML += linha;
+
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                    });
+
+            });
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+
 });

@@ -68,8 +68,6 @@
                                                     </div>
                                                 </div>
                                             @endif
-
-
                                         </div>
 
                                         <div class="row mt-3">
@@ -187,6 +185,20 @@
                                                         type="text" name="telefone2" id="telefone2" value="">
                                                 </div>
                                             </div>
+                                            @if($tipo_processo_id == 1)
+                                                <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="tipo_indicacao">Tipo de Indicação</label>
+                                                        <select wire:model="tipo_indicacao" class="form-select"
+                                                            name="tipo_indicacao" id="tipo_indicacao">
+                                                            <option selected>Selecione...</option>
+                                                            <option value="Auto-Indicação">Auto-Indicação</option>
+                                                            <option value="Indicação-Conselheiro">Indicação-Conselheiro
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-12">
                                                 <div class="form-group">
@@ -195,6 +207,30 @@
                                                         class="form-control" id="observacao" value="">
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+
+                                            @if($tipo_processo_id == 1)
+                                                <div class="col-lg-3 col-12 col-md-3 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="tipo_situacao_assistencia">Tipo de Situação</label>
+                                                        <select wire:model="tipo_situacao_assistencia" class="form-select"
+                                                            name="tipo_situacao_assistencia" id="tipo_situacao_assistencia">
+                                                            <option selected>Selecione...</option>
+                                                            <option value="Solicitação do Cidadão">Solicitação do Cidadão
+                                                            </option>
+                                                            <option value="Solicitação de Instituição">Solicitação de
+                                                                Instituição</option>
+                                                            <option value="Substituição de Advogado">Substituição de
+                                                                Advogado</option>
+                                                            <option value="Advogado Solicita Permissão de Intervenção">
+                                                                Advogado Solicita Permissão de Intervenção</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                         </div>
 
                                         <div class="row mt-3">
