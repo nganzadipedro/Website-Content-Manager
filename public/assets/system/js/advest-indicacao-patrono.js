@@ -1,5 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const checkAll = document.getElementById("checkAll");
+    const checkItems = document.querySelectorAll(".checkItem");
+
+    // ✅ Selecionar / desselecionar todos
+    checkAll.addEventListener("change", () => {
+        checkItems.forEach(item => {
+            item.checked = checkAll.checked;
+        });
+    });
+
+    // ✅ Se desmarcar um item, desmarca o "todos"
+    checkItems.forEach(item => {
+        item.addEventListener("change", () => {
+            const total = checkItems.length;
+            const marcados = document.querySelectorAll(".checkItem:checked").length;
+            checkAll.checked = total === marcados;
+        });
+    });
+
+
     $(document).on('click', '#btn-gerar-pdf', function () {
 
         const form = document.createElement("form");
@@ -52,11 +72,183 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+    $(document).on('click', '.btn-indeferir', function () {
+
+        // Pega o data-id do <a> clicado
+        let id = $(this).data('id');
+        let requerente = $(this).data('requerente');
+        let data_entrada = $(this).data('entrada');
+        console.log('ID selecionado:', id);
+        $('#inscricao_id').val(id);
+        $('#requerente').val(requerente);
+
+    });
+
+     $(document).on('click', '#btn-registar-indeferimento', function () {
+
+        inscricao_id = $("#inscricao_id").val();
+        mensagem_despacho = $('#mensagem_indeferimento').val();
+        data_despacho = $('#data_indeferimento').val();
+
+        if (mensagem_despacho == '' || mensagem_despacho == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite a mensagem de despacho",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+            formData.append('inscricao_id', inscricao_id);
+            formData.append('mensagem_despacho', mensagem_despacho);
+            formData.append('data_despacho', data_despacho);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja registar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/indicacao-patrono-mudarindeferido/update",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/registed/Deferido";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.btn-detalhes', function () {
 
         // Pega o data-id do <a> clicado
         let id = $(this).data('id');
         buscarItemDetalhes(id);
+
+    });
+
+    $(document).on('click', '#btn-excluir-processos', function () {
+
+        const selecionados = [];
+        const user_id = $('#user_id').val();
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (user_id != 1 && user_id != 4054) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não tem permissão para excluir registos",
+                timer: 4000
+            });
+        }
+        else if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+            csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja excluir os processos selecionados?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Sim, excluir!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/inscricao-delete-grupo/post",
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados excluídos com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.reload();
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+
+        }
 
     });
 

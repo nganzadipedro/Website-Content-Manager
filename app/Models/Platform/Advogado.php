@@ -3,6 +3,7 @@
 namespace App\Models\Platform;
 
 use App\Models\Municipio;
+use App\Models\Patrono;
 use App\Models\Pessoa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,5 +49,9 @@ class Advogado extends Model
 
     public function getmunicipio(){
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
+    }
+
+    public function getpatrono(){
+        return $this->hasOne(Patrono::class, 'advogado_id', 'id');
     }
 }

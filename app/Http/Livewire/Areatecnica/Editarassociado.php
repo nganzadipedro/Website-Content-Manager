@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Areatecnica;
 
+use App\Models\Estagiariospatrono;
 use App\Models\Municipio;
+use App\Models\Patrono;
 use App\Models\Pessoa;
 use App\Models\Platform\Advogado;
+use Auth;
 use Livewire\Component;
 
 class Editarassociado extends Component
@@ -14,6 +17,10 @@ class Editarassociado extends Component
     public $membro_hash;
     public $pessoa;
     public $municipios;
+    public $patrono;
+
+    public $patronos = array();
+    public $lista_patronos = array();
 
     public function mount($hash)
     {
@@ -24,7 +31,30 @@ class Editarassociado extends Component
 
     public function render()
     {
-         $this->municipios = Municipio::all();
-        return view('dashboard.areatecnica.editar-associado')->extends('layouts-new.app')->section('content');
+
+        $this->patronos = Patrono::all();
+        foreach ($this->patronos as $pat) {
+            $registo = [];
+            $registo[0] = $pat->id;
+            $registo[1] = $pat->advogado_id;
+            $registo[2] = $pat->getadvogado->getpessoa->nome;
+
+            array_push($this->lista_patronos, $registo);
+        }
+
+        if ($this->advogado->categoria == 'Estagiario') {
+            $existe = Estagiariospatrono::where('estagiario_id', $this->advogado->id)->first();
+            if ($existe != null) {
+                $this->patrono = Patrono::find($existe->patrono_id);
+            }
+        }
+
+        $this->municipios = Municipio::all();
+        if (Auth::user()->permissao_id == 3) {
+            return view('dashboard.areatecnica.editar-associado')->extends('layouts-new.app')->section('content');
+        }
+
+        return view('dashboard.secretaria.editar-associado')->extends('layouts-new.app')->section('content');
+
     }
 }

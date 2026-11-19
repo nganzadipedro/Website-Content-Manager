@@ -1,13 +1,59 @@
 <div>
 
     <style>
-        .obs{
+        .obs {
             background-color: red;
             color: white;
             display: block;
             padding: 3px;
             border-radius: 5px;
             margin-top: 3px;
+        }
+
+        .obrigatorio {
+            color: red;
+            font-weight: bold;
+        }
+
+        .custom-dropdown {
+            position: relative;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border: .5px solid var(--border-md);
+            border-top: none;
+            border-radius: 0 0 var(--r) var(--r);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+            display: block;
+        }
+
+        .custom-dropdown-item {
+            padding: 9px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--t2);
+            border-bottom: .5px solid var(--border);
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .custom-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .custom-dropdown-item:hover {
+            background-color: #ebeb32;
+            color: #000;
+        }
+
+        .custom-dropdown-empty {
+            padding: 10px 12px;
+            color: var(--t3);
+            font-size: 12px;
+            text-align: center;
         }
     </style>
 
@@ -72,8 +118,10 @@
                                                         Destinatário: {{ $registo->destinatario }}<br>
                                                         Encaminhado: {{ $registo->encaminhado }}<br>
                                                         @if($registo->observacao != null && $registo->observacao != '')
-                                                        <span class="obs">{{ $registo->observacao }}</span>
+                                                            <span class="obs">{{ $registo->observacao }}</span>
                                                         @endif
+                                                        <br>
+                                                        Nº Estagiários: <span id="num_estagiarios"></span><br>
                                                     </p>
                                                 </div>
                                             </div>
@@ -88,7 +136,7 @@
 
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="num_bilhete">Nº Bilhete</label>
+                                                    <label class="form-label" for="num_bilhete">Nº Bilhete <span class="obrigatorio">*</span></label>
                                                     <input type="text" maxlength="20" name="num_bilhete"
                                                         class="form-control" id="num_bilhete" value="">
                                                 </div>
@@ -96,7 +144,7 @@
 
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="sexo">Género</label>
+                                                    <label class="form-label" for="sexo">Género <span class="obrigatorio">*</span></label>
                                                     <select name="sexo" id="sexo" class="form-select">
                                                         <option value="" selected>Selecione...</option>
                                                         <option value="Masculino">Masculino</option>
@@ -107,7 +155,7 @@
 
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="telefone1">Telefone 1</label>
+                                                    <label class="form-label" for="telefone1">Telefone 1 <span class="obrigatorio">*</span></label>
                                                     <input type="text" maxlength="9" name="telefone1"
                                                         class="form-control" id="telefone1"
                                                         value="{{ $registo->telefone }}">
@@ -116,7 +164,7 @@
 
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="telefone2">Telefone 2</label>
+                                                    <label class="form-label" for="telefone2">Telefone 2</label>
                                                     <input type="text" maxlength="9" name="telefone2"
                                                         class="form-control" id="telefone2"
                                                         value="{{ $registo->telefone2 }}">
@@ -128,16 +176,16 @@
                                         <div class="row mt-4">
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
-                                                    <label for="email">Email</label>
+                                                    <label class="form-label" for="email">Email</label>
                                                     <input type="email" maxlength="255" name="email"
                                                         class="form-control" id="email" value="">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-12 col-md-3">
                                                 <div class="form-group">
-                                                    <label for="acto_pretendido">Acto Pretendido</label>
-                                                    <select name="acto_pretendido" id="acto_pretendido"
-                                                        class="form-select">
+                                                    <label class="form-label" for="acto_pretendido">Acto
+                                                        Pretendido <span class="obrigatorio">*</span></label>
+                                                    <select name="acto_pretendido" id="acto_pretendido" class="form-select">
                                                         <option selected value="">Selecione...</option>
                                                         <option value="Inscrição">Inscrição</option>
                                                         <option value="Reinscrição">Reinscrição</option>
@@ -147,97 +195,119 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-12 col-md-3 mt-3">
-                                                <div class="form-group">
-                                                    <a href="#" style="cursor: pointer;" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-patronos"
-                                                        class="btn btn-primary">Escolher Patrono</a>
-                                                    <a id="btn-novo-patrono" style="cursor: pointer;"
-                                                        class="btn btn-info">Novo Patrono</a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row mt-3">
-                                            <div class="col-lg-6 col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="nome_patrono">Nome do patrono</label>
-                                                    <input type="text" class="form-control" maxlength="200"
-                                                        id="nome_patrono" name="nome_patrono">
-                                                </div>
-                                            </div>
                                             <div class="col-lg-3 col-12 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="num_cedula_patrono">Nº Cédula</label>
-                                                    <input type="text" class="form-control" maxlength="9"
-                                                        id="num_cedula_patrono" name="num_cedula_patrono">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-12 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="tel_patrono">Telefone do patrono</label>
-                                                    <input type="text" class="form-control" maxlength="9"
-                                                        id="tel_patrono" name="tel_patrono">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row mt-3">
-                                            <div class="col-lg-3 col-12 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="email_patrono">Email do patrono</label>
-                                                    <input type="email" class="form-control" maxlength="200"
-                                                        id="email_patrono" name="email_patrono">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-12 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="nome_escritorio">Nome do Escritório</label>
-                                                    <input type="text" class="form-control" maxlength="200"
-                                                        id="nome_escritorio" name="nome_escritorio">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="endereco_escritorio_est">Endereço do Escritório</label>
-                                                    <input type="text" class="form-control" maxlength="200"
-                                                        id="endereco_escritorio_est" name="endereco_escritorio_est">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="row mt-4">
-                                            <div class="col-lg-3 col-12 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="municipio_id_est">Município</label>
-                                                    <select name="municipio_id_est" id="municipio_id_est"
+                                                <div class="form-group" id="dvescolher_patrono">
+                                                    <label class="form-label" for="escolher_patrono">Escolher
+                                                        Patrono <span class="obrigatorio">*</span></label>
+                                                    <select name="escolher_patrono" id="escolher_patrono"
                                                         class="form-select">
-                                                        <option value="" selected>Selecione...</option>
-                                                        @foreach ($municipios as $muni)
-                                                            <option value="{{$muni->id}}">{{$muni->descricao}}</option>
-                                                        @endforeach
+                                                        <option value="existe" selected>Patrono Existente</option>
+                                                        <option value="novo">Novo Patrono</option>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                        </div>
+
+                                        <div class="row mt-5">
                                             <div class="col-lg-6 col-12 col-md-6 col-sm-12 col-xl-6">
                                                 <div class="form-group">
-                                                    <label for="observacao2">Observação</label>
+                                                    <label class="form-label" for="observacao2">Observação (Indeferimento)</label>
                                                     <input type="text" name="observacao2" class="form-control"
                                                         id="observacao2" value="">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-12 col-md-2 col-sm-12 col-xl-3">
-                                                <div class="form-group">
-                                                    <label for="num_estagiarios">Nº Estagiários</label>
-                                                    <input type="text" maxlength="10" disabled name="num_estagiarios"
-                                                        class="form-control" id="num_estagiarios" value="">
+                                            <div class="col-lg-6 col-12 col-md-6">
+                                                <div class="form-group" id="dvnomepatronoexiste">
+                                                    <label class="form-label" for="nome_patrono_existe">Pesquisar Nome
+                                                        do
+                                                        Patrono <span class="obrigatorio">*</span></label>
+                                                    <input type="text" class="form-control" maxlength="200"
+                                                        id="nome_patrono_existe" name="nome_patrono_existe">
+                                                    <div id="patrono_dropdown" class="custom-dropdown"></div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div id="end-estagiario">
+
+                                            <div class="row mt-3">
+                                                <div class="col-lg-6 col-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="nome_patrono">Nome do
+                                                            patrono <span class="obrigatorio">*</span></label>
+                                                        <input type="text" class="form-control" maxlength="200"
+                                                            id="nome_patrono" name="nome_patrono">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="tel_patrono">Telefone do
+                                                            patrono</label>
+                                                        <input type="text" class="form-control" maxlength="200"
+                                                            id="tel_patrono" name="tel_patrono">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="email_patrono">Email do
+                                                            patrono</label>
+                                                        <input type="email" class="form-control" maxlength="200"
+                                                            id="email_patrono" name="email_patrono">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="nome_escritorio">Nome do
+                                                            Escritório</label>
+                                                        <input type="text" class="form-control" maxlength="200"
+                                                            id="nome_escritorio" name="nome_escritorio">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cedula_patrono">Número da
+                                                            Cédula</label>
+                                                        <input type="text" class="form-control" maxlength="7"
+                                                            id="cedula_patrono" name="cedula_patrono">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-12 col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="municipio_id_est">Município <span
+                                                                class="obrigatorio">*</span></label>
+                                                        <select name="municipio_id_est" id="municipio_id_est"
+                                                            class="form-select">
+                                                            <option value="" selected>Selecione...</option>
+                                                            @foreach ($municipios as $muni)
+                                                                <option value="{{$muni->id}}">{{$muni->descricao}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-lg-6 col-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="endereco_escritorio_est">Endereço
+                                                            do
+                                                            Escritório <span class="obrigatorio">*</span></label>
+                                                        <input type="text" class="form-control" maxlength="200"
+                                                            id="endereco_escritorio_est" name="endereco_escritorio_est">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+
                                         <div class="row mt-3">
                                             <div class="col-lg-12 col-12">
                                                 <a id="btn-registar-inscricao" class="btn btn-success mt-4">Salvar</a>
@@ -263,62 +333,25 @@
         </div>
     </div>
 
-    <div class="modal modal-blur fade" id="modal-patronos" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Lista de Patronos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row"">
-                        <div class=" table-responsive">
-                        <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Cédula</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($patronos as $item)
-                                    <tr>
-                                        <td>{{$loop->index + 1}}</td>
-
-                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->getpessoa->nome}}
-                                        </td>
-                                        <td>{{$item->advogado_id == null ? $item->nome : $item->getadvogado->num_associado}}
-                                        </td>
-                                        <td>
-                                            <a title="Adicionar" data-id="{{ $item->id }}"
-                                                class="btn-adicionar badge bg-blue-lt" style="cursor: pointer;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M12 5l0 14" />
-                                                    <path d="M5 12l14 0" />
-                                                </svg>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 </div>
 
 
 @section('script-aux')
+    <script>
+        // Carrega os 1000+ produtos em memória no JavaScript
+        let nome = @json($lista_patronos);
+        console.log(nome);
+        const listaPatronosGlobal = [
+            @foreach ($lista_patronos as $pro)
+                                                                                                                                {
+                    id: "{{ $pro[0] }}",
+                    advogado_id: "{{ $pro[1] }}",
+                    nome: "{{ $pro[2] }}"
+                },
+            @endforeach
+                                                                ];
+    </script>
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/system/js/registar-inscricao-estagiario.js') }}"></script>
     <script>

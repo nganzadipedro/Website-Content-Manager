@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Areatecnica;
 
 use App\Models\Inscricaoadvogado;
+use App\Models\Pessoa;
+use App\Models\Platform\Advogado;
 use App\Models\Registoentrada;
 use Auth;
 use Livewire\Component;
@@ -73,6 +75,50 @@ class Pesquisageral extends Component
                 $estado = 'Indeferido';
             } else if ($estado == 'em tratamento' && $item->tipo_processo_id == 2 && $item->estado_distribuicao == 'Por Distribuir') {
                 $estado = 'Mapa de Distribuição';
+            } else if ($estado == 'aguarda cerimonia') {
+                if ($item->advogado_id != null) {
+                    $existe = Advogado::find($item->advogado_id);
+                    if ($existe) {
+                        if ($existe->estado == 'Aguarda Cerimónia') {
+                            if ($existe->presenca_cerimonia == 'Ausente') {
+                                $estado = 'Ausente na Cerimónia';
+                            } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Advogado' && $existe->data_cerimonia_associado == null) {
+                                $estado = 'Aguarda Cerimónia';
+                            } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Advogado' && $existe->data_cerimonia_associado != null) {
+                                $estado = 'Cédula Entregue';
+                            } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Estagiario' && $existe->data_cerimonia_estagiario == null) {
+                                $estado = 'Aguarda Cerimónia';
+                            } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Estagiario' && $existe->data_cerimonia_estagiario != null) {
+                                $estado = 'Cédula Entregue';
+                            }
+                        } else if ($existe->estado == 'Registado') {
+                            $estado = 'Cédula Entregue';
+                        }
+                    }
+                } else {
+                    $nome = $item->getregistoentrada->proveniencia;
+                    $pessoa = Pessoa::where('nome', $nome)->first();
+                    if ($pessoa) {
+                        $existe = Advogado::where('pessoa_id', $pessoa->id)->first();
+                        if ($existe) {
+                            if ($existe->estado == 'Aguarda Cerimónia') {
+                                if ($existe->presenca_cerimonia == 'Ausente') {
+                                    $estado = 'Ausente na Cerimónia';
+                                } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Advogado' && $existe->data_cerimonia_associado == null) {
+                                    $estado = 'Aguarda Cerimónia';
+                                } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Advogado' && $existe->data_cerimonia_associado != null) {
+                                    $estado = 'Cédula Entregue';
+                                } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Estagiario' && $existe->data_cerimonia_estagiario == null) {
+                                    $estado = 'Aguarda Cerimónia';
+                                } else if ($existe->presenca_cerimonia == 'Presente' && $existe->categoria == 'Estagiario' && $existe->data_cerimonia_estagiario != null) {
+                                    $estado = 'Cédula Entregue';
+                                }
+                            } else if ($existe->estado == 'Registado') {
+                                $estado = 'Cédula Entregue';
+                            }
+                        }
+                    }
+                }
             }
 
             $linha[4] = $estado;

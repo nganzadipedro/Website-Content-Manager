@@ -16,6 +16,7 @@ class Editarinscricao extends Component
     public $inscricao;
     public $municipios = array();
     public $patronos = array();
+    public $lista_patronos = array();
     public $patrono;
 
     public function mount($hash)
@@ -31,13 +32,21 @@ class Editarinscricao extends Component
         $this->tipo_documento = $this->registo->tipo_documento;
         $this->proveniencia = $this->registo->proveniencia;
         $this->patrono = Patrono::find($this->inscricao->patrono_id);
-
+        
     }
 
     public function render()
     {
         $this->municipios = Municipio::all();
         $this->patronos = Patrono::all();
+         foreach ($this->patronos as $pat) {
+            $registo = [];
+            $registo[0] = $pat->id;
+            $registo[1] = $pat->advogado_id;
+            $registo[2] = $pat->getadvogado->getpessoa->nome;
+
+            array_push($this->lista_patronos, $registo);
+        }
        
         if ($this->registo->tipo_processo_id == 3) {
             return view('dashboard.areatecnica.editar-inscricao-estagiario')->extends('layouts-new.app')->section('content');

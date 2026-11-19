@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\APIProxyPayController;
+use App\Http\Controllers\InscricaoAdvogadoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post("payment", [APIProxyPayController::class, 'webhookPayment']);
+// Route::post("payment", [APIProxyPayController::class, 'webhookPayment']);
+Route::post('consultprocess', [InscricaoAdvogadoController::class, 'consulta_processo_inscricao']);

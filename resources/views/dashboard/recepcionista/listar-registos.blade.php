@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
-                            <h3 class="h1">Listagem dos registos de entrada</h3>
+                            <h3 class="h1">Listagem dos registos de entrada ({{ $tipo_processo_desc }})</h3>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($lista_recepcao as $item)
+                                    @foreach ($lista as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>

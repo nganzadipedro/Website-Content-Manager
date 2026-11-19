@@ -6,7 +6,7 @@
                     <div class="row align-items-center">
                         <div class="col-10">
                             <h3 class="h1">Inscrições Para Advogados Registados [{{ $categoria_p }}]</h3>
-
+                            <input type="hidden" value="{{ Auth::user()->id }}" id="user_id">
                             <a id="btn-remeter-cn" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
@@ -29,6 +29,18 @@
                                     <path d="M4 11h16" />
                                     <path d="M15 19l2 2l4 -4" />
                                 </svg> Registar Data de Despacho</a>
+                            <a id="btn-excluir-processos" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 7l16 0" />
+                                    <path d="M10 11l0 6" />
+                                    <path d="M14 11l0 6" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg> Excluir Processos</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +78,7 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>
-                                                @if ($item->estado == 'Sobre a mesa do Presidente')
+                                                @if ($item->estado == 'Sobre a mesa do Presidente' || $item->despacho == 'Indeferido')
                                                     <input type="checkbox" class="checkItem" value="{{$item->id}}">
                                                 @endif
                                             </td>
@@ -139,9 +151,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-id="{{ $item->registo_entrada_id }}" class="badge bg-blue-lt btn-detalhes"
-                                                    title="Detalhes do processo" style="cursor: pointer;"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-detalhes">
+                                                <a data-id="{{ $item->registo_entrada_id }}"
+                                                    class="badge bg-blue-lt btn-detalhes" title="Detalhes do processo"
+                                                    style="cursor: pointer;" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -241,7 +254,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Registar Data de Despacho</h5>
+                <h5 class="modal-title">Registar Data de Despacho (Deferido)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -250,7 +263,7 @@
 
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                        <label class="form-label">Data de Despacho do Presidente</label>
+                        <label class="form-label">Data de Despacho (Deferido) do Presidente</label>
                         <input type="date" class="form-control" name="data_despacho_presidente"
                             id="data_despacho_presidente">
                     </div>
@@ -321,7 +334,8 @@
                 <div class="row mb-3">
                     <div class="col-md-12 col-lg-12 col-12 col-xs-12">
                         <label for="nome_requerente_encaminhar" class="form-label">Nome do Candidato/Requerente</label>
-                        <input type="text" class="form-control" disabled name="nome_requerente_encaminhar" id="nome_requerente_encaminhar">
+                        <input type="text" class="form-control" disabled name="nome_requerente_encaminhar"
+                            id="nome_requerente_encaminhar">
                     </div>
                 </div>
 

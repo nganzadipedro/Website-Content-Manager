@@ -1,12 +1,7 @@
 <div class="page-wrapper">
     <div class="page-header d-print-none">
         <div class="container-xl">
-            <div class="card card-md">
-                <div class="card-stamp card-stamp-lg">
-                    <div class="card-stamp-icon bg-primary">
-
-                    </div>
-                </div>
+            <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
@@ -41,11 +36,13 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
-                                            <td>{{$item->assunto}}</td>
-                                            <td>{{$item->data_entrada}}</td>
-                                            <td>{{$item->proveniencia}}</td>
+                                            <td>{{$item->getregisto->assunto}}</td>
+                                            <td>{{$item->getregisto->data_entrada}}</td>
+                                            <td>{{$item->requerente == null ? $item->getregisto->proveniencia : $item->requerente }}
+                                            </td>
                                             <td>
-                                                <a title="Detalhes do Registo" href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
+                                                <a title="Detalhes do Registo"
+                                                    href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -59,12 +56,35 @@
                                                         <path d="M11 9h-4" />
                                                     </svg>
                                                 </a>
+                                                <a title="Registar" class="badge bg-yellow-lt"
+                                                    href="{{ route('system.areatecnica.arquivar_pedido', $item->hash) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                    </svg>
+                                                </a>
+                                                <a data-id="{{ $item->getregisto->hash }}" class="btn-preview badge bg-green-lt"
+                                                    title="Visualizar Documento" style="cursor: pointer;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+                                                        <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+                                                        <path d="M17 18h2" />
+                                                        <path d="M20 15h-3v6" />
+                                                        <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
+                                                    </svg>
+                                                </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -77,6 +97,7 @@
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
+        <script src="{{ asset('assets/system/js/aj-documentos.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();

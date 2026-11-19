@@ -118,6 +118,21 @@ function buscarItemDetalhes(id) {
                             O processo ainda não foi registado na área técnica.
                         </h3>`
             }
+            else if (data[0].tipo_processo_id == 1 && hasData(data[5]) == true) {
+
+                html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            Nº Processo Área Técnica: ${data[5].codigo} <br>
+                            Estado: ${data[5].estado} <br>
+                            Natureza: ${data[5].natureza} <br>
+                            Localização: ${data[5].localizacao == null ? '' : data[5].localizacao} <br><br>
+                            Género: ${data[5].sexo} <br>
+                            Requerente: ${data[5].requerente} <br>
+                            Advogado Substituído: ${data[5].advogado_substituido == null ? '' : data[5].advogado_substituido} <br>
+                            Tipo de Indicação: ${data[5].tipo_indicacao} <br><br>
+                            Tipo de Situação: ${data[5].tipo_situacao_assistencia} <br>
+                            Instituição em Cópia: ${data[5].insitituicao_copia == null ? '' : data[5].insitituicao_copia} <br>`
+
+            }
             else if (data[0].tipo_processo_id != 2 && data[0].tipo_processo_id != 3) {
 
             }

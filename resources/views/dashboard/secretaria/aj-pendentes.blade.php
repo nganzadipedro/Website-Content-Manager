@@ -39,7 +39,7 @@
                                             <td>{{$loop->index + 1}}</td>
                                             <td>{{$item->codigo}}</td>
                                             <td>
-                                                @if ($item->tipo_indicacao == 'Auto-Indicação')
+                                               
                                                     <a title="Atribuir Advogado"
                                                         href="{{ route('system.secretaria.atribuir_advogado', $item->hash) }}"
                                                         class="badge bg-green-lt" style="cursor: pointer;">
@@ -52,7 +52,7 @@
                                                             <path d="M5 12l14 0" />
                                                         </svg>
                                                     </a>
-                                                @endif
+                                        
                                             </td>
                                             <td>{{$item->assunto}}</td>
                                             <td>{{$item->gettipoprocesso->descricao}}</td>

@@ -22,8 +22,11 @@ class Pedidoassistencia extends Model
         'natureza',
         'localizacao',
         'insitituicao_copia',
+        'requerente',
+        'advogado_substituido',
         'user_id',
         'registo_entrada_id',
+        'pedido_referencia_id',
         'estado',
         'tipo_situacao_assistencia',
         'tipo_indicacao'

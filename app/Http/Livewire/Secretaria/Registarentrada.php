@@ -61,15 +61,20 @@ class Registarentrada extends Component
             $this->mensagem('Informe o tipo de indicação da assistência', 'warning');
         } else if ($this->tipo_processo_id == 1 && ($this->tipo_situacao_assistencia == null || $this->tipo_situacao_assistencia == '')) {
             $this->mensagem('Informe o tipo de situação da assistência', 'warning');
-        }
-        else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == 'Auto-Indicação' && $this->tipo_situacao_assistencia != 'Advogado Solicita Permissão de Intervenção')) {
+        } else if ($this->tipo_processo_id == 1 && ($this->tipo_indicacao == 'Auto-Indicação' && $this->tipo_situacao_assistencia != 'Advogado Solicita Permissão de Intervenção')) {
             $this->mensagem('O tipo de indicação e o tipo de situação da assistência não são compatíveis', 'warning');
-        }
-        else {
+        } else {
 
             date_default_timezone_set("Africa/Luanda");
 
-            $numero = Registoentrada::whereYear('created_at', now()->year)->count() + 1;
+            $max_id = Registoentrada::whereYear('created_at', now()->year)
+                ->max('id') ?? 0;
+            $numero = 1;
+
+            if ($max_id != 0) {
+                $res = Registoentrada::find($max_id);
+                $numero = $res->numero + 1;
+            }
 
             $registo = Registoentrada::create([
                 'assunto' => $this->assunto,

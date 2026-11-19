@@ -127,7 +127,7 @@
                                                         Endereço do escritório:
                                                         {{ $inscricao_advogado->patrono->getadvogado->endereco_escritorio}}<br><br>
                                                         Município:
-                                                        {{ $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao}}<br><br>
+                                                        {{ $inscricao_advogado->patrono->getadvogado->municipio_id != null ? $inscricao_advogado->patrono->getadvogado->getmunicipio->descricao : 'Não especificado' }}<br><br>
                                                     @endif
                                                 </div>
                                             </div>

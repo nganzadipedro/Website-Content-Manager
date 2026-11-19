@@ -4,11 +4,12 @@
         <div class="page-header d-print-none">
             <div class="container-xl">
                 <div class="card">
-                  
+
                     <div class="card-body">
                         <h3 class="h1">Inscrições Para Advogados Estagiários [Indicação de Patrono]</h3>
+                        <input type="hidden" value="{{ Auth::user()->id }}" id="user_id">
                         <div class="row mt-5">
-                            <div class="col-4">
+                            <div class="col-12">
 
                                 <a id="btn-gerar-excel" class="btn btn-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -36,6 +37,18 @@
                                         <path d="M20 15h-3v6" />
                                         <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
                                     </svg>Exportar em PDF</a>
+                                <a id="btn-excluir-processos" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 7l16 0" />
+                                        <path d="M10 11l0 6" />
+                                        <path d="M14 11l0 6" />
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                    </svg> Excluir Processos</a>
 
                             </div>
                         </div>
@@ -55,11 +68,13 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>
+                                                <input type="checkbox" id="checkAll">
+                                            </th>
                                             <th>Nº Processo</th>
                                             <th>Requerente</th>
                                             <th>Data de Entrada</th>
                                             <th>Acto Pretendido</th>
-                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -68,6 +83,9 @@
                                         @foreach ($lista as $item)
                                             <tr>
                                                 <td>{{$loop->index + 1}}</td>
+                                                <td>
+                                                    <input type="checkbox" class="checkItem" value="{{$item->id}}">
+                                                </td>
                                                 <td>{{$item->codigo}}</td>
                                                 <td>{{$item->getregistoentrada->proveniencia}}</td>
                                                 <td>{{$item->getregistoentrada->data_entrada}}</td>
@@ -86,8 +104,24 @@
                                                             <path d="M13.5 6.5l4 4" />
                                                         </svg>
                                                     </a>
-                                                </td>
-                                                <td>
+                                                    <a data-id="{{ $item->id }}"
+                                                        data-requerente="{{ $item->getregistoentrada->proveniencia }}"
+                                                        data-entrada="{{ $item->getregistoentrada->data_entrada }}"
+                                                        class="btn-indeferir badge bg-red-lt" title="Indeferir Processo"
+                                                        style="cursor: pointer;" data-bs-toggle="modal"
+                                                        data-bs-target="#modal-report">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M12 9v4" />
+                                                            <path
+                                                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+                                                            <path d="M12 16h.01" />
+                                                        </svg>  
+                                                    </a>
+
                                                     <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
                                                         title="Detalhes do processo" style="cursor: pointer;"
                                                         data-bs-toggle="modal" data-bs-target="#modal-detalhes">
@@ -158,6 +192,43 @@
                     </div>
                     <div class="modal-body">
                         <div class=" alert alert-primary" id="dv-detalhes"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Dados de Indeferimento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <input type="hidden" name="inscricao_id" id="inscricao_id" value="">
+                        <div class="mb-3">
+                            <label class="form-label">Nome do Requerente</label>
+                            <input type="text" class="form-control" name="requerente" id="requerente" disabled value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Data do Indeferimento</label>
+                            <input type="date" class="form-control" name="data_indeferimento" id="data_indeferimento">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Mensagem de Indeferimento</label>
+                            <textarea type="text" class="form-control" name="mensagem_indeferimento"
+                                id="mensagem_indeferimento" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-lg-12 col-12">
+                            <a id="btn-registar-indeferimento" class="btn btn-success mt-4">Salvar</a>
+                            <a href="#" class="btn btn-danger mt-4">Cancelar</a>
+                        </div>
                     </div>
                 </div>
             </div>

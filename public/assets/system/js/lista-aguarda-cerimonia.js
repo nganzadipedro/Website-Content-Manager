@@ -155,6 +155,14 @@ $(document).on('click', '.btn-detalhes', function () {
 
 });
 
+$(document).on('click', '.btn-historico', function () {
+
+    // Pega o data-id do <a> clicado
+    let id = $(this).data('id');
+    buscarHistorico(id);
+
+});
+
 $(document).on('click', '#btn-cancelar', function () {
 
     const modalElement = document.getElementById('modal-cerimonia');
@@ -182,20 +190,20 @@ $(document).on('click', '.btn-cerimonia', function () {
 
             municipio = '';
             cedula = '';
-            if (data.municipio_id != null) {
-                municipio = data.getmunicipio.descricao;
+            if (data[0].municipio_id != null) {
+                municipio = data[0].getmunicipio.descricao;
             }
 
             html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
-                            Nome completo: ${data.getpessoa.nome} <br><br>
-                            Nome profissional: ${data.nome_profissional} <br><br>
-                            Género: ${data.getpessoa.genero} <br><br>
-                            Nº BI: ${data.getpessoa.num_documento} <br><br>
-                            <strong> Categoria: ${data.categoria} </strong> <br><br>
-                            Nº Cédula: ${data.categoria == 'Advogado' ? data.num_associado : data.num_estagiario} <br><br>
+                            Nome completo: ${data[0].getpessoa.nome} <br><br>
+                            Nome profissional: ${data[0].nome_profissional} <br><br>
+                            Género: ${data[0].getpessoa.genero} <br><br>
+                            Nº BI: ${data[0].getpessoa.num_documento} <br><br>
+                            <strong> Categoria: ${data[0].categoria} </strong> <br><br>
+                            Nº Cédula: ${data[0].categoria == 'Advogado' ? data[0].num_associado : data[0].num_estagiario} <br><br>
                         </div>`
             $("#dv-detalhes-2").html(html);
-            $('#advogado_id').val(data.id);
+            $('#advogado_id').val(data[0].id);
 
         })
         .catch(error => {
@@ -219,27 +227,81 @@ function buscarItem(id) {
             $("#dv-detalhes").html("");
 
             municipio = '';
-            if (data.municipio_id != null) {
-                municipio = data.getmunicipio.descricao;
+            if (data[0].municipio_id != null) {
+                municipio = data[0].getmunicipio.descricao;
             }
 
             html = `<div class="col-md-12 col-lg-12 col-xl-12 col-12">
-                            Nome completo: ${data.getpessoa.nome} <br><br>
-                            Nome profissional: ${data.nome_profissional} <br><br>
-                            Género: ${data.getpessoa.genero} <br><br>
-                            Nº BI: ${data.getpessoa.num_documento} <br><br>
-                            <strong> Categoria: ${data.categoria} </strong> <br><br>
-                            Nº Cédula Advogado: ${data.num_associado == null ? '' : data.num_associado} <br><br>
-                            Nº Cédula Estagiário: ${data.num_estagiario == null ? '' : data.num_estagiario} <br><br>
-                            Email: ${data.getpessoa.email}<br><br>
-                            Contactos: ${data.getpessoa.telefone1}/${data.getpessoa.telefone2 == null ? '' : data.getpessoa.telefone2}<br><br>
-                            Endereço: ${data.endereco_escritorio == null ? '' : data.endereco_escritorio}<br><br>
+                            Nome completo: ${data[0].getpessoa.nome} <br><br>
+                            Nome profissional: ${data[0].nome_profissional} <br><br>
+                            Género: ${data[0].getpessoa.genero} <br><br>
+                            Nº BI: ${data[0].getpessoa.num_documento} <br><br>
+                            <strong> Categoria: ${data[0].categoria} </strong> <br><br>
+                            Nº Cédula Advogado: ${data[0].num_associado == null ? '' : data[0].num_associado} <br><br>
+                            Nº Cédula Estagiário: ${data[0].num_estagiario == null ? '' : data[0].num_estagiario} <br><br>
+                            Email: ${data[0].getpessoa.email}<br><br>
+                            Contactos: ${data[0].getpessoa.telefone1}/${data[0].getpessoa.telefone2 == null ? '' : data[0].getpessoa.telefone2}<br><br>
+                            Endereço: ${data[0].endereco_escritorio == null ? '' : data[0].endereco_escritorio}<br><br>
                             Município: ${municipio} <br><br>
-                            Data de Inscrição Advogado: ${data.data_inscricao_oaa == null ? '' : data.data_inscricao_oaa} <br><br>
-                            Data de Inscrição Estagiário: ${data.data_inscricao_estagiario == null ? '' : data.data_inscricao_estagiario}
+                            Data de Inscrição Advogado: ${data[0].data_inscricao_oaa == null ? '' : data[0].data_inscricao_oaa} <br><br>
+                            Data de Inscrição Estagiário: ${data[0].data_inscricao_estagiario == null ? '' : data[0].data_inscricao_estagiario}
                         </div>`
             $("#dv-detalhes").html(html);
 
+
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+}
+
+function buscarHistorico(id) {
+
+    fetch(`/system/getHistoricoProcesso/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return response.json();
+        })
+        .then(dados => {
+
+            const div = document.getElementById('list-group-item');
+            div.innerHTML = '';
+
+            dados.forEach(item => {
+
+                let avatar = window.avatarUrl;
+
+                const data = item.created_at;
+                const [datePart, timePart] = data.split("T");
+                const [ano, mes, dia] = datePart.split("-");
+                const hora = timePart.substring(0, 8);
+
+                const formatada = `${dia}/${mes}/${ano} ${hora}`;
+
+                linha = `<div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-auto"><span class="badge bg-green"></span></div>
+                                    <div class="col-auto">
+                                        <a href="#">
+                                            <span class="avatar"
+                                                style="background-image: url(${avatar})"></span>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#" class="text-reset d-block">${item.nome}
+                                            | ${formatada}</a>
+                                        <div class="d-block text-secondary mt-n1">
+                                            ${item.operacao}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                div.innerHTML += linha;
+
+            });
 
         })
         .catch(error => {
@@ -330,4 +392,70 @@ document.getElementById('btn-registar-cerimonia').addEventListener('click', func
         });
 
     }
+});
+
+$(document).on('click', '.btn-excluir', function () {
+
+    // Pega o data-id do <a> clicado
+    let id = $(this).data('id');
+    const formData = new FormData();
+    formData.append('advogado_id', id);
+
+    Swal.fire({
+        title: "Confirmação",
+        text: "Tem certeza que deseja excluir este registo?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#34c38f",
+        cancelButtonColor: "#f46a6a",
+        confirmButtonText: "Excluir!",
+        cancelButtonText: "Cancelar",
+        showLoaderOnConfirm: true,
+        preConfirm: function () {
+            return $.ajax({
+                url: "/system/delete-advogado/post",
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (res) {
+
+                    console.log(res);
+                    if (res == 'sucesso') {
+                        sweetAlert({
+                            type: "success",
+                            title: "Sucesso",
+                            text: 'Dados excluídos com sucesso!',
+                            timer: 4000
+                        });
+                        window.location.reload();
+                    }
+                    else if (res == 'tecnico') {
+                        sweetAlert({
+                            type: "warning",
+                            title: "Aviso",
+                            text: 'Não pode excluir este registo, contacte o técnico do sistema',
+                            timer: 4000
+                        });
+                    }
+                },
+                error: function (error) {
+
+                    sweetAlert({
+                        type: "warning",
+                        title: "Erro " + error.status,
+                        text: 'Erro: ' + error.responseJSON.message,
+                        timer: 9000
+                    });
+                    console.log("Error: " + error.responseJSON.message);
+                }
+            });
+        }
+    });
+
+
 });

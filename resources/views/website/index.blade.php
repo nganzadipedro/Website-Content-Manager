@@ -320,7 +320,7 @@
                                     <span class="role">Conselheiro</span>
                                 </div>
                                 <div class="membro">
-                                    <img src="{{ asset('assets/website/img/fotos/user_default.jpg') }}"
+                                    <img src="{{ asset('assets/website/img/fotos/conselheiros/jose_vicente.jpg') }}"
                                         alt="José Rodrigues Vicente">
                                     <p>José Rodrigues Vicente</p>
                                     <span class="card-number">Cédula Nº 3213</span>

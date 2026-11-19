@@ -6,19 +6,9 @@ function valida_formulario() {
     const registo_entrada_id = document.getElementById('registo_entrada_id').value;
     const inscricao_advogado_id = document.getElementById('inscricao_advogado_id').value;
     const despacho = document.getElementById('despacho').value;
-    const data_despacho = document.getElementById('data_despacho').value;
-    const mensagem_despacho = document.getElementById('mensagem_despacho').value;
 
     if (despacho == '' || despacho == null) {
-        msgErro = "Preencha o campo despacho";
-        tem = false;
-    }
-    else if (data_despacho == '' || data_despacho == null) {
-        msgErro = "Digite a data do despacho";
-        tem = false;
-    }
-    else if (despacho == 'Indeferido' && (mensagem_despacho == '' || mensagem_despacho == null)) {
-        msgErro = "Digite a mensagem do despacho";
+        msgErro = "Preencha o campo Encaminhar Para";
         tem = false;
     }
 
@@ -43,14 +33,11 @@ document.getElementById('btn-registar-despacho').addEventListener('click', funct
         const formData = new FormData();
         const registo_entrada_id = document.getElementById('registo_entrada_id').value;
         const inscricao_advogado_id = document.getElementById('inscricao_advogado_id').value;
+        const tipoprocesso_id = document.getElementById('tipoprocesso_id').value;
         const despacho = document.getElementById('despacho').value;
-        const data_despacho = document.getElementById('data_despacho').value;
-        const mensagem_despacho = document.getElementById('mensagem_despacho').value;
 
         formData.append('inscricao_advogado_id', inscricao_advogado_id);
         formData.append('despacho', despacho);
-        formData.append('data_despacho', data_despacho);
-        formData.append('mensagem_despacho', mensagem_despacho);
         formData.append('registo_entrada_id', registo_entrada_id);
 
         Swal.fire({
@@ -85,8 +72,14 @@ document.getElementById('btn-registar-despacho').addEventListener('click', funct
                                 timer: 3000
                             });
 
-                            window.location.reload();
-
+                            if (tipoprocesso_id == 2) {
+                                window.location.href = '/system/areatecnica/list/subscription/registed/Deferido';
+                            }
+                            else if (tipoprocesso_id == 3) {
+                                window.location.href = '/system/areatecnica/list/subscription-trainee/registed/Deferido';
+                            } else {
+                                window.location.reload();
+                            }
                         }
                     },
                     error: function (error) {

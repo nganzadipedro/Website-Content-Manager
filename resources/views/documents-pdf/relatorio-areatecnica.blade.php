@@ -281,6 +281,10 @@
             color: #141414;
         }
 
+        .detalhes table.bar-chart tr.bar-row td.bar-name {
+            font-size: 12px;
+        }
+
         table.bar-chart tr.bar-row td.bar-track {
             background: #fdf6de;
             border: 1px solid #f0e2b0;
@@ -356,8 +360,10 @@
     <footer>
         <table>
             <tr>
-                <td style="text-align:left;">Documento processado pelo Sistema de Gestão de Informações do CPL-OAA. Gerado em {{ $data[0] }} de
-                    {{ $data[1] }} de {{ $data[2] }}</td>
+                <td style="text-align:left;">Documento processado pelo Sistema de Gestão de Informações do CPL-OAA.
+                    Gerado em {{ $data[0] }} de
+                    {{ $data[1] }} de {{ $data[2] }}
+                </td>
                 <td style="text-align:right;" class="pagenum"></td>
             </tr>
         </table>
@@ -371,7 +377,7 @@
         <strong>{{ \Carbon\Carbon::parse($dataFinal)->format('d/m/Y') }}</strong>.
     </div>
 
-    {{-- Resumo geral de inscrições 
+    {{-- Resumo geral de inscrições
     <table class="stats">
         <tr>
             <td>
@@ -387,7 +393,7 @@
                 <span class="label">Advogados estagiários</span>
             </td>
         </tr>
-    </table>  --}}
+    </table> --}}
 
     <h2 class="seccao">Resumo de Processos por Categoria</h2>
 
@@ -403,6 +409,10 @@
                 <td>
                     <span class="num">{{ $processosAdvogados['execucao'] ?? 0 }}</span>
                     <span class="label">Em execução</span>
+                </td>
+                <td>
+                    <span class="num">{{ $processosAdvogados['indeferido'] ?? 0 }}</span>
+                    <span class="label">Indeferidos</span>
                 </td>
                 <td>
                     <span class="num">{{ $processosAdvogados['remetidocn'] ?? 0 }}</span>
@@ -438,6 +448,10 @@
                     <span class="label">Em execução</span>
                 </td>
                 <td>
+                    <span class="num">{{ $processosEstagiarios['indeferido'] ?? 0 }}</span>
+                    <span class="label">Indeferidos</span>
+                </td>
+                <td>
                     <span class="num">{{ $processosEstagiarios['remetidocn'] ?? 0 }}</span>
                     <span class="label">Remetidos ao CN</span>
                 </td>
@@ -457,12 +471,45 @@
         </table>
     </div>
 
+    <h2 class="seccao">Processos Em Execução: Advogados</h2>
+
+    <div class="detalhes">
+        <table class="bar-chart">
+            <tr class="bar-row">
+                <td class="bar-name">Processos por Distribuir ({{ $processosAdvogados['mapa-distribuicao'] }})</td>
+            </tr>
+            <tr class="bar-row">
+                <td class="bar-name">Análise de Conselheiros ({{ $processosAdvogados['analise-conselheiro'] }})</td>
+            </tr>
+            <tr class="bar-row">
+                <td class="bar-name">Análise Comissão de Ética ({{ $processosAdvogados['comissao-etica'] }})</td>
+            </tr>
+            <tr class="bar-row">
+                <td class="bar-name">Sobre a Mesa do Presidente ({{ $processosAdvogados['mesa-presidente'] }})</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2 class="seccao">Processos Em Execução: Advogados Estagiários</h2>
+
+    <div class="detalhes">
+        <table class="bar-chart">
+            <tr class="bar-row">
+                <td class="bar-name">Indicação de Patrono ({{ $processosEstagiarios['indicacao-patrono'] }})</td>
+            </tr>
+            <tr class="bar-row">
+                <td class="bar-name">Sobre a Mesa do Presidente ({{ $processosEstagiarios['mesa-presidente'] }})</td>
+            </tr>
+        </table>
+    </div>
+
     <h2 class="seccao">Comparativo: Advogados vs. Advogados Estagiários</h2>
 
     @php
         $metricas = [
             'pendentes' => ['label' => 'Pendentes', 'adv' => $processosAdvogados['pendentes'] ?? 0, 'est' => $processosEstagiarios['pendentes'] ?? 0],
             'execucao' => ['label' => 'Em Execução', 'adv' => $processosAdvogados['execucao'] ?? 0, 'est' => $processosEstagiarios['execucao'] ?? 0],
+            'indeferido' => ['label' => 'Indeferidos', 'adv' => $processosAdvogados['indeferido'] ?? 0, 'est' => $processosEstagiarios['indeferido'] ?? 0],
             'remetidocn' => ['label' => 'Remetidos ao CN', 'adv' => $processosAdvogados['remetidocn'] ?? 0, 'est' => $processosEstagiarios['remetidocn'] ?? 0],
             'cerimonia' => ['label' => 'Aguardando Cerimónia', 'adv' => $processosAdvogados['cerimonia'] ?? 0, 'est' => $processosEstagiarios['cerimonia'] ?? 0],
             'cedula' => ['label' => 'Cédulas Entregues', 'adv' => $processosAdvogados['cedula'] ?? 0, 'est' => $processosEstagiarios['cedula'] ?? 0],
@@ -480,7 +527,7 @@
             @php
                 // $max = max($m['adv'], $m['est'], 1);
                 $max = $m['adv'] + $m['est'];
-                if($max == 0) {
+                if ($max == 0) {
                     $max = 1; // Evita divisão por zero
                 }
                 $advPct = round(($m['adv'] / $max) * 100);

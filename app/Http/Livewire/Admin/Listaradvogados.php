@@ -21,9 +21,22 @@ class Listaradvogados extends Component
         } else if (Auth::user()->permissao_id == 3) {
             return view('dashboard.areatecnica.listar-advogados')->extends('layouts-new.app')->section('content');
         }
+        else if (Auth::user()->permissao_id == 2) {
+            return view('dashboard.secretaria.listar-advogados')->extends('layouts-new.app')->section('content');
+        }
         else if (Auth::user()->permissao_id == 6) {
             return view('dashboard.recepcionista.listar-advogados')->extends('layouts-new.app')->section('content');
         }
 
+    }
+
+    public function e_patrono($id)
+    {
+        $advogado = Advogado::find($id);
+        if ($advogado->getpatrono != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

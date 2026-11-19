@@ -123,6 +123,20 @@
                                                             <path d="M11 9h-4" />
                                                         </svg>
                                                     </a>
+                                                    <a data-id="{{ $this->_pegaregistoentrada($item->getpessoa->nome) }}"
+                                                        class="btn-historico badge bg-yellow-lt"
+                                                        title="Histórico do processo" style="cursor: pointer;"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-historico">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1.25" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-history">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M12 8l0 4l2 2" />
+                                                            <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+                                                        </svg>
+                                                    </a>
                                                     <a title="Recepção da Cédula" data-id="{{ $item->id }}"
                                                         class="badge bg-green-lt btn-cerimonia" style="cursor: pointer;"
                                                         data-bs-toggle="modal" data-bs-target="#modal-cerimonia">
@@ -140,6 +154,23 @@
                                                             <path d="M6 15l2 0" />
                                                         </svg>
                                                     </a>
+                                                    @if (Auth::user()->id == 1 || Auth::user()->id == 4054)
+                                                        <a title="Excluir Registo" data-id="{{ $item->id }}"
+                                                            class="badge bg-red-lt btn-excluir" style="cursor: pointer;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M4 7l16 0" />
+                                                                <path d="M10 11l0 6" />
+                                                                <path d="M14 11l0 6" />
+                                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                            </svg>
+                                                        </a>
+                                                    @endif
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -202,6 +233,22 @@
         </div>
     </div>
 
+    <div class="modal modal-blur fade" id="modal-historico" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Histórico do Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group list-group-flush list-group-hoverable" id="list-group-item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal modal-blur fade" id="modal-cerimonia-grupo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -253,6 +300,7 @@
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/system/js/lista-aguarda-cerimonia.js') }}"></script>
     <script>
+        window.avatarUrl = "{{ asset('images/user-icon.png') }}";
         $('#myTable').DataTable({
             paging: false, // Desabilita a paginação
             searching: true, // Habilita a barra de pesquisa

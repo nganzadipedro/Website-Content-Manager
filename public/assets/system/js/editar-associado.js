@@ -1,36 +1,163 @@
+let dropdown;
+let id_patrono_filtrado;
+let patronoactual_id = $("#patronoactual_id").val();
+let patronoactual_nome = $("#patronoactual_nome").val();
+let patronoactual_telefone = $("#patronoactual_telefone").val();
+let patronoactual_cedula = $("#patronoactual_cedula").val();
+let patronoactual_email = $("#patronoactual_email").val();
+let patronoactual_endereco = $("#patronoactual_endereco").val();
+let patronoactual_municipio_id = $("#patronoactual_municipio_id").val();
+let patronoactual_escritorio = $("#patronoactual_escritorio").val();
+let escolher_patrono = '';
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    dropdown = document.getElementById('patrono_dropdown');
+    if (listaPatronosGlobal === 'undefined') return;
+
+    // Função para filtrar e renderizar a lista
+    function filtrarPatronos(texto) {
+
+        console.log('Filtrando patronos com o texto:', texto);
+        const query = texto.trim().toLowerCase();
+        dropdown = document.getElementById('patrono_dropdown');
+
+        if (query === '') {
+            dropdown.style.display = 'none';
+            dropdown.innerHTML = '';
+            return;
+        }
+
+        // Filtra até 20 resultados para manter a renderização ultra-rápida
+        const resultados = listaPatronosGlobal.filter(p =>
+            p.nome.toLowerCase().includes(query)
+        ).slice(0, 10);
+
+        dropdown.innerHTML = '';
+
+        if (resultados.length > 0) {
+            resultados.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'custom-dropdown-item';
+                div.textContent = item.nome;
+
+                // Evento de seleção do item
+                div.addEventListener('click', function () {
+                    id_patrono_filtrado = item.id;
+                    // buscarItem(id_patrono_filtrado);
+                    // alert('patrono selecionado');
+                    document.getElementById('nome_patrono_existe').value = item.nome;
+                    dropdown.style.display = 'none';
+                });
+
+                dropdown.appendChild(div);
+            });
+        } else {
+            dropdown.innerHTML = '<div class="custom-dropdown-empty">Nenhum patrono encontrado</div>';
+        }
+
+        dropdown.style.display = 'block';
+    }
+
+    // Eventos de digitação e foco
+    $(document).on('input', '#nome_patrono_existe', function () {
+        filtrarPatronos(this.value);
+        id_patrono_filtrado = 0;
+    });
+
+    // $(document).on('focus', '#nome_patrono_existe', function () {
+    //     if (this.value.trim() !== '') {
+    //         filtrarPatronos(this.value);
+    //         id_patrono_filtrado = 0;
+    //     }
+    // });
+
+    // Fecha a lista se clicar fora do campo
+    document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+});
+
 
 categoria_field = $('#categoria_field').val();
 $('#end-advogado').hide();
 $('#end-estagiario').hide();
+$('#dvescolher-patrono').hide();
+$('#dvnomepatronoexiste').hide();
 
-if (categoria_field == 'Estagiario') {
+if (categoria_field == 'Estagiario' && (patronoactual_id == '' || patronoactual_id == null)) {
+    $('#dvescolher-patrono').show();
+    $('#dvnomepatronoexiste').show();
+    escolher_patrono = $('#escolher_patrono').val();
+    $('#end-estagiario').hide();
+    $('#end-advogado').hide();
+}
+else if (categoria_field == 'Estagiario' && (patronoactual_id != '' && patronoactual_id != null)) {
+    $('#dvescolher-patrono').hide();
+    $('#dvnomepatronoexiste').show();
     $('#end-estagiario').show();
     $('#end-advogado').hide();
+    $("#nome_patrono").val(patronoactual_nome);
+    $("#nome_patrono").prop("disabled", true);
+    $("#tel_patrono").val(patronoactual_telefone);
+    $("#email_patrono").val(patronoactual_email);
+    $("#nome_escritorio").val(patronoactual_escritorio);
+    $("#cedula_patrono").val(patronoactual_cedula);
+    $("#municipio_id_est").val(patronoactual_municipio_id);
+    $("#endereco_escritorio_est").val(patronoactual_endereco);
 }
 else if (categoria_field == 'Advogado') {
     $('#end-advogado').show();
     $('#end-estagiario').hide();
+    $('#dvescolher-patrono').hide();
+    escolher_patrono = '';
+    $('#dvnomepatronoexiste').hide();
 }
 
 $(document).on('change', '#categoria', function () {
 
     const categoria = $(this).val();
-
     if (categoria == 'Estagiario') {
-        $('#end-estagiario').show();
+        $('#dvescolher-patrono').show();
+        escolher_patrono = $('#escolher_patrono').val();
+        $('#dvnomepatronoexiste').show();
+        $('#end-estagiario').hide();
         $('#end-advogado').hide();
     }
     else if (categoria == 'Advogado') {
         $('#end-advogado').show();
         $('#end-estagiario').hide();
+        $('#dvescolher-patrono').hide();
+        escolher_patrono = '';
+        $('#dvnomepatronoexiste').hide();
     }
     else {
         $('#end-advogado').hide();
         $('#end-estagiario').hide();
+        $('#dvescolher-patrono').hide();
+        escolher_patrono = '';
+        $('#dvnomepatronoexiste').hide();
+    }
+});
+
+$(document).on('change', '#escolher_patrono', function () {
+
+    const tipo = $(this).val();
+    escolher_patrono = tipo;
+    if (tipo == 'existe') {
+        $('#end-estagiario').hide();
+        $('#dvnomepatronoexiste').show();
+        $('#nome_patrono_existe').val("");
+    }
+    else {
+        $('#end-estagiario').show();
+        $('#dvnomepatronoexiste').hide();
+        $('#nome_patrono_existe').val("");
     }
 
 });
-
 
 
 function valida_formulario() {
@@ -52,24 +179,35 @@ function valida_formulario() {
     const categoria = document.getElementById('categoria').value;
     const estado = document.getElementById('estado').value;
 
-    endereco_profissional_adv;
-    municipio_id_adv;
-    nome_patrono;
-    tel_patrono;
-    email_patrono;
-    nome_escritorio;
-    endereco_escritorio_est;
-    municipio_id_est;
+    var endereco_profissional_adv;
+    var municipio_id_adv;
+    var nome_patrono;
+    var tel_patrono;
+    var email_patrono;
+    var nome_escritorio;
+    var cedula_patrono;
+    var endereco_escritorio_est;
+    var municipio_id_est;
 
     if (categoria == 'Advogado') {
         endereco_profissional_adv = document.getElementById('endereco_profissional_adv').value;
         municipio_id_adv = document.getElementById('municipio_id_adv').value;
     }
-    else if (categoria == 'Estagiario') {
+    else if (categoria == 'Estagiario' && escolher_patrono == 'novo' && (patronoactual_id == '' || patronoactual_id == null)) {
         nome_patrono = document.getElementById('nome_patrono').value;
         tel_patrono = document.getElementById('tel_patrono').value;
         email_patrono = document.getElementById('email_patrono').value;
         nome_escritorio = document.getElementById('nome_escritorio').value;
+        cedula_patrono = document.getElementById('cedula_patrono').value;
+        endereco_escritorio_est = document.getElementById('endereco_escritorio_est').value;
+        municipio_id_est = document.getElementById('municipio_id_est').value;
+    }
+    else if (categoria == 'Estagiario' && (patronoactual_id != '' && patronoactual_id != null)) {
+        nome_patrono = document.getElementById('nome_patrono').value;
+        tel_patrono = document.getElementById('tel_patrono').value;
+        email_patrono = document.getElementById('email_patrono').value;
+        nome_escritorio = document.getElementById('nome_escritorio').value;
+        cedula_patrono = document.getElementById('cedula_patrono').value;
         endereco_escritorio_est = document.getElementById('endereco_escritorio_est').value;
         municipio_id_est = document.getElementById('municipio_id_est').value;
     }
@@ -94,24 +232,12 @@ function valida_formulario() {
         msgErro = "Escolha o género";
         tem = false;
     }
-    else if (categoria == '' || categoria == null) {
-        msgErro = "Escolha a categoria";
-        tem = false;
-    }
-    else if (estado == '' || estado == null) {
-        msgErro = "Informe se o associado já está registado ou se aguarda cerimónia";
-        tem = false;
-    }
     else if (categoria == 'Advogado' && (num_associado == '' || num_associado == null)) {
         msgErro = "Digite o número da cédula de advogado";
         tem = false;
     }
     else if (categoria == 'Estagiario' && (num_estagiario == '' || num_estagiario == null)) {
         msgErro = "Digite o número da cédula de advogado estagiário";
-        tem = false;
-    }
-    else if (email == '' || email == null) {
-        msgErro = "Digite o endereço de email";
         tem = false;
     }
     else if (categoria == 'Advogado' && (endereco_profissional_adv == '' || endereco_profissional_adv == null)) {
@@ -122,22 +248,43 @@ function valida_formulario() {
         msgErro = "Escolha o município referente ao endereço profissional do advogado";
         tem = false;
     }
-    // else if (categoria == 'Estagiario' && (nome_patrono == '' || nome_patrono == null)) {
-    //     msgErro = "Digite o nome do patrono";
-    //     tem = false;
-    // }
-    // else if (categoria == 'Estagiario' && (nome_escritorio == '' || nome_escritorio == null)) {
-    //     msgErro = "Digite o nome do escritório";
-    //     tem = false;
-    // }
-    // else if (categoria == 'Estagiario' && (endereco_escritorio_est == '' || endereco_escritorio_est == null)) {
-    //     msgErro = "Digite o endereço do escritório";
-    //     tem = false;
-    // }
-    // else if (categoria == 'Estagiario' && (municipio_id_est == '' || municipio_id_est == null)) {
-    //     msgErro = "Escolha o município referente ao endereço do escritório";
-    //     tem = false;
-    // }
+    else if (categoria == 'Estagiario' && escolher_patrono == 'existe' && (id_patrono_filtrado == 0 || id_patrono_filtrado == '' || id_patrono_filtrado == null) && (patronoactual_id == '' || patronoactual_id == null)) {
+        msgErro = "Selecione o patrono";
+        tem = false;
+    }
+    else if (categoria == 'Estagiario' && escolher_patrono == 'novo' && (patronoactual_id == '' || patronoactual_id == null)) {
+
+        if (nome_patrono == '' || nome_patrono == null) {
+            msgErro = "Digite o nome do patrono";
+            tem = false;
+        }
+        else if (endereco_escritorio_est == '' || endereco_escritorio_est == null) {
+            msgErro = "Digite o endereço do escritório";
+            tem = false;
+        }
+        else if (municipio_id_est == '' || municipio_id_est == null) {
+            msgErro = "Escolha o município referente ao endereço do escritório";
+            tem = false;
+        }
+
+    }
+    else if (categoria == 'Estagiario' && (patronoactual_id != '' && patronoactual_id != null)) {
+
+        if (nome_patrono == '' || nome_patrono == null) {
+            msgErro = "Digite o nome do patrono";
+            tem = false;
+        }
+        else if (endereco_escritorio_est == '' || endereco_escritorio_est == null) {
+            msgErro = "Digite o endereço do escritório";
+            tem = false;
+        }
+        else if (municipio_id_est == '' || municipio_id_est == null) {
+            msgErro = "Escolha o município referente ao endereço do escritório";
+            tem = false;
+        }
+
+    }
+
 
     if (tem == false) {
         sweetAlert({
@@ -182,16 +329,27 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         nome_escritorio = '';
         endereco_escritorio_est = '';
         municipio_id_est = '';
+        cedula_patrono = '';
 
         if (categoria == 'Advogado') {
             endereco_profissional_adv = document.getElementById('endereco_profissional_adv').value;
             municipio_id_adv = document.getElementById('municipio_id_adv').value;
         }
-        else if (categoria == 'Estagiario') {
+        else if (categoria == 'Estagiario' && escolher_patrono == 'novo' && (patronoactual_id == '' || patronoactual_id == null)) {
             nome_patrono = document.getElementById('nome_patrono').value;
             tel_patrono = document.getElementById('tel_patrono').value;
             email_patrono = document.getElementById('email_patrono').value;
             nome_escritorio = document.getElementById('nome_escritorio').value;
+            cedula_patrono = document.getElementById('cedula_patrono').value;
+            endereco_escritorio_est = document.getElementById('endereco_escritorio_est').value;
+            municipio_id_est = document.getElementById('municipio_id_est').value;
+        }
+        else if (categoria == 'Estagiario' && (patronoactual_id != '' && patronoactual_id != null)) {
+            nome_patrono = document.getElementById('nome_patrono').value;
+            tel_patrono = document.getElementById('tel_patrono').value;
+            email_patrono = document.getElementById('email_patrono').value;
+            nome_escritorio = document.getElementById('nome_escritorio').value;
+            cedula_patrono = document.getElementById('cedula_patrono').value;
             endereco_escritorio_est = document.getElementById('endereco_escritorio_est').value;
             municipio_id_est = document.getElementById('municipio_id_est').value;
         }
@@ -218,6 +376,10 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
         formData.append('endereco_escritorio_est', endereco_escritorio_est);
         formData.append('municipio_id_est', municipio_id_est);
         formData.append('advogado_id', advogado_id);
+        formData.append('escolher_patrono', escolher_patrono);
+        formData.append('id_patrono_filtrado', id_patrono_filtrado);
+        formData.append('cedula_patrono', cedula_patrono);
+        formData.append('patronoactual_id', patronoactual_id);
 
         Swal.fire({
             title: "Confirmação",
@@ -250,7 +412,16 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                                 text: 'Dados actualizados com sucesso!',
                                 timer: 3000
                             });
-                            window.location.reload();
+
+                            if (categoria == 'Advogado') {
+                                window.location.href = '/system/areatecnica/list/lawyers';
+                            }
+                            else if (categoria == 'Estagiario') {
+                                window.location.href = '/system/areatecnica/list/trainees';
+                            }
+                            else {
+                                window.location.reload();
+                            }
                         }
                         else if (res == 'duplicado') {
                             sweetAlert({
@@ -265,6 +436,14 @@ document.getElementById('btn-registar-inscricao').addEventListener('click', func
                                 type: "warning",
                                 title: "Aviso",
                                 text: 'Número do BI duplicado na base de dados!',
+                                timer: 3000
+                            });
+                        }
+                        else if (res == 'duplicado-patrono') {
+                            sweetAlert({
+                                type: "warning",
+                                title: "Aviso",
+                                text: 'Cédula do Patrono duplicado na base de dados!',
                                 timer: 3000
                             });
                         }

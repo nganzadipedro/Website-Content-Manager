@@ -4,10 +4,10 @@
             <div class="card">
                 <div class="card-body">
 
-
                     <h3 class="h1">Processos de Inscrição de Advogados Remetidos ao Conselho Nacional</h3>
                     <div class="row mt-5">
-                        <div class="col-7">
+                        <div class="col-12">
+                            <input type="hidden" value="{{ Auth::user()->id }}" id="user_id">
 
                             <a id="btn-registar-dataremessa" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -21,6 +21,32 @@
                                     <path d="M4 11h16" />
                                     <path d="M15 19l2 2l4 -4" />
                                 </svg> Registar Data de Remessa</a>
+                                <a id="btn-retornar" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up-double">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M13 14l-4 -4l4 -4" />
+                                                            <path d="M8 14l-4 -4l4 -4" />
+                                                            <path d="M9 10h7a4 4 0 1 1 0 8h-1" />
+                                                        </svg> Retornar à Mesa do Presidente</a>
+                                                        <a id="btn-excluir-processos" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 7l16 0" />
+                                    <path d="M10 11l0 6" />
+                                    <path d="M14 11l0 6" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg> Excluir Processos</a>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-9">
                             <a id="btn-gerar-excel" class="btn btn-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
@@ -65,7 +91,6 @@
             <div class="row row-cards">
                 <div class="col-12">
                     <div class="card">
-
                         <div class="table-responsive" style="max-height: 550px; overflow: auto; padding: 5px;">
                             <table id="myTable" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -90,9 +115,9 @@
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
                                             <td>
-                                                @if ($item->data_remessa_cn == null)
+                                               
                                                     <input type="checkbox" class="checkItem" value="{{$item->id}}">
-                                                @endif
+                                                
                                             </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
@@ -102,6 +127,16 @@
                                             <td>{{$item->data_despacho}}</td>
                                             <td>{{$item->data_remessa_cn}}</td>
                                             <td>
+                                                <a style="cursor: pointer;" data-tel1="{{$item->telefone1}}" data-tel2="{{$item->telefone2}}" data-bilhete="{{$item->num_bilhete}}"
+                                                        data-nome="{{$item->getregistoentrada->proveniencia}}"
+                                                        class="badge bg-yellow-lt dados-pessoais"
+                                                        data-id="{{ $item->id }}" data-email="{{ $item->email }}" data-sexo="{{ $item->sexo }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-user">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+	<path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
+</svg>
+                                                    </a>
                                                 <a style="cursor: pointer;" data-bilhete="{{$item->num_bilhete}}"
                                                     data-nome="{{$item->getregistoentrada->proveniencia}}"
                                                     class="badge bg-green-lt registar-informacoes"
@@ -124,12 +159,111 @@
                                 </tbody>
                             </table>
                         </div>
+                    
+
+                    <div class="mt-3 p-3">
+
+                            <a id="btn-gerar-excel-completo" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-spreadsheet">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                                    <path d="M8 11h8v7h-8l0 -7" />
+                                    <path d="M8 15h8" />
+                                    <path d="M11 11v7" />
+                                </svg>Exportar Lista Completa em Excel</a>
+                            <a id="btn-gerar-pdf-completo" class="btn btn-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+                                    <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+                                    <path d="M17 18h2" />
+                                    <path d="M20 15h-3v6" />
+                                    <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
+                                </svg>Exportar Lista Completa em PDF</a>
 
                     </div>
+</div>
+
+                     
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal modal-blur fade" id="modal-dados-pessoais" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Actualizar Dados Pessoais</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        @csrf
+
+                        <input type="hidden" id="inscricao_id" value="">
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                <label class="form-label" for="nomedp">Nome</label>
+                                <input type="text" value="" class="form-control" id="nomedp">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label" for="numbilhetedp">Nº Bilhete</label>
+                                <input type="text" value="" class="form-control" id="numbilhetedp">
+                            </div>
+                            <div class="col-lg-6 col-12 col-md-6">
+
+                                <label class="form-label" for="sexodp">Género</label>
+                                <select name="sexodp" id="sexodp" class="form-select">
+                                    <option value="" selected>Não Definido</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label" for="telefone1dp">Telefone 1</label>
+                                <input type="text" value="" class="form-control" id="telefone1dp">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-12 col-xs-12">
+                                <label class="form-label" for="telefone2dp">Telefone 2</label>
+                                <input type="text" value="" class="form-control" id="telefone2dp">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 col-lg-12 col-12 col-xs-12">
+                                <label class="form-label" for="emaildp">Email</label>
+                                <input type="text" value="" class="form-control" id="emaildp">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12 col-12">
+                            <a id="btn-salvar-dados-pessoais" class="btn btn-success mt-4">Salvar</a>
+                            <a id="btn-cancelar-dados-pessoais" class="btn btn-danger mt-4">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <div class="modal modal-blur fade" id="modal-registar-informacoes" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -146,19 +280,19 @@
 
                     <div class="row mb-3">
                         <div class="col-md-12 col-lg-12 col-12 col-xs-12">
-                            <label for="">Nome</label>
+                            <label class="form-label" for="nome">Nome</label>
                             <input type="text" disabled maxlength="200" value="" class="form-control" id="nome">
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
-                            <label for="">Nº Bilhete</label>
+                            <label class="form-label" for="num_bilhete">Nº Bilhete</label>
                             <input type="text" maxlength="15" value="" class="form-control" id="num_bilhete">
                         </div>
                         <div class="col-lg-6 col-12 col-md-6">
                             
-                                <label for="sexo">Género</label>
+                                <label class="form-label" for="sexo">Género</label>
                                 <select name="sexo" id="sexo" class="form-select">
                                     <option value="" selected>Não Definido</option>
                                     <option value="Masculino">Masculino</option>
@@ -171,7 +305,7 @@
                     <div class="row mb-3">
                         <div class=" col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
-                                <label for="cedula_disponivel">Cédula Disponível</label>
+                                <label class="form-label" for="cedula_disponivel">Cédula Disponível</label>
                                 <select name="cedula_disponivel" id="cedula_disponivel" class="form-select">
                                     <option value="Sim" selected>Sim</option>
                                 </select>
@@ -179,7 +313,7 @@
                         </div>
                         <div class=" col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
-                                <label for="num_cedula">Nº Cédula</label>
+                                <label class="form-label" for="num_cedula">Nº Cédula</label>
                                 <input type="text" maxlength="7" name="numero_cedula" class="form-control"
                                     id="numero_cedula" value="">
                             </div>
@@ -188,14 +322,14 @@
                     <div class="row mb-3">
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
-                                <label for="data_emissao_cedula">Data de Emissão da Cédula</label>
+                                <label class="form-label" for="data_emissao_cedula">Data de Emissão da Cédula</label>
                                 <input type="date" name="data_emissao_cedula" class="form-control"
                                     id="data_emissao_cedula" value="">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-12 col-xs-12">
                             <div class="form-group">
-                                <label for="aguarda_cerimonia">Aguarda Cerimónia</label>
+                                <label class="form-label" for="aguarda_cerimonia">Aguarda Cerimónia</label>
                                 <select name="aguarda_cerimonia" id="aguarda_cerimonia" class="form-select">
                                     <option value="Sim">Sim</option>
                                 </select>

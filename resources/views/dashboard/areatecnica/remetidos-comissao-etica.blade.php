@@ -6,6 +6,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
+                            <input type="hidden" value="{{ Auth::user()->id }}" id="user_id">
                             <h3 class="h1">Processos de Inscrição Para Advogado Remetidos à Comissão de Ética</h3>
                             <a id="btn-registar-devolucao-modal" class="btn btn-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -17,6 +18,18 @@
                                     <path d="M8 14l-4 -4l4 -4" />
                                     <path d="M9 10h7a4 4 0 1 1 0 8h-1" />
                                 </svg> Registar Devolução da Comissão de Ética</a>
+                            <a id="btn-excluir-processos" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 7l16 0" />
+                                    <path d="M10 11l0 6" />
+                                    <path d="M14 11l0 6" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg> Excluir Processos</a>
                         </div>
                     </div>
                 </div>
@@ -77,19 +90,20 @@
                                                     data-nome="{{ $item->getregistoentrada->proveniencia }}"
                                                     title="Registar Como Indeferido" data-id="{{ $item->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 9v4" />
-                                                            <path
-                                                                d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
-                                                            <path d="M12 16h.01" />
-                                                        </svg>
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M12 9v4" />
+                                                        <path
+                                                            d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+                                                        <path d="M12 16h.01" />
+                                                    </svg>
                                                 </a>
-                                                <a data-id="{{ $item->registo_entrada_id }}" class="badge bg-blue-lt btn-detalhes"
-                                                    title="Detalhes do processo" style="cursor: pointer;"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-detalhes">
+                                                <a data-id="{{ $item->registo_entrada_id }}"
+                                                    class="badge bg-blue-lt btn-detalhes" title="Detalhes do processo"
+                                                    style="cursor: pointer;" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-detalhes">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"

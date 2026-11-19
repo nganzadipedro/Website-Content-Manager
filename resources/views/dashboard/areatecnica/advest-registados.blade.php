@@ -7,7 +7,7 @@
                         <div class="col-10">
                             <h3 class="h1">Inscrições Para Advogados Estagiários
                                 [{{ $categoria_p == 'Deferido' ? 'Sobre a Mesa do Presidente' : $categoria_p }}]</h3>
-
+                            <input type="hidden" value="{{ Auth::user()->id }}" id="user_id">
                             <a id="btn-remeter-cn" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
@@ -30,6 +30,18 @@
                                     <path d="M4 11h16" />
                                     <path d="M15 19l2 2l4 -4" />
                                 </svg> Registar Data de Despacho</a>
+                            <a id="btn-excluir-processos" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 7l16 0" />
+                                    <path d="M10 11l0 6" />
+                                    <path d="M14 11l0 6" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg> Excluir Processos</a>
                         </div>
                     </div>
                 </div>
@@ -54,10 +66,10 @@
                                         <th>Nº Processo</th>
                                         <th>Requerente</th>
                                         <th>Estado</th>
+                                        <th>Patrono</th>
                                         <th>Despacho</th>
                                         <th>Data Despacho</th>
                                         <th>Acto Pretendido</th>
-                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -81,16 +93,16 @@
 
                                             <td>{{$loop->index + 1}}</td>
                                             <td>
-                                                @if ($item->estado == 'Sobre a mesa do Presidente')
+                                                @if ($item->estado == 'Sobre a mesa do Presidente' || $item->despacho == 'Indeferido')
                                                     <input type="checkbox" class="checkItem" value="{{$item->id}}">
                                                 @endif
                                             </td>
                                             <td>{{$item->codigo}}</td>
                                             <td>{{$item->getregistoentrada->proveniencia}}</td>
                                             <td>{{$item->estado == 'em tratamento' ? $item->despacho : $item->estado}}</td>
+                                            <td>{{$item->patrono_id == null ? 'Não Tem Patrono' : 'Tem Patrono'}}</td>
                                             <td>{{$item->despacho == null ? 'Sem Despacho' : $item->despacho}}</td>
-                                            <td>{{$data_despacho}}
-                                            </td>
+                                            <td>{{$data_despacho}}</td>
                                             <td>{{$item->acto_pretendido}}</td>
                                             <td>
                                                 @if ($item->despacho == 'Indeferido' || $item->estado == 'Sobre a mesa do Presidente')
@@ -121,6 +133,7 @@
                                                         <path d="M19 16v6" />
                                                     </svg>
                                                 </a>
+                                                
                                                 @if ($item->estado == 'Sobre a mesa do Presidente')
                                                     <a style="cursor:pointer;" class="badge bg-red-lt mudar-despacho"
                                                         data-nome="{{ $item->getregistoentrada->proveniencia }}"
@@ -137,8 +150,6 @@
                                                         </svg>
                                                     </a>
                                                 @endif
-                                            </td>
-                                            <td>
 
                                                 <a data-id="{{ $item->id }}" class="badge bg-blue-lt btn-detalhes"
                                                     title="Detalhes do processo" style="cursor: pointer;"

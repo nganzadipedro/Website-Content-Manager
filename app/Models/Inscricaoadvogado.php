@@ -25,6 +25,7 @@ class Inscricaoadvogado extends Model
         'texto_despacho',
         'sexo',
         'acto_pretendido',
+        'codigo_valid_dec',
         'registo_entrada_id',
         'advogado_id',
         'tipo_processo_id',

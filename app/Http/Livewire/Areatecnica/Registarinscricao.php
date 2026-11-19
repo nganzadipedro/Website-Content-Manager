@@ -43,6 +43,7 @@ class Registarinscricao extends Component
     public $municipios = array();
 
     public $patronos = array();
+    public $lista_patronos = array();
 
     public function mount($hash)
     {
@@ -63,6 +64,14 @@ class Registarinscricao extends Component
 
         $this->municipios = Municipio::all();
         $this->patronos = Patrono::all();
+        foreach ($this->patronos as $pat) {
+            $registo = [];
+            $registo[0] = $pat->id;
+            $registo[1] = $pat->advogado_id;
+            $registo[2] = $pat->getadvogado->getpessoa->nome;
+
+            array_push($this->lista_patronos, $registo);
+        }
         if ($this->registo->tipo_processo_id == 3) {
             return view('dashboard.areatecnica.registar-inscricao-estagiario')->extends('layouts-new.app')->section('content');
         }

@@ -211,7 +211,7 @@
                                 </span>
                             </a>
                         </li>
-                       
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -357,22 +357,29 @@
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
                                         <a class="dropdown-item" href="{{ route('system.secretaria.registar_entrada') }}">
-                                           + Novo Registo +
+                                            + Novo Registo +
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.listar_registos', 'inscricao') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.listar_registos', 'inscricao') }}">
                                             Processos de Inscrição
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.listar_registos', 'assistencia') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.listar_registos', 'assistencia') }}">
                                             Pedidos de Assistência
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.listar_registos', 'outros') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.listar_registos', 'participacao') }}">
+                                            Participações
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.listar_registos', 'outros') }}">
                                             Outros Processos
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                         <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
                                 <span
@@ -395,14 +402,68 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.list_assistencia','not-solved') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.substituition') }}">
+                                            + Substituição de Advogados +
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.list_assistencia', 'not-solved') }}">
                                             Pendentes
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.list_assistencia', 'solved') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.list_assistencia', 'solved') }}">
                                             Indicados
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.list_assistencia', 'documents') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.list_assistencia', 'documents') }}">
                                             Documentos Emitidos
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                        <path d="M12 12l8 -4.5" />
+                                        <path d="M12 12l0 9" />
+                                        <path d="M12 12l-8 -4.5" />
+                                        <path d="M16 5.25l-8 4.5" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Participações
+                                </span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-menu-columns">
+                                    <div class="dropdown-menu-column">
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar', 'pendente') }}">
+                                            Pendentes
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar', 'autorizado') }}">
+                                            Sobre a mesa do Presidente
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar', 'cancelado') }}">
+                                            Remetidos aos conselheiros
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar', 'cancelado') }}">
+                                            Remetidos à Comissão de Ética
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.secretaria.pedido_intervencao_listar', 'cancelado') }}">
+                                            Finalizados
                                         </a>
                                     </div>
                                 </div>
@@ -499,19 +560,52 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Relatórios
+                                    Associados
                                 </span>
                             </a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.secretaria.generate_report') }}">
-                                            Gerar Relatório
+                                        <a class="dropdown-item" href="{{ route('system.secretaria.list_lawyers') }}">
+                                            Advogados
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('system.secretaria.list_trainees') }}">
+                                            Advogados Estagiários
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        <!-- <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                                            data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                                            <span
+                                                                class="nav-link-icon d-md-none d-lg-inline-block">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                                                    <path d="M12 12l8 -4.5" />
+                                                                    <path d="M12 12l0 9" />
+                                                                    <path d="M12 12l-8 -4.5" />
+                                                                    <path d="M16 5.25l-8 4.5" />
+                                                                </svg>
+                                                            </span>
+                                                            <span class="nav-link-title">
+                                                                Relatórios
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-menu">
+                                                            <div class="dropdown-menu-columns">
+                                                                <div class="dropdown-menu-column">
+                                                                    <a class="dropdown-item" href="{{ route('system.secretaria.generate_report') }}">
+                                                                        Gerar Relatório
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li> -->
                     @endif
 
                     @if (Auth::user()->permissao_id == 6)
@@ -557,8 +651,17 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.recepcionista.listar_registos') }}">
-                                            Listar
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.recepcionista.listar_registos', 'assistencia') }}">
+                                            Pedidos de Assistência
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.recepcionista.listar_registos', 'participacao') }}">
+                                            Participações
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('system.recepcionista.listar_registos', 'outros') }}">
+                                            Outros Processos
                                         </a>
                                     </div>
                                 </div>
@@ -632,287 +735,6 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->permissao_id == 3 && Auth::user()->id != 10)
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('system.areatecnica.dashboard') }}">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Dashboard
-                                </span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Pedidos de AJ
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_pedidos_pendentes') }}">
-                                            Pendentes
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_pedidos_deferidos') }}">
-                                            Deferidos
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_pedidos_arquivados') }}">
-                                            Arquivados
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Inscrições Advogados
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_advogados_pendentes') }}">
-                                            Pendentes
-                                        </a>
-
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-one') }}">
-                                            Mapa de Distribuição
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-two') }}">
-                                            Remetidos aos Conselheiros
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-three') }}">
-                                            Remetidos à Comissão de Ética
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_advogados_registados', 'Deferido') }}">
-                                            Sobre a mesa do Presidente
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_advogados_registados', 'Indeferido') }}">
-                                            Indeferidos
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_advogados_cn') }}">
-                                            Remetidos ao CN
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Inscrições Advogados Estagiários
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_estagiarios_pendentes') }}">
-                                            Pendentes
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Deferido') }}">
-                                            Sobre a mesa do Presidente
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Indeferido') }}">
-                                            Indeferidos
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Indicacao-Patrono') }}">
-                                            Indicação de Patrono
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.list_est_remetidos_cn') }}">
-                                            Remetidos ao CN
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Associados
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.areatecnica.list_lawyers') }}">
-                                            Advogados
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('system.areatecnica.list_trainees') }}">
-                                            Advogados Estagiários
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('system.areatecnica.regist_lawyer') }}">
-                                            Cadastrar
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Aguardando Cerimónia
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.list_cerimonia', 'Advogado') }}">
-                                            Advogados
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.list_cerimonia', 'Estagiario') }}">
-                                            Advogados Estagiários
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Advogado') }}">
-                                            Advogados Ausentes
-                                        </a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Estagiario') }}">
-                                            Advogados Estagiários Ausentes
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                <span
-                                    class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                                        <path d="M12 12l8 -4.5" />
-                                        <path d="M12 12l0 9" />
-                                        <path d="M12 12l-8 -4.5" />
-                                        <path d="M16 5.25l-8 4.5" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Patronos
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('system.areatecnica.list_patronos') }}">
-                                            Listar
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                    @endif
-
                     @if (Auth::user()->permissao_id == 3 && Auth::user()->id == 1)
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ route('system.areatecnica.dashboard') }}">
@@ -961,10 +783,6 @@
                                             Pendentes
                                         </a>
                                         <a class="dropdown-item"
-                                            href="{{ route('system.areatecnica.listar_pedidos_deferidos') }}">
-                                            Deferidos
-                                        </a>
-                                        <a class="dropdown-item"
                                             href="{{ route('system.areatecnica.listar_pedidos_arquivados') }}">
                                             Arquivados
                                         </a>
@@ -972,6 +790,382 @@
                                 </div>
                             </div>
                         </li>
+
+                    @endif
+
+                    @if (Auth::user()->permissao_id == 3)
+
+
+                        <!-- permissões para o cláudio -->
+                        @if(Auth::user()->id == 4059)
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ route('system.areatecnica.dashboard') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Dashboard
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Pedidos de AJ
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_pedidos_pendentes') }}">
+                                                Pendentes
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_pedidos_arquivados') }}">
+                                                Arquivados
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Associados
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_lawyers') }}">
+                                                Advogados
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_trainees') }}">
+                                                Advogados Estagiários
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.regist_lawyer') }}">
+                                                Cadastrar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Patronos
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_patronos') }}">
+                                                Listar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        @else
+
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ route('system.areatecnica.dashboard') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Dashboard
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Inscrições Advogados
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_advogados_pendentes') }}">
+                                                Pendentes
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-one') }}">
+                                                Mapa de Distribuição
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-two') }}">
+                                                Remetidos aos Conselheiros
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_mapa_distribuicao', 'stage-three') }}">
+                                                Remetidos à Comissão de Ética
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_advogados_registados', 'Deferido') }}">
+                                                Sobre a mesa do Presidente
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_advogados_registados', 'Indeferido') }}">
+                                                Indeferidos
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_advogados_cn') }}">
+                                                Remetidos ao CN
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Inscrições Advogados Estagiários
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_estagiarios_pendentes') }}">
+                                                Pendentes
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Deferido') }}">
+                                                Sobre a mesa do Presidente
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Indeferido') }}">
+                                                Indeferidos
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.listar_estagiarios_registados', 'Indicacao-Patrono') }}">
+                                                Indicação de Patrono
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.list_est_remetidos_cn') }}">
+                                                Remetidos ao CN
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Associados
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_lawyers') }}">
+                                                Advogados
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_trainees') }}">
+                                                Advogados Estagiários
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.regist_lawyer') }}">
+                                                Cadastrar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Aguardando Cerimónia
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.list_cerimonia', 'Advogado') }}">
+                                                Advogados
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.list_cerimonia', 'Estagiario') }}">
+                                                Advogados Estagiários
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Advogado') }}">
+                                                Advogados Ausentes
+                                            </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('system.areatecnica.list_ausente_cerimonia', 'Estagiario') }}">
+                                                Advogados Estagiários Ausentes
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                                            <path d="M12 12l8 -4.5" />
+                                            <path d="M12 12l0 9" />
+                                            <path d="M12 12l-8 -4.5" />
+                                            <path d="M16 5.25l-8 4.5" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Patronos
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="{{ route('system.areatecnica.list_patronos') }}">
+                                                Listar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        @endif
+
+
+
+
+
 
                     @endif
 

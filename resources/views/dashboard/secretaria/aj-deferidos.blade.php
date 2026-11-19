@@ -40,21 +40,19 @@
                                                 <td>{{$item->gettipoprocesso->descricao}}</td>
                                                 <td>{{$item->proveniencia}}</td>
                                                 <td>
-                                                    @if ($item->tipo_indicacao == 'Auto-Indicação')
-                                                        <a href="{{ route('system.secretaria.atribuir_advogado', $item->hash) }}"
-                                                            class="badge bg-blue-lt" title="Alterar Indicação">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-switch-2">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6" />
-                                                                <path d="M18 4l3 3l-3 3" />
-                                                                <path d="M3 7h5l7 10h6" />
-                                                                <path d="M18 20l3 -3l-3 -3" />
-                                                            </svg>
-                                                        </a>
-                                                    @endif
+                                                    <a href="{{ route('system.secretaria.atribuir_advogado', $item->hash) }}"
+                                                        class="badge bg-blue-lt" title="Alterar Indicação">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-switch-2">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6" />
+                                                            <path d="M18 4l3 3l-3 3" />
+                                                            <path d="M3 7h5l7 10h6" />
+                                                            <path d="M18 20l3 -3l-3 -3" />
+                                                        </svg>
+                                                    </a>
                                                     <a href="{{ route('system.secretaria.documento_assistencia', $item->hash) }}"
                                                         class="badge bg-green-lt" title="Emitir Documento">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

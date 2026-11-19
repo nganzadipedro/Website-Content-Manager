@@ -151,5 +151,36 @@ class UserController extends Controller
         //
     }
 
+    public function resolve_cedulas_entregues()
+    {
+
+        // processos que ainda não peguei o relacionamento
+        $res = Inscricaoadvogado::where('cedula_disponivel', 'Sim')
+            ->where('estado', 'aguarda cerimonia')
+            ->whereNull('advogado_id')
+            ->get();
+
+        // processos que já peguei o relacionamento
+        $res = Inscricaoadvogado::where('cedula_disponivel', 'Sim')
+            ->where('estado', 'aguarda cerimonia')
+            ->whereNotNull('advogado_id')
+            ->get();
+
+        foreach ($res as $inscricao) {
+
+            $advogado = Registoentrada::where('num_bilhete', $inscricao->num_bilhete)->first();
+
+            if ($advogado) {
+                $inscricao->advogado_id = $advogado->id;
+                $inscricao->save();
+            }
+
+        }
+
+        dd($res);
+
+
+    }
+
 
 }

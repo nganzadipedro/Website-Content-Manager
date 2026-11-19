@@ -28,8 +28,6 @@
                                         <th>Requerente</th>
                                         <th>Natureza</th>
                                         <th>Localização</th>
-                                        <th>Usuário</th>
-                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -41,10 +39,9 @@
                                             <td>{{$item->getregisto->proveniencia}}</td>
                                             <td>{{$item->natureza}}</td>
                                             <td>{{$item->localizacao}}</td>
-                                            <td>{{$item->getuser->getpessoa->nome}}</td>
                                             <td>
                                                 <a title="Editar Registo" class="badge bg-yellow-lt"
-                                                    href="{{ route('system.areatecnica.detalhes_registo', $item->hash) }}">
+                                                    href="{{ route('system.areatecnica.editar_pedido', $item->hash) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -54,9 +51,8 @@
                                                         <path d="M13.5 6.5l4 4" />
                                                     </svg>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <a title="Detalhes do Registo" href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
+                                                <a title="Detalhes do Registo"
+                                                    href="{{ route('system.areatecnica.detalhes_registo', $item->getregisto->hash) }}"
                                                     class="badge bg-blue-lt">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -70,12 +66,24 @@
                                                         <path d="M11 9h-4" />
                                                     </svg>
                                                 </a>
+                                                <a data-id="{{$item->getregisto->hash }}" class="btn-preview badge bg-green-lt"
+                                                    title="Visualizar Documento" style="cursor: pointer;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
+                                                        <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
+                                                        <path d="M17 18h2" />
+                                                        <path d="M20 15h-3v6" />
+                                                        <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1" />
+                                                    </svg>
+                                                </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -88,6 +96,7 @@
 </div>
 @section('script-aux')
     <script src="{{ asset('assets/template/src/plugins/src/table/datatable/datatables.js') }}"></script>
+    <script src="{{ asset('assets/system/js/aj-documentos.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();

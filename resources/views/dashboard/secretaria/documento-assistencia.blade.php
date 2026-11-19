@@ -117,14 +117,25 @@
                                                     </div>
                                                 @endif
 
-
-
-
                                                 <div class="col-lg-4 col-12 col-md-4">
                                                     <div class="form-group" id="insitituicao_copia_field">
                                                         <label for="insitituicao_copia" class="form-label">Instituição em
                                                             cópia</label>
                                                         <input type="text" id="insitituicao_copia" name="insitituicao_copia"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mt-3">
+
+
+                                                <div class="col-lg-4 col-12 col-md-4">
+                                                    <div class="form-group" id="requerente_field">
+                                                        <label for="requerente" class="form-label">Nome do
+                                                            Requerente</label>
+                                                        <input type="text" id="requerente" name="requerente"
                                                             class="form-control">
                                                     </div>
                                                 </div>
@@ -149,7 +160,8 @@
                             <input type="hidden" id="tipo_indicacao_p" value="{{ $registo->tipo_indicacao }}">
                             <input type="hidden" id="registoentrada_id_p" value="{{ $registo->id }}">
                             <input type="hidden" id="registoentrada_hash_p" value="{{ $registo->hash }}">
-                            <input type="hidden" id="tipo_situacao_assistencia_p" value="{{ $registo->tipo_situacao_assistencia }}">
+                            <input type="hidden" id="tipo_situacao_assistencia_p"
+                                value="{{ $registo->tipo_situacao_assistencia }}">
                         </form>
                     </div>
                 </div>

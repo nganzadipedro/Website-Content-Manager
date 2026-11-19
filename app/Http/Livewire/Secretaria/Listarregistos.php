@@ -36,9 +36,16 @@ class Listarregistos extends Component
             $this->lista = Registoentrada::where('tipo_processo_id', 1)
                 ->orderBy('id', 'desc')->get();
             $this->tipo_processo_desc = 'Processos de Assistência Judiciária';
-        } else {
+        }
+        else if ($this->tipo_processo == 'participacao') {
+            $this->lista = Registoentrada::where('tipo_processo_id', 4)
+                ->orderBy('id', 'desc')->get();
+            $this->tipo_processo_desc = 'Participações';
+        }
+        else {
             $this->lista = Registoentrada::where('tipo_processo_id', '!=', 2)
                 ->Where('tipo_processo_id', '!=', 3)
+                ->Where('tipo_processo_id', '!=', 4)
                 ->Where('tipo_processo_id', '!=', 1)
                 ->orderBy('id', 'desc')->get();
             $this->tipo_processo_desc = 'Outros Processos';

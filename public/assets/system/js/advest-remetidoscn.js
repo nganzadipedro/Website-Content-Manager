@@ -24,22 +24,211 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    $(document).on('click', '.registar-informacoes', function () {
+    $(document).on('click', '.dados-pessoais', function () {
+
+        $("#inscricao_id").val("");
+        $("#nomedp").val("Buscando dados...");
+        $("#numbilhetedp").val("Buscando dados...");
+        $("#telefone1dp").val("Buscando dados...");
+        $("#telefone2dp").val("Buscando dados...");
+        $("#emaildp").val("Buscando dados...");
+        $("#sexodp").val("");
 
         id = $(this).data("id");
         nome = $(this).data("nome");
         bilhete = $(this).data("bilhete");
+        telefone1 = $(this).data("tel1");
+        telefone2 = $(this).data("tel2");
+        email = $(this).data("email");
+        sexo = $(this).data("sexo");
 
-        $("#inscricao_id").val(id);
-        $("#nome").val(nome);
-        $("#num_bilhete").val(bilhete);
+        const modal = new bootstrap.Modal(document.getElementById('modal-dados-pessoais'));
+        modal.show();
+
+        setTimeout(function () {
+            $("#inscricao_id").val(id);
+            $("#nomedp").val(nome);
+            $("#numbilhetedp").val(bilhete);
+            $("#telefone1dp").val(telefone1);
+            $("#telefone2dp").val(telefone2);
+            $("#emaildp").val(email);
+            $("#sexodp").val(sexo);
+        }, 1500);
+
+    });
+
+    $(document).on('click', '#btn-cancelar-dados-pessoais', function () {
+
+        $("#inscricao_id").val("");
+        $("#nomedp").val("");
+        $("#numbilhetedp").val("");
+        $("#telefone1dp").val("");
+        $("#telefone2dp").val("");
+        $("#emaildp").val("");
+        $("#sexodp").val("");
+
+        const modalElement = document.getElementById('modal-dados-pessoais');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+
+    });
+
+    $(document).on('click', '#btn-salvar-dados-pessoais', function () {
+
+        const nome = document.getElementById('nomedp').value;
+        const email = document.getElementById('emaildp').value;
+        const num_bilhete = document.getElementById('numbilhetedp').value;
+        const telefone1 = document.getElementById('telefone1dp').value;
+        const telefone2 = document.getElementById('telefone2dp').value;
+        const sexo = document.getElementById('sexodp').value;
+
+        if (num_bilhete == '' || num_bilhete == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite o número do bilhete",
+                timer: 4000
+            });
+        }
+        else if (nome == '' || nome == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite o nome",
+                timer: 4000
+            });
+        }
+        else if (sexo == '' || sexo == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Escolha o género/sexo",
+                timer: 4000
+            });
+        }
+        else if ((telefone1 == '' || telefone1 == null)) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite o número de telefone principal",
+                timer: 4000
+            });
+        }
+        else if (isNaN(telefone1) == true) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Digite um número de telefone válido",
+                timer: 4000
+            });
+        }
+        else {
+
+            const inscricao_id = document.getElementById('inscricao_id').value;
+
+            const formData = new FormData();
+            formData.append('inscricao_id', inscricao_id);
+            formData.append('nome', nome);
+            formData.append('email', email);
+            formData.append('num_bilhete', num_bilhete);
+            formData.append('telefone1', telefone1);
+            formData.append('telefone2', telefone2);
+            formData.append('sexo', sexo);
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja actualizar esta informação?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Salvar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/dadospessoais-candidato/update",
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados actualizados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.reload();
+
+                            }
+                            else if (res == 'bilhete') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso!",
+                                    text: "O número do bilhete digitado já existe na base de dados",
+                                    timer: 4000
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+        }
+
+    });
+
+    $(document).on('click', '.registar-informacoes', function () {
+
+        $("#inscricao_id").val("");
+        $("#nome").val("Buscando dados...");
+        $("#num_bilhete").val("Buscando dados...");
+        $("#sexo").val("");
+        $("#numero_cedula").val("");
+        $("#data_emissao_cedula").val("");
+
+        id = $(this).data("id");
+        nome = $(this).data("nome");
+        bilhete = $(this).data("bilhete");
+        sexo = $(this).data("sexo");
 
         const modal = new bootstrap.Modal(document.getElementById('modal-registar-informacoes'));
         modal.show();
 
+        setTimeout(function () {
+            $("#inscricao_id").val(id);
+            $("#nome").val(nome);
+            $("#num_bilhete").val(bilhete);
+            $("#sexo").val(sexo);
+        }, 1500);
+
     });
 
     btnCancelar.addEventListener("click", () => {
+
+        $("#inscricao_id").val("");
+        $("#nome").val("");
+        $("#num_bilhete").val("");
+        $("#sexo").val("");
+        $("#numero_cedula").val("");
+        $("#data_emissao_cedula").val("");
 
         const modalElement = document.getElementById('modal-registar-informacoes');
         const modal = bootstrap.Modal.getInstance(modalElement);
@@ -47,23 +236,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+
+
     $(document).on('click', '#btn-registar-informacoes', function () {
 
         const cedula_disponivel = document.getElementById('cedula_disponivel').value;
         const numero_cedula = document.getElementById('numero_cedula').value;
+        const num_bilhete = document.getElementById('num_bilhete').value;
         const data_emissao_cedula = document.getElementById('data_emissao_cedula').value;
         const aguarda_cerimonia = document.getElementById('aguarda_cerimonia').value;
+        const sexo = document.getElementById('sexo').value;
 
-
-        if (cedula_disponivel == '' || cedula_disponivel == null) {
+        if (num_bilhete == '' || num_bilhete == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
-                text: "Informe se a cédula já está disponível",
+                text: "Digite o número do bilhete",
                 timer: 4000
             });
         }
-        else if ((numero_cedula == '' || numero_cedula == null) && (cedula_disponivel == 'Sim')) {
+        else if ((numero_cedula == '' || numero_cedula == null)) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
@@ -79,19 +271,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 4000
             });
         }
-        else if ((numero_cedula != '' && numero_cedula != null) && (cedula_disponivel == 'Não')) {
-            sweetAlert({
-                type: "warning",
-                title: "Aviso!",
-                text: "Se já tem número da cédula, a cédula deve estar disponível",
-                timer: 4000
-            });
-        }
         else if (data_emissao_cedula == '' || data_emissao_cedula == null) {
             sweetAlert({
                 type: "warning",
                 title: "Aviso!",
                 text: "Digite a data de emissão da cédula",
+                timer: 4000
+            });
+        }
+        else if (sexo == '' || sexo == null) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Escolha o género",
                 timer: 4000
             });
         }
@@ -103,9 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('inscricao_id', inscricao_id);
             formData.append('cedula_disponivel', cedula_disponivel);
             formData.append('numero_cedula', numero_cedula);
-            formData.append('numero_cedula', numero_cedula);
+            formData.append('num_bilhete', num_bilhete);
             formData.append('data_emissao_cedula', data_emissao_cedula);
             formData.append('aguarda_cerimonia', aguarda_cerimonia);
+            formData.append('sexo', sexo);
 
             Swal.fire({
                 title: "Confirmação",
@@ -139,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     timer: 3000
                                 });
 
-                                window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+                                window.location.reload();
 
                             }
                             else if (res == 'duplicado') {
@@ -147,6 +340,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                     type: "warning",
                                     title: "Aviso!",
                                     text: "O número de cédula digitado já existe na base de dados",
+                                    timer: 4000
+                                });
+                            }
+                            else if (res == 'bilhete') {
+                                sweetAlert({
+                                    type: "warning",
+                                    title: "Aviso!",
+                                    text: "O número do bilhete de identidade é obrigatório",
                                     timer: 4000
                                 });
                             }
@@ -171,6 +372,93 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             });
+        }
+
+    });
+
+    $(document).on('click', '#btn-excluir-processos', function () {
+
+        const selecionados = [];
+        const user_id = $('#user_id').val();
+
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
+        });
+
+        if (user_id != 1 && user_id != 4054) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não tem permissão para excluir registos",
+                timer: 4000
+            });
+        }
+        else if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+            csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja excluir os processos selecionados?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Sim, excluir!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/inscricao-delete-grupo/post",
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados excluídos com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.reload();
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+
         }
 
     });
@@ -535,63 +823,134 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    $(document).on('click', '.btn-retornar', function () {
+    $(document).on('click', '#btn-retornar', function () {
 
-        let id = $(this).data('id');
+        const selecionados = [];
 
-        const formData = new FormData();
-        formData.append('inscricao_id', id);
-        csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-        Swal.fire({
-            title: "Confirmação",
-            text: "Tem certeza que deseja retornar o processo à mesa do Presidente?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#34c38f",
-            cancelButtonColor: "#f46a6a",
-            confirmButtonText: "Sim, retornar!",
-            cancelButtonText: "Cancelar",
-            showLoaderOnConfirm: true,
-            preConfirm: function () {
-                return $.ajax({
-                    url: "/system/registo-retornarmesa/update",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    type: "POST",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (res) {
-
-                        console.log(res);
-                        if (res == 'sucesso') {
-                            sweetAlert({
-                                type: "success",
-                                title: "Sucesso",
-                                text: 'Dados registados com sucesso!',
-                                timer: 3000
-                            });
-
-                            window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
-
-                        }
-                    },
-                    error: function (error) {
-
-                        sweetAlert({
-                            type: "warning",
-                            title: "Erro " + error.status,
-                            text: 'Erro: ' + error.responseJSON.message,
-                            timer: 9000
-                        });
-                        console.log("Error: " + error.responseJSON.message);
-                    }
-                });
-            }
+        document.querySelectorAll(".checkItem:checked").forEach(item => {
+            selecionados.push(item.value);
         });
+
+        if (selecionados.length === 0) {
+            sweetAlert({
+                type: "warning",
+                title: "Aviso!",
+                text: "Não foi selecionado nenhum processo na tabela de dados",
+                timer: 4000
+            });
+        }
+        else {
+
+            const formData = new FormData();
+
+            Array.from(selecionados).forEach(id => {
+                formData.append('selecionados[]', id);
+            });
+            csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            Swal.fire({
+                title: "Confirmação",
+                text: "Tem certeza que deseja retornar os processos à mesa do Presidente?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Sim, retornar!",
+                cancelButtonText: "Cancelar",
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return $.ajax({
+                        url: "/system/registo-retornarmesa/update",
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (res) {
+
+                            console.log(res);
+                            if (res == 'sucesso') {
+                                sweetAlert({
+                                    type: "success",
+                                    title: "Sucesso",
+                                    text: 'Dados registados com sucesso!',
+                                    timer: 3000
+                                });
+
+                                window.location.href = "/system/areatecnica/list/subscription-trainee/remetidoscn";
+
+                            }
+                        },
+                        error: function (error) {
+
+                            sweetAlert({
+                                type: "warning",
+                                title: "Erro " + error.status,
+                                text: 'Erro: ' + error.responseJSON.message,
+                                timer: 9000
+                            });
+                            console.log("Error: " + error.responseJSON.message);
+                        }
+                    });
+                }
+            });
+
+        }
+
+    });
+
+    $(document).on('click', '#btn-gerar-pdf-completo', function () {
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/system/areatecnica/exportpdf-full-post/remessacn";
+        form.target = "_blank";
+
+        // CSRF
+        const csrf = document.createElement("input");
+        csrf.type = "hidden";
+        csrf.name = "_token";
+        csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+        form.appendChild(csrf);
+
+        const tipo_processo = document.createElement("input");
+        tipo_processo.type = "hidden";
+        tipo_processo.name = "tipo_processo";
+        tipo_processo.value = 3;
+        form.appendChild(tipo_processo);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+    });
+
+    $(document).on('click', '#btn-gerar-excel-completo', function () {
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/system/areatecnica/exportxls-full-post/remessacn";
+        form.target = "_blank";
+
+        // CSRF
+        const csrf = document.createElement("input");
+        csrf.type = "hidden";
+        csrf.name = "_token";
+        csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+        form.appendChild(csrf);
+
+        const tipo_processo = document.createElement("input");
+        tipo_processo.type = "hidden";
+        tipo_processo.name = "tipo_processo";
+        tipo_processo.value = 3;
+        form.appendChild(tipo_processo);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
 
     });
 

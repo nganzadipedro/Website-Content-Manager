@@ -1,12 +1,7 @@
 <div class="page-wrapper">
     <div class="page-header d-print-none">
         <div class="container-xl">
-            <div class="card card-md">
-                <div class="card-stamp card-stamp-lg">
-                    <div class="card-stamp-icon bg-primary">
-
-                    </div>
-                </div>
+            <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-10">
@@ -30,10 +25,10 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>ID</th>
                                         <th>Nome</th>
-                                        <th>Categoria</th>
                                         <th>Nº Cédula</th>
+                                        <th>Categoria</th>
+                                        <th>Patrono?</th>
                                         <th>Nº Bilhete</th>
                                         <th></th>
                                     </tr>
@@ -42,10 +37,10 @@
                                     @foreach ($lista_advogados as $item)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$item->id}}</td>
                                             <td>{{$item->getpessoa->nome}}</td>
-                                            <td>{{$item->categoria}}</td>
                                             <td>{{$item->num_associado}}</td>
+                                            <td>{{$item->categoria}}</td>
+                                            <td>{{$this->e_patrono($item->id) ? 'Patrono' : '-------'}}</td>
                                             <td>{{$item->getpessoa->num_documento}}</td>
                                             <td>
                                                 <a title="Editar" class="badge bg-yellow-lt"
