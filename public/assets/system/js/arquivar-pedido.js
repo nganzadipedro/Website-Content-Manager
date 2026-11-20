@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sexo = document.getElementById('sexo').value;
 
-        if (tipo_situacao != 'Substituição de Advogado' && (pedido_referencia_id == '' || pedido_referencia_id == null)) {
+        if (tipo_situacao == 'Substituição de Advogado' && (pedido_referencia_id != '' && pedido_referencia_id != null)) {
 
             e_substituicao = true;
 
@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append('observacao', observacao);
             formData.append('registo_id', registo_id);
             formData.append('pedido_id', pedido_id);
+            formData.append('tipo_situacao', tipo_situacao);
+            formData.append('pedido_referencia_id', pedido_referencia_id);
 
             Swal.fire({
                 title: "Confirmação",

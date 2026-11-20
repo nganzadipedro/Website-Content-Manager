@@ -154,17 +154,17 @@ class AssistenciaController extends Controller
 
         $pedido = Pedidoassistencia::find($request->pedido_id);
         $registo_entrada = Registoentrada::find($request->registo_id);
-        $pedido_referencia = Pedidoassistencia::find($pedido->pedido_referencia_id);
+        $pedido_referencia = Pedidoassistencia::find($request->pedido_referencia_id);
 
-        if ($pedido->pedido_referencia_id != null && $pedido_referencia == null) {
-            return 'pedido-referencia';
-        }
+        // if ($pedido->pedido_referencia_id != null && $pedido_referencia == null) {
+        //     return 'pedido-referencia';
+        // }
 
         $pedido->observacao = $request->observacao;
         $pedido->sexo = $request->sexo;
         $pedido->save();
 
-        if ($pedido->pedido_referencia_id == null) {
+        if ($pedido_referencia == null) {
             $pedido->natureza = $request->natureza;
             $pedido->localizacao = $request->localizacao;
             $pedido->save();

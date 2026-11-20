@@ -1531,7 +1531,7 @@ class SystemController extends Controller
         // $advogado->email_patrono = $request->email_patrono;
         // $advogado->telefone_patrono = $request->tel_patrono;
         // $advogado->nome_escritorio = $request->nome_escritorio;
-        // $advogado->estado = $request->estado;
+        $advogado->estado = $request->estado;
         $advogado->municipio_id = $request->categoria == 'Advogado' ? $request->municipio_id_adv : $request->municipio_id_est;
         $advogado->endereco_escritorio = $request->categoria == 'Advogado' ? $request->endereco_profissional_adv : $request->endereco_escritorio_est;
         $advogado->save();
